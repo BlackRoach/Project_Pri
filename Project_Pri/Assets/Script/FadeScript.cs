@@ -1,21 +1,28 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FadeScript : MonoBehaviour {
 
-    [SerializeField] private Image fade;
-    [SerializeField] private GameObject TitleWindow;
-    [SerializeField] private GameObject IntroWindow;
-    public float playingTime = 0.5f;
-    public float WaitTime = 1.0f;
-    private float time = 0f;
+    [SerializeField] protected Image fade;
 
+    [SerializeField] protected float playingTime = 0.5f;
+    [SerializeField] protected float waitTime = 1.0f;
+    [SerializeField] protected bool fadeout = false;
+    protected float time = 0f;
+    protected bool fadeoutEnd = false;
 	void Start () {
-        IntroWindow.SetActive(true);
-        TitleWindow.SetActive(false);
-        StartCoroutine(FadeIn());
+      
+    
  
+    }
+    public void _FadeIn()
+    {
+        StartCoroutine(FadeIn());
+    }
+    public void _FadeOut()
+    {
+        StartCoroutine(FadeOut());
     }
     IEnumerator FadeIn()
     {
@@ -29,8 +36,9 @@ public class FadeScript : MonoBehaviour {
             fade.color = color;
             yield return null;
         }
-        yield return new WaitForSeconds(WaitTime);
-        StartCoroutine(FadeOut());
+        yield return new WaitForSeconds(waitTime);
+        if (fadeout)
+            StartCoroutine(FadeOut());
 
     }
     IEnumerator FadeOut()
@@ -45,10 +53,8 @@ public class FadeScript : MonoBehaviour {
             fade.color = color;
             yield return null;
         }
-        yield return new WaitForSeconds(WaitTime);
-        this.gameObject.GetComponent<FadeScript>().enabled = false;
-        IntroWindow.SetActive(false);
-        TitleWindow.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        fadeoutEnd = true;
     }
    
 }

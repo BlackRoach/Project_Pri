@@ -1575,8 +1575,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1622498114}
   - component: {fileID: 1622498115}
-  - component: {fileID: 1622498113}
   - component: {fileID: 1622498116}
+  - component: {fileID: 1622498113}
   m_Layer: 0
   m_Name: '*Manager'
   m_TagString: Untagged
@@ -1592,14 +1592,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622498112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b6b709bb4b7f24bb2edffdeab11818, type: 3}
+  m_Script: {fileID: 11500000, guid: b6d2515928f5b134898ee9a7b3feef80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fade: {fileID: 998983845}
+  playingTime: 1
+  waitTime: 1
+  fadeout: 1
   TitleWindow: {fileID: 244664047}
   IntroWindow: {fileID: 1466255040}
-  playingTime: 1
-  WaitTime: 1
 --- !u!4 &1622498114
 Transform:
   m_ObjectHideFlags: 0
