@@ -18,6 +18,9 @@ public class PlayerManager : MonoBehaviour {
     {
         instance = this;
     }
+    [SerializeField] private PlayerInteraction playerInteraction;
+
+
     // Use this for initialization
     void Start () {
 		
@@ -27,4 +30,9 @@ public class PlayerManager : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void Interaction()
+    {
+        playerInteraction.Interaction();
+    }
+
 }

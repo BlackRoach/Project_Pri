@@ -20,12 +20,16 @@ public class InGamemanager : MonoBehaviour {
     }
 
 
-    [SerializeField] private GameObject BattleWindow;
-    [SerializeField] private GameObject InfoButtons;
-    [SerializeField] private GameObject JoyController;
-    [SerializeField] private Text Name;
-    [SerializeField] private Text Score;
+    [SerializeField] private PlayerDataContainer playerDataContainer;
+    [SerializeField] private GameObject battleWindow;
+    [SerializeField] private GameObject infoButtons;
+    [SerializeField] private GameObject joyController;
+    [SerializeField] private Text nameText;
+    [SerializeField] private Text scoreText;
 
+        
+    public PlayerDataContainer PlayerDataContainer_readonly
+    { get { return playerDataContainer; } }
 
     // Use this for initialization
     void Start () {
@@ -37,20 +41,26 @@ public class InGamemanager : MonoBehaviour {
 		
 	}
 
+
+    public void BattleButton()
+    {
+
+    }
     public void OpenBattleWindow()
     {
-        BattleWindow.SetActive(true);
+        battleWindow.SetActive(true);
+     
     }
     public void CloseBattleWindow()
     {
-        BattleWindow.SetActive(false);
+        battleWindow.SetActive(false);
     }
     public void AbleInfoButton()
     {
-        InfoButtons.SetActive(true);
+        infoButtons.SetActive(true);
     }
     public void EnableInfoButton()
     {
-        InfoButtons.SetActive(false);
+        infoButtons.SetActive(false);
     }
 }

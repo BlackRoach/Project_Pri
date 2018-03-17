@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -47,9 +48,9 @@ TagManager:
   - name: Object
     uniqueID: 548472591
     locked: 0
-  - name: Char
-    uniqueID: 510086403
+  - name: MoveableCharacter
+    uniqueID: 2241579105
     locked: 0
   - name: UI
-    uniqueID: 1685049499
+    uniqueID: 2018401487
     locked: 0

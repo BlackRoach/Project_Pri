@@ -10,10 +10,12 @@ public class InteractionObject : MonoBehaviour, IInteractive
         if (col.CompareTag("Player"))
         {
           
-
+           
             playerInteraction = col.gameObject.GetComponent<PlayerInteraction>();
 
             playerInteraction._Interaction_Object = this;
+            if(this.GetComponent<Collider2D>().CompareTag("Monster"))
+                InGamemanager.Instance.AbleInfoButton();
         }
     }
 
