@@ -37,8 +37,11 @@ public class InGamemanager : MonoBehaviour {
 
 
     void Start () {
-		
-	}
+        worldObjects.SetActive(true);
+        worldUI.SetActive(true);
+        battleObjects.SetActive(false);
+        battleUI.SetActive(false);
+    }
 	
 
 	void Update () {
@@ -48,7 +51,19 @@ public class InGamemanager : MonoBehaviour {
 
     public void BattleButton()
     {
-
+        BattleManager.Instance.enabled = true;
+        worldObjects.SetActive(false);
+        worldUI.SetActive(false);
+        battleObjects.SetActive(true);
+        battleUI.SetActive(true);
+    }
+    public void BattleExitButton()
+    {
+        BattleManager.Instance.enabled = false;
+        worldObjects.SetActive(true);
+        worldUI.SetActive(true);
+        battleObjects.SetActive(false);
+        battleUI.SetActive(false);
     }
     public void OpenBattleWindow()
     {
@@ -66,5 +81,13 @@ public class InGamemanager : MonoBehaviour {
     public void EnableInfoButton()
     {
         infoButtons.SetActive(false);
+    }
+    public void FinishBattle()
+    {
+        BattleManager.Instance.enabled = false;
+        worldObjects.SetActive(true);
+        worldUI.SetActive(true);
+        battleObjects.SetActive(false);
+        battleUI.SetActive(false);
     }
 }
