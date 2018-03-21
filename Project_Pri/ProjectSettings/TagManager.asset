@@ -54,3 +54,12 @@ TagManager:
   - name: UI
     uniqueID: 2018401487
     locked: 0
+  - name: Battle_Monster
+    uniqueID: 673009037
+    locked: 0
+  - name: Battle_Player
+    uniqueID: 3581215643
+    locked: 0
+  - name: Battle_Effect
+    uniqueID: 1649315277
+    locked: 0

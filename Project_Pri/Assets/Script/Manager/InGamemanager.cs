@@ -24,6 +24,10 @@ public class InGamemanager : MonoBehaviour {
     [SerializeField] private GameObject battleWindow;
     [SerializeField] private GameObject infoButtons;
     [SerializeField] private GameObject joyController;
+    [SerializeField] private GameObject worldObjects;
+    [SerializeField] private GameObject battleObjects;
+    [SerializeField] private GameObject worldUI;
+    [SerializeField] private GameObject battleUI;
     [SerializeField] private Text nameText;
     [SerializeField] private Text scoreText;
 
@@ -31,12 +35,12 @@ public class InGamemanager : MonoBehaviour {
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
 
-    // Use this for initialization
+
     void Start () {
 		
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}
