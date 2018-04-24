@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle_Monster : MonoBehaviour {
+public class Battle_Monster : Battle_Character {
 
-    [SerializeField] private GameObject effect;
+  
     [SerializeField] private GameObject cursur;
-    
-    
-    private int hp;
+  
 	// Use this for initialization
 	void Start () {
 		
@@ -16,16 +14,22 @@ public class Battle_Monster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(BattleManager.Instance.isAttack_readonly)
+        
+        progress_gauge += Time.deltaTime * filled_speed;
+        if (progress_gauge >= max_gauge && !isInQ)
+        {
+            battleManager.AddToArray(this.gameObject);
+            isInQ = true;
+        }
+
+        if (BattleManager.Instance.isAttack_readonly)
         {
             cursur.SetActive(true);
+         
         }
         else
             cursur.SetActive(false);
     }
-    public void Effect()
-    {
-        effect.SetActive(true);
-    }
-   
+
+
 }

@@ -37,10 +37,10 @@ public class InGamemanager : MonoBehaviour {
 
 
     void Start () {
-        worldObjects.SetActive(true);
-        worldUI.SetActive(true);
-        battleObjects.SetActive(false);
-        battleUI.SetActive(false);
+        //worldObjects.SetActive(true);
+        //worldUI.SetActive(true);
+        //battleObjects.SetActive(false);
+        //battleUI.SetActive(false);
     }
 	
 

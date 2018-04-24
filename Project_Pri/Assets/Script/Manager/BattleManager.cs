@@ -20,11 +20,12 @@ public class BattleManager : MonoBehaviour {
         instance = this;
     }
     [SerializeField] private Image attackButton;
+    [SerializeField] private Queue<GameObject> attackQueue = new Queue<GameObject>();
     private float fillamount;
     private float currentCoolTime;
     private float cooltime = 10f;
     private bool isAttack = false;
-
+    public bool isFightWhile = false;
     public bool isAttack_readonly{   get{return isAttack;}}
 	// Use this for initialization
 	void Start () {
@@ -46,7 +47,7 @@ public class BattleManager : MonoBehaviour {
                 Debug.Log(1);
                 if(hit.transform.CompareTag("Monster")&& isAttack)
                 {
-                    hit.transform.gameObject.GetComponent<Battle_Monster>().Effect();
+                    hit.transform.gameObject.GetComponent<Battle_Monster>().Attacked();
                     isAttack = false;
                     StartCoroutine(Cooltime(attackButton));
                 }
@@ -75,5 +76,12 @@ public class BattleManager : MonoBehaviour {
         if(attackButton.fillAmount >= 1)
             isAttack = true;
     }
-
+    public void AddToArray(GameObject character)
+    {
+        attackQueue.Enqueue(character);
+    }
+    public void DeleteInArray()
+    {
+        attackQueue.Dequeue();
+    }
 }
