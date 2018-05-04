@@ -57,7 +57,7 @@ TagManager:
   - name: Battle_Monster
     uniqueID: 673009037
     locked: 0
-  - name: Battle_Player
+  - name: Battle_Char
     uniqueID: 3581215643
     locked: 0
   - name: Battle_Effect

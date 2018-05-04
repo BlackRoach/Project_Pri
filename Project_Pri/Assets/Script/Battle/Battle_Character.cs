@@ -7,15 +7,24 @@ public class Battle_Character : MonoBehaviour
 {
 
     [SerializeField] private GameObject effect;
-    [SerializeField] private Image guageBar;
-    [SerializeField] private Image hpBar;
+    [SerializeField] protected GameObject StatusUI;
+    [SerializeField] protected Image guageBar;
+    [SerializeField] protected Image hpBar;
     [SerializeField] protected float filled_speed;
     [SerializeField] protected float max_gauge;
+
+
     protected BattleManager battleManager;
+
     protected int hp = 100;
+
+    [SerializeField] protected float progress_gauge = 0;
+
     public bool isInQ = false;
-    protected float progress_gauge = 0;
-    [SerializeField] Vector2 own_position;
+
+    private Vector2 own_position;
+ 
+
     private void Awake()
     {
         own_position = this.gameObject.transform.position;
@@ -30,7 +39,7 @@ public class Battle_Character : MonoBehaviour
     public void BackToOwnPosition()
     {
         StartCoroutine(IbackToOwnPosition());
-        battleManager.DeleteInArray();
+        
     }
     public void Attack(GameObject enemy)
     {
@@ -55,11 +64,20 @@ public class Battle_Character : MonoBehaviour
             this.gameObject.transform.localPosition = pos;
             yield return 0;
         }
+        isInQ = false;
+        battleManager.isFightWhile = false;
+        progress_gauge = 0;
         yield return null;
     }
     public IEnumerator ImoveToEnemy(GameObject enemy)
     {
-        Vector2 enemypos = new Vector2(enemy.transform.position.x - 1, enemy.transform.position.y);
+       
+        Vector2 enemypos;
+        if (enemy.transform.position.x > own_position.x)
+            enemypos = new Vector2(enemy.transform.position.x - 1, enemy.transform.position.y);
+        else
+            enemypos = new Vector2(enemy.transform.position.x + 1, enemy.transform.position.y);
+
         float t = 0.0f;
         while (t < 1.0f)
         {
@@ -69,7 +87,7 @@ public class Battle_Character : MonoBehaviour
             this.gameObject.transform.localPosition = pos;
             yield return 0;
         }
-
+        Attack(enemy);
         yield return null;
         StartCoroutine(IbackToOwnPosition());
     }

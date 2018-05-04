@@ -11,7 +11,7 @@ public class InGamemanager : MonoBehaviour {
             if (instance)
                 return instance;
             else
-                return instance = new GameObject("*Manager").AddComponent<InGamemanager >();
+                return instance = GameObject.Find("*Manager").AddComponent<InGamemanager >();
         }
     }
     private void Awake()
@@ -28,6 +28,8 @@ public class InGamemanager : MonoBehaviour {
     [SerializeField] private GameObject battleObjects;
     [SerializeField] private GameObject worldUI;
     [SerializeField] private GameObject battleUI;
+    [SerializeField] private Camera WorldCamera;
+    [SerializeField] private Camera BattleCamera;
     [SerializeField] private Text nameText;
     [SerializeField] private Text scoreText;
 
@@ -37,14 +39,18 @@ public class InGamemanager : MonoBehaviour {
 
 
     void Start () {
-        //worldObjects.SetActive(true);
-        //worldUI.SetActive(true);
-        //battleObjects.SetActive(false);
-        //battleUI.SetActive(false);
-    }
-	
 
-	void Update () {
+        WorldCamera.gameObject.SetActive(true);
+        worldObjects.SetActive(true);
+        worldUI.SetActive(true);
+        BattleCamera.gameObject.SetActive(false);
+        battleObjects.SetActive(false);
+        battleUI.SetActive(false);
+
+    }
+
+
+    void Update () {
 		
 	}
 
@@ -52,16 +58,21 @@ public class InGamemanager : MonoBehaviour {
     public void BattleButton()
     {
         BattleManager.Instance.enabled = true;
+        WorldCamera.gameObject.SetActive(false);
         worldObjects.SetActive(false);
         worldUI.SetActive(false);
+        BattleCamera.gameObject.SetActive(true);
         battleObjects.SetActive(true);
         battleUI.SetActive(true);
+
     }
     public void BattleExitButton()
     {
         BattleManager.Instance.enabled = false;
+        WorldCamera.gameObject.SetActive(true);
         worldObjects.SetActive(true);
         worldUI.SetActive(true);
+        BattleCamera.gameObject.SetActive(false);
         battleObjects.SetActive(false);
         battleUI.SetActive(false);
     }
@@ -90,4 +101,5 @@ public class InGamemanager : MonoBehaviour {
         battleObjects.SetActive(false);
         battleUI.SetActive(false);
     }
+  
 }
