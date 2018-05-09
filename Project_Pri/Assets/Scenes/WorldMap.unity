@@ -1540,9 +1540,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
-  m_TileRefreshArray:
-  - serializedVersion: 1
-    m_DirtyIndex: 0
 --- !u!1 &284324346
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,9 +3469,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
-  m_TileRefreshArray:
-  - serializedVersion: 1
-    m_DirtyIndex: 0
 --- !u!114 &300703381 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114868300855740610, guid: 25cf0c8ebea57bb4e9820ecfbd04082d,
