@@ -33,6 +33,7 @@ public class TextBoxController : MonoBehaviour {
 
     private void Start()
     {
+        // text 먼저 가져오기
         foreach(string text in textDialogues.textFiles_01){
             textArray.Add(text);
         }
@@ -46,12 +47,12 @@ public class TextBoxController : MonoBehaviour {
     // text 작동 메소드
     public void DialogueText()
     {
-        if(currentText > textArray.Count - 1)
+        if(currentText > endText)
         {
             StopCoroutine(AutoTyping());
             dialogueBox.SetActive(false);
         }
-        if (currentText <= textArray.Count - 1)
+        if (currentText <= endText)
         {
             text_Line.text = " ";
 
