@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TextBoxController : MonoBehaviour {
 
+    public static TextBoxController instance;
+
     public GameObject dialogueBox;
 
     public Text text_Line;
@@ -15,9 +17,17 @@ public class TextBoxController : MonoBehaviour {
 
     public List<string> textArray = new List<string>();
 
-    private int currentText;
+    public int currentText;
     [SerializeField]
     private int endText;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
 
 
@@ -29,6 +39,8 @@ public class TextBoxController : MonoBehaviour {
 
         currentText = 0;
         endText = textArray.Count - 1;
+
+        dialogueBox.SetActive(true);
     }
 
     // text 작동 메소드

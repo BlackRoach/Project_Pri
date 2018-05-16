@@ -62,6 +62,9 @@ public class EventController : MonoBehaviour {
             ui_Count_Panel.SetActive(false);
             ui_Count_Five_Panel.SetActive(false);
             ui_Count_Ten_Panel.SetActive(true);
+            TextBoxController.instance.dialogueBox.SetActive(true);
+            TextBoxController.instance.currentText = 0;
+            TextBoxController.instance.DialogueText();
         }
     }
 
