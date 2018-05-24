@@ -8,18 +8,15 @@ public class TextBoxController : MonoBehaviour {
 
     public static TextBoxController instance;
 
-    public GameObject dialogueBox;
+    public DialogueText dialogueText;
 
-    public Text text_Line;
+    public Text text_Box;
 
-    public DialogueText textDialogues;
+    public List<string> text_Array = new List<string>();
 
+    public int current_Text,end_Text;
 
-    public List<string> textArray = new List<string>();
-
-    public int currentText;
-    [SerializeField]
-    private int endText;
+    private bool is_Texting;
 
     private void Awake()
     {
@@ -29,51 +26,100 @@ public class TextBoxController : MonoBehaviour {
         }
     }
 
-
-
     private void Start()
     {
-        // text 먼저 가져오기
-        foreach(string text in textDialogues.textFiles_01){
-            textArray.Add(text);
-        }
-
-        currentText = 0;
-        endText = textArray.Count - 1;
-
-        dialogueBox.SetActive(true);
+        current_Text = 0;
+        end_Text = 0;
+        is_Texting = false;
     }
 
-    // text 작동 메소드
-    public void DialogueText()
+    public void Text_Input()
     {
-        if(currentText > endText)
+        if(EventController.instance.current_Count == 10)
         {
-            StopCoroutine(AutoTyping());
-            dialogueBox.SetActive(false);
+            foreach(string text in dialogueText.textFiles_01)
+            {
+                text_Array.Add(text);
+            }
+            end_Text = 5;
         }
-        if (currentText <= endText)
+
+        if (EventController.instance.is_Trigger_Four)
         {
-            text_Line.text = " ";
+            foreach (string text in dialogueText.textFiles_02)
+            {
+                text_Array.Add(text);
+            }
+            end_Text = 3;
+        }
+        if (EventController.instance.is_Trigger_Five)
+        {
+            foreach (string text in dialogueText.textFiles_03)
+            {
+                text_Array.Add(text);
+            }
+            end_Text = 3;
 
-            StartCoroutine(AutoTyping());
-
-            currentText++;
+            EventController.instance.is_Trigger_Five = false;
         }
     }
-    // text 줄줄이 나오도록 하는 메소드
+
+
+    public void Text_Output()
+    {
+        if (!is_Texting)
+        {
+            if (current_Text <= end_Text)
+            {
+                if (EventController.instance.current_Count == 10 || EventController.instance.is_Trigger_Four
+                    || !EventController.instance.is_Trigger_Five)
+                {
+                    StartCoroutine(AutoTyping());
+                    current_Text++;                
+                }
+
+                text_Box.text = " ";
+            }
+        }
+        CheckForText_Array();
+    }
+
     IEnumerator AutoTyping()
     {
-        foreach (char letter in textArray[currentText].ToCharArray())
+        foreach (char text in text_Array[current_Text].ToCharArray())
         {
-            text_Line.text += letter;
+            is_Texting = true;
+
+            text_Box.text += text;
 
             yield return new WaitForSeconds(0.1f);
         }
+        is_Texting = false;
     }
+    
+    private void CheckForText_Array()
+    {
+        if(current_Text > end_Text)
+        {
+            EventController.instance.img_Text_Box.SetActive(false);
+            text_Array.Clear();
+            current_Text = 0;
+            end_Text = 0;
 
-
-
+            if (EventController.instance.is_Trigger_Four)
+            {
+                EventController.instance.Event_ExitButton_Pressed();
+                EventController.instance.is_Trigger_Five = EventController.instance.is_Trigger_Four;
+                EventController.instance.is_Trigger_Four = false;
+                EventController.instance.is_Trigger_Two = false;
+                EventController.instance.is_Trigger_Three = false;
+            }
+            if (!EventController.instance.is_Trigger_Five)
+            {
+                EventController.instance.Event_ExitButton_Pressed();
+            }
+        }
+    }
 
 } // class
 

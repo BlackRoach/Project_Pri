@@ -9,74 +9,206 @@ using UnityEngine.UI;
 public class EventController : MonoBehaviour {
 
 
+    public static EventController instance;
 
-    // layout_Panel
-    public GameObject ui_Count_Ten_Panel;
-    public GameObject ui_Count_Panel;
-    public GameObject ui_Count_Five_Panel;
+    public GameObject img_Text_Box;
+
+    public GameObject origin_Panel,count_Five_Panel,count_Ten_Panel,trigger_One_Panel,trigger_Four_Panel,trigger_Five_Panel;
 
 
+    public Text text_Trigger_One, text_Trigger_Two, text_Trigger_Three, text_Trigger_Four, text_Trigger_Five;
 
-    public Text text_Count;
+    public Text show_count;
 
-    [SerializeField]
-    private int increase_count;
+    public int current_Count;
+    private int calculate_One;
+    private int defualt_Count;
 
-    private int StartCount = 0;
+    public bool is_Trigger_One, is_Trigger_Two, is_Trigger_Three, is_Trigger_Four, is_Trigger_Five;
 
-    private int current_Count;
-    
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
+        calculate_One = 1;
+        current_Count = 0;
+        defualt_Count = 0;
+        show_count.text = current_Count.ToString();
 
-        current_Count = StartCount;
-        text_Count.text = StartCount.ToString();
+        is_Trigger_One = is_Trigger_Two = is_Trigger_Three = is_Trigger_Four = is_Trigger_Five = false;
     }
-
-    // 1씩 더하기
-    public void AddOne()
+    private void Update()
     {
-        current_Count += increase_count;
-        text_Count.text = current_Count.ToString();
+        Event_Trigger_Count_Join();
     }
 
-    // 1씩 빼기
-    public void SubOne()
+    public void Count_AddOne()
     {
-        current_Count -= increase_count;
-        text_Count.text = current_Count.ToString();
+        current_Count += calculate_One;
+        show_count.text = current_Count.ToString();
     }
 
-    // 이벤트 실행 버튼 
-    public void EventJoinClicked()
+    public void Count_SubOne()
+    {
+        current_Count -= calculate_One;
+        show_count.text = current_Count.ToString();
+    }
+
+
+    public void Event_ClickButton_Pressed()
     {
         if(current_Count == 5)
         {
-            ui_Count_Panel.SetActive(false);
-            ui_Count_Ten_Panel.SetActive(false);
-            ui_Count_Five_Panel.SetActive(true);
+            origin_Panel.SetActive(false);
+            count_Ten_Panel.SetActive(false);
+            trigger_One_Panel.SetActive(false);
+            trigger_Five_Panel.SetActive(false);
+            trigger_Four_Panel.SetActive(false);
+            count_Five_Panel.SetActive(true);
         }
         if(current_Count == 10)
         {
-            ui_Count_Panel.SetActive(false);
-            ui_Count_Five_Panel.SetActive(false);
-            ui_Count_Ten_Panel.SetActive(true);
-            TextBoxController.instance.dialogueBox.SetActive(true);
-            TextBoxController.instance.currentText = 0;
-            TextBoxController.instance.DialogueText();
+            count_Five_Panel.SetActive(false);
+            origin_Panel.SetActive(false);
+            trigger_Four_Panel.SetActive(false);
+            trigger_Five_Panel.SetActive(false);
+            trigger_One_Panel.SetActive(false);
+            count_Ten_Panel.SetActive(true);
+
+            //  ----------------------------
+
+            img_Text_Box.SetActive(true);
+            TextBoxController.instance.Text_Input();
+            TextBoxController.instance.Text_Output();
+        }
+    }
+    private void Event_Trigger_Count_Join()
+    {
+
+        if (current_Count == 15)
+        {
+            if (!is_Trigger_One)
+            {
+                is_Trigger_One = true;
+                text_Trigger_One.text = calculate_One.ToString();
+                StartCoroutine(Auto_Event_System());
+            }
+        }
+        if(current_Count == 16)
+        {
+            if (!is_Trigger_Two)
+            {
+                is_Trigger_Two = true;
+                text_Trigger_Two.text = calculate_One.ToString();
+            }
+        }
+        if(current_Count == 17)
+        {
+            if (!is_Trigger_Three)
+            {
+                is_Trigger_Three = true;
+                text_Trigger_Three.text = calculate_One.ToString();
+            }
+        }
+        if(is_Trigger_Two && is_Trigger_Three)
+        {
+            if (!is_Trigger_Four)
+            {
+                is_Trigger_Four = true;
+                text_Trigger_Four.text = calculate_One.ToString();
+                StartCoroutine(Auto_Event_System());
+            }
+        }
+
+        if (is_Trigger_Five)
+        {
+            text_Trigger_Five.text = calculate_One.ToString();
+            StartCoroutine(Auto_Event_System());
+        }
+
+    }
+    public void Event_ExitButton_Pressed()
+    {
+        origin_Panel.SetActive(true);
+        trigger_One_Panel.SetActive(false);
+        trigger_Five_Panel.SetActive(false);
+        count_Five_Panel.SetActive(false);
+        count_Ten_Panel.SetActive(false);
+        trigger_Four_Panel.SetActive(false);
+        // ------------------------------
+
+
+        TextBoxController.instance.text_Array.Clear();
+        TextBoxController.instance.current_Text = 0;
+        TextBoxController.instance.end_Text = 0;
+        img_Text_Box.SetActive(false);
+    }
+
+    IEnumerator Auto_Event_System()
+    {
+
+        yield return new WaitForSeconds(calculate_One);
+
+        if(current_Count == 15)
+        {
+            Trigger_One_Event();
+        }
+
+        if (is_Trigger_Four)
+        {
+            Trigger_Four_Event();
+        }
+        if (is_Trigger_Five)
+        {
+            Trigger_Five_Event();
         }
     }
 
-    // 이벤트 나가기 버튼
-    public void EventQuitClicked()
+    private void Trigger_One_Event()
     {
-        ui_Count_Panel.SetActive(true);
-        ui_Count_Five_Panel.SetActive(false);
-        ui_Count_Ten_Panel.SetActive(false);
+        trigger_One_Panel.SetActive(true);
+        trigger_Five_Panel.SetActive(false);
+        origin_Panel.SetActive(false);
+        count_Five_Panel.SetActive(false);
+        count_Ten_Panel.SetActive(false);
+        trigger_Four_Panel.SetActive(false);
     }
+    private void Trigger_Four_Event()
+    {
+        trigger_Four_Panel.SetActive(true);
+        trigger_Five_Panel.SetActive(false);
+        trigger_One_Panel.SetActive(false);
+        origin_Panel.SetActive(false);
+        count_Five_Panel.SetActive(false);
+        count_Ten_Panel.SetActive(false);
 
-    
+        // ----------------------
+
+        img_Text_Box.SetActive(true);
+        TextBoxController.instance.Text_Input();
+        TextBoxController.instance.Text_Output();
+    }
+    private void Trigger_Five_Event()
+    {
+        trigger_Five_Panel.SetActive(true);
+        trigger_Four_Panel.SetActive(false);
+        trigger_One_Panel.SetActive(false);
+        origin_Panel.SetActive(false);
+        count_Five_Panel.SetActive(false);
+        count_Ten_Panel.SetActive(false);
+
+        // -----------------------
+
+        img_Text_Box.SetActive(true);
+        TextBoxController.instance.Text_Input();
+        TextBoxController.instance.Text_Output();
+    }
 } // class
 
 
