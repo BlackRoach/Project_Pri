@@ -8,6 +8,8 @@ public class TextBoxController : MonoBehaviour {
 
     public static TextBoxController instance;
 
+    public GameObject img_Tail_left, img_Tail_right;
+
     public DialogueText dialogueText;
 
     public Text text_Box;
@@ -86,6 +88,21 @@ public class TextBoxController : MonoBehaviour {
 
     IEnumerator AutoTyping()
     {
+
+        if (!EventController.instance.is_Trigger_Five)
+        {
+            if (current_Text % 2 == 0)
+            {
+                img_Tail_left.SetActive(true);
+                img_Tail_right.SetActive(false);
+            }
+            else
+            {
+                img_Tail_left.SetActive(false);
+                img_Tail_right.SetActive(true);
+            }
+
+        }
         foreach (char text in text_Array[current_Text].ToCharArray())
         {
             is_Texting = true;
