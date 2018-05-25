@@ -25,7 +25,6 @@ public class EventController : MonoBehaviour {
     private int defualt_Count;
 
     public bool is_Trigger_One, is_Trigger_Two, is_Trigger_Three, is_Trigger_Four, is_Trigger_Five;
-
     private void Awake()
     {
         if(instance == null)
@@ -148,6 +147,8 @@ public class EventController : MonoBehaviour {
         TextBoxController.instance.current_Text = 0;
         TextBoxController.instance.end_Text = 0;
         img_Text_Box.SetActive(false);
+
+        
     }
 
     IEnumerator Auto_Event_System()

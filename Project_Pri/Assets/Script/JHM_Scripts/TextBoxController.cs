@@ -93,13 +93,13 @@ public class TextBoxController : MonoBehaviour {
         {
             if (current_Text % 2 == 0)
             {
-                img_Tail_left.SetActive(true);
-                img_Tail_right.SetActive(false);
+                img_Tail_left.SetActive(false);
+                img_Tail_right.SetActive(true);
             }
             else
             {
-                img_Tail_left.SetActive(false);
-                img_Tail_right.SetActive(true);
+                img_Tail_left.SetActive(true);
+                img_Tail_right.SetActive(false);
             }
 
         }
