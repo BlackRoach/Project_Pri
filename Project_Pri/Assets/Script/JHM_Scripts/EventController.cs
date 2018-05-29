@@ -124,12 +124,13 @@ public class EventController : MonoBehaviour {
                 StartCoroutine(Auto_Event_System());
             }
         }
-
+        
         if (is_Trigger_Five)
         {
             text_Trigger_Five.text = calculate_One.ToString();
             StartCoroutine(Auto_Event_System());
         }
+        
 
     }
     public void Event_ExitButton_Pressed()
@@ -146,9 +147,7 @@ public class EventController : MonoBehaviour {
         TextBoxController.instance.text_Array.Clear();
         TextBoxController.instance.current_Text = 0;
         TextBoxController.instance.end_Text = 0;
-        img_Text_Box.SetActive(false);
-
-        
+        img_Text_Box.SetActive(false);       
     }
 
     IEnumerator Auto_Event_System()
@@ -209,6 +208,24 @@ public class EventController : MonoBehaviour {
         img_Text_Box.SetActive(true);
         TextBoxController.instance.Text_Input();
         TextBoxController.instance.Text_Output();
+    }
+
+    
+    public void All_Default_Value()
+    {
+        text_Trigger_One.text = defualt_Count.ToString();
+        text_Trigger_Two.text = defualt_Count.ToString();
+        text_Trigger_Three.text = defualt_Count.ToString();
+        text_Trigger_Four.text = defualt_Count.ToString();
+        text_Trigger_Five.text = defualt_Count.ToString();
+
+        // -----------------
+
+        current_Count = defualt_Count;
+        show_count.text = current_Count.ToString();
+
+        is_Trigger_One = is_Trigger_Two = is_Trigger_Three = is_Trigger_Four = is_Trigger_Five = false;
+
     }
 } // class
 

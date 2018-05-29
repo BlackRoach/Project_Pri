@@ -123,17 +123,21 @@ public class TextBoxController : MonoBehaviour {
             current_Text = 0;
             end_Text = 0;
 
-            if (EventController.instance.is_Trigger_Four)
+            if (EventController.instance.current_Count != 10)
             {
-                EventController.instance.Event_ExitButton_Pressed();
-                EventController.instance.is_Trigger_Five = EventController.instance.is_Trigger_Four;
-                EventController.instance.is_Trigger_Four = false;
-                EventController.instance.is_Trigger_Two = false;
-                EventController.instance.is_Trigger_Three = false;
-            }
-            if (!EventController.instance.is_Trigger_Five)
-            {
-                EventController.instance.Event_ExitButton_Pressed();
+                if (EventController.instance.is_Trigger_Four)
+                {
+                    EventController.instance.Event_ExitButton_Pressed();
+                    EventController.instance.is_Trigger_Five = EventController.instance.is_Trigger_Four;
+                    EventController.instance.is_Trigger_Four = false;
+                    EventController.instance.is_Trigger_Two = false;
+                    EventController.instance.is_Trigger_Three = false;
+                }
+                if (!EventController.instance.is_Trigger_Five)
+                {
+                    EventController.instance.Event_ExitButton_Pressed();
+                    EventController.instance.All_Default_Value();
+                }
             }
         }
     }
