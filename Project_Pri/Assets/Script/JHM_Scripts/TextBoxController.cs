@@ -34,7 +34,7 @@ public class TextBoxController : MonoBehaviour {
         end_Text = 0;
         is_Texting = false;
     }
-
+    // 텍스트를 리스트에 담기
     public void Text_Input()
     {
         if(EventController.instance.current_Count == 10)
@@ -60,13 +60,19 @@ public class TextBoxController : MonoBehaviour {
             {
                 text_Array.Add(text);
             }
-            end_Text = 3;
-
-            EventController.instance.is_Trigger_Five = false;
+            end_Text = 3;           
+        }
+        if (EventController.instance.is_Trigger_Six)
+        {
+            foreach (string text in dialogueText.textFiles_04)
+            {
+                text_Array.Add(text);
+            }
+            end_Text = 2;
         }
     }
 
-
+    // 텍스트를 게임상에 출력하기
     public void Text_Output()
     {
         if (!is_Texting)
@@ -74,7 +80,7 @@ public class TextBoxController : MonoBehaviour {
             if (current_Text <= end_Text)
             {
                 if (EventController.instance.current_Count == 10 || EventController.instance.is_Trigger_Four
-                    || !EventController.instance.is_Trigger_Five)
+                    || EventController.instance.is_Trigger_Five || EventController.instance.is_Trigger_Six)
                 {
                     StartCoroutine(AutoTyping());
                     current_Text++;                
@@ -85,11 +91,11 @@ public class TextBoxController : MonoBehaviour {
         }
         CheckForText_Array();
     }
-
+    // 오토 타이핑 메소드
     IEnumerator AutoTyping()
     {
 
-        if (!EventController.instance.is_Trigger_Five)
+        if (EventController.instance.is_Trigger_Five)
         {
             if (current_Text % 2 == 0)
             {
@@ -113,13 +119,15 @@ public class TextBoxController : MonoBehaviour {
         }
         is_Texting = false;
     }
-    
+    // 텍스트가 끝났는지 감지해주는 메소드
     private void CheckForText_Array()
     {
         if(current_Text > end_Text)
         {
             EventController.instance.img_Text_Box.SetActive(false);
+
             text_Array.Clear();
+
             current_Text = 0;
             end_Text = 0;
 
@@ -128,15 +136,15 @@ public class TextBoxController : MonoBehaviour {
                 if (EventController.instance.is_Trigger_Four)
                 {
                     EventController.instance.Event_ExitButton_Pressed();
-                    EventController.instance.is_Trigger_Five = EventController.instance.is_Trigger_Four;
-                    EventController.instance.is_Trigger_Four = false;
-                    EventController.instance.is_Trigger_Two = false;
-                    EventController.instance.is_Trigger_Three = false;
+                    EventController.instance.can_Access = true;
                 }
-                if (!EventController.instance.is_Trigger_Five)
+                if (EventController.instance.is_Trigger_Five)
                 {
                     EventController.instance.Event_ExitButton_Pressed();
-                    EventController.instance.All_Default_Value();
+                }
+                if (EventController.instance.is_Trigger_Six)
+                {
+                    EventController.instance.Event_ExitButton_Pressed();
                 }
             }
         }
