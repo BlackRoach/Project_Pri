@@ -6,15 +6,13 @@ using UnityEngine.UI;
 
 public class TextBoxController : MonoBehaviour {
 
-    public static TextBoxController instance;
+    public static TextBoxController instance = null;
+
+    private DialogueText dialogue_Text;
 
     public GameObject img_Tail_left, img_Tail_right;
 
-    public DialogueText dialogueText;
-
-    public Text text_Box;
-
-    public List<string> text_Array = new List<string>();
+    public Text text_Box; 
 
     public int current_Text,end_Text;
 
@@ -22,54 +20,24 @@ public class TextBoxController : MonoBehaviour {
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        dialogue_Text = transform.Find("Dialogue_Text").GetComponent<DialogueText>();
     }
 
     private void Start()
-    {
+    {        
+
         current_Text = 0;
         end_Text = 0;
         is_Texting = false;
-    }
-    // 텍스트를 리스트에 담기
-    public void Text_Input()
-    {
-        if(EventController.instance.current_Count == 10)
-        {
-            foreach(string text in dialogueText.textFiles_01)
-            {
-                text_Array.Add(text);
-            }
-            end_Text = 5;
-        }
-
-        if (EventController.instance.is_Trigger_Four)
-        {
-            foreach (string text in dialogueText.textFiles_02)
-            {
-                text_Array.Add(text);
-            }
-            end_Text = 3;
-        }
-        if (EventController.instance.is_Trigger_Five)
-        {
-            foreach (string text in dialogueText.textFiles_03)
-            {
-                text_Array.Add(text);
-            }
-            end_Text = 3;           
-        }
-        if (EventController.instance.is_Trigger_Six)
-        {
-            foreach (string text in dialogueText.textFiles_04)
-            {
-                text_Array.Add(text);
-            }
-            end_Text = 2;
-        }
     }
 
     // 텍스트를 게임상에 출력하기
@@ -80,7 +48,8 @@ public class TextBoxController : MonoBehaviour {
             if (current_Text <= end_Text)
             {
                 if (EventController.instance.current_Count == 10 || EventController.instance.is_Trigger_Four
-                    || EventController.instance.is_Trigger_Five || EventController.instance.is_Trigger_Six)
+                    || EventController.instance.is_Trigger_Five || EventController.instance.is_Trigger_Six
+                    || EventController.instance.is_Trigger_Seven || EventController.instance.is_Trigger_Eight)
                 {
                     StartCoroutine(AutoTyping());
                     current_Text++;                
@@ -109,13 +78,78 @@ public class TextBoxController : MonoBehaviour {
             }
 
         }
-        foreach (char text in text_Array[current_Text].ToCharArray())
+        if (EventController.instance.current_Count == 10) {
+            foreach (char text in dialogue_Text.textFiles_01[current_Text].ToCharArray())
+            {
+                is_Texting = true;
+
+                text_Box.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        if (EventController.instance.current_Count == 17)
         {
-            is_Texting = true;
+            if (EventController.instance.is_Trigger_Four && !EventController.instance.can_Access_01)
+            {
+                foreach (char text in dialogue_Text.textFiles_02[current_Text].ToCharArray())
+                {
+                    is_Texting = true;
 
-            text_Box.text += text;
+                    text_Box.text += text;
 
-            yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            if (EventController.instance.is_Trigger_Five && EventController.instance.can_Access_01)
+            {
+                foreach (char text in dialogue_Text.textFiles_03[current_Text].ToCharArray())
+                {
+                    is_Texting = true;
+
+                    text_Box.text += text;
+
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+        if (EventController.instance.current_Count == 20 && EventController.instance.is_Trigger_Six
+            && !EventController.instance.can_Access_02)
+        {
+            foreach (char text in dialogue_Text.textFiles_04[current_Text].ToCharArray())
+            {
+                is_Texting = true;
+
+                text_Box.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        if (EventController.instance.is_Trigger_Seven && EventController.instance.can_Access_02)
+        {
+            if(current_Text == 1)
+            {
+                EventController.instance.trigger_Seven_Anim.SetBool("isState", true);
+            }
+            foreach (char text in dialogue_Text.textFiles_05[current_Text].ToCharArray())
+            {
+                is_Texting = true;
+
+                text_Box.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        if (EventController.instance.is_Trigger_Eight && EventController.instance.can_Access_02)
+        {
+            foreach (char text in dialogue_Text.textFiles_06[current_Text].ToCharArray())
+            {
+                is_Texting = true;
+
+                text_Box.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         is_Texting = false;
     }
@@ -125,24 +159,35 @@ public class TextBoxController : MonoBehaviour {
         if(current_Text > end_Text)
         {
             EventController.instance.img_Text_Box.SetActive(false);
-
-            text_Array.Clear();
-
+            
             current_Text = 0;
             end_Text = 0;
 
             if (EventController.instance.current_Count != 10)
             {
-                if (EventController.instance.is_Trigger_Four)
+                if (EventController.instance.current_Count == 17)
+                {
+                    if (EventController.instance.is_Trigger_Four)
+                    {
+                        EventController.instance.Event_ExitButton_Pressed();
+                        EventController.instance.can_Access_01 = true;
+                    }
+                    if (EventController.instance.is_Trigger_Five)
+                    {
+                        EventController.instance.Event_ExitButton_Pressed();
+                    }
+                }
+                if (EventController.instance.is_Trigger_Six && !EventController.instance.can_Access_02)
+                {
+                    EventController.instance.choice_Button_Panel.SetActive(true);
+                    EventController.instance.can_Access_02 = true;
+                }
+                if (EventController.instance.is_Trigger_Seven)
                 {
                     EventController.instance.Event_ExitButton_Pressed();
-                    EventController.instance.can_Access = true;
+                    EventController.instance.trigger_Seven_Anim.SetBool("isState", false);
                 }
-                if (EventController.instance.is_Trigger_Five)
-                {
-                    EventController.instance.Event_ExitButton_Pressed();
-                }
-                if (EventController.instance.is_Trigger_Six)
+                if (EventController.instance.is_Trigger_Eight)
                 {
                     EventController.instance.Event_ExitButton_Pressed();
                 }
