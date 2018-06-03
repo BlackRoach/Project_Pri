@@ -9,8 +9,9 @@ public class Battle_Monster : Battle_Character {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        if (battleManager == null)
+            battleManager = BattleManager.Instance;
+    }
 	
 	// Update is called once per frame
 	void Update () {

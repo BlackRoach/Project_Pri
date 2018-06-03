@@ -16,12 +16,15 @@ public class Battle_Player : Battle_Character
     // Use this for initialization
     void Start()
     {
-
+        if (battleManager == null)
+            battleManager = BattleManager.Instance;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
         StatusUI.transform.position = new Vector2(this.transform.position.x+0.3f,
                                                   this.transform.position.y-1.7f);
 
@@ -60,6 +63,7 @@ public class Battle_Player : Battle_Character
         {
             this.gameObject.SetActive(false);
             StatusUI.SetActive(false);
+            battleManager.GetResult(false);
         }
 
     }

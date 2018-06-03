@@ -25,12 +25,13 @@ public class Battle_Character : MonoBehaviour
     private Vector2 own_position;
  
 
+   
     private void Awake()
     {
+        
         own_position = this.gameObject.transform.position;
         battleManager = BattleManager.Instance;
     }
-   
 
     public void MoveToEnemy(GameObject enemy)
     {

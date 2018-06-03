@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class InGamemanager : MonoBehaviour {
+public class InGamemanager : MonoBehaviour
+{
     private static InGamemanager instance = null;
     public static InGamemanager Instance
     {
         get
         {
-            if (instance)
-                return instance;
-            else
-                return instance = GameObject.Find("*Manager").AddComponent<InGamemanager >();
+            return instance;
+
         }
     }
     private void Awake()
     {
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
         instance = this;
     }
 
@@ -27,18 +31,20 @@ public class InGamemanager : MonoBehaviour {
     [SerializeField] private GameObject worldObjects;
     [SerializeField] private GameObject battleObjects;
     [SerializeField] private GameObject worldUI;
+    [SerializeField] private GameObject battleHudUI;
     [SerializeField] private GameObject battleUI;
     [SerializeField] private Camera WorldCamera;
     [SerializeField] private Camera BattleCamera;
     [SerializeField] private Text nameText;
     [SerializeField] private Text scoreText;
 
-        
+
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
 
 
-    void Start () {
+    void Start()
+    {
 
         WorldCamera.gameObject.SetActive(true);
         worldObjects.SetActive(true);
@@ -46,13 +52,15 @@ public class InGamemanager : MonoBehaviour {
         BattleCamera.gameObject.SetActive(false);
         battleObjects.SetActive(false);
         battleUI.SetActive(false);
+        battleHudUI.SetActive(false);
 
     }
 
 
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
 
 
     public void BattleButton()
@@ -64,7 +72,7 @@ public class InGamemanager : MonoBehaviour {
         BattleCamera.gameObject.SetActive(true);
         battleObjects.SetActive(true);
         battleUI.SetActive(true);
-
+        battleHudUI.SetActive(true);
     }
     public void BattleExitButton()
     {
@@ -75,11 +83,12 @@ public class InGamemanager : MonoBehaviour {
         BattleCamera.gameObject.SetActive(false);
         battleObjects.SetActive(false);
         battleUI.SetActive(false);
+        battleHudUI.SetActive(false);
     }
     public void OpenBattleWindow()
     {
         battleWindow.SetActive(true);
-     
+
     }
     public void CloseBattleWindow()
     {
@@ -100,6 +109,7 @@ public class InGamemanager : MonoBehaviour {
         worldUI.SetActive(true);
         battleObjects.SetActive(false);
         battleUI.SetActive(false);
+        battleHudUI.SetActive(false);
     }
-  
+
 }

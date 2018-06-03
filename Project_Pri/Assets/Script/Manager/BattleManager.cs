@@ -9,20 +9,26 @@ public class BattleManager : MonoBehaviour
     {
         get
         {
-            if (instance)
-                return instance;
-            else
-                return instance = GameObject.Find("*Manager").AddComponent<BattleManager>();
+             return instance;
+            
         }
     }
     private void Awake()
     {
+        if (instance)
+        {
+            DestroyImmediate(gameObject.GetComponent<BattleManager>());
+            return;
+        }
         instance = this;
     }
 
-
+    [SerializeField] private GameObject resultWindow;
+    [SerializeField] private GameObject victoryPopup;
+    [SerializeField] private GameObject defeatPopup;
     [SerializeField] private GameObject skillButtons;
     [SerializeField] private GameObject commandButton;
+    [SerializeField] private GameObject megami;
     [SerializeField] private Image attackButton;
     [SerializeField] private Queue<GameObject> attackQueue = new Queue<GameObject>();
     [SerializeField] private GameObject player;
@@ -32,13 +38,14 @@ public class BattleManager : MonoBehaviour
     private float currentCoolTime;
     private float cooltime = 10f;
     private bool isAttack = false;
+    private bool isResult = false;
     public bool isFightWhile = false;
     public bool isCommandOn = false;
     public bool isAttack_readonly { get { return isAttack; } }
     // Use this for initialization
     void Start()
     {
-     
+        resultWindow.SetActive(false);
     }
     
     // Update is called once per frame
@@ -55,7 +62,6 @@ public class BattleManager : MonoBehaviour
 
             if (hit)
             {
-                Debug.Log(1);
                 if (hit.transform.CompareTag("Monster") && isAttack)
                 {
                     Time.timeScale = 1;
@@ -73,7 +79,7 @@ public class BattleManager : MonoBehaviour
 
         }
         // 큐에 의한 신호등
-        if (attackQueue.Count != 0 && !isFightWhile)
+        if (attackQueue.Count != 0 && !isFightWhile && !isResult)
         {
             
             isFightWhile = true;
@@ -86,6 +92,7 @@ public class BattleManager : MonoBehaviour
                 presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(enemys[Random.Range(0,2)]);
             }
         }
+        // else if(enemys.count == 0) -> result 출력
     }
     IEnumerator Cooltime(Image skillFilter)
     {
@@ -99,7 +106,33 @@ public class BattleManager : MonoBehaviour
 
         yield break;
     }
+    IEnumerator MegamiMove(bool isWin)
+    {
 
+        Vector2 thisPosition = megami.gameObject.transform.localPosition;
+        float t = 0.0f;
+        while (t < 1.0f)
+        {
+
+            t += Time.deltaTime * 0.8f;
+            Vector2 pos = megami.gameObject.transform.localPosition;
+            pos = Vector2.Lerp(thisPosition, new Vector2(470,6), t);
+            megami.gameObject.transform.localPosition = pos;
+            yield return 0;
+        }
+        if (isWin)
+            victoryPopup.SetActive(true);
+        else
+            defeatPopup.SetActive(true);
+        yield return null;
+    }
+    public void GetResult(bool isWin)
+    {
+        isResult = true;
+        resultWindow.SetActive(true);
+        resultWindow.GetComponent<FadeScript>()._FadeOut();
+        StartCoroutine(MegamiMove(isWin));
+    }
     public void AttackButton()
     {
         Time.timeScale = 0;
