@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Anim_Event : MonoBehaviour {
+
+
+
     private GameObject face_Emotion_01, face_Emotion_02, face_Emotion_03;
 
   

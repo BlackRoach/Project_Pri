@@ -125,30 +125,33 @@ public class TextBoxController : MonoBehaviour {
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        if (EventController.instance.is_Trigger_Seven && EventController.instance.can_Access_02)
+        if (EventController.instance.current_Count != 10)
         {
-            if(current_Text == 1)
+            if (EventController.instance.is_Trigger_Seven && EventController.instance.can_Access_02)
             {
-                EventController.instance.trigger_Seven_Anim.SetBool("isState", true);
+                if (current_Text == 1)
+                {
+                    EventController.instance.trigger_Seven_Anim.SetBool("isState", true);
+                }
+                foreach (char text in dialogue_Text.textFiles_05[current_Text].ToCharArray())
+                {
+                    is_Texting = true;
+
+                    text_Box.text += text;
+
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
-            foreach (char text in dialogue_Text.textFiles_05[current_Text].ToCharArray())
+            if (EventController.instance.is_Trigger_Eight && EventController.instance.can_Access_02)
             {
-                is_Texting = true;
+                foreach (char text in dialogue_Text.textFiles_06[current_Text].ToCharArray())
+                {
+                    is_Texting = true;
 
-                text_Box.text += text;
+                    text_Box.text += text;
 
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-        if (EventController.instance.is_Trigger_Eight && EventController.instance.can_Access_02)
-        {
-            foreach (char text in dialogue_Text.textFiles_06[current_Text].ToCharArray())
-            {
-                is_Texting = true;
-
-                text_Box.text += text;
-
-                yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
         }
         is_Texting = false;
@@ -184,7 +187,9 @@ public class TextBoxController : MonoBehaviour {
                 }
                 if (EventController.instance.is_Trigger_Seven)
                 {
+                    EventController.instance.trigger_Seven_Anim.SetBool("isState", false);
                     EventController.instance.Event_ExitButton_Pressed();
+
                 }
                 if (EventController.instance.is_Trigger_Eight)
                 {
