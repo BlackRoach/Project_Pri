@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-
-
 public class EventController : MonoBehaviour {
 
 
@@ -53,7 +51,7 @@ public class EventController : MonoBehaviour {
         calculate_One = 1;
         current_Count = 0;
         defualt_Count = 0;
-        face_Current_State_Count = 0;
+        face_Current_State_Count = calculate_One;
         show_count.text = current_Count.ToString();
         face_Show_Count.text = face_Current_State_Count.ToString();
 
@@ -85,6 +83,25 @@ public class EventController : MonoBehaviour {
         current_Count -= calculate_One;
         show_count.text = current_Count.ToString();
     }
+    // 트리거_8_Panel 에 있는 케릭터 표정 변화 컨트롤 Add_One
+    public void Trigger_Eight_Character_Emotion_Count_AddOne()
+    {
+        if (face_Current_State_Count < 3)
+        {
+            face_Current_State_Count += calculate_One;
+            face_Show_Count.text = face_Current_State_Count.ToString();
+        }
+    }
+    // 트리거_8_Panel 에 있는 케릭터 표정 변화 컨트롤 Sub_One
+    public void Trigger_Eight_Character_Emotion_Count_SubOne()
+    {
+        if (face_Current_State_Count > 1)
+        {
+            face_Current_State_Count -= calculate_One;
+            face_Show_Count.text = face_Current_State_Count.ToString();
+        }
+    }
+
 
     // 조건과 맞을경우 이벤트 버튼 작동
     public void Event_ClickButton_Pressed()
@@ -359,7 +376,7 @@ public class EventController : MonoBehaviour {
         // -----------------
 
         current_Count = defualt_Count;
-        face_Current_State_Count = defualt_Count;
+        face_Current_State_Count = calculate_One;
         show_count.text = current_Count.ToString();
         face_Show_Count.text = face_Current_State_Count.ToString();
 
