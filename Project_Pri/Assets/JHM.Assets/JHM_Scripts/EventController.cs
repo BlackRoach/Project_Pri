@@ -65,6 +65,7 @@ public class EventController : MonoBehaviour {
         // --------------------------
         choice_Button_Panel.SetActive(false);
     }
+    // Update
     private void Update()
     {
         Event_Trigger_Count_Join();
@@ -101,7 +102,6 @@ public class EventController : MonoBehaviour {
             face_Show_Count.text = face_Current_State_Count.ToString();
         }
     }
-
 
     // 조건과 맞을경우 이벤트 버튼 작동
     public void Event_ClickButton_Pressed()

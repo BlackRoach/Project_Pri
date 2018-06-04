@@ -185,7 +185,6 @@ public class TextBoxController : MonoBehaviour {
                 if (EventController.instance.is_Trigger_Seven)
                 {
                     EventController.instance.Event_ExitButton_Pressed();
-                    EventController.instance.trigger_Seven_Anim.SetBool("isState", false);
                 }
                 if (EventController.instance.is_Trigger_Eight)
                 {
