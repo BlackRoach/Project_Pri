@@ -1003,6 +1003,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4375155696e904aaa558fa33040300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  origin_Panel: {fileID: 1813377962}
+  condition_Panel: {fileID: 1898700519}
+  text_Condition:
+  - {fileID: 1086339157}
+  - {fileID: 1469104091}
+  - {fileID: 308920249}
 --- !u!4 &1446384120
 Transform:
   m_ObjectHideFlags: 0
