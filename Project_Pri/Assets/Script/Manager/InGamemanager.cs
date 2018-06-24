@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class InGamemanager : MonoBehaviour
 {
     private static InGamemanager instance = null;
@@ -26,18 +27,20 @@ public class InGamemanager : MonoBehaviour
 
     [SerializeField] private PlayerDataContainer playerDataContainer;
     [SerializeField] private GameObject battleWindow;
+    [SerializeField] private GameObject teleportWindow;
     [SerializeField] private GameObject infoButtons;
     [SerializeField] private GameObject joyController;
     [SerializeField] private GameObject worldObjects;
-    [SerializeField] private GameObject battleObjects;
+
     [SerializeField] private GameObject worldUI;
-    [SerializeField] private GameObject battleHudUI;
-    [SerializeField] private GameObject battleUI;
+
     [SerializeField] private Camera WorldCamera;
-    [SerializeField] private Camera BattleCamera;
+
     [SerializeField] private Text nameText;
     [SerializeField] private Text scoreText;
 
+    [SerializeField] public Transform[] trans_list;
+    [SerializeField] public int[] position_money;
 
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
@@ -49,10 +52,7 @@ public class InGamemanager : MonoBehaviour
         WorldCamera.gameObject.SetActive(true);
         worldObjects.SetActive(true);
         worldUI.SetActive(true);
-        BattleCamera.gameObject.SetActive(false);
-        battleObjects.SetActive(false);
-        battleUI.SetActive(false);
-        battleHudUI.SetActive(false);
+
 
     }
 
@@ -65,26 +65,10 @@ public class InGamemanager : MonoBehaviour
 
     public void BattleButton()
     {
-        BattleManager.Instance.enabled = true;
-        WorldCamera.gameObject.SetActive(false);
-        worldObjects.SetActive(false);
-        worldUI.SetActive(false);
-        BattleCamera.gameObject.SetActive(true);
-        battleObjects.SetActive(true);
-        battleUI.SetActive(true);
-        battleHudUI.SetActive(true);
+        SceneManager.LoadScene("BattleScene");
+   
     }
-    public void BattleExitButton()
-    {
-        BattleManager.Instance.enabled = false;
-        WorldCamera.gameObject.SetActive(true);
-        worldObjects.SetActive(true);
-        worldUI.SetActive(true);
-        BattleCamera.gameObject.SetActive(false);
-        battleObjects.SetActive(false);
-        battleUI.SetActive(false);
-        battleHudUI.SetActive(false);
-    }
+   
     public void OpenBattleWindow()
     {
         battleWindow.SetActive(true);
@@ -94,6 +78,15 @@ public class InGamemanager : MonoBehaviour
     {
         battleWindow.SetActive(false);
     }
+
+    public void OpenTeleportWindow()
+    {
+        teleportWindow.SetActive(true);
+    }
+    public void CloseTeleportWindow()
+    {
+        teleportWindow.SetActive(false);
+    }
     public void AbleInfoButton()
     {
         infoButtons.SetActive(true);
@@ -102,14 +95,6 @@ public class InGamemanager : MonoBehaviour
     {
         infoButtons.SetActive(false);
     }
-    public void FinishBattle()
-    {
-        BattleManager.Instance.enabled = false;
-        worldObjects.SetActive(true);
-        worldUI.SetActive(true);
-        battleObjects.SetActive(false);
-        battleUI.SetActive(false);
-        battleHudUI.SetActive(false);
-    }
+    
 
 }

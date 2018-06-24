@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class BattleManager : MonoBehaviour
 {
     private static BattleManager instance = null;
@@ -153,7 +154,10 @@ public class BattleManager : MonoBehaviour
         commandButton.SetActive(false);
         skillButtons.SetActive(true);
     }
-   
+    public void BackToWorld()
+    {
+        SceneManager.LoadScene("WorldMap");
+    }
 }
 
   

@@ -16,6 +16,8 @@ public class InteractionObject : MonoBehaviour, IInteractive
             playerInteraction._Interaction_Object = this;
             if(this.GetComponent<Collider2D>().CompareTag("Monster"))
                 InGamemanager.Instance.AbleInfoButton();
+            else if (this.GetComponent<Collider2D>().CompareTag("Teleport"))
+                InGamemanager.Instance.OpenTeleportWindow();
         }
     }
 
