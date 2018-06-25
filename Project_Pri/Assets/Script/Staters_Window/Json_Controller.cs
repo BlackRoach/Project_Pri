@@ -118,6 +118,7 @@ public class Json_Controller : MonoBehaviour
                 }
                 break;
         }
+        Game_Controller.instance.Clicked_Button_Save_Description_Panel_Close();
     }
     private void Json_Data_Save_Area_Number_1()
     {
