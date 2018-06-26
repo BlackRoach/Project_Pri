@@ -21,6 +21,7 @@ public class Json_Game_Data
 
         save_Code = (power + con + hp) * 2 + 11000;
     }
+    public Json_Game_Data() { }
 }
 
 public class Json_Controller : MonoBehaviour
@@ -32,12 +33,12 @@ public class Json_Controller : MonoBehaviour
 
     private JsonData load_Data;
 
-    //private string json_File_1;
-
     private TextAsset json_File_1;
 
-    private List<Json_Game_Data> save_Data_01 = new List<Json_Game_Data>();
-    private List<Json_Game_Data> save_Data_02 = new List<Json_Game_Data>();
+    private Json_Game_Data save_Data_01 = new Json_Game_Data();
+    private Json_Game_Data save_Data_02 = new Json_Game_Data();
+
+    public string mobile_Path;
     private void Awake()
     {
         if (instance == null)
@@ -47,15 +48,15 @@ public class Json_Controller : MonoBehaviour
         else if (instance != this)
         {
             Destroy(this.gameObject);
-        }
-
-        Debug.Log(Application.persistentDataPath);
+        }    
+    }
+    private void Start()
+    {
+        mobile_Path = Application.persistentDataPath;
     }
     // Condition_Panel에 있는 능력치 초기화
     public void Defualt_Json_Data()
-    {
-
-        // json_File_1 = File.ReadAllText(Application.dataPath + "/JHM.Assets/Resources/JsonFile01.json");
+    {       
         json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Defualt_Ability");
 
         load_Data = JsonMapper.ToObject(json_File_1.text);
@@ -122,45 +123,42 @@ public class Json_Controller : MonoBehaviour
     }
     private void Json_Data_Save_Area_Number_1()
     {
-        save_Data_01.Add(new Json_Game_Data(int.Parse(text_Condition[0].text.ToString()),
+        save_Data_01 = new Json_Game_Data(int.Parse(text_Condition[0].text.ToString()),
             int.Parse(text_Condition[1].text.ToString()),
-            int.Parse(text_Condition[2].text.ToString())));
+            int.Parse(text_Condition[2].text.ToString()));
 
-        JsonData save_Json = JsonMapper.ToJson(save_Data_01);
+        string save_Json = JsonUtility.ToJson(save_Data_01);
 
-        File.WriteAllText(Application.dataPath + "/Resources/JHM.Resources.Json/save_01.json", save_Json.ToString());
-
-        Debug.Log(save_Json.ToString());
+        File.WriteAllText(mobile_Path + "/" + "save_01.json", save_Json);
+       
     }
     private void Json_Data_Save_Area_Number_2()
     {
-        save_Data_02.Add(new Json_Game_Data(int.Parse(text_Condition[0].text.ToString()),
+        save_Data_02 = new Json_Game_Data(int.Parse(text_Condition[0].text.ToString()),
             int.Parse(text_Condition[1].text.ToString()),
-            int.Parse(text_Condition[2].text.ToString())));
+            int.Parse(text_Condition[2].text.ToString()));
 
-        JsonData save_Json = JsonMapper.ToJson(save_Data_02);
+        string save_Json = JsonUtility.ToJson(save_Data_02);
 
-        File.WriteAllText(Application.dataPath + "/Resources/JHM.Resources.Json/save_02.json", save_Json.ToString());
+        File.WriteAllText(mobile_Path + "/" + "save_02.json", save_Json);
 
-        Debug.Log(save_Json.ToString());
     }
     // ---------------------------
     // DATA 불러오기
     public void Json_Data_Load_Area_Number_1()
     {
-        if (File.Exists(Application.dataPath + "/Resources/JHM.Resources.Json/save_01.json"))
+        if (File.Exists(mobile_Path + "/" + "save_01.json"))
         {
-            string load_Json = File.ReadAllText(Application.dataPath + "/Resources/JHM.Resources.Json/save_01.json");
+            string load_Json = File.ReadAllText(mobile_Path + "/" + "save_01.json");
 
-            JsonData load_One = JsonMapper.ToObject(load_Json);
+            Json_Game_Data load_Data = new Json_Game_Data();
+            JsonUtility.FromJsonOverwrite(load_Json, load_Data);
 
-            int temp = ((int.Parse(load_One[0]["power"]
-                .ToString()) + int.Parse(load_One[0]["con"].ToString()) + int.Parse(load_One[0]["hp"].ToString())) * 2)
-                + 11000;
-            if (int.Parse(load_One[0]["save_Code"].ToString()) == temp)
+            int temp = (load_Data.power + load_Data.con + load_Data.hp) * 2 + 11000;
+            if (load_Data.save_Code == temp)
             {
                 Game_Controller.instance.Clicked_Button_To_Condition_Panel_From_Load();
-                Load_Json_Parsing_Data(load_One);
+                Load_Json_Parsing_Data(load_Data);
             }
             else
             {
@@ -172,23 +170,21 @@ public class Json_Controller : MonoBehaviour
             Debug.Log("json data(save_1) 파일 찾지 못함!");
             Game_Controller.instance.Clicked_Button_Erorr_Panel();
         }
-
     }
     public void Json_Data_Load_Area_Number_2()
     {
-        if (File.Exists(Application.dataPath + "/Resources/JHM.Resources.Json/save_02.json"))
+        if (File.Exists(mobile_Path + "/" + "save_02.json"))
         {
-            string load_Json = File.ReadAllText(Application.dataPath + "/Resources/JHM.Resources.Json/save_02.json");
+            string load_Json = File.ReadAllText(mobile_Path + "/" + "save_02.json");
 
-            JsonData load_Two = JsonMapper.ToObject(load_Json);
+            Json_Game_Data load_Data = new Json_Game_Data();
+            JsonUtility.FromJsonOverwrite(load_Json, load_Data);
 
-            int temp = ((int.Parse(load_Two[0]["power"]
-                .ToString()) + int.Parse(load_Two[0]["con"].ToString()) + int.Parse(load_Two[0]["hp"].ToString())) * 2)
-                + 11000;
-            if (int.Parse(load_Two[0]["save_Code"].ToString()) == temp)
+            int temp = (load_Data.power + load_Data.con + load_Data.hp) * 2 + 11000;
+            if (load_Data.save_Code == temp)
             {
                 Game_Controller.instance.Clicked_Button_To_Condition_Panel_From_Load();
-                Load_Json_Parsing_Data(load_Two);
+                Load_Json_Parsing_Data(load_Data);
             }
             else
             {
@@ -201,11 +197,11 @@ public class Json_Controller : MonoBehaviour
             Game_Controller.instance.Clicked_Button_Erorr_Panel();
         }
     }
-    private void Load_Json_Parsing_Data(JsonData data)
+    private void Load_Json_Parsing_Data(Json_Game_Data data)
     {
-        text_Condition[0].text = data[0]["power"].ToString();
-        text_Condition[1].text = data[0]["con"].ToString();
-        text_Condition[2].text = data[0]["hp"].ToString();
+        text_Condition[0].text = data.power.ToString();
+        text_Condition[1].text = data.con.ToString();
+        text_Condition[2].text = data.hp.ToString();
     }
 
     // ------------------------------
