@@ -53,6 +53,8 @@ public class Json_Controller : MonoBehaviour
     private void Start()
     {
         mobile_Path = Application.persistentDataPath;
+
+        Debug.Log(mobile_Path);
     }
     // Condition_Panel에 있는 능력치 초기화
     public void Defualt_Json_Data()
