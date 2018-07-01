@@ -33,7 +33,7 @@ public class Json_Controller : MonoBehaviour
 
     private JsonData load_Data;
 
-    private TextAsset json_File_1;
+    private TextAsset json_File;
 
     private Json_Game_Data save_Data_01 = new Json_Game_Data();
     private Json_Game_Data save_Data_02 = new Json_Game_Data();
@@ -59,9 +59,9 @@ public class Json_Controller : MonoBehaviour
     // Condition_Panel에 있는 능력치 초기화
     public void Defualt_Json_Data()
     {       
-        json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Defualt_Ability");
+        json_File = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Defualt_Ability");
 
-        load_Data = JsonMapper.ToObject(json_File_1.text);
+        load_Data = JsonMapper.ToObject(json_File.text);
 
         Defualt_Json_Parsing_Data(load_Data);
     }

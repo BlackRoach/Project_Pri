@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 17338563}
   - component: {fileID: 17338562}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (15)
+  m_Name: Item_Slot_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 193485957}
   - component: {fileID: 193485956}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (18)
+  m_Name: Item_Slot_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 238465702}
   - component: {fileID: 238465701}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (20)
+  m_Name: Item_Slot_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 257890238}
   - component: {fileID: 257890237}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (19)
+  m_Name: Item_Slot_19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 393732450}
   - component: {fileID: 393732449}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (1)
+  m_Name: Item_Slot_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 537810536}
   - component: {fileID: 537810538}
   m_Layer: 5
-  m_Name: Items_Inventory
+  m_Name: Items_Inventory_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,7 +1150,7 @@ GameObject:
   - component: {fileID: 606142060}
   - component: {fileID: 606142059}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (7)
+  m_Name: Item_Slot_08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 676749610}
   - component: {fileID: 676749609}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (12)
+  m_Name: Item_Slot_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1286,7 +1286,7 @@ GameObject:
   - component: {fileID: 860617044}
   - component: {fileID: 860617043}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (11)
+  m_Name: Item_Slot_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1465,7 +1465,7 @@ GameObject:
   - component: {fileID: 1210949682}
   - component: {fileID: 1210949681}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (13)
+  m_Name: Item_Slot_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1533,7 +1533,7 @@ GameObject:
   - component: {fileID: 1221396307}
   - component: {fileID: 1221396306}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (8)
+  m_Name: Item_Slot_09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1675,7 +1675,7 @@ GameObject:
   - component: {fileID: 1248414166}
   - component: {fileID: 1248414165}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (2)
+  m_Name: Item_Slot_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1743,7 +1743,7 @@ GameObject:
   - component: {fileID: 1295350564}
   - component: {fileID: 1295350563}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (3)
+  m_Name: Item_Slot_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1811,7 +1811,7 @@ GameObject:
   - component: {fileID: 1300607953}
   - component: {fileID: 1300607952}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (17)
+  m_Name: Item_Slot_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1879,7 +1879,7 @@ GameObject:
   - component: {fileID: 1309829686}
   - component: {fileID: 1309829685}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (5)
+  m_Name: Item_Slot_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1970,7 +1970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 102.99988, y: -233}
+  m_AnchoredPosition: {x: 103, y: -233}
   m_SizeDelta: {x: 150, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1313243170
@@ -2169,7 +2169,7 @@ GameObject:
   - component: {fileID: 1366105255}
   - component: {fileID: 1366105254}
   m_Layer: 5
-  m_Name: Img_Inventory_01
+  m_Name: Item_Slot_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2237,7 +2237,7 @@ GameObject:
   - component: {fileID: 1401490274}
   - component: {fileID: 1401490273}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (9)
+  m_Name: Item_Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2375,7 +2375,7 @@ GameObject:
   - component: {fileID: 1440370727}
   - component: {fileID: 1440370726}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (6)
+  m_Name: Item_Slot_07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2432,6 +2432,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1440370724}
+--- !u!1 &1656523085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1656523086}
+  - component: {fileID: 1656523087}
+  m_Layer: 0
+  m_Name: Inventory_Json_Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1656523086
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1656523085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09264293, y: 1.2406068, z: 0.0669164}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1656523087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1656523085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16af1c237c37b846a88fbdf8e62efa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items_Info: []
 --- !u!1 &1733917028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,7 +2558,7 @@ GameObject:
   - component: {fileID: 1858405161}
   - component: {fileID: 1858405160}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (4)
+  m_Name: Item_Slot_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2585,7 +2626,7 @@ GameObject:
   - component: {fileID: 1979769195}
   - component: {fileID: 1979769194}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (10)
+  m_Name: Item_Slot_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2653,7 +2694,7 @@ GameObject:
   - component: {fileID: 1981657978}
   - component: {fileID: 1981657977}
   m_Layer: 5
-  m_Name: Img_Inventory_01 (16)
+  m_Name: Item_Slot_16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
