@@ -24,7 +24,8 @@ public class Items_Info
     public int equip_Type;
 
     public string slug;
-    
+
+    public Sprite item_Img;
 
     public Items_Info(int _id, string _name,string _description, int _value_Type, int _value, int _price, int _use_Type,
         int _equip_Type, string _slug)
@@ -38,5 +39,9 @@ public class Items_Info
         use_Type = _use_Type;
         equip_Type = _equip_Type;
         slug = _slug;
+    }
+    public Items_Info()
+    {
+        id = -1;
     }
 } // class

@@ -6,7 +6,7 @@ using System.IO;
 
 public class Item_Json_DataBase : MonoBehaviour {
 
-    public List<Items_Info> items_Info = new List<Items_Info>();
+    public List<Items_Info> items_Base = new List<Items_Info>();
 
     private string mobile_Path;
 
@@ -29,14 +29,41 @@ public class Item_Json_DataBase : MonoBehaviour {
 
         for (int i = 0; i < load_Data.Count; i++)
         {
-            items_Info.Add(new Items_Info((int)load_Data[i]["ID"],load_Data[i]["ITEM_NAME"].ToString(),load_Data[i]["ITEM_DESCRIPTION"].ToString(),
+            items_Base.Add(new Items_Info((int)load_Data[i]["ID"],load_Data[i]["ITEM_NAME"].ToString(),load_Data[i]["ITEM_DESCRIPTION"].ToString(),
                 (int)load_Data[i]["ITEM_VALUETYPE"],(int)load_Data[i]["ITEM_VALUE"],(int)load_Data[i]["ITEM_PRICE"],
                 (int)load_Data[i]["ITEM_USETYPE"],(int)load_Data[i]["ITEM_EQUIPTYPE"],load_Data[i]["ITEM_SLUG"].ToString()));
+
+            switch (items_Base[i].id)
+            {
+                case 30001:
+                    {
+                        items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                    }break;
+                case 30002:
+                    {
+                        items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                    }
+                    break;
+                case 30003:
+                    {
+                        items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                    }
+                    break;
+            }
         }
     }
 
-    
-
+    public Items_Info Search_For_Item(int _id)
+    {
+        for(int i = 0; i< items_Base.Count; i++)
+        {
+            if(items_Base[i].id == _id)
+            {
+                return items_Base[i];
+            }
+        }
+        return null;
+    }
 
 
 
