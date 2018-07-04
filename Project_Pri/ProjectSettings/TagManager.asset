@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Monster
-  - Teleport
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -42,25 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Ground
-    uniqueID: 1053869473
-    locked: 0
-  - name: Object
-    uniqueID: 548472591
-    locked: 0
-  - name: MoveableCharacter
-    uniqueID: 2241579105
-    locked: 0
-  - name: Battle_Monster
-    uniqueID: 673009037
-    locked: 0
-  - name: Battle_Char
-    uniqueID: 3581215643
-    locked: 0
-  - name: Battle_Effect
-    uniqueID: 1649315277
-    locked: 0
-  - name: UI
-    uniqueID: 2018401487
     locked: 0

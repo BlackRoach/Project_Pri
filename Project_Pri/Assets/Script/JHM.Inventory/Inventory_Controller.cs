@@ -22,7 +22,7 @@ public class Inventory_Controller : MonoBehaviour {
     private void Awake()
     {
         inventory_Panel = GameObject.Find("Inventory_Panel");
-        inventory_Slot_Panel = inventory_Panel.transform.FindChild("Slot_Panel").gameObject;
+        inventory_Slot_Panel = inventory_Panel.transform.Find("Slot_Panel").gameObject;
         item_DataBase = GameObject.Find("Inventory_Json_Data").GetComponent<Item_Json_DataBase>();
     }
 
