@@ -28,7 +28,10 @@ public class InGamemanager : MonoBehaviour
     [SerializeField] private PlayerDataContainer playerDataContainer;
     [SerializeField] private GameObject battleWindow;
     [SerializeField] private GameObject teleportWindow;
+    [SerializeField] private GameObject questWindow;
+  
     [SerializeField] private GameObject infoButtons;
+    [SerializeField] private GameObject questButton;
     [SerializeField] private GameObject joyController;
     [SerializeField] private GameObject worldObjects;
 
@@ -36,11 +39,15 @@ public class InGamemanager : MonoBehaviour
 
     [SerializeField] private Camera WorldCamera;
 
-    [SerializeField] private Text nameText;
-    [SerializeField] private Text scoreText;
+    private QuestManager questManager;
 
-    [SerializeField] public Transform[] trans_list;
-    [SerializeField] public int[] position_money;
+    public Text nameText;
+    public Text scoreText;
+
+ 
+
+    public Transform[] trans_list;
+    public int[] position_money;
 
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
@@ -48,7 +55,7 @@ public class InGamemanager : MonoBehaviour
 
     void Start()
     {
-
+        questManager = QuestManager.Instance;
         WorldCamera.gameObject.SetActive(true);
         worldObjects.SetActive(true);
         worldUI.SetActive(true);
@@ -68,6 +75,9 @@ public class InGamemanager : MonoBehaviour
         SceneManager.LoadScene("BattleScene");
    
     }
+
+
+
    
     public void OpenBattleWindow()
     {
@@ -79,6 +89,11 @@ public class InGamemanager : MonoBehaviour
         battleWindow.SetActive(false);
     }
 
+    
+
+
+
+
     public void OpenTeleportWindow()
     {
         teleportWindow.SetActive(true);
@@ -87,6 +102,38 @@ public class InGamemanager : MonoBehaviour
     {
         teleportWindow.SetActive(false);
     }
+
+
+
+
+
+
+    public void AbleQuestButton()
+    {
+        questButton.SetActive(true);
+    }
+    public void EnableQuestButton()
+    {
+        questButton.SetActive(false);
+    }
+    public void OpenQuestWindow()
+    {
+        questWindow.SetActive(true);
+    }
+    public void CloseQuestWindow()
+    {
+        questWindow.SetActive(false);
+        questManager.InitText();
+    }
+
+
+
+
+
+
+
+
+
     public void AbleInfoButton()
     {
         infoButtons.SetActive(true);

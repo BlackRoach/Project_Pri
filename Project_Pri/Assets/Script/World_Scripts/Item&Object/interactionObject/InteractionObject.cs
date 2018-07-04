@@ -14,10 +14,12 @@ public class InteractionObject : MonoBehaviour, IInteractive
             playerInteraction = col.gameObject.GetComponent<PlayerInteraction>();
 
             playerInteraction._Interaction_Object = this;
-            if(this.GetComponent<Collider2D>().CompareTag("Monster"))
+            if (this.GetComponent<Collider2D>().CompareTag("Monster"))
                 InGamemanager.Instance.AbleInfoButton();
-            else if (this.GetComponent<Collider2D>().CompareTag("Teleport"))
+            if (this.GetComponent<Collider2D>().CompareTag("Teleport"))
                 InGamemanager.Instance.OpenTeleportWindow();
+            if (this.GetComponent<Collider2D>().CompareTag("QuestPanel"))
+                InGamemanager.Instance.AbleQuestButton();
         }
     }
 

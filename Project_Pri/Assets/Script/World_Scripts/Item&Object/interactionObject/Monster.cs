@@ -24,14 +24,10 @@ public class Monster : InteractionObject, IInteractive
     void Update () {
 		
 	}
-    private void OpenBattleInfoWindow()
-    {
-        inGameManager.OpenBattleWindow();
-    }
-
+ 
     void IInteractive.Interaction()
     {
-        OpenBattleInfoWindow();
+        inGameManager.OpenBattleWindow();
     }
     
 }
