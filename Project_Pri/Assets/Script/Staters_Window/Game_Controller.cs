@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class Game_Controller : MonoBehaviour {
+public class Game_Controller : MonoBehaviour
+{
 
     public static Game_Controller instance = null;
 
@@ -13,34 +14,32 @@ public class Game_Controller : MonoBehaviour {
     public GameObject save_List_Panel;
     public GameObject load_List_Panel;
     public GameObject save_Description;
-
+    public GameObject error_Panel;
     public Text text_Save_Location_Number;
 
     private int count_One;
-    
+
+    private bool load_Exitway;
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(this.gameObject);
         }
     }
     private void Start()
     {
-        origin_Panel.SetActive(true);
-        condition_Panel.SetActive(false);
-        save_List_Panel.SetActive(false);
-        save_Description.SetActive(false);
-        load_List_Panel.SetActive(false);
+        Clicked_Button_Origin_Panel();
 
         // -------------------------
 
-        count_One = 1; 
+        count_One = 1;
+        load_Exitway = false;
     }
     // Condition_Panel에 있는 능력치 조절
     public int Add_One(int temp)
@@ -56,8 +55,15 @@ public class Game_Controller : MonoBehaviour {
         return temp;
     }
     // ---------------
-
-    
+    public void Clicked_Button_Origin_Panel()
+    {
+        origin_Panel.SetActive(true);
+        condition_Panel.SetActive(false);
+        save_List_Panel.SetActive(false);
+        save_Description.SetActive(false);
+        load_List_Panel.SetActive(false);
+        error_Panel.SetActive(false);
+    }
     public void Clicked_Button_Condition_Panel()
     {
         origin_Panel.SetActive(false);
@@ -67,17 +73,40 @@ public class Game_Controller : MonoBehaviour {
 
         Json_Controller.instance.Defualt_Json_Data();
     }
-    public void Clicked_Button_Load_List_Panel()
+    public void Clicked_Button_To_Condition_Panel_From_Load()
     {
+        origin_Panel.SetActive(false);
+        condition_Panel.SetActive(true);
+        load_List_Panel.SetActive(false);
+        save_List_Panel.SetActive(false);
+        save_Description.SetActive(false);
+        error_Panel.SetActive(false);
+    }
+    public void Clicked_Button_Exit_From_Load_Panel()
+    {
+        if(load_Exitway)
+        {
+            Clicked_Button_Origin_Panel();
+        } else
+        {
+            Clicked_Button_To_Condition_Panel_From_Load();
+        }
+    }
+
+    public void Clicked_Button_Load_List_Panel(bool way)
+    {
+        load_Exitway = way;
         load_List_Panel.SetActive(true);
     }
-    
-    public void Clicked_Button_Save_List_Panel()
+    public void Clicked_Button_Save_List_Panel_Open()
     {
         save_List_Panel.SetActive(true);
     }
-
-    public void Clicked_Button_Save_Description_Panel(int numberOfLocation)
+    public void Clicked_Button_Save_List_Panel_Close()
+    {
+        save_List_Panel.SetActive(false);
+    }
+    public void Clicked_Button_Save_Description_Panel_Open(int numberOfLocation)
     {
         save_List_Panel.SetActive(false);
         save_Description.SetActive(true);
@@ -86,14 +115,24 @@ public class Game_Controller : MonoBehaviour {
 
         text_Save_Location_Number.text = numberOfLocation.ToString();
     }
+    public void Clicked_Button_Save_Description_Panel_Close()
+    {
+        save_Description.SetActive(false);
+    }
+    public void Clicked_Button_Erorr_Panel()
+    {
+        load_List_Panel.SetActive(false);
+        error_Panel.SetActive(true);
+    }
 
-
-
-
+    public void Clicked_Button_Exit_From_Erorr_Panel()
+    {
+        Debug.Log("게임 종료 작동 했음");
+        Application.Quit();
+    }
 
 
 } // class
-
 
 
 
