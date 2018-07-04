@@ -38,15 +38,18 @@ public class Item_Json_DataBase : MonoBehaviour {
                 case 30001:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = false;
                     }break;
                 case 30002:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = true;
                     }
                     break;
                 case 30003:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = false;
                     }
                     break;
             }

@@ -25,7 +25,9 @@ public class Items_Info
 
     public string slug;
 
+    // -----------------------------
     public Sprite item_Img;
+    public bool stackable;
 
     public Items_Info(int _id, string _name,string _description, int _value_Type, int _value, int _price, int _use_Type,
         int _equip_Type, string _slug)

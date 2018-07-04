@@ -19,6 +19,8 @@ public class Inventory_Controller : MonoBehaviour {
 
     private int slot_Count;
 
+    private bool is_Stackable;
+    
     private void Awake()
     {
         inventory_Panel = GameObject.Find("Inventory_Panel");
@@ -28,6 +30,7 @@ public class Inventory_Controller : MonoBehaviour {
 
     private void Start()
     {
+        is_Stackable = false;
         slot_Count = 20;
         
         for(int i = 0; i<slot_Count; i++)
@@ -42,21 +45,58 @@ public class Inventory_Controller : MonoBehaviour {
     {
         Items_Info add_Item = item_DataBase.Search_For_Item(_id);
 
-        for(int i = 0; i < item.Count; i++)
+        if (add_Item.stackable)
         {
-            if(item[i].id == -1)
+            if (!is_Stackable)
             {
-                item[i] = add_Item;
-                GameObject item_Obj = Instantiate(item_Prefab);
-                item_Obj.transform.SetParent(slot[i].transform);
-                item_Obj.transform.localPosition = Vector2.zero;
-                item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
-                item_Obj.name = add_Item.slug;
-                break;
+                is_Stackable = true;
+                // -----------------
+                for (int i = 0; i < item.Count; i++)
+                {
+                    if (item[i].id == -1)
+                    {
+                        item[i] = add_Item;
+                        GameObject item_Obj = Instantiate(item_Prefab);
+                        item_Obj.transform.SetParent(slot[i].transform);
+                        item_Obj.transform.localPosition = Vector2.zero;
+                        item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
+                        item_Obj.name = add_Item.slug;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for(int i = 0; i < item.Count; i++)
+                {
+                    if(item[i].id == 30002)
+                    {
+                        GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                        potion.GetComponent<Item>().amount++;
+                        potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                    }
+                }
             }
         }
-
+        else
+        {
+            for (int i = 0; i < item.Count; i++)
+            {
+                if (item[i].id == -1)
+                {
+                    item[i] = add_Item;
+                    GameObject item_Obj = Instantiate(item_Prefab);
+                    item_Obj.transform.SetParent(slot[i].transform);
+                    item_Obj.transform.localPosition = Vector2.zero;
+                    item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
+                    item_Obj.name = add_Item.slug;
+                    break;
+                }
+            }
+        }
     }
+
+    
 } // class
 
 
