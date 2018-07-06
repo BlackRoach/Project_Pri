@@ -37,8 +37,10 @@ public class Inventory_Controller : MonoBehaviour {
         {
             item.Add(new Items_Info());
             slot.Add(Instantiate(slot_Prefab));
+            slot[i].GetComponent<Slot>().slot_Id = i;
             slot[i].transform.SetParent(inventory_Slot_Panel.transform);
         }
+        Default_Item_Add();
     }
 
     public void Add_Item(int _id)
@@ -57,6 +59,8 @@ public class Inventory_Controller : MonoBehaviour {
                     {
                         item[i] = add_Item;
                         GameObject item_Obj = Instantiate(item_Prefab);
+                        item_Obj.GetComponent<Item>().item_Ability = add_Item;
+                        item_Obj.GetComponent<Item>().slot_Location = i;
                         item_Obj.transform.SetParent(slot[i].transform);
                         item_Obj.transform.localPosition = Vector2.zero;
                         item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
@@ -72,7 +76,7 @@ public class Inventory_Controller : MonoBehaviour {
                     if(item[i].id == 30002)
                     {
                         GameObject potion = slot[i].transform.GetChild(0).gameObject;
-                        potion.GetComponent<Item>().amount++;
+                        potion.GetComponent<Item>().amount += 2;
                         potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
                     }
                 }
@@ -86,6 +90,8 @@ public class Inventory_Controller : MonoBehaviour {
                 {
                     item[i] = add_Item;
                     GameObject item_Obj = Instantiate(item_Prefab);
+                    item_Obj.GetComponent<Item>().item_Ability = add_Item;
+                    item_Obj.GetComponent<Item>().slot_Location = i;
                     item_Obj.transform.SetParent(slot[i].transform);
                     item_Obj.transform.localPosition = Vector2.zero;
                     item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
@@ -96,6 +102,15 @@ public class Inventory_Controller : MonoBehaviour {
         }
     }
 
+    private void Default_Item_Add()
+    {
+        Add_Item(30001);
+        for (int i = 0; i < 3; i++)
+        {
+            Add_Item(30002);
+        }
+        
+    }
     
 } // class
 
