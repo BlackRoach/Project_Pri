@@ -6,6 +6,8 @@ using System.IO;
 
 public class Item_Json_DataBase : MonoBehaviour {
 
+    public static Item_Json_DataBase instance;
+
     public List<Items_Info> items_Base = new List<Items_Info>();
 
     private string mobile_Path;
@@ -13,6 +15,21 @@ public class Item_Json_DataBase : MonoBehaviour {
     private TextAsset json_File;
 
     private JsonData load_Data;
+
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.transform.gameObject);
+        }
+        
+    }
 
     private void Start()
     {

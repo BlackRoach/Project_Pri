@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory_Controller : MonoBehaviour {
 
+    public static Inventory_Controller instance;
 
     private GameObject inventory_Panel;
     private GameObject inventory_Slot_Panel;
@@ -23,6 +24,16 @@ public class Inventory_Controller : MonoBehaviour {
     
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.transform.gameObject);
+        }
+        // ---------------
         inventory_Panel = GameObject.Find("Inventory_Panel");
         inventory_Slot_Panel = inventory_Panel.transform.Find("Slot_Panel").gameObject;
         item_DataBase = GameObject.Find("Inventory_Json_Data").GetComponent<Item_Json_DataBase>();
@@ -108,9 +119,9 @@ public class Inventory_Controller : MonoBehaviour {
         for (int i = 0; i < 3; i++)
         {
             Add_Item(30002);
-        }
-        
+        }      
     }
+    
     
 } // class
 
