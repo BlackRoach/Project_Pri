@@ -17,6 +17,7 @@ public class Level_Manager : MonoBehaviour {
     {
         SceneManager.LoadScene("Game_Inventory");
         Inventory_Canvas.instance.Game_Object_Set_On();
+        Inventory_Controller.instance.Add_Item(30001);
     }
 
 
