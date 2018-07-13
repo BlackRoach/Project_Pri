@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory_Controller : MonoBehaviour {
 
-    public static Inventory_Controller instance;
+    public static Inventory_Controller instance = null;
 
     private GameObject inventory_Panel;
     private GameObject inventory_Slot_Panel;
@@ -24,14 +24,13 @@ public class Inventory_Controller : MonoBehaviour {
     
     private void Awake()
     {
-        if (instance != null)
+        if(instance != null)
         {
             Destroy(this.gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.transform.gameObject);
         }
         // ---------------
         inventory_Panel = GameObject.Find("Inventory_Panel");

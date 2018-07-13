@@ -6,7 +6,7 @@ using System.IO;
 
 public class Item_Json_DataBase : MonoBehaviour {
 
-    public static Item_Json_DataBase instance;
+    public static Item_Json_DataBase instance = null;
 
     public List<Items_Info> items_Base = new List<Items_Info>();
 
@@ -19,14 +19,13 @@ public class Item_Json_DataBase : MonoBehaviour {
 
     private void Awake()
     {
-        if (instance != null)
+        if(instance != null)
         {
             Destroy(this.gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.transform.gameObject);
         }
         
     }
