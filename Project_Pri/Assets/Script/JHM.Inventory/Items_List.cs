@@ -11,6 +11,7 @@ public class Items_List {
 
     public bool stackable;
 
+    
     public Items_List(int _id,int _amount,bool _stackable)
     {
         id = _id;

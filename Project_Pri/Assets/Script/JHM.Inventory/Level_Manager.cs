@@ -9,14 +9,18 @@ public class Level_Manager : MonoBehaviour {
 
     public void Go_To_Game_Origin_Scene()
     {
-        SceneManager.LoadScene("Game_Origin");
- 
+        Inventory_Controller.instance.If_Exit_Inventory_Scene();
+        StartCoroutine(Load_To_Game_Origin_Scene());
     }
-
+    IEnumerator Load_To_Game_Origin_Scene()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Game_Origin");
+    }
+    
     public void Go_To_Inventory_Scene()
     {
         SceneManager.LoadScene("Game_Inventory");
-        Inventory_Controller.instance.Add_Item(30001);
     }
 
 

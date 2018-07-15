@@ -50,9 +50,11 @@ public class Inventory_Controller : MonoBehaviour {
             slot[i].GetComponent<Slot>().slot_Id = i;
             slot[i].transform.SetParent(inventory_Slot_Panel.transform);
         }
-        Default_Item_Add();
-    }
 
+        StartCoroutine(Load_Item());
+        
+    }
+    // 아이템 추가 메소드
     public void Add_Item(int _id)
     {
         Items_Info add_Item = item_DataBase.Search_For_Item(_id);
@@ -111,17 +113,53 @@ public class Inventory_Controller : MonoBehaviour {
             }
         }
     }
-
-    private void Default_Item_Add()
+    // 인벤토리 들어오때 Json Load
+    IEnumerator Load_Item()
     {
-        Add_Item(30001);
-        for (int i = 0; i < 3; i++)
+        Inventory_Add_Item_Json.instance.LOAD_NEW_DATA_JSON_Inventory();
+
+        yield return new WaitForSeconds(0f);
+        for (int i = 0; i < item.Count; i++)
         {
-            Add_Item(30002);
-        }      
+            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30001)
+            {
+                Add_Item(30001);
+            }
+            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30002)
+            {
+                for (int j = 1; j <= Inventory_Add_Item_Json.instance.load_Item_Data[i].amount; j += 2)
+                {
+                    Add_Item(30002);
+                }
+            }
+            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30003)
+            {
+                Add_Item(30003);
+            }
+        }
     }
     
-    
+    // 인벤토리 나갈때 Json Save 
+    public void If_Exit_Inventory_Scene()
+    {
+        for(int i = 0; i < item.Count; i++)
+        {
+            if(item[i].id == 30002)
+            {
+                Inventory_Add_Item_Json.instance.inventory_Item_List[i].stackable = true;
+                GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                Inventory_Add_Item_Json.instance.inventory_Item_List[i].amount = potion.GetComponent<Item>().amount;
+            }
+            else
+            {
+                Inventory_Add_Item_Json.instance.inventory_Item_List[i].stackable = false;
+                Inventory_Add_Item_Json.instance.inventory_Item_List[i].amount = 1;
+            }
+            Inventory_Add_Item_Json.instance.inventory_Item_List[i].id = item[i].id;
+        }
+
+        Inventory_Add_Item_Json.instance.SAVE_NEW_DATA_JSON_Inventory();
+    }
 } // class
 
 
