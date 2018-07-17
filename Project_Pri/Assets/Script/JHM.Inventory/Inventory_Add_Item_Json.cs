@@ -96,6 +96,7 @@ public class Inventory_Add_Item_Json : MonoBehaviour {
         inventory_Item_List[0].id = 30001;
         inventory_Item_List[1].id = 30002;
         inventory_Item_List[1].stackable = true;
+        inventory_Item_List[1].amount += 4;
 
         SAVE_NEW_DATA_JSON_Inventory();
     }

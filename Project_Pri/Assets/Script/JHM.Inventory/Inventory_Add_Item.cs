@@ -16,6 +16,7 @@ public class Inventory_Add_Item : MonoBehaviour {
 
     public void Add_Item_Value(int _id)
     {
+        Check_For_Loop_If_Index_Is_Null();
         if (current_Index < 20)
         {
             if (_id == 30002)
@@ -39,6 +40,17 @@ public class Inventory_Add_Item : MonoBehaviour {
         Inventory_Add_Item_Json.instance.SAVE_NEW_DATA_JSON_Inventory();
     }
 
+    private void Check_For_Loop_If_Index_Is_Null()
+    {
+        for(int i = 0; i < Inventory_Add_Item_Json.instance.inventory_Item_List.Length; i++)
+        {
+            if(Inventory_Add_Item_Json.instance.inventory_Item_List[i].id == -1)
+            {
+                current_Index = i;
+                break;
+            }
+        }
+    }
 
 } // class
 

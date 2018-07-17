@@ -21,7 +21,9 @@ public class Inventory_Controller : MonoBehaviour {
     private int slot_Count;
 
     private bool is_Stackable;
-    
+
+    public int current_Index;
+
     private void Awake()
     {
         if(instance != null)
@@ -40,6 +42,7 @@ public class Inventory_Controller : MonoBehaviour {
 
     private void Start()
     {
+        current_Index = 0;
         is_Stackable = false;
         slot_Count = 20;
         
@@ -54,38 +57,47 @@ public class Inventory_Controller : MonoBehaviour {
         StartCoroutine(Load_Item());
         
     }
+    public void Select_Buy_Item(int _id)
+    {   
+        for(int i = 0; i < item.Count; i++)
+        {
+            if(item[i].id == -1)
+            {
+                current_Index = i;
+                Add_Item(_id);
+                break;
+            }
+        }
+    }
     // 아이템 추가 메소드
     public void Add_Item(int _id)
     {
         Items_Info add_Item = item_DataBase.Search_For_Item(_id);
-
+        
         if (add_Item.stackable)
         {
             if (!is_Stackable)
             {
                 is_Stackable = true;
                 // -----------------
-                for (int i = 0; i < item.Count; i++)
+                if (item[current_Index].id == -1)
                 {
-                    if (item[i].id == -1)
-                    {
-                        item[i] = add_Item;
-                        GameObject item_Obj = Instantiate(item_Prefab);
-                        item_Obj.GetComponent<Item>().item_Ability = add_Item;
-                        item_Obj.GetComponent<Item>().slot_Location = i;
-                        item_Obj.transform.SetParent(slot[i].transform);
-                        item_Obj.transform.localPosition = Vector2.zero;
-                        item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
-                        item_Obj.name = add_Item.slug;
-                        break;
-                    }
+                    item[current_Index] = add_Item;
+                    GameObject item_Obj = Instantiate(item_Prefab);
+                    item_Obj.GetComponent<Item>().item_Ability = add_Item;
+                    item_Obj.GetComponent<Item>().slot_Location = current_Index;
+                    item_Obj.transform.SetParent(slot[current_Index].transform);
+                    item_Obj.transform.localPosition = Vector2.zero;
+                    item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
+                    item_Obj.name = add_Item.slug;
+                    current_Index++;
                 }
             }
             else
             {
-                for(int i = 0; i < item.Count; i++)
+                for (int i = 0; i < item.Count; i++)
                 {
-                    if(item[i].id == 30002)
+                    if (item[i].id == 30002)
                     {
                         GameObject potion = slot[i].transform.GetChild(0).gameObject;
                         potion.GetComponent<Item>().amount += 2;
@@ -96,22 +108,20 @@ public class Inventory_Controller : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < item.Count; i++)
+            if (item[current_Index].id == -1)
             {
-                if (item[i].id == -1)
-                {
-                    item[i] = add_Item;
-                    GameObject item_Obj = Instantiate(item_Prefab);
-                    item_Obj.GetComponent<Item>().item_Ability = add_Item;
-                    item_Obj.GetComponent<Item>().slot_Location = i;
-                    item_Obj.transform.SetParent(slot[i].transform);
-                    item_Obj.transform.localPosition = Vector2.zero;
-                    item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
-                    item_Obj.name = add_Item.slug;
-                    break;
-                }
+                item[current_Index] = add_Item;
+                GameObject item_Obj = Instantiate(item_Prefab);
+                item_Obj.GetComponent<Item>().item_Ability = add_Item;
+                item_Obj.GetComponent<Item>().slot_Location = current_Index;
+                item_Obj.transform.SetParent(slot[current_Index].transform);
+                item_Obj.transform.localPosition = Vector2.zero;
+                item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
+                item_Obj.name = add_Item.slug;
+                current_Index++;
             }
         }
+        
     }
     // 인벤토리 들어오때 Json Load
     IEnumerator Load_Item()
@@ -121,20 +131,27 @@ public class Inventory_Controller : MonoBehaviour {
         yield return new WaitForSeconds(0f);
         for (int i = 0; i < item.Count; i++)
         {
-            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30001)
+            if (current_Index < 20)
             {
-                Add_Item(30001);
-            }
-            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30002)
-            {
-                for (int j = 1; j <= Inventory_Add_Item_Json.instance.load_Item_Data[i].amount; j += 2)
+                if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30001)
                 {
-                    Add_Item(30002);
+                    Add_Item(30001);
                 }
-            }
-            if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30003)
-            {
-                Add_Item(30003);
+                else if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30002)
+                {
+                    for (int j = 1; j <= Inventory_Add_Item_Json.instance.load_Item_Data[i].amount; j += 2)
+                    {
+                        Add_Item(30002);
+                    }
+                }
+                else if (Inventory_Add_Item_Json.instance.load_Item_Data[i].id == 30003)
+                {
+                    Add_Item(30003);
+                }
+                else
+                {
+                    current_Index++;
+                }
             }
         }
     }

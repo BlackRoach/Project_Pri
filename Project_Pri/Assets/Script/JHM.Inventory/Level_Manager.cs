@@ -14,7 +14,7 @@ public class Level_Manager : MonoBehaviour {
     }
     IEnumerator Load_To_Game_Origin_Scene()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("Game_Origin");
     }
     
