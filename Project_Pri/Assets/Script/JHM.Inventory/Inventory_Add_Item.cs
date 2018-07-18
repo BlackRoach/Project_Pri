@@ -11,9 +11,12 @@ public class Inventory_Add_Item : MonoBehaviour {
 
     private void Start()
     {
+        // 2부터 시작 이유는 맨처음 초기값있기때문에 헬멧 1 포션 5개
         current_Index = 2;
     }
-
+    // 아이템 추가 할수있는 함수
+    // 규태님 하고 희찬님 씬에서 아이템 구매시 이 함수 사용해주세요~~!!
+    // param에 30001은 헬멧 30002은 포션 30003은 방패 입니다  
     public void Add_Item_Value(int _id)
     {
         Check_For_Loop_If_Index_Is_Null();
@@ -39,7 +42,7 @@ public class Inventory_Add_Item : MonoBehaviour {
 
         Inventory_Add_Item_Json.instance.SAVE_NEW_DATA_JSON_Inventory();
     }
-
+    // 아이템 추가 시 제일 앞쪽 빈자리 찾아서 추가 할수있는 기능 
     private void Check_For_Loop_If_Index_Is_Null()
     {
         for(int i = 0; i < Inventory_Add_Item_Json.instance.inventory_Item_List.Length; i++)

@@ -45,7 +45,7 @@ public class Inventory_Controller : MonoBehaviour {
         current_Index = 0;
         is_Stackable = false;
         slot_Count = 20;
-        
+        // 슬롯 20개 만들기
         for(int i = 0; i<slot_Count; i++)
         {
             item.Add(new Items_Info());
@@ -57,6 +57,7 @@ public class Inventory_Controller : MonoBehaviour {
         StartCoroutine(Load_Item());
         
     }
+    // 인벤토리씬에서만 아이템 추가 기능 함수
     public void Select_Buy_Item(int _id)
     {   
         for(int i = 0; i < item.Count; i++)
