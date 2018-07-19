@@ -24,21 +24,29 @@ public class Shop : MonoBehaviour {
 
     private Item_Json_DataBase item_Database;
 
-    private static int money = 2000; // Static 변수는 씬이 바껴도 값이 유지된다.
+    private static int money = 200000; // Static 변수는 씬이 바껴도 값이 유지된다.
     private static int diamond = 0; 
     public Text moneyTxt;
     public Text diamondTxt;
     public GameObject DialoguePanelAskIfBuy;
     public GameObject DialoguePanelInvenFull;
     private int price = 0;
+    private int itemID = 0;
 
     private Items_Info itemInfo;
+
+    // 인벤토리연결
+    // - Hierarchy안에 Inventory_Add_Item_Json 스크립트 컴포넌트를 가진 오브젝트가 한개 꼭 있어야 한다.
+    // - Hierarchy안에 Inventory_Manager 스크립트 컴포넌트를 가진 오브젝트가 한개 꼭 있어야 한다. 
+    public Inventory_Add_Item inventoryAddItem;
+    
 
     // Script Excution Order 사용함 
     // Edit - Project Settings -Script Excution Order
 
     // Use this for initialization
     void Start () {
+
         Scrollbar1.size = 0.05f;
         Scrollbar2.size = 0.05f;
 
@@ -125,33 +133,44 @@ public class Shop : MonoBehaviour {
         slot.infoTxt.text = "다이아 1개 삭감";
         slot.itemImage.color = new Color(0, 0, 0, 0);
     }
-
+    
     public void BuyItem(int _id)
     {
         itemInfo = item_Database.Search_For_Item(_id);
         int price = itemInfo.price;
-        Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
+        //Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
+        Debug.Log("구매전 인벤토리에 들어있는 아이템 수 : " + inventoryAddItem.current_Index);
         if (money < price)
         {
             Debug.Log("돈이 부족합니다.");
             return;
         }
-        if(DataTunnel.ItemInfos.Count >= 3)
+        //if(DataTunnel.ItemInfos.Count >= 3)
+        //{
+        //    DialoguePanelInvenFull.SetActive(true);
+        //    return;
+        //}
+        if(inventoryAddItem.current_Index >= 20)
         {
             DialoguePanelInvenFull.SetActive(true);
             return;
         }
         this.price = price;
+        this.itemID = _id;
         DialoguePanelAskIfBuy.SetActive(true);
+
+        
     }
+
 
     public void Yes()
     {
         money -= price;
         moneyTxt.text = "보유골드 : " + money.ToString();
         DialoguePanelAskIfBuy.SetActive(false);
-        DataTunnel.AddItem(itemInfo); // 인벤토리에 넣기위해 장바구니에 아이템을 넣는다.
+        //DataTunnel.AddItem(itemInfo); // 인벤토리에 넣기위해 장바구니에 아이템을 넣는다.
         price = 0;
+        inventoryAddItem.Add_Item_Value(itemID);
     }
 
     public void No()
@@ -181,6 +200,12 @@ public class Shop : MonoBehaviour {
     public void SceneChange()
     {
         SceneManager.LoadScene("Shop_Result");
+        //SceneManager.LoadScene("Game_Inventory");
+    }
+
+    public void SceneChange(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
     public void ActivateShop1()
