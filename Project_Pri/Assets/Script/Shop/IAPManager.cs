@@ -17,7 +17,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     // Apple App Store-specific product identifier for the subscription product.
     //private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
-    // 애플 플레이스토어 아이템 고유 식별자 코드
+    // 애플스토어 아이템 고유 식별자 코드
     private static string kProductNameAppleConsumable = "apple.consumable";
     private static string kProductNameAppleNonConsumable = "apple.nonconsumable";
     private static string kProductNameAppleSubscription = "apple.subscription";
