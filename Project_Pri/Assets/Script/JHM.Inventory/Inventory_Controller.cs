@@ -9,21 +9,33 @@ public class Inventory_Controller : MonoBehaviour {
 
     private GameObject inventory_Panel;
     private GameObject inventory_Slot_Panel;
+    private GameObject character_Item_Panel;
 
     private Item_Json_DataBase item_DataBase;
 
     public GameObject slot_Prefab;
     public GameObject item_Prefab;
 
+    public GameObject slot_Type_1;
+    public GameObject slot_Type_2;
+    public GameObject item_Get_On_Info_Panel;
+    public Text item_Description;
+    // 인벤토리 아이템
     public List<Items_Info> item = new List<Items_Info>();
     public List<GameObject> slot = new List<GameObject>();
+    // 플레이어 착용중인 아이템 
+    public List<GameObject> current_slot = new List<GameObject>();
+    public List<Items_Info> current_item = new List<Items_Info>();
+
+    public Items_Info current_Select_Item = new Items_Info();
 
     private int slot_Count;
 
     private bool is_Stackable;
-
+    
     public int current_Index;
 
+    
     private void Awake()
     {
         if(instance != null)
@@ -38,14 +50,16 @@ public class Inventory_Controller : MonoBehaviour {
         inventory_Panel = GameObject.Find("Inventory_Panel");
         inventory_Slot_Panel = inventory_Panel.transform.Find("Slot_Panel").gameObject;
         item_DataBase = GameObject.Find("Inventory_Json_Data").GetComponent<Item_Json_DataBase>();
+        character_Item_Panel = GameObject.Find("Character_Item_Panel");
     }
 
     private void Start()
     {
+        item_Get_On_Info_Panel.SetActive(false);
         current_Index = 0;
         is_Stackable = false;
         slot_Count = 20;
-        // 슬롯 20개 만들기
+        // 인벤토리 슬롯 20개 만들기
         for(int i = 0; i<slot_Count; i++)
         {
             item.Add(new Items_Info());
@@ -55,7 +69,21 @@ public class Inventory_Controller : MonoBehaviour {
         }
 
         StartCoroutine(Load_Item());
-        
+        // 실시간 착용 아이템 슬롯 2개 만들기
+        for(int i = 0; i <  2; i++)
+        {
+            if (i == 0)
+            {
+                current_slot.Add(Instantiate(slot_Type_1));
+            }
+            else
+            {
+                current_slot.Add(Instantiate(slot_Type_2));
+            }
+            current_item.Add(new Items_Info());
+            current_slot[i].GetComponent<Slot>().slot_Id = i;
+            current_slot[i].transform.SetParent(character_Item_Panel.transform);
+        }      
     }
     // 인벤토리씬에서만 아이템 추가 기능 함수
     public void Select_Buy_Item(int _id)
@@ -178,6 +206,49 @@ public class Inventory_Controller : MonoBehaviour {
 
         Inventory_Add_Item_Json.instance.SAVE_NEW_DATA_JSON_Inventory();
     }
+    // 아이템 창작 해제 할때 이용 되는 코드 라인
+    public void Item_Get_On_Instruction_Panel(string _text)
+    {
+        item_Get_On_Info_Panel.SetActive(true);
+        item_Description.text = _text;
+    }
+    public void Item_Get_Off_Instruction_Panel(string _text)
+    {
+        item_Description.text = _text;
+    }
+    public void Button_Item_Get_On_Player_Slot_Section()
+    {
+        item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
+        Destroy(slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0)
+            .gameObject);
+
+        current_item[Item_Information.select_Index] = current_Select_Item;
+
+
+        Create_Player_Current_Item();
+    }
+    public void Button_Item_Get_Off_Player_Slot_Section()
+    {
+
+    }
+    public void Button_Item_Instruction_Panel_Exit()
+    {
+        item_Get_On_Info_Panel.SetActive(false);
+    } 
+
+    private void Create_Player_Current_Item()
+    {
+        GameObject item_Obj = Instantiate(item_Prefab);
+        item_Obj.GetComponent<Item>().item_Ability = current_Select_Item;
+        item_Obj.GetComponent<Item>().slot_Location = current_Index;
+        item_Obj.transform.SetParent(current_slot[Item_Information.select_Index].transform);
+        item_Obj.transform.localPosition = Vector2.zero;
+        item_Obj.GetComponent<Image>().sprite = current_Select_Item.item_Img;
+        item_Obj.name = current_Select_Item.slug;
+
+        Destroy(item_Obj.transform.GetChild(0).gameObject);
+    }
+    // -----------------------------------
 } // class
 
 

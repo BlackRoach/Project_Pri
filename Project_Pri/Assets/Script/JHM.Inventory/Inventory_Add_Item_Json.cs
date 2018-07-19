@@ -13,7 +13,7 @@ public class Inventory_Add_Item_Json : MonoBehaviour {
 
     public Items_List[] load_Item_Data;
 
-    public string mobile_Path;
+    private string mobile_Path;
     
     private JsonData save_Json;
     private JsonData load_Json;
