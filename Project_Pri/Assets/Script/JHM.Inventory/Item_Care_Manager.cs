@@ -10,6 +10,7 @@ public class Item_Care_Manager : MonoBehaviour {
 
     public int[] previous_Slot_Index;
 
+
     
     private void Awake()
     {

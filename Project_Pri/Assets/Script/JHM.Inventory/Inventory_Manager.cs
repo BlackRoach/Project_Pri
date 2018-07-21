@@ -7,6 +7,7 @@ public class Inventory_Manager : MonoBehaviour {
     public static Inventory_Manager instance;
 
     public bool is_Defualt;
+
     private void Awake()
     {
         if(instance != null)
