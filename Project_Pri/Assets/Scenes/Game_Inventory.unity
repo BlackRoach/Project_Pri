@@ -707,7 +707,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 733742340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058914134}
+        m_MethodName: Button_Item_Get_Off_Player_Slot_Section
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &733742340
@@ -2742,7 +2753,8 @@ MonoBehaviour:
     type: 2}
   item_Get_On_Info_Panel: {fileID: 1806680884}
   item_Get_Off_Info_Panel: {fileID: 1166277064}
-  item_Description: {fileID: 1319185765}
+  item_Description_01: {fileID: 1319185765}
+  item_Description_02: {fileID: 1080976325}
   item: []
   slot: []
   current_slot: []

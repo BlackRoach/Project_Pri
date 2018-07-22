@@ -25,9 +25,12 @@ public class Item : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
     {
         if(item_Ability != null)
         {
-            this.transform.SetParent(this.transform.parent.parent);
-            this.transform.position = eventData.position;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
+            if (!transform.GetComponent<Item_Information>().set_Pos)
+            {
+                this.transform.SetParent(this.transform.parent.parent);
+                this.transform.position = eventData.position;
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+            }
         }
     }
 
@@ -35,7 +38,10 @@ public class Item : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
     {
         if (item_Ability != null)
         {
-            this.transform.position = eventData.position;
+            if (!transform.GetComponent<Item_Information>().set_Pos)
+            {
+                this.transform.position = eventData.position;
+            }
         }
     }
 
@@ -43,9 +49,12 @@ public class Item : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
     {
         if (item_Ability != null)
         {
-            this.transform.SetParent(inventory.slot[slot_Location].transform);
-            this.transform.localPosition = Vector2.zero;
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
+            if (!transform.GetComponent<Item_Information>().set_Pos)
+            {
+                this.transform.SetParent(inventory.slot[slot_Location].transform);
+                this.transform.localPosition = Vector2.zero;
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+            }
         }
     }
     

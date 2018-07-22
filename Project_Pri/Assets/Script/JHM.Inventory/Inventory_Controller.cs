@@ -21,7 +21,8 @@ public class Inventory_Controller : MonoBehaviour {
     public GameObject item_Get_On_Info_Panel;
     public GameObject item_Get_Off_Info_Panel;
 
-    public Text item_Description;
+    public Text item_Description_01;
+    public Text item_Description_02;
     // 인벤토리 아이템
     public List<Items_Info> item = new List<Items_Info>();
     public List<GameObject> slot = new List<GameObject>();
@@ -217,26 +218,70 @@ public class Inventory_Controller : MonoBehaviour {
     {
         item_Get_On_Info_Panel.SetActive(true);
         item_Get_Off_Info_Panel.SetActive(false);
-        item_Description.text = _text;
+        item_Description_01.text = _text;
     }
     public void Item_Get_Off_Instruction_Panel(string _text)
     {
-        item_Description.text = _text;
+        item_Get_On_Info_Panel.SetActive(false);
+        item_Get_Off_Info_Panel.SetActive(true);
+        item_Description_02.text = _text;
     }
     public void Button_Item_Get_On_Player_Slot_Section()
     {
+        if(current_item[Item_Information.select_Index].id != -1)
+        {
+            Button_Item_Get_Off_Player_Slot_Section();
+        }
         current_item[Item_Information.select_Index] = current_Select_Item;
         item_Get_On_Info_Panel.SetActive(false);
         item_Get_Off_Info_Panel.SetActive(false);
-        item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
+        if (current_item[Item_Information.select_Index].id == 30001 || current_item[Item_Information.select_Index].id == 30003)
+        {
+            item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
+        }
+        else if (current_item[Item_Information.select_Index].id == 30002)
+        {
+            if (slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0).gameObject
+                .GetComponent<Item>().amount <= 0)
+            {
+                item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
+            }
+        }
         Item_Destroy();
-
         Create_Player_Current_Item();
         Create_Player_Current_Item_Amount();
     }
     public void Button_Item_Get_Off_Player_Slot_Section()
     {
+        item_Get_On_Info_Panel.SetActive(false);
+        item_Get_Off_Info_Panel.SetActive(false);
 
+        Destroy(current_slot[Item_Information.select_Index].transform.GetChild(2).gameObject);
+        if (current_item[Item_Information.select_Index].id != 30002)
+        {
+            Select_Buy_Item(current_item[Item_Information.select_Index].id);
+        }
+        else
+        {
+            for (int i = 0; i < item.Count; i++)
+            {
+                if (item[i].id == 30002)
+                {
+                    GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                    potion.GetComponent<Item>().amount += 1;
+                    potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                }
+            }
+        }
+        current_item[Item_Information.select_Index] = new Items_Info();
+        if (Item_Information.select_Index == 0)
+        {
+            character_Item_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+        }
+        else
+        {
+            character_Item_Panel.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+        }
     }
     public void Button_Item_Instruction_Panel_Exit()
     {
@@ -253,7 +298,8 @@ public class Inventory_Controller : MonoBehaviour {
         item_Obj.transform.localPosition = Vector2.zero;
         item_Obj.GetComponent<Image>().sprite = current_Select_Item.item_Img;
         item_Obj.name = current_Select_Item.slug;
-
+        item_Obj.GetComponent<Item_Information>().set_Pos = true;
+        
         Destroy(item_Obj.transform.GetChild(0).gameObject);
     }
     private void Create_Player_Current_Item_Amount()
@@ -301,7 +347,7 @@ public class Inventory_Controller : MonoBehaviour {
             }
         }
     }
-    // -----------------------------------
+    // --------------------------------------------------
 } // class
 
 
