@@ -7,7 +7,7 @@ public class Inventory_Manager : MonoBehaviour {
     public static Inventory_Manager instance;
 
     public bool is_Defualt;
-
+    public bool is_Restart;
     private void Awake()
     {
         if(instance != null)
@@ -24,6 +24,7 @@ public class Inventory_Manager : MonoBehaviour {
     private void Start()
     {
         is_Defualt = false;
+        is_Restart = false;
     }
 
 

@@ -22,22 +22,22 @@ public class Item_Information : MonoBehaviour {
     {
         if (!set_Pos)
         {
-            Inventory_Controller.instance.Item_Get_On_Instruction_Panel(item_Select.item_Ability.description);
-        }
-        else
-        {
-            Inventory_Controller.instance.Item_Get_Off_Instruction_Panel(item_Select.item_Ability.description);
-        }
-        if (!set_Pos)
-        {
             Inventory_Controller.instance.current_Select_Item = item_Select.item_Ability;
             StartCoroutine(Find_Select_Item_Parent_Position());
         }
         else
         {
             select_Index = transform.parent.GetComponent<Slot>().slot_Id;
-            
         }
+        if (!set_Pos)
+        {
+            Inventory_Controller.instance.Item_Get_On_Instruction_Panel(item_Select.item_Ability.description);
+        }
+        else
+        {
+            Inventory_Controller.instance.Item_Get_Off_Instruction_Panel(item_Select.item_Ability.description);
+        }
+       
 
     }
 

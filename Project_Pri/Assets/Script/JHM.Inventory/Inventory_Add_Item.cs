@@ -21,7 +21,7 @@ public class Inventory_Add_Item : MonoBehaviour {
     {
         Check_For_Loop_If_Index_Is_Null();
         if (current_Index < 20)
-        {
+        { 
             if (_id == 30002)
             {
                 for(int i = 0; i < Inventory_Add_Item_Json.instance.inventory_Item_List.Length; i++)

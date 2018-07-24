@@ -20,6 +20,7 @@ public class Inventory_Controller : MonoBehaviour {
     public GameObject slot_Type_2;
     public GameObject item_Get_On_Info_Panel;
     public GameObject item_Get_Off_Info_Panel;
+    public GameObject error_Information_Panel;
 
     public Text item_Description_01;
     public Text item_Description_02;
@@ -38,7 +39,8 @@ public class Inventory_Controller : MonoBehaviour {
     
     public int current_Index;
 
-    
+    public int item_Table_Id;
+ 
     private void Awake()
     {
         if(instance != null)
@@ -60,6 +62,8 @@ public class Inventory_Controller : MonoBehaviour {
     {
         item_Get_On_Info_Panel.SetActive(false);
         item_Get_Off_Info_Panel.SetActive(false);
+        error_Information_Panel.SetActive(false);
+        item_Table_Id = 0;
         current_Index = 0;
         is_Stackable = false;
         slot_Count = 20;
@@ -71,10 +75,9 @@ public class Inventory_Controller : MonoBehaviour {
             slot[i].GetComponent<Slot>().slot_Id = i;
             slot[i].transform.SetParent(inventory_Slot_Panel.transform);
         }
-
-        StartCoroutine(Load_Item());
+       
         // 실시간 착용 아이템 슬롯 2개 만들기
-        for(int i = 0; i <  2; i++)
+        for (int i = 0; i < 2; i++)
         {
             if (i == 0)
             {
@@ -88,9 +91,7 @@ public class Inventory_Controller : MonoBehaviour {
             current_slot[i].GetComponent<Slot>().slot_Id = i;
             current_slot[i].transform.SetParent(character_Item_Panel.transform);
         }
-
-        character_Item_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
-        character_Item_Panel.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+        StartCoroutine(Load_Item());
     }
     // 인벤토리씬에서만 아이템 추가 기능 함수
     public void Select_Buy_Item(int _id)
@@ -127,6 +128,8 @@ public class Inventory_Controller : MonoBehaviour {
                     item_Obj.GetComponent<Image>().sprite = add_Item.item_Img;
                     item_Obj.name = add_Item.slug;
                     current_Index++;
+
+                   
                 }
             }
             else
@@ -163,7 +166,7 @@ public class Inventory_Controller : MonoBehaviour {
     IEnumerator Load_Item()
     {
         Inventory_Add_Item_Json.instance.LOAD_NEW_DATA_JSON_Inventory();
-
+        Item_Table_Json.instance.Item_Table_Json_Load();
         yield return new WaitForSeconds(0f);
         for (int i = 0; i < item.Count; i++)
         {
@@ -190,6 +193,72 @@ public class Inventory_Controller : MonoBehaviour {
                 }
             }
         }
+        // Item Table
+        for(int i = 0; i < Item_Table_Json.instance.item_Table.Length; i++)
+        {
+            if (Item_Table_Json.instance.item_Table[i].id != -1)
+            {          
+                switch (Item_Table_Json.instance.item_Table[i].id)
+                {
+                    case 30001:
+                        {
+                            current_item[i] = item_DataBase.Search_For_Item(30001);
+                        }break;
+                    case 30002:
+                        {
+                            current_item[i] = item_DataBase.Search_For_Item(30002);
+                        }
+                        break;
+                    case 30003:
+                        {
+                            current_item[i] = item_DataBase.Search_For_Item(30003);
+                        }
+                        break;
+                }
+            }
+        }
+        for(int i = 0; i < current_item.Count; i++)
+        {
+            if(current_item[i].id != -1)
+            {
+                GameObject item_Obj = Instantiate(item_Prefab);
+                item_Obj.transform.SetParent(current_slot[i].transform);
+                item_Obj.transform.localPosition = Vector2.zero;
+                item_Obj.GetComponent<Item>().item_Ability = current_item[i];
+                item_Obj.GetComponent<Item>().slot_Location = i;
+                item_Obj.GetComponent<Image>().sprite = current_item[i].item_Img;
+                item_Obj.name = current_item[i].slug;
+                item_Obj.GetComponent<Item_Information>().set_Pos = true;
+                Destroy(item_Obj.transform.GetChild(0).gameObject);
+                
+                if(current_item[i].id == 30001 || current_item[i].id == 30003)
+                {
+                    character_Item_Panel.transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = 1.ToString();
+                } else if(current_item[i].id == 30002)
+                {
+                    character_Item_Panel.transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = 10.ToString();
+                }
+            }
+            else
+            {
+                character_Item_Panel.transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+            }
+        }
+        // ------------------
+
+        for(int i = 0; i < item.Count; i++)
+        {
+            if (item[i].id == 30002)
+            {
+                GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                if (potion.GetComponent<Item>().amount != Inventory_Add_Item_Json.instance.load_Item_Data[i].amount)
+                {
+                    potion.GetComponent<Item>().amount++;
+                    potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                }
+            }
+                
+        }
     }
     
     // 인벤토리 나갈때 Json Save 
@@ -210,14 +279,28 @@ public class Inventory_Controller : MonoBehaviour {
             }
             Inventory_Add_Item_Json.instance.inventory_Item_List[i].id = item[i].id;
         }
-
+        for(int i = 0; i < current_item.Count; i++)
+        {
+            Item_Table_Json.instance.item_Table[i].id = current_item[i].id;
+        }
         Inventory_Add_Item_Json.instance.SAVE_NEW_DATA_JSON_Inventory();
+        Item_Table_Json.instance.Item_Table_Json_Save();
     }
     // 아이템 창작 해제 할때 이용 되는 코드 라인
     public void Item_Get_On_Instruction_Panel(string _text)
     {
         item_Get_On_Info_Panel.SetActive(true);
         item_Get_Off_Info_Panel.SetActive(false);
+        if(current_Select_Item.use_Type == 1)
+        {
+            item_Get_On_Info_Panel.transform.GetChild(1).gameObject.SetActive(true);
+            item_Get_On_Info_Panel.transform.GetChild(2).gameObject.SetActive(false);
+        } else if(current_Select_Item.use_Type == 2)
+        {
+            item_Get_On_Info_Panel.transform.GetChild(1).gameObject.SetActive(false);
+            item_Get_On_Info_Panel.transform.GetChild(2).gameObject.SetActive(true);
+        }
+
         item_Description_01.text = _text;
     }
     public void Item_Get_Off_Instruction_Panel(string _text)
@@ -228,60 +311,158 @@ public class Inventory_Controller : MonoBehaviour {
     }
     public void Button_Item_Get_On_Player_Slot_Section()
     {
-        if(current_item[Item_Information.select_Index].id != -1)
+        int count = 0;
+        for (int i = 0; i < item.Count; i++)
         {
-            Button_Item_Get_Off_Player_Slot_Section();
+            if (item[i].id != -1)
+            {
+                count++;
+            }
         }
-        current_item[Item_Information.select_Index] = current_Select_Item;
-        item_Get_On_Info_Panel.SetActive(false);
-        item_Get_Off_Info_Panel.SetActive(false);
-        if (current_item[Item_Information.select_Index].id == 30001 || current_item[Item_Information.select_Index].id == 30003)
+        if (current_item[Item_Information.select_Index].id != -1)
         {
-            item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
+            item_Table_Id = current_item[Item_Information.select_Index].id;
         }
-        else if (current_item[Item_Information.select_Index].id == 30002)
+        else
         {
-            if (slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0).gameObject
-                .GetComponent<Item>().amount <= 0)
+            item_Table_Id = 0;
+        }
+        if (count != item.Count || item_Table_Id == 0
+            || item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].id == 30001 &&
+            item_Table_Id == 30002)
+        {
+            
+            current_item[Item_Information.select_Index] = current_Select_Item;
+            if (current_item[Item_Information.select_Index].id == 30001 || current_item[Item_Information.select_Index].id == 30003)
             {
                 item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
             }
-        }
-        Item_Destroy();
-        Create_Player_Current_Item();
-        Create_Player_Current_Item_Amount();
-    }
-    public void Button_Item_Get_Off_Player_Slot_Section()
-    {
-        item_Get_On_Info_Panel.SetActive(false);
-        item_Get_Off_Info_Panel.SetActive(false);
-
-        Destroy(current_slot[Item_Information.select_Index].transform.GetChild(2).gameObject);
-        if (current_item[Item_Information.select_Index].id != 30002)
-        {
-            Select_Buy_Item(current_item[Item_Information.select_Index].id);
-        }
-        else
-        {
-            for (int i = 0; i < item.Count; i++)
+            else if (current_item[Item_Information.select_Index].id == 30002)
             {
-                if (item[i].id == 30002)
+                if (slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0).gameObject
+                    .GetComponent<Item>().amount <= 0)
                 {
-                    GameObject potion = slot[i].transform.GetChild(0).gameObject;
-                    potion.GetComponent<Item>().amount += 1;
-                    potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                    item[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]] = new Items_Info();
                 }
             }
+            Item_Destroy();
+            if (item_Table_Id != 0)
+            {
+                if (item_Table_Id == 30002)
+                {
+                    for (int i = 0; i < item.Count; i++)
+                    {
+                        if (item[i].id == 30002)
+                        {
+                            GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                            potion.GetComponent<Item>().amount++;
+                            potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    Select_Buy_Item(item_Table_Id);
+                }
+            }
+            Create_Player_Current_Item();
+            Create_Player_Current_Item_Amount();
         }
-        current_item[Item_Information.select_Index] = new Items_Info();
-        if (Item_Information.select_Index == 0)
+        item_Get_On_Info_Panel.SetActive(false);
+        item_Get_Off_Info_Panel.SetActive(false);
+    }
+    
+    public void Button_Item_Get_Off_Player_Slot_Section()
+    {
+        
+        Items_Info check_Item = current_slot[Item_Information.select_Index].transform.GetChild(2).transform.GetComponent<
+            Item>().item_Ability;
+        item_Get_On_Info_Panel.SetActive(false);
+        item_Get_Off_Info_Panel.SetActive(false);
+        int temp = 0;
+        for (int i = 0; i < item.Count; i++)
         {
-            character_Item_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+            if (item[i].id == -1)
+            {
+                Destroy(current_slot[Item_Information.select_Index].transform.GetChild(2).gameObject);
+                if (current_item[Item_Information.select_Index].id != 30002)
+                {
+                    Select_Buy_Item(current_item[Item_Information.select_Index].id);
+                }
+                else
+                {
+                    for (int j = 0; j < item.Count; j++)
+                    {
+                        if (item[j].id == 30002)
+                        {
+                            GameObject potion = slot[j].transform.GetChild(0).gameObject;
+                            potion.GetComponent<Item>().amount += 1;
+                            potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                        }
+                    }
+                }
+                current_item[Item_Information.select_Index] = new Items_Info();
+                if (Item_Information.select_Index == 0)
+                {
+                    character_Item_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+                }
+                else
+                {
+                    character_Item_Panel.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+                }
+                break;
+            }
+            else
+            {
+                temp++;
+            }
         }
-        else
+        if(temp == item.Count)
         {
-            character_Item_Panel.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+            bool ctrl = false;
+            int count = 0;
+            if (check_Item.id == 30002)
+            {
+                for (int i = 0; i < item.Count; i++)
+                {
+                    if (item[i].id == 30002)
+                    {
+                        GameObject potion = slot[i].transform.GetChild(0).gameObject;
+                        potion.GetComponent<Item>().amount += 1;
+                        potion.transform.GetChild(0).GetComponent<Text>().text = potion.GetComponent<Item>().amount.ToString();
+                        Destroy(current_slot[Item_Information.select_Index].transform.GetChild(2).gameObject);
+                        current_item[Item_Information.select_Index] = new Items_Info();
+                        if (Item_Information.select_Index == 0)
+                        {
+                            character_Item_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+                        }
+                        else
+                        {
+                            character_Item_Panel.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = 0.ToString();
+                        }
+                        ctrl = true;
+                        break;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                if(count == item.Count)
+                {
+                    error_Information_Panel.SetActive(true);
+                    ctrl = true;
+                } 
+            }
+            if (!ctrl)
+            {
+                error_Information_Panel.SetActive(true);
+            }
         }
+    }
+    public void Exit_Error_Information_Panel()
+    {
+        error_Information_Panel.SetActive(false);
     }
     public void Button_Item_Instruction_Panel_Exit()
     {
@@ -293,7 +474,7 @@ public class Inventory_Controller : MonoBehaviour {
     {
         GameObject item_Obj = Instantiate(item_Prefab);
         item_Obj.GetComponent<Item>().item_Ability = current_Select_Item;
-        item_Obj.GetComponent<Item>().slot_Location = current_Index;
+        item_Obj.GetComponent<Item>().slot_Location = Item_Information.select_Index;
         item_Obj.transform.SetParent(current_slot[Item_Information.select_Index].transform);
         item_Obj.transform.localPosition = Vector2.zero;
         item_Obj.GetComponent<Image>().sprite = current_Select_Item.item_Img;
@@ -335,7 +516,7 @@ public class Inventory_Controller : MonoBehaviour {
         {
             GameObject potion = slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0).gameObject;
 
-            if (potion.GetComponent<Item>().amount <= 0)
+            if (potion.GetComponent<Item>().amount <= 1)
             {
                 Destroy(slot[Item_Care_Manager.instance.previous_Slot_Index[Item_Information.select_Index]].transform.GetChild(0)
                 .gameObject);
