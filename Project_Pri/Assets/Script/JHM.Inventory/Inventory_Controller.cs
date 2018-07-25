@@ -476,7 +476,7 @@ public class Inventory_Controller : MonoBehaviour {
         item_Obj.GetComponent<Item>().item_Ability = current_Select_Item;
         item_Obj.GetComponent<Item>().slot_Location = Item_Information.select_Index;
         item_Obj.transform.SetParent(current_slot[Item_Information.select_Index].transform);
-        //item_Obj.transform.localPosition = Vector2.zero;
+        item_Obj.transform.localPosition = Vector2.zero;
         item_Obj.GetComponent<Image>().sprite = current_Select_Item.item_Img;
         item_Obj.name = current_Select_Item.slug;
         item_Obj.GetComponent<Item_Information>().set_Pos = true;
