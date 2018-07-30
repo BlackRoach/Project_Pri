@@ -113,6 +113,39 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &22968409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 22968410}
+  m_Layer: 5
+  m_Name: Text_Box_Spawn_Pos_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &22968410
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 22968409}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1060128997}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 400}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1001 &46326515
 Prefab:
   m_ObjectHideFlags: 0
@@ -228,6 +261,10 @@ Prefab:
     - target: {fileID: 1895169575380054, guid: 92ce83344a12dad4f9aae8f3955d22b9, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882022269856466, guid: 92ce83344a12dad4f9aae8f3955d22b9, type: 2}
+      propertyPath: m_Name
+      value: Text_Dialog
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 92ce83344a12dad4f9aae8f3955d22b9, type: 2}
@@ -1105,7 +1142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 366091963}
   m_Layer: 5
-  m_Name: Text_Box_Spawn_Pos
+  m_Name: Text_Box_Spawn_Pos_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,7 +1164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -160, y: 400}
+  m_AnchoredPosition: {x: -190, y: 400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &391568278
@@ -1621,6 +1658,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 787511942}
+--- !u!114 &799501238 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114240753067091630, guid: 92ce83344a12dad4f9aae8f3955d22b9,
+    type: 2}
+  m_PrefabInternal: {fileID: 46326515}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &842510762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,6 +2087,7 @@ RectTransform:
   - {fileID: 528423434}
   - {fileID: 506550317}
   - {fileID: 366091963}
+  - {fileID: 22968410}
   m_Father: {fileID: 259222887}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2761,7 +2805,9 @@ MonoBehaviour:
   char_Spawn_Pos_1: {fileID: 528423434}
   char_Spawn_Pos_2: {fileID: 506550317}
   text_Box_Pos_1: {fileID: 366091963}
+  text_Box_Pos_2: {fileID: 22968410}
   text_Event_Count: {fileID: 224151985}
+  text_Dialog: {fileID: 799501238}
   event_1:
     event_State: 0
     trigger: 0
