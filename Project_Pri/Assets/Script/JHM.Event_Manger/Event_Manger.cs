@@ -31,6 +31,7 @@ public class Event_Manger : MonoBehaviour {
     private int count;
     public int text_Around_Count;
 
+    public bool is_Typing;
     private void Awake()
     {
         if(instance != null)
@@ -46,6 +47,7 @@ public class Event_Manger : MonoBehaviour {
     {
         count = 0;
         text_Around_Count = 0;
+        is_Typing = false;
         text_Event_Count.text = count.ToString();
         bg_Event.SetActive(false);
         text_Box.SetActive(false);
@@ -102,10 +104,10 @@ public class Event_Manger : MonoBehaviour {
             rio_2.transform.localPosition = Vector3.zero;
             rio_2.transform.localRotation = Quaternion.identity;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         text_Around_Count++;
         text_Box.SetActive(true);
-        text_Dialog.text = dialog_Data[0]["DIALOG_TEXT"].ToString();
+        StartCoroutine(Auto_Typing());
         if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
         {
             text_Box.transform.SetParent(text_Box_Pos_1.transform);
@@ -130,10 +132,10 @@ public class Event_Manger : MonoBehaviour {
             rio_1.transform.localPosition = Vector3.zero;
             rio_1.transform.localRotation = Quaternion.identity;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         text_Around_Count++;
         text_Box.SetActive(true);
-        text_Dialog.text = dialog_Data[0]["DIALOG_TEXT"].ToString();
+        StartCoroutine(Auto_Typing());
         if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
         {
             text_Box.transform.SetParent(text_Box_Pos_1.transform);
@@ -157,7 +159,7 @@ public class Event_Manger : MonoBehaviour {
         count--;
         text_Event_Count.text = count.ToString();
     }
-
+    // Json_Resource Files 불러오기
     private void Json_File_Event_Table_Read_Only()
     {
         TextAsset event_List = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Event_Manager");
@@ -170,6 +172,7 @@ public class Event_Manger : MonoBehaviour {
 
         dialog_Data = JsonMapper.ToObject(dialog_List.text);
     }
+    // event_Data 초기화
     private void Defualt_All_Event_State()
     {
         event_1.complete = (int)event_Data[0]["DIALOG_COUNT"];
@@ -184,89 +187,130 @@ public class Event_Manger : MonoBehaviour {
         event_1.current = 0;
         event_2.current = 0;
     }
-    // 다이로그 텍스트 누를시
+    // 다이로그 텍스트 누를시(Button)
     public void Button_Text_Around_Count_Fuction()
     {
-        if (event_1.trigger)
+        if (!is_Typing)
         {
-            if (text_Around_Count <= (int)event_Data[0]["DIALOG_COUNT"])
+            if (event_1.trigger)
             {
-                text_Around_Count++;
-                event_1.current++;
-                if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
+                if (text_Around_Count <= (int)event_Data[0]["DIALOG_COUNT"])
                 {
-                    text_Box.transform.SetParent(text_Box_Pos_1.transform);
-                    text_Box.transform.localPosition = Vector3.zero;
-                    text_Box.transform.localRotation = Quaternion.identity;
-                }
-                if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 2)
-                {
-                    text_Box.transform.SetParent(text_Box_Pos_2.transform);
-                    text_Box.transform.localPosition = Vector3.zero;
-                    text_Box.transform.localRotation = Quaternion.identity;
-                }
-                if (text_Around_Count == 2)
-                {
-                    text_Dialog.text = dialog_Data[1]["DIALOG_TEXT"].ToString();
-                }
-                if (text_Around_Count == 3)
-                {
-                    text_Dialog.text = dialog_Data[2]["DIALOG_TEXT"].ToString();
-                }
-                if (text_Around_Count == 4)
-                {
-                    text_Box.SetActive(false);
-                    if (event_1.current == event_1.complete)
+                    text_Around_Count++;
+                    event_1.current++;
+                    if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
                     {
-                        bg_Event.SetActive(false);
-                        Destroy(char_Spawn_Pos_1.transform.GetChild(0).transform.gameObject);
-                        Destroy(char_Spawn_Pos_2.transform.GetChild(0).transform.gameObject);
+                        text_Box.transform.SetParent(text_Box_Pos_1.transform);
+                        text_Box.transform.localPosition = Vector3.zero;
+                        text_Box.transform.localRotation = Quaternion.identity;
                     }
-                    event_1.trigger = false;
-                    event_1.event_State = 2;
-                    text_Around_Count = 0;
+                    if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 2)
+                    {
+                        text_Box.transform.SetParent(text_Box_Pos_2.transform);
+                        text_Box.transform.localPosition = Vector3.zero;
+                        text_Box.transform.localRotation = Quaternion.identity;
+                    }
+                    if (text_Around_Count == 2)
+                    {
+                        StartCoroutine(Auto_Typing());
+                    }
+                    if (text_Around_Count == 3)
+                    {
+                        StartCoroutine(Auto_Typing());
+                    }
+                    if (text_Around_Count == 4)
+                    {
+                        text_Box.SetActive(false);
+                        if (event_1.current == event_1.complete)
+                        {
+                            bg_Event.SetActive(false);
+                            Destroy(char_Spawn_Pos_1.transform.GetChild(0).transform.gameObject);
+                            Destroy(char_Spawn_Pos_2.transform.GetChild(0).transform.gameObject);
+                        }
+                        event_1.trigger = false;
+                        event_1.event_State = 2;
+                        text_Around_Count = 0;
+                    }
                 }
             }
-        }
-        if (event_2.trigger)
-        {
-            if (text_Around_Count <= (int)event_Data[1]["DIALOG_COUNT"])
+            if (event_2.trigger)
             {
-                text_Around_Count++;
-                event_2.current++;
-                if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
+                if (text_Around_Count <= (int)event_Data[1]["DIALOG_COUNT"])
                 {
-                    text_Box.transform.SetParent(text_Box_Pos_1.transform);
-                    text_Box.transform.localPosition = Vector3.zero;
-                    text_Box.transform.localRotation = Quaternion.identity;
-                }
-                if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 2)
-                {
-                    text_Box.transform.SetParent(text_Box_Pos_2.transform);
-                    text_Box.transform.localPosition = Vector3.zero;
-                    text_Box.transform.localRotation = Quaternion.identity;
-                }
-                if (text_Around_Count == 2)
-                {
-                    text_Dialog.text = dialog_Data[1]["DIALOG_TEXT"].ToString();
-                }
-                if (text_Around_Count == 3)
-                {
-                    text_Box.SetActive(false);
-                    if (event_2.current == event_2.complete)
+                    text_Around_Count++;
+                    event_2.current++;
+                    if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 1)
                     {
-                        bg_Event.SetActive(false);
-                        Destroy(char_Spawn_Pos_1.transform.GetChild(0).transform.gameObject);
+                        text_Box.transform.SetParent(text_Box_Pos_1.transform);
+                        text_Box.transform.localPosition = Vector3.zero;
+                        text_Box.transform.localRotation = Quaternion.identity;
                     }
-                    event_2.trigger = false;
-                    event_2.event_State = 2;
-                    text_Around_Count = 0;
+                    if ((int)dialog_Data[text_Around_Count - 1]["DIALOG_POSITION"] == 2)
+                    {
+                        text_Box.transform.SetParent(text_Box_Pos_2.transform);
+                        text_Box.transform.localPosition = Vector3.zero;
+                        text_Box.transform.localRotation = Quaternion.identity;
+                    }
+                    if (text_Around_Count == 2)
+                    {
+                        StartCoroutine(Auto_Typing());
+                    }
+                    if (text_Around_Count == 3)
+                    {
+                        text_Box.SetActive(false);
+                        if (event_2.current == event_2.complete)
+                        {
+                            bg_Event.SetActive(false);
+                            Destroy(char_Spawn_Pos_1.transform.GetChild(0).transform.gameObject);
+                        }
+                        event_2.trigger = false;
+                        event_2.event_State = 2;
+                        text_Around_Count = 0;
+                    }
                 }
             }
         }
     }
+    // Text_Auto 타이핑
+    IEnumerator Auto_Typing()
+    {
+        text_Dialog.text = " ";
+        yield return new WaitForSeconds(0f);
+        if ((int)dialog_Data[0]["DIALOG_NUMBER"] == text_Around_Count)
+        {
+            foreach (char text in dialog_Data[0]["DIALOG_TEXT"].ToString().ToCharArray())
+            {
+                is_Typing = true;
 
-   
+                text_Dialog.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        if ((int)dialog_Data[1]["DIALOG_NUMBER"] == text_Around_Count)
+        {
+            foreach (char text in dialog_Data[1]["DIALOG_TEXT"].ToString().ToCharArray())
+            {
+                is_Typing = true;
+
+                text_Dialog.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        if ((int)dialog_Data[2]["DIALOG_NUMBER"] == text_Around_Count)
+        {
+            foreach (char text in dialog_Data[2]["DIALOG_TEXT"].ToString().ToCharArray())
+            {
+                is_Typing = true;
+
+                text_Dialog.text += text;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        is_Typing = false;
+    }
 } // class
 
 
