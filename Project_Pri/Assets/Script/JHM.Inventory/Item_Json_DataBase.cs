@@ -6,6 +6,8 @@ using System.IO;
 
 public class Item_Json_DataBase : MonoBehaviour {
 
+    public static Item_Json_DataBase instance = null;
+
     public List<Items_Info> items_Base = new List<Items_Info>();
 
     private string mobile_Path;
@@ -13,6 +15,20 @@ public class Item_Json_DataBase : MonoBehaviour {
     private TextAsset json_File;
 
     private JsonData load_Data;
+
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+        
+    }
 
     private void Start()
     {
@@ -38,15 +54,18 @@ public class Item_Json_DataBase : MonoBehaviour {
                 case 30001:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = false;
                     }break;
                 case 30002:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = true;
                     }
                     break;
                 case 30003:
                     {
                         items_Base[i].item_Img = Resources.Load<Sprite>("JHM.Img/" + items_Base[i].slug);
+                        items_Base[i].stackable = false;
                     }
                     break;
             }

@@ -24,6 +24,7 @@ public class TitleButtonManager : MonoBehaviour {
     }
     [SerializeField] private GameObject selectableButtons;
     [SerializeField] private GameObject touchToStartButton;
+    [SerializeField] private GameObject optionPanel;
 
     [SerializeField] private float playingTime = 1f;
 
@@ -68,13 +69,25 @@ public class TitleButtonManager : MonoBehaviour {
     public void OptionButtonOn()
     {
         // 옵션 버튼
+        optionPanel.SetActive(true);
     }
     public void ExitButtonOn()
     {
         // 끝내기 버튼
         Application.Quit();
     }
- 
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void SoundEffectTest(AudioClip clip)
+    {
+        AudioManager AM = FindObjectOfType<AudioManager>();
+        AM.SFPlay(clip);
+    }
+
     IEnumerator TouchButtonInvisible()
     {
         Color color = touchToStartImg.color;
