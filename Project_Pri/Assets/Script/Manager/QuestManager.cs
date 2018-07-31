@@ -26,7 +26,8 @@ public class QuestManager : MonoBehaviour {
         instance = this;
     }
 
-    private string jsonString;
+    private TextAsset jsonString;
+   
     private JsonData mudoMember;
     private JsonData presentData;
     private InGamemanager inGameManager;
@@ -46,6 +47,8 @@ public class QuestManager : MonoBehaviour {
     [SerializeField] private Text myquestInfo;
     [SerializeField] private Text myquestReward;
 
+    private string parsethis;
+
     private string current_id = "";
     private string current_progress;
     private int current_cnt;
@@ -57,9 +60,13 @@ public class QuestManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         inGameManager = InGamemanager.Instance;
-        jsonString = File.ReadAllText(Application.dataPath + "/Resources/JsonDB/Quest/QuestDB.json");
-        mudoMember = JsonMapper.ToObject(jsonString);
+        jsonString = Resources.Load < TextAsset >("JsonDB/Quest/QuestDB") as TextAsset;
+        parsethis = jsonString.text;
+        mudoMember = JsonMapper.ToObject(parsethis);
 
+        acceptbutton.SetActive(false);
+        giveupbutton.SetActive(false);
+        successbutton.SetActive(false);
         myQuest_page = 1;
         questName.text = "";
         InitText();
@@ -76,10 +83,38 @@ public class QuestManager : MonoBehaviour {
         }
         return null;
     }
+    public void QuestButtonInit()
+    {
+        if (presentData["QUEST_PROGRESS"].ToString() == "AVAILABLE")
+        {
+            acceptbutton.SetActive(true);
+            giveupbutton.SetActive(false);
+            successbutton.SetActive(false);
+        }
+        else if (presentData["QUEST_PROGRESS"].ToString() == "ACCECPTED")
+        {
+            acceptbutton.SetActive(false);
+            giveupbutton.SetActive(true);
+            successbutton.SetActive(false);
+        }
+        else if (presentData["QUEST_PROGRESS"].ToString() == "COMPLETE")
+        {
+            acceptbutton.SetActive(false);
+            giveupbutton.SetActive(false);
+            successbutton.SetActive(true);
+        }
+        else if (presentData["QUEST_PROGRESS"].ToString() == "DONE")
+        {
+            acceptbutton.SetActive(false);
+            giveupbutton.SetActive(false);
+            successbutton.SetActive(false);
+        }
+    }
     public void QuestButtons(string index)
     {
         current_id = index;
         presentData = Suchdata(index); // 이거다 이거~
+        QuestButtonInit();
         questName.text = presentData["QUEST_NAME"].ToString();
         questSummary.text = presentData["QUEST_SUMMARY"].ToString();
         questInfo.text = presentData["QUEST_DESCRIPTION"].ToString();
@@ -101,16 +136,18 @@ public class QuestManager : MonoBehaviour {
     public void AcceptQuest()
     {
         SetCurrentData();
-
+      
         if (current_cnt < complete_cnt && current_progress.Equals("AVAILABLE"))
         {
             current_questList.Add(current_id);
             mudoMember[current_line]["QUEST_PROGRESS"] = "ACCECPTED";
         }
+        QuestButtonInit();
 
     }
     public void GiveUpQuest()
     {
+      
         if (current_questList.Count != 0)
         {
             int num = current_questList.BinarySearch(current_id);
@@ -123,11 +160,12 @@ public class QuestManager : MonoBehaviour {
             else
                 SetMyQuestText(myQuest_page);
         }
-    
+        QuestButtonInit();
     }
     public void CompleteQuest()
     {
         SetCurrentData();
+        
         if (current_cnt == complete_cnt)
         {
             mudoMember[current_line]["QUEST_PROGRESS"] = "DONE";
@@ -137,6 +175,7 @@ public class QuestManager : MonoBehaviour {
         {
             // 아직 못끝냄
         }
+        QuestButtonInit();
     }
     public void SetMyQuestText(int index)
     {
@@ -191,6 +230,6 @@ public class QuestManager : MonoBehaviour {
     {
         string save;
         save = JsonMapper.ToJson(mudoMember);
-        File.WriteAllText(Application.dataPath + "/Resources/JsonDB/Quest/QuestDB.json", save);
+        File.WriteAllText(Application.persistentDataPath + "/"+"JsonQuestDB.json", save);
     }
 }
