@@ -5461,9 +5461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '20001
-
-'
+  m_Text: 
 --- !u!222 &1054700043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6334,7 +6332,6 @@ MonoBehaviour:
   battleWindow: {fileID: 657508346}
   teleportWindow: {fileID: 1391902482}
   questWindow: {fileID: 2088430497}
-  myquestWindow: {fileID: 186428742}
   infoButtons: {fileID: 937354655}
   questButton: {fileID: 574272790}
   joyController: {fileID: 981983891}
@@ -6359,9 +6356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myquestWindow: {fileID: 186428742}
-  acceptbutton: {fileID: 0}
-  giveupbutton: {fileID: 0}
-  successbutton: {fileID: 0}
+  acceptbutton: {fileID: 179350894}
+  giveupbutton: {fileID: 1676469131}
+  successbutton: {fileID: 1976520086}
   questName: {fileID: 1783382297}
   questSummary: {fileID: 916598737}
   questInfo: {fileID: 2061267099}
@@ -7031,9 +7028,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '20001
-
-'
+  m_Text: 
 --- !u!222 &1783382298
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7871,7 +7866,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 20002
+  m_Text: 
 --- !u!222 &2032923001
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -1,0 +1,32 @@
+[
+  {
+    "ID": 70001,
+    "DIALOG_NUMBER": 1,
+    "DIALOG_POSITION": 1,
+    "DIALOG_TEXT": "첫번째 텍스트입니다"
+  },
+  {
+    "ID": 70002,
+    "DIALOG_NUMBER": 2,
+    "DIALOG_POSITION": 1,
+    "DIALOG_TEXT": "두번째 텍스트입니다"
+  },
+  {
+    "ID": 70003,
+    "DIALOG_NUMBER": 3,
+    "DIALOG_POSITION": 2,
+    "DIALOG_TEXT": "세번째 텍스트입니다"
+  },
+  {
+    "ID": 70004,
+    "DIALOG_NUMBER": 4,
+    "DIALOG_POSITION": 2,
+    "DIALOG_TEXT": "네번째 텍스트입니다"
+  },
+  {
+    "ID": 70005,
+    "DIALOG_NUMBER": 5,
+    "DIALOG_POSITION": 1,
+    "DIALOG_TEXT": "다섯번째 텍스트입니다"
+  }
+]
