@@ -162,7 +162,7 @@ public class Event_Manger : MonoBehaviour {
     // Json_Resource Files 불러오기
     private void Json_File_Event_Table_Read_Only()
     {
-        TextAsset event_List = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Event_Manager");
+        TextAsset event_List = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Event_List_1");
 
         event_Data = JsonMapper.ToObject(event_List.text);
 
