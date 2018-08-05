@@ -25,7 +25,11 @@ public class Level_Manager : MonoBehaviour {
     }
 
 
-
+    public void Load_To_Main_Scene()
+    {
+        SceneManager.LoadScene("Main");
+    }
+    
 
 
 
