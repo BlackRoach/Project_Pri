@@ -5,16 +5,10 @@ using UnityEngine.UI;
 
 public class Character_Lio : MonoBehaviour {
 
-    private Animator anim;
-
     private float time;
     private float time_temp;
 
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
-
+ 
     private void Update()
     {
         if (time < time_temp)

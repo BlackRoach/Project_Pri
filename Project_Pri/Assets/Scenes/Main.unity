@@ -2801,6 +2801,8 @@ MonoBehaviour:
   bg_Event: {fileID: 991447821}
   character_Rio: {fileID: 1241640887566936, guid: 481908b2f0e37d34099c52a5e4e96602,
     type: 2}
+  character_Rena: {fileID: 1000390505953126, guid: 49d846855abe182448bc27bdcd004343,
+    type: 2}
   text_Box: {fileID: 46326517}
   char_Spawn_Pos_1: {fileID: 528423434}
   char_Spawn_Pos_2: {fileID: 506550317}
@@ -2818,7 +2820,19 @@ MonoBehaviour:
     trigger: 0
     current: 0
     complete: 0
+  event_3:
+    event_State: 0
+    trigger: 0
+    current: 0
+    complete: 0
+  dialog_Count: 0
   text_Around_Count: 0
+  is_Typing: 0
+  mobile_Path: 
+  rena_Info:
+    old: 0
+    state: 0
+    dress: 0
 --- !u!1 &1487710490
 GameObject:
   m_ObjectHideFlags: 0

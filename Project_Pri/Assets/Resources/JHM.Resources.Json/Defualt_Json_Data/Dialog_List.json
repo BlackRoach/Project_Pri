@@ -28,5 +28,11 @@
     "DIALOG_NUMBER": 5,
     "DIALOG_POSITION": 1,
     "DIALOG_TEXT": "다섯번째 텍스트입니다"
+  },
+  {
+    "ID": 70006,
+    "DIALOG_NUMBER": 6,
+    "DIALOG_POSITION": 1,
+    "DIALOG_TEXT": "여섯번째 텍스트입니다"
   }
 ]

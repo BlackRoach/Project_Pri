@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using LitJson;
+using System.IO;
 
 public class Rena_Manager : MonoBehaviour {
 
@@ -19,6 +20,10 @@ public class Rena_Manager : MonoBehaviour {
     public Text text_Dress;
     [SerializeField]
     private bool is_Showing;
+
+    public string mobile_Path;
+
+    private JsonData rena_Data;
     private void Start()
     {
         old_Count = state_Count = dress_Count = 1;
@@ -43,6 +48,13 @@ public class Rena_Manager : MonoBehaviour {
             Resources.Load<Sprite>("JHM.Img/" + "DRESS1_1");
         rena_Char_4.transform.GetChild(0).gameObject.GetComponent<Image>().sprite =
             Resources.Load<Sprite>("JHM.Img/" + "STATE_2_DRESS2");
+
+        mobile_Path = Application.persistentDataPath;
+
+        rena_Info.old = -1;
+        rena_Info.state = -1;
+        rena_Info.dress = -1;
+        Json_Save_Rena_Data();
     }
 
     // 레나 상태 < , >  plus , minus 버튼
@@ -171,6 +183,8 @@ public class Rena_Manager : MonoBehaviour {
                 rena_Char_4.transform.GetChild(0).gameObject.GetComponent<Image>().sprite =
             Resources.Load<Sprite>("JHM.Img/" + "STATE_2_DRESS1");
             }
+
+            Json_Save_Rena_Data();
         }
     }
 
@@ -184,6 +198,15 @@ public class Rena_Manager : MonoBehaviour {
 
         is_Showing = false;
     }
+
+    // Json_Save Rena_Data
+    public void Json_Save_Rena_Data()
+    {
+        rena_Data = JsonMapper.ToJson(rena_Info);
+
+        File.WriteAllText(mobile_Path + "/" + "Rena_Data.json", rena_Data.ToString());
+    }
+
 } // class
 
 
