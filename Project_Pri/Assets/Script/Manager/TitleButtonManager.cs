@@ -65,6 +65,8 @@ public class TitleButtonManager : MonoBehaviour {
     public void CgModeButtonOn()
     {
         // cg모드 버튼
+        SceneManager.LoadScene("CGGallery");
+
     }
     public void OptionButtonOn()
     {

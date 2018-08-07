@@ -6,87 +6,15 @@ using LitJson;
 using System.IO;
 using System;
 
-public class Year
-{
-    private int id; // ID
-    private int game_year; // 년도
-    private int game_month; // 달
-    private int day1_min; // 상순 시작
-    private int day1_max; // 상순 끝
-    private int day2_min; // 중순 시작
-    private int day2_max; // 중순 끝
-    private int day3_min; // 하순 시작
-    private int day3_max; // 하순 끝
-    private List<int> daysList; // 일자 리스트
-
-    public Year(int id, int game_year, int game_month, 
-        int day1_min, int day1_max, int day2_min, int day2_max,
-        int day3_min, int day3_max, List<int> days)
-    {
-        this.id = id;
-        this.game_year = game_year;
-        this.game_month = game_month;
-        this.day1_min = day1_min;
-        this.day1_max = day1_max;
-        this.day2_min = day2_min;
-        this.day2_max = day2_max;
-        this.day3_min = day3_min;
-        this.day3_max = day3_max;
-        //daysList = days; // 얉은 복사 : days를 Clear하면 daysList도 Clear되버린다.
-        //Debug.Log("생성자안에서 : " + days.Count); // 42
-        daysList = new List<int>();
-
-        for(int i=0; i<days.Count; i++)
-        {
-            daysList.Add(days[i]); // 깊은 복사
-        }
-    }
-
-    public int GAME_YEAR
-    {
-        get { return game_year; }
-    }
-    public int GAME_MONTH
-    {
-        get { return game_month; }
-    }
-    public int DAY1_MIN
-    {
-        get { return day1_min; }
-    }
-    public int DAY1_MAX
-    {
-        get { return day1_max; }
-    }
-    public int DAY2_MIN
-    {
-        get { return day2_min; }
-    }
-    public int DAY2_MAX
-    {
-        get { return day2_max; }
-    }
-    public int DAY3_MIN
-    {
-        get { return day3_min; }
-    }
-    public int DAY3_MAX
-    {
-        get { return day3_max; }
-    }
-    public List<int> DAYSLIST
-    {
-        get { return daysList; }
-    }
-}
-
-
 public class Calendar : MonoBehaviour {
 
     private int currentYear; // 현재 년도
     private int currentMonth; // 현재 달
+    private int debugYear; // 디버그용 년도
+    private int debugMonth; // 디버그용 달
 
     private List<Year> yearList = new List<Year>();
+    private List<CalendarEvent> eventList = new List<CalendarEvent>();
 
     
     public Text[] dayTxts; // 36개
@@ -121,63 +49,33 @@ public class Calendar : MonoBehaviour {
         get { return currentMonth; }
     }
 
+    public int CurrentYear
+    {
+        get { return currentYear; }
+    }
+
+    public List<CalendarEvent> EventList
+    {
+        get { return eventList; }
+    }
+
 	// Use this for initialization
 	void Start () {
-        JsonLoader();
+        JsonCalendarLoad();
+        JsonCalendarEventLoad();
         currentYear = 190;
         currentMonth = 1;
+        debugYear = currentYear;
+        debugMonth = currentMonth;
         yearTxt2.text = currentYear.ToString();
         monthTxt2.text = currentMonth.ToString();
         ShowCalendar();
 	}
-	
-    public void IncreaseMonth()
-    {
-        if(currentYear == 197 && currentMonth == 1)
-        {
-            Debug.Log("마지막 날입니다.");
-            return;
-        }
-        if(currentMonth < 12)
-        {
-            currentMonth++;
-        }
-        else
-        {
-            currentMonth = 1;
-            currentYear++;
-            
-        }
-        yearTxt2.text = currentYear.ToString();
-        monthTxt2.text = currentMonth.ToString();
-    }
 
-    public void DecreaseMonth()
-    {
-        if(currentYear == 190 && currentMonth == 1)
-        {
-            Debug.Log("가장 첫해의 첫달입니다.");
-            return;
-        }
-
-        Debug.Log("가장 첫해의 첫달입니다.");
-        if (currentMonth > 0)
-        {
-            currentMonth--;
-        }
-        else
-        {
-            currentMonth = 12;
-            currentYear--;
-        }
-        yearTxt2.text = currentYear.ToString();
-        monthTxt2.text = currentMonth.ToString();
-    }
-
-    private void JsonLoader()
+    private void JsonCalendarLoad()
     {
         // 우선 Asset 폴더아래에 Resources 폴더안에 calendar Json 파일을 만들어 넣어야 한다.
-        TextAsset file = Resources.Load<TextAsset>("calendar"); // 확장자를 안쓴다.
+        TextAsset file = Resources.Load<TextAsset>("JsonDB/calendar"); // 확장자를 안쓴다.
         string JsonStrings = file.ToString();
         //Debug.Log(JsonStrings);
 
@@ -220,8 +118,134 @@ public class Calendar : MonoBehaviour {
         //Debug.Log(yearList[0].DAYSLIST.Count); // 42
     }
 
+    private void JsonCalendarEventLoad()
+    {
+        TextAsset file = Resources.Load<TextAsset>("JsonDB/calendarEvent");
+        string JsonStrings = file.ToString();
+        //Debug.Log(JsonStrings);
+
+        JsonData eventData = JsonMapper.ToObject(JsonStrings);
+        //Debug.Log("ID : " + eventData[1]["ID"]); // 25002
+        //Debug.Log("GAME_YEAR : " + eventData[1]["GAME_YEAR"]); // 190
+        //Debug.Log("GAME_MONTH : " + eventData[1]["GAME_MONTH"]); // 2
+        //Debug.Log("VACANCE_GG : " + eventData[0]["VACANCE_CG"]);
+
+        for (int i = 0; i < eventData.Count; i++)
+        {
+            CalendarEvent tmpEvent = new CalendarEvent(
+                JsonDataToInt(eventData[i]["ID"]),
+                JsonDataToInt(eventData[i]["GAME_YEAR"]),
+                JsonDataToInt(eventData[i]["GAME_MONTH"]),
+                eventData[i]["VACANCE_CG"].ToString()
+            );
+
+            eventList.Add(tmpEvent);
+        }
+
+        //Debug.Log(eventList.Count); // 85
+        //Debug.Log(eventList[0].ID);
+        //Debug.Log(eventList[0].GAME_YEAR);
+        //Debug.Log(eventList[0].GAME_MONTH);
+
+        //Debug.Log(eventList[1].ID); // 25002
+        //Debug.Log(eventList[1].GAME_YEAR); // 190
+        //Debug.Log(eventList[1].GAME_MONTH); // 2
+    }
+
+    public void IncreaseMonthDebug()
+    {
+        if (debugYear == 197 && debugMonth == 1)
+        {
+            Debug.Log("마지막 날입니다.");
+            return;
+        }
+        if (debugMonth < 12)
+        {
+            debugMonth++;
+        }
+        else
+        {
+            debugMonth = 1;
+            debugYear++;
+
+        }
+        yearTxt2.text = debugYear.ToString();
+        monthTxt2.text = debugMonth.ToString();
+    }
+
+    public void DecreaseMonthDebug()
+    {
+        if (debugYear == 190 && debugMonth == 1)
+        {
+            Debug.Log("가장 첫해의 첫달입니다.");
+            return;
+        }
+
+        if (debugMonth > 0)
+        {
+            debugMonth--;
+        }
+        else
+        {
+            debugMonth = 12;
+            debugYear--;
+        }
+        yearTxt2.text = debugYear.ToString();
+        monthTxt2.text = debugMonth.ToString();
+    }
+
+    public void IncreaseMonth()
+    {
+        if (currentYear == 197 && currentMonth == 1)
+        {
+            Debug.Log("마지막 날입니다.");
+            return;
+        }
+        if (currentMonth < 12)
+        {
+            currentMonth++;
+        }
+        else
+        {
+            currentMonth = 1;
+            currentYear++;
+
+        }
+        yearTxt.text = currentYear.ToString();
+        monthTxt.text = currentMonth.ToString();
+    }
+
+    public void DecreaseMonth()
+    {
+        if (currentYear == 190 && currentMonth == 1)
+        {
+            Debug.Log("가장 첫해의 첫달입니다.");
+            return;
+        }
+
+        if (currentMonth > 0)
+        {
+            currentMonth--;
+        }
+        else
+        {
+            currentMonth = 12;
+            currentYear--;
+        }
+        yearTxt2.text = currentYear.ToString();
+        monthTxt2.text = currentMonth.ToString();
+    }
+
+    public void ShowCalenderDebug()
+    {
+        currentYear = debugYear;
+        currentMonth = debugMonth;
+        ShowCalendar();
+    }
+
     public void ShowCalendar() // Json으로 받아온 날짜 출력
     {
+        
         yearTxt.text = currentYear.ToString();
         monthTxt.text = currentMonth.ToString();
 
@@ -307,13 +331,13 @@ public class Calendar : MonoBehaviour {
         lastStart = tmpYear.DAYSLIST.IndexOf(tmpYear.DAY3_MIN); // 하순 첫날 인덱스
         lastEnd = tmpYear.DAYSLIST.IndexOf(tmpYear.DAY3_MAX); // 하순 마지막날 인덱스
 
-        Debug.Log("DAY3_MAX : " + tmpYear.DAY3_MAX);
-        Debug.Log(firstStart);
-        Debug.Log(firstEnd);
-        Debug.Log(middleStart);
-        Debug.Log(middleEnd);
-        Debug.Log(lastStart);
-        Debug.Log(lastEnd);
+        //Debug.Log("DAY3_MAX : " + tmpYear.DAY3_MAX);
+        //Debug.Log(firstStart);
+        //Debug.Log(firstEnd);
+        //Debug.Log(middleStart);
+        //Debug.Log(middleEnd);
+        //Debug.Log(lastStart);
+        //Debug.Log(lastEnd);
 
         // 스케줄 이미지 처리
         for (int i = 0; i < dayImages.Length; i++)
