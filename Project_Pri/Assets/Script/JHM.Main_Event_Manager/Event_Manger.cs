@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using LitJson;
 using System.IO;
 
-public class Event_Manger : MonoBehaviour {
+public class Event_Manger : MonoBehaviour
+{
 
     public static Event_Manger instance = null;
 
@@ -19,6 +20,7 @@ public class Event_Manger : MonoBehaviour {
     public Transform text_Box_Pos_2;
     public Text text_Event_Count;
     public Text text_Dialog;
+
 
     public Event_State event_1;
     public Event_State event_2;
@@ -39,12 +41,12 @@ public class Event_Manger : MonoBehaviour {
 
     public bool is_Typing;
 
-    public string mobile_Path;
+    private string mobile_Path;
 
     public Char_Rena rena_Info;
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(this.gameObject);
         }
@@ -57,6 +59,8 @@ public class Event_Manger : MonoBehaviour {
     {
         mobile_Path = Application.persistentDataPath;
 
+        character_Rena.SetActive(false);
+
         dialog_Count = 0;
         count = 0;
         text_Around_Count = 0;
@@ -67,7 +71,7 @@ public class Event_Manger : MonoBehaviour {
         Json_File_Event_Table_Read_Only();
 
         Defualt_All_Event_State();
-      
+
         if (File.Exists(mobile_Path + "/" + "Rena_Data.json"))
         {
             string json_String = File.ReadAllText(mobile_Path + "/" + "Rena_Data.json");
@@ -199,10 +203,7 @@ public class Event_Manger : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         if ((int)event_Data[2]["EVENT_CHARACTER_COUNT"] == 1)
         {
-            GameObject rena = Instantiate(character_Rena);
-            rena.transform.SetParent(char_Spawn_Pos_1.transform);
-            rena.transform.localPosition = Vector3.zero;
-            rena.transform.localRotation = Quaternion.identity;
+            character_Rena.SetActive(true);
         }
         yield return new WaitForSeconds(2.5f);
         text_Around_Count += 6;
@@ -353,18 +354,18 @@ public class Event_Manger : MonoBehaviour {
             }
             if (event_3.trigger)
             {
-                if(dialog_Count <= (int)event_Data[1]["DIALOG_COUNT"])
+                if (dialog_Count <= (int)event_Data[1]["DIALOG_COUNT"])
                 {
                     dialog_Count++;
                     text_Around_Count++;
                     event_3.current++;
-                    if(dialog_Count == 2)
+                    if (dialog_Count == 2)
                     {
                         text_Box.SetActive(false);
                         if (event_3.current == event_3.complete)
                         {
                             bg_Event.SetActive(false);
-                            Destroy(char_Spawn_Pos_1.transform.GetChild(0).transform.gameObject);
+                            character_Rena.SetActive(false);
                         }
                         event_3.trigger = false;
                         event_3.event_State = 2;
@@ -429,12 +430,17 @@ public class Event_Manger : MonoBehaviour {
     // 케릭터 레나 현재 스타일 
     private void Created_Character_Rena_Style()
     {
-        GameObject rena_Body = character_Rena.transform.GetChild(0).transform.gameObject;
-        GameObject rena_Face = character_Rena.transform.GetChild(1).transform.gameObject;
-
-        if(rena_Info.old == 1 && rena_Info.state == 1)
+        if (rena_Info.old == 1 && rena_Info.state == 1)
         {
-            if(rena_Info.dress == 1)
+            character_Rena.transform.GetChild(0).gameObject.SetActive(true);
+            character_Rena.transform.GetChild(1).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(2).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(3).gameObject.SetActive(false);
+
+            GameObject rena_Body = character_Rena.transform.GetChild(0).transform.GetChild(0).transform.gameObject;
+            GameObject rena_Face = character_Rena.transform.GetChild(0).transform.GetChild(1).transform.gameObject;
+
+            if (rena_Info.dress == 1)
             {
                 rena_Body.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + "DRESS1");
             }
@@ -446,6 +452,14 @@ public class Event_Manger : MonoBehaviour {
         }
         if (rena_Info.old == 1 && rena_Info.state == 2)
         {
+            character_Rena.transform.GetChild(0).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(1).gameObject.SetActive(true);
+            character_Rena.transform.GetChild(2).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(3).gameObject.SetActive(false);
+
+            GameObject rena_Body = character_Rena.transform.GetChild(1).transform.GetChild(0).transform.gameObject;
+            GameObject rena_Face = character_Rena.transform.GetChild(1).transform.GetChild(1).transform.gameObject;
+
             if (rena_Info.dress == 1)
             {
                 rena_Body.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + "H1");
@@ -458,6 +472,13 @@ public class Event_Manger : MonoBehaviour {
         }
         if (rena_Info.old == 2 && rena_Info.state == 1)
         {
+            character_Rena.transform.GetChild(0).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(1).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(2).gameObject.SetActive(true);
+            character_Rena.transform.GetChild(3).gameObject.SetActive(false);
+
+            GameObject rena_Body = character_Rena.transform.GetChild(2).transform.GetChild(0).transform.gameObject;
+            GameObject rena_Face = character_Rena.transform.GetChild(2).transform.GetChild(1).transform.gameObject;
             if (rena_Info.dress == 1)
             {
                 rena_Body.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + "DRESS1_1");
@@ -470,6 +491,13 @@ public class Event_Manger : MonoBehaviour {
         }
         if (rena_Info.old == 2 && rena_Info.state == 2)
         {
+            character_Rena.transform.GetChild(0).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(1).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(2).gameObject.SetActive(false);
+            character_Rena.transform.GetChild(3).gameObject.SetActive(true);
+
+            GameObject rena_Body = character_Rena.transform.GetChild(3).transform.GetChild(0).transform.gameObject;
+            GameObject rena_Face = character_Rena.transform.GetChild(3).transform.GetChild(1).transform.gameObject;
             if (rena_Info.dress == 1)
             {
                 rena_Body.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + "STATE_2_DRESS2");

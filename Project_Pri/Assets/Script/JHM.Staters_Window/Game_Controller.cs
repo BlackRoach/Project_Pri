@@ -35,7 +35,7 @@ public class Game_Controller : MonoBehaviour
     private void Start()
     {
         Clicked_Button_Origin_Panel();
-
+        Clicked_Button_To_Condition_Panel_From_Load();
         // -------------------------
 
         count_One = 1;
