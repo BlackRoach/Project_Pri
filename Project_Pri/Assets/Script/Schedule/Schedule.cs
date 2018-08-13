@@ -248,8 +248,6 @@ public class Schedule : MonoBehaviour {
     private void executeSchedules() // 스케줄을 실행한다
     {
         //Debug.Log("day " + day);
-        string tmp = string.Empty;
-
         if (day >= decidedSchedules.Count)
         {
             Debug.Log("스케줄이 종료되었습니다.");

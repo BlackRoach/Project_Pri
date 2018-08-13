@@ -37,6 +37,10 @@ public class Year
             daysList.Add(days[i]); // 깊은 복사
         }
     }
+    public int ID
+    {
+        get { return id; }
+    }
 
     public int GAME_YEAR
     {

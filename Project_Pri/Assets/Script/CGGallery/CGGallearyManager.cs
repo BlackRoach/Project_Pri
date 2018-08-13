@@ -27,7 +27,7 @@ public class CGGallearyManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        CGManager cgm = FindObjectOfType<CGManager>();
+        //CGManager cgm = FindObjectOfType<CGManager>();
 
         //bCG1 = cgm.CgInfoList[0].IS_UNLOCK;
         //bCG2 = cgm.CgInfoList[1].IS_UNLOCK;
