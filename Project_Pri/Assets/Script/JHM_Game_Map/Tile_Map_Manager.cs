@@ -18,15 +18,20 @@ public class Tile_Map_Manager : MonoBehaviour {
 
     private TextAsset json_File;
     private JsonData load_Data;
+
+    private GameObject target_Map_3;
+    private GameObject target_Map_4;
+    private Transform Tile_Map_Parent;
+    private int current_Map;
     private void Start()
     {
-        tile_Map_3.SetActive(false);
-        tile_Map_4.SetActive(false);
-
+        current_Map = 0;
         count = 1;
         text_Count.text = count.ToString();
-
+        Tile_Map_Parent = GameObject.Find("Grid").transform;
         Defualt_Json_Data();
+
+
     }
     
     public void Add_One()
@@ -49,19 +54,29 @@ public class Tile_Map_Manager : MonoBehaviour {
 
     public void Button_Pressed_Tile_Map_Result()
     {
+        if(current_Map == 3)
+        {
+            Destroy(target_Map_3.gameObject);
+        } else if(current_Map == 4)
+        {
+            Destroy(target_Map_4.gameObject);
+        }
         string tile_Name = load_Data[count - 1]["TILEMAP_NAME"].ToString();
         if (count == 3 && tile_Name == load_Data[count - 1]["TILEMAP_NAME"].ToString())
         {
-            tile_Map_3.SetActive(true);
-            tile_Map_4.SetActive(false);
+            target_Map_3 = Instantiate(tile_Map_3);
+            target_Map_3.transform.SetParent(Tile_Map_Parent);
+            target_Map_3.transform.localPosition = Vector3.zero;
+            current_Map = count;
         }
         if (count == 4 && tile_Name == load_Data[count - 1]["TILEMAP_NAME"].ToString())
         {
-            tile_Map_3.SetActive(false);
-            tile_Map_4.SetActive(true);
+            target_Map_4 = Instantiate(tile_Map_4);
+            target_Map_4.transform.SetParent(Tile_Map_Parent);
+            target_Map_4.transform.localPosition = Vector3.zero;
+            current_Map = count;
         }
     }
-
 
 } // class
 
