@@ -18,5 +18,15 @@
     "ID": 55004,
     "TILEMAP_NAME": "TILEMAP_4",
     "TILEMAP_INFO": "4번 타일맵"
+  },
+  {
+    "ID": 55005,
+    "TILEMAP_NAME": "TILEMAP_5",
+    "TILEMAP_INFO": "5번 타일맵"
+  },
+  {
+    "ID": 55006,
+    "TILEMAP_NAME": "TILEMAP_6",
+    "TILEMAP_INFO": "6번 타일맵"
   }
 ]
