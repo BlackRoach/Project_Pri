@@ -7,22 +7,39 @@ using LitJson;
 
 public class Tile_Map_Manager : MonoBehaviour {
 
+    public static Tile_Map_Manager instance = null;
+
     public GameObject tile_Map_3;
     public GameObject tile_Map_4;
+    public GameObject tile_Map_5;
 
+    public GameObject prefab_Player;
     public Text text_Count;
+    public Transform Tile_Map_Parent;
 
-    [SerializeField]
-    private int count;
+
+    public int count;
 
 
     private TextAsset json_File;
     private JsonData load_Data;
 
-    private GameObject target_Map_3;
-    private GameObject target_Map_4;
-    private Transform Tile_Map_Parent;
-    private int current_Map;
+    public GameObject target_Map_3;
+    public GameObject target_Map_4;
+    public GameObject target_Map_5;
+    public int current_Map;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     private void Start()
     {
         current_Map = 0;
@@ -31,7 +48,7 @@ public class Tile_Map_Manager : MonoBehaviour {
         Tile_Map_Parent = GameObject.Find("Grid").transform;
         Defualt_Json_Data();
 
-
+        prefab_Player.SetActive(false);
     }
     
     public void Add_One()
@@ -61,6 +78,11 @@ public class Tile_Map_Manager : MonoBehaviour {
         {
             Destroy(target_Map_4.gameObject);
         }
+        else if(current_Map == 5)
+        {
+            Destroy(target_Map_5.gameObject);
+        }
+
         string tile_Name = load_Data[count - 1]["TILEMAP_NAME"].ToString();
         if (count == 3 && tile_Name == load_Data[count - 1]["TILEMAP_NAME"].ToString())
         {
@@ -68,6 +90,10 @@ public class Tile_Map_Manager : MonoBehaviour {
             target_Map_3.transform.SetParent(Tile_Map_Parent);
             target_Map_3.transform.localPosition = Vector3.zero;
             current_Map = count;
+
+            prefab_Player.SetActive(true);
+            prefab_Player.transform.position = new Vector3(1, 3, 0);
+            prefab_Player.transform.rotation = Quaternion.identity;
         }
         if (count == 4 && tile_Name == load_Data[count - 1]["TILEMAP_NAME"].ToString())
         {
@@ -76,6 +102,20 @@ public class Tile_Map_Manager : MonoBehaviour {
             target_Map_4.transform.localPosition = Vector3.zero;
             current_Map = count;
         }
+        if(count == 5 && tile_Name == load_Data[count - 1]["TILEMAP_NAME"].ToString())
+        {
+            target_Map_5 = Instantiate(tile_Map_5);
+            target_Map_5.transform.SetParent(Tile_Map_Parent);
+            target_Map_5.transform.localPosition = Vector3.zero;
+            current_Map = count;
+
+            prefab_Player.SetActive(true);
+            prefab_Player.transform.position = new Vector3(1, -7, 0);
+            prefab_Player.transform.rotation = Quaternion.identity;
+        }
+
+        
+
     }
 
 } // class
