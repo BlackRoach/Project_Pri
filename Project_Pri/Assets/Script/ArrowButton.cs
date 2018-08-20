@@ -15,19 +15,21 @@ public class ArrowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         //Debug.Log("OnPointerDown"); // 게임오브젝트 범위 안에서 마우스 버튼을 눌렀을 때
         bMovable = true;
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         //Debug.Log("OnPointerUp"); // 게임오브젝트 범위 안에서 마우스 버튼을 땠을 때
         bMovable = false;
+        mainActor.Stop();
     }
 
 
     public void OnPointerExit(PointerEventData eventData)
     {
         //Debug.Log("OnPointerExit"); // 게임오브젝트 범위 안에서 나갔을 때
-        bMovable = false;
+        //bMovable = false;
     }
 
     // Use this for initialization
@@ -37,10 +39,12 @@ public class ArrowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 	
 	// Update is called once per frame
 	void Update () {
-		if(bMovable)
+        if (bMovable)
         {
             mainActor.Move(moveDirection);
         }
+
+        //Debug.Log(bMovable);
 	}
 
 

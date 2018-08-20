@@ -49,7 +49,7 @@ public class TileMapLoader : MonoBehaviour {
     {
         
         string id = "5500" + tilemapNum; // 찾는 아이디 번호
-        //Debug.Log(id);
+        Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
         {
             if (loadData[i]["ID"].ToString() == id)
