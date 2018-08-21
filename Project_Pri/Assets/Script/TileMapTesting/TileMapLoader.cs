@@ -49,7 +49,7 @@ public class TileMapLoader : MonoBehaviour {
     {
         
         string id = "5500" + tilemapNum; // 찾는 아이디 번호
-        Debug.Log(id);
+        //Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
         {
             if (loadData[i]["ID"].ToString() == id)
@@ -83,6 +83,34 @@ public class TileMapLoader : MonoBehaviour {
     {
         Destroy(currentTileMap);
 
+    }
+
+    public void ChangeMap(int mapID)
+    {
+        Destroy(currentTileMap);
+
+        string id = mapID.ToString(); // 찾는 아이디 번호
+        //Debug.Log(id);
+        for (int i = 0; i < loadData.Count; i++)
+        {
+            if (loadData[i]["ID"].ToString() == id)
+            {
+                tilemapName = loadData[i]["TILEMAP_NAME"].ToString();
+            }
+        }
+
+        // tile은 Asset 폴더 안에 있는 원본이다.
+        GameObject tile = Resources.Load<GameObject>("Prefabs/KIM.TileMap/" + tilemapName);
+        if (tile != null)
+        {
+            currentTileMap = Instantiate(tile, Grid.transform);
+        }
+        else
+        {
+            Debug.Log("맵이 존재하지 않습니다.");
+        }
+        // 현재맵을 지운다.
+        // 새맵을 불러온다.
     }
 
     // Json에서 타일맵 리스트 데이터를 불러온다. 
