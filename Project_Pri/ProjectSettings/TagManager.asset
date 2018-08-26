@@ -7,6 +7,10 @@ TagManager:
   - Monster
   - Teleport
   - QuestPanel
+  - TrakingArea
+  - obstacle
+  - GridBox
+  - checkBox
   layers:
   - Default
   - TransparentFX
@@ -16,8 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Block
+  - Ground
   - 
   - 
   - 

@@ -10,7 +10,7 @@ public class Monster : InteractionObject, IInteractive
         inGameManager = InGamemanager.Instance;
 	}
 
-  
+
     protected override void OnTriggerExit2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
