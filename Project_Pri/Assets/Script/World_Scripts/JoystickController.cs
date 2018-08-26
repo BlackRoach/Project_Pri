@@ -24,9 +24,13 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
 
     private void Awake()
     {
+     
         //playerManager = InGameManager.Instance.PlayerDataContainer_readonly._PlayerManager;
     }
-
+    private void OnEnable()
+    {
+        InitPos();
+    }
     public virtual void OnDrag(PointerEventData ped)
     {
 

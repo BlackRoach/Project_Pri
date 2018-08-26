@@ -40,8 +40,6 @@ public class InteractionObject : MonoBehaviour, IInteractive
     {
         if (col.CompareTag("Player"))
         {
-          
-
             playerInteraction._Interaction_Object = null;
         }
     }

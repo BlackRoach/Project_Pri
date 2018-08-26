@@ -35,6 +35,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] enemys;
     private GameObject presentlyAttackChar;
+  [SerializeField]  private InGamemanager ingameManager;
     private float fillamount;
     private float currentCoolTime;
     private float cooltime = 10f;
@@ -46,6 +47,7 @@ public class BattleManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ingameManager = InGamemanager.Instance;
         resultWindow.SetActive(false);
     }
     
@@ -156,7 +158,11 @@ public class BattleManager : MonoBehaviour
     }
     public void BackToWorld()
     {
+        ingameManager.opponent.SetActive(false);
+        ingameManager.TurnOnWorldObjects();
+        ingameManager.isRespawn = true;
         SceneManager.LoadScene("WorldMap");
+       
     }
 }
 

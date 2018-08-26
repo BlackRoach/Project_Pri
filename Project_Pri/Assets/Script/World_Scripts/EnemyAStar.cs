@@ -3,30 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-/* 		Author : Saad Khawaja
-	 *  http://www.saadkhawaja.com
-	 * 	http://www.twitter.com/saadskhawaja
-
-	 *     This file is part of Grid Based A* - Tower Defense.
-
-		    Grid Based A* - Tower Defense is free software: you can redistribute it and/or modify
-		    it under the terms of the GNU General Public License as published by
-		    the Free Software Foundation, either version 3 of the License, or
-		    (at your option) any later version.
-
-		    Grid Based A* - Tower Defense is distributed in the hope that it will be useful,
-		    but WITHOUT ANY WARRANTY; without even the implied warranty of
-		    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		    GNU General Public License for more details.
-
-
-	 * 
-*/
 
 public class EnemyAStar : MonoBehaviour {
 
 
     public GameManager Game;
+  
     public MyPathNode nextNode;
     bool gray = false;
     public MyPathNode[,] grid;
@@ -119,10 +101,13 @@ public class EnemyAStar : MonoBehaviour {
         startx = x;
         starty = y;
     }
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 		myColor = getRandomColor();
 
@@ -132,6 +117,11 @@ public class EnemyAStar : MonoBehaviour {
 
         StartCoroutine(ChangeState());
 
+    }
+    private void OnEnable()
+    {
+        if(!isTracing)
+           StartCoroutine(ChangeState());
     }
 
     void InitPath()
@@ -216,21 +206,21 @@ public class EnemyAStar : MonoBehaviour {
         endGridPosition = new gridPosition(Game.targetx, Game.targety);
         quadrant = xpoint > 0 ? (ypoint > 0 ? 1 : 4) : (ypoint > 0 ? 2 : 3);
 
-        
-       
-        if (isMoving) {
+        this.gameObject.transform.GetComponentInChildren<Transform>().position = this.gameObject.transform.position;
+        if (!isTracing)
+        {
+
+            transform.position += moveVelocity * speed * Time.deltaTime;
+
+        }
+        else if (isMoving) {
             isTracing = true;
             initializePosition(startx, starty);
             InitPath();
             StopAllCoroutines();
 			StartCoroutine(move());
 		}
-        else if(!isTracing)
-        {
-           
-            transform.position += moveVelocity * speed * Time.deltaTime;
-
-        }
+       
     }
 
 
@@ -360,7 +350,12 @@ public class EnemyAStar : MonoBehaviour {
 		return new Vector2(posX,posY);	
 		
 	}
-	
+	public void JustInitPosition(int x, int y)
+    {
+        this.gameObject.transform.position = getGridPosition(x, y);
+        currentGridPosition.x = x;
+        currentGridPosition.y = y;
+    }
 	
 	public void initializePosition(int x, int y)
 	{
@@ -427,8 +422,10 @@ public class EnemyAStar : MonoBehaviour {
                 StopAllCoroutines();
 
                 StartCoroutine(ChangeState());
-               
+                isTracing = false;
             }
+            else
+                isTracing = true;
 
         }
         else if (quadrant == 2)
@@ -438,9 +435,10 @@ public class EnemyAStar : MonoBehaviour {
             {
                 StopCoroutine(move());
                 StartCoroutine(ChangeState());
-                
+                isTracing = false;
             }
-
+            else
+                isTracing = true;
         }
         else if (quadrant == 3)
         {
@@ -448,9 +446,10 @@ public class EnemyAStar : MonoBehaviour {
             {
                 StopAllCoroutines();
                 StartCoroutine(ChangeState());
-             
+                isTracing = false;
             }
-
+            else
+                isTracing = true;
         }
         else if (quadrant == 4)
         {
@@ -458,9 +457,10 @@ public class EnemyAStar : MonoBehaviour {
             {
                 StopAllCoroutines();
                 StartCoroutine(ChangeState());
-              
+                isTracing = false;
             }
-
+            else
+                isTracing = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -470,6 +470,7 @@ public class EnemyAStar : MonoBehaviour {
             traceTarget = collision.gameObject;
             StopAllCoroutines();
             isMoving = true;
+            isTracing = true;
         }
       
     }

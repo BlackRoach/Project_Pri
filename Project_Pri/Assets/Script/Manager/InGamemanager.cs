@@ -16,6 +16,7 @@ public class InGamemanager : MonoBehaviour
     }
     private void Awake()
     {
+       
         if (instance)
         {
             DestroyImmediate(gameObject);
@@ -37,17 +38,19 @@ public class InGamemanager : MonoBehaviour
 
     [SerializeField] private GameObject worldUI;
 
-    [SerializeField] private Camera WorldCamera;
+    [SerializeField] private GameObject WorldCamera;
 
     private QuestManager questManager;
 
     public Text nameText;
     public Text scoreText;
 
- 
+    public GameObject opponent;
 
     public Transform[] trans_list;
     public int[] position_money;
+
+    public bool isRespawn = false;
 
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
@@ -66,16 +69,30 @@ public class InGamemanager : MonoBehaviour
 
     void Update()
     {
+        if (isRespawn)
+        {
+            isRespawn = false;
+            StartCoroutine(ReSpawnMonster(opponent));
 
+        }
     }
 
 
     public void BattleButton()
     {
+        WorldCamera.SetActive(false); 
+        worldObjects.SetActive(false);
+        worldUI.SetActive(false);
+        DontDestroyOnLoad(this);
         SceneManager.LoadScene("BattleScene");
    
     }
-
+    public void TurnOnWorldObjects()
+    {
+        WorldCamera.SetActive(true);
+        worldObjects.SetActive(true);
+        worldUI.SetActive(true);
+    }
 
 
    
@@ -143,5 +160,12 @@ public class InGamemanager : MonoBehaviour
         infoButtons.SetActive(false);
     }
     
-
+    public IEnumerator ReSpawnMonster(GameObject monster)
+    {
+        EnemyAStar enemyAstar = monster.GetComponent<EnemyAStar>();
+        enemyAstar.JustInitPosition(enemyAstar.spawnx, enemyAstar.spawny);
+        yield return new WaitForSeconds(15f);
+        monster.SetActive(true);
+        yield return null;
+    }
 }

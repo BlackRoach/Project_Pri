@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : InteractionObject, IInteractive
+public class Monster : MonoBehaviour
 {
     private InGamemanager inGameManager;
 	// Use this for initialization
@@ -10,24 +10,20 @@ public class Monster : InteractionObject, IInteractive
         inGameManager = InGamemanager.Instance;
 	}
 
-
-    protected override void OnTriggerExit2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            base.OnTriggerExit2D(col);
-            inGameManager.CloseBattleWindow();
-            inGameManager.EnableInfoButton();
+            inGameManager.opponent = this.transform.parent.gameObject;
+            inGameManager.BattleButton();
         }
     }
+   
     // Update is called once per frame
     void Update () {
 		
 	}
  
-    void IInteractive.Interaction()
-    {
-        inGameManager.OpenBattleWindow();
-    }
+    
     
 }

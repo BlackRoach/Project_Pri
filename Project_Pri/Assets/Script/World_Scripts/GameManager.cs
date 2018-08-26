@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 public class GameManager : MonoBehaviour {
-
-
+   
 	public MyPathNode[,] grid;
 	public GameObject enemy;
 	public GameObject gridBox;
@@ -21,14 +20,15 @@ public class GameManager : MonoBehaviour {
     public int targetx;
     public int targety;
 
-   
+
+    [SerializeField] private GameObject WorldObject;
 
     //This is what you need to show in the inspector.
     public static int distance = 2;
 
 
 	void Start () {
-	
+      
 	
 		//Generate a grid - nodes according to the specified size
 		grid = new MyPathNode[gridWidth, gridHeight];
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour {
 	void createEnemy(int x,int y)
 	{
 		GameObject nb = (GameObject)GameObject.Instantiate (enemy);
+        nb.transform.parent = WorldObject.transform;
         nb.GetComponent<EnemyAStar>().spawnx = x;
         nb.GetComponent<EnemyAStar>().spawnx = y;
         nb.SetActive (true);

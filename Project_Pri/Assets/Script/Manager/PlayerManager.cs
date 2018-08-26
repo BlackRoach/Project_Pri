@@ -8,14 +8,17 @@ public class PlayerManager : MonoBehaviour {
     {
         get
         {
-            if (instance)
-                return instance;
-            else
-                return instance = new GameObject("*Manager").AddComponent<PlayerManager>();
+            return instance;
+
         }
     }
     private void Awake()
     {
+        if (instance)
+        {
+            DestroyImmediate(gameObject.GetComponent<PlayerManager>());
+            return;
+        }
         instance = this;
     }
     [SerializeField] private PlayerInteraction playerInteraction;
