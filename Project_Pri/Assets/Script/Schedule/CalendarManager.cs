@@ -9,10 +9,11 @@ public class CalendarManager : MonoBehaviour {
     public static CalendarManager instance;
 
     private int currentYear;    // 년
-    private int currentMonth;   // 월
+    private int currentMonth;   // 숫자월
+    private string currentStrMonth; // 글자월
     private int currentDate;    // 일
     private string currentDay;  // 요일
-
+    
     public int CurrentYear
     {
         get { return currentYear; }
@@ -22,6 +23,11 @@ public class CalendarManager : MonoBehaviour {
     {
         get { return currentMonth; }
         set { currentMonth = value; }
+    }
+    public string CurrentStrMonth
+    {
+        get { return currentStrMonth; }
+        set { currentStrMonth = value; }
     }
     public int CurrentDate
     {
@@ -49,18 +55,50 @@ public class CalendarManager : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        GAME_CALENDAR_LOAD();
+        GAME_WAHT_DAY_LOAD();
 
-        currentYear = 192;
-        currentMonth = 3;
-        currentDate = 17;
-        currentDay = "TUE";
+        currentYear = yearList[0].GAME_YEAR;
+        //currentMonth = yearList[0].GAME_MONTH;
+        currentMonth = 11;
+        currentStrMonth = GetCurrentStrMonth();
+        currentDate = yearList[0].DAYSLIST[0];
+        currentDay = GetCurrentDay();
     }
 
     // Use this for initialization
     void Start () {
-        GAME_CALENDAR_LOAD();
-        GAME_WAHT_DAY_LOAD();
+      
 	}
+
+    public string GetCurrentStrMonth()
+    {
+        bool bFind;
+        for(int i = 0; i < dayList.Count; i++)
+        {
+            bFind = dayList[i].YEAR == currentYear && dayList[i].MONTH == currentMonth;
+            if(bFind)
+            {
+                return dayList[i].WHAT_MONTH;
+            }
+        }
+        return "Nothing";
+    }
+
+    public string GetCurrentDay()
+    {
+        bool bFind;
+        for(int i = 0; i < dayList.Count; i++)
+        {
+            bFind = dayList[i].YEAR == currentYear && dayList[i].MONTH == currentMonth
+                && dayList[i].CALENDAR_DAY == currentDate;
+            if(bFind)
+            {
+                return dayList[i].WHAT_DAY;
+            }
+        }
+        return "Nothing";
+    }
 
     private int JsonDataToInt(JsonData json)
     {

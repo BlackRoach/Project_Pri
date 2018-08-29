@@ -241,6 +241,7 @@ public class ScheduleManager : MonoBehaviour {
                 + (day + 1) + "일, ";
             DetailsText.text += decidedActivities[day].title + " 활동을 하였는데..";
             CalendarManager.instance.CurrentDate = day + 1;
+            CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();
             infoPanel.ShowDateInfo();
             day++;
         }
@@ -251,7 +252,20 @@ public class ScheduleManager : MonoBehaviour {
             decidedActivities.Clear();
             ClearSchedule();
             CancelInvoke("RunSchedule");
-
+            CalendarManager.instance.CurrentDate = 1;
+            int currentMonth = CalendarManager.instance.CurrentMonth;
+            if(currentMonth >= 12)
+            {
+                CalendarManager.instance.CurrentMonth = 1;
+                CalendarManager.instance.CurrentYear++;
+            }
+            else
+            {
+                CalendarManager.instance.CurrentMonth++;
+            }
+            CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();
+            CalendarManager.instance.CurrentStrMonth = CalendarManager.instance.GetCurrentStrMonth();
+            ChangeScene("Main");
         }
         
     }

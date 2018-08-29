@@ -22,5 +22,30 @@ public class CalendarWhatDay
         this.whatMonth = whatMonth;
     }
 
+    public int ID
+    {
+        get { return id; }
+    }
+    public int YEAR
+    {
+        get { return year; }
+    }
+    public int MONTH
+    {
+        get { return month; }
+    }
+    public int CALENDAR_DAY
+    {
+        get { return calendarDay; }
+    }
+    public string WHAT_DAY
+    {
+        get { return whatDay; }
+    }
+    public string WHAT_MONTH
+    {
+        get { return whatMonth; }
+    }
+
 
 }

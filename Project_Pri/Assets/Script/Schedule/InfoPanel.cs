@@ -17,7 +17,7 @@ public class InfoPanel : MonoBehaviour {
 
     public void ShowDateInfo()
     {
-        Month.text = CalendarManager.instance.CurrentMonth.ToString();
+        Month.text = CalendarManager.instance.CurrentStrMonth;
         Day.text = CalendarManager.instance.CurrentDay.ToString();
         Date.text = CalendarManager.instance.CurrentDate.ToString();
         Year.text = CalendarManager.instance.CurrentYear.ToString();
