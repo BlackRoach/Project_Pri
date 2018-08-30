@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
-using System.IO;
 using System;
 
 public class Calendar : MonoBehaviour {
@@ -38,22 +37,18 @@ public class Calendar : MonoBehaviour {
     {
         get { return lastStart; }
     }
-
     public int LastEnd
     {
         get { return lastEnd; }
     }
-    
     public int CurrentMonth
     {
         get { return currentMonth; }
     }
-
     public int CurrentYear
     {
         get { return currentYear; }
     }
-
     public List<CalendarEvent> EventList
     {
         get { return eventList; }
@@ -75,7 +70,7 @@ public class Calendar : MonoBehaviour {
     private void JsonCalendarLoad()
     {
         // 우선 Asset 폴더아래에 Resources 폴더안에 calendar Json 파일을 만들어 넣어야 한다.
-        TextAsset file = Resources.Load<TextAsset>("JsonDB/calendar"); // 확장자를 안쓴다.
+        TextAsset file = Resources.Load<TextAsset>("JsonDB/GAME_CALENDAR"); // 확장자를 안쓴다.
         string JsonStrings = file.ToString();
         //Debug.Log(JsonStrings);
 
@@ -92,7 +87,7 @@ public class Calendar : MonoBehaviour {
         {
             for (int j = 1; j <= 42; j++) // 한행의 1일 ~ 42일에 접근
             {
-                // DAY? 에 접근해서 String으로 변환후 Int로후 변환 임시 리스트에 Add
+                // DAY? 에 접근해서 String으로 변환후 Int로 변환후 임시 리스트에 Add
                 int tmpOneDay = JsonDataToInt(yearData[i]["DAY" + j.ToString()]);
                 tmpDays.Add(tmpOneDay);
             }
@@ -303,6 +298,7 @@ public class Calendar : MonoBehaviour {
         Debug.Log(JsonStrings);
     }
 
+    // Calendar의  DrawSchedule()에서 호출한다.
     public void PreviewSchedule(List<string> schedules) 
     {
         // 달력에 예약할 스케줄을 미리 표시한다.
@@ -314,8 +310,8 @@ public class Calendar : MonoBehaviour {
         for (int i = 0; i < yearList.Count; i++) // 년도를 쭉 검색한다.
         {
             // 현재년도와 현재달에 해당하는 Year 인스턴스를 찾는다.
-            if (currentYear == yearList[i].GAME_YEAR &&
-                currentMonth == yearList[i].GAME_MONTH)
+            if (yearList[i].GAME_YEAR == currentYear &&
+                yearList[i].GAME_MONTH  == currentMonth)
             {
                 //Debug.Log("1");
                 //Debug.Log(yearList[i].DAYSLIST.Count);
@@ -324,6 +320,7 @@ public class Calendar : MonoBehaviour {
             }
         }
         // 상순, 중순, 하순에 해당하는 날짜를 알아낸다.
+        // IndexOf(T) : 제일 처음 만나는 T의 인덱스 값을 반환한다.
         firstStart = tmpYear.DAYSLIST.IndexOf(tmpYear.DAY1_MIN); // 상순 첫날 인덱스
         firstEnd = tmpYear.DAYSLIST.IndexOf(tmpYear.DAY1_MAX); // 상순 마지막날 인덱스
         middleStart = tmpYear.DAYSLIST.IndexOf(tmpYear.DAY2_MIN); // 중순 첫날 인덱스

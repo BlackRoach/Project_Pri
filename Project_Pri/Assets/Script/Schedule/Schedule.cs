@@ -45,11 +45,6 @@ public class Schedule : MonoBehaviour {
         //selectedSchedules[0].GetComponent<Image>().sprite =
         //    Resources.Load<Sprite>("Sprite/CGGallery/" + "VACANCE_CG_1");
     }
-	
-	// Update is called once per frame
-	void Update () {
-	   	
-	}
 
     public void AddSchedule(int i) // 스케줄 추가
     {
@@ -232,8 +227,8 @@ public class Schedule : MonoBehaviour {
         for (int i = 0; i < 10; i++) // 중순 스케줄 저장
             decidedSchedules.Add(schedules[1]);
 
-        int last10day = calendar.LastEnd - calendar.LastStart + 1; // 첫날도 포함 (+1)
-        for (int i = 0; i < last10day; i++) // 하순 스케줄 저장
+        int lastdays = calendar.LastEnd - calendar.LastStart + 1; // 첫날도 포함 (+1)
+        for (int i = 0; i < lastdays; i++) // 하순 스케줄 저장
             decidedSchedules.Add(schedules[2]);
         //Debug.Log(calendar.LastEnd);
         //Debug.Log(calendar.LastStart);
