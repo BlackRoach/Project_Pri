@@ -6272,6 +6272,7 @@ MonoBehaviour:
   - {fileID: 623528084}
   - {fileID: 1922402635}
   position_money: 
+  isRespawn: 0
 --- !u!114 &1537399563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6309,7 +6310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 58340329}
   gridBox: {fileID: 2051839912}
-  gridWidth: 14
+  gridWidth: 15
   gridHeight: 10
   spawnx: 
   spawny: 

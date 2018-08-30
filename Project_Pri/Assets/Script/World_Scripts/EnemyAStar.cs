@@ -215,6 +215,7 @@ public class EnemyAStar : MonoBehaviour {
         }
         else if (isMoving) {
             isTracing = true;
+            moveVelocity = Vector3.zero;
             initializePosition(startx, starty);
             InitPath();
             StopAllCoroutines();
@@ -414,54 +415,54 @@ public class EnemyAStar : MonoBehaviour {
         ypoint = playerpos.y - transform.position.y;
         distance = Vector2.Distance(playerpos, transform.position);
 
-        if (quadrant == 1)
-        {
+        //if (quadrant == 1)
+        //{
 
-            if (up.tag == "obstacle" && right.tag == "obstacle")
-            {
-                StopAllCoroutines();
+        //    if (up.tag == "obstacle" && right.tag == "obstacle")
+        //    {
+        //        StopAllCoroutines();
 
-                StartCoroutine(ChangeState());
-                isTracing = false;
-            }
-            else
-                isTracing = true;
+        //        StartCoroutine(ChangeState());
+        //        isTracing = false;
+        //    }
+        //    else
+        //        isTracing = true;
 
-        }
-        else if (quadrant == 2)
-        {
+        //}
+        //else if (quadrant == 2)
+        //{
 
-            if (up.tag == "obstacle" && left.tag == "obstacle")
-            {
-                StopCoroutine(move());
-                StartCoroutine(ChangeState());
-                isTracing = false;
-            }
-            else
-                isTracing = true;
-        }
-        else if (quadrant == 3)
-        {
-            if (down.tag == "obstacle" && left.tag == "obstacle")
-            {
-                StopAllCoroutines();
-                StartCoroutine(ChangeState());
-                isTracing = false;
-            }
-            else
-                isTracing = true;
-        }
-        else if (quadrant == 4)
-        {
-            if (down.tag == "obstacle" && right.tag == "obstacle")
-            {
-                StopAllCoroutines();
-                StartCoroutine(ChangeState());
-                isTracing = false;
-            }
-            else
-                isTracing = true;
-        }
+        //    if (up.tag == "obstacle" && left.tag == "obstacle")
+        //    {
+        //        StopCoroutine(move());
+        //        StartCoroutine(ChangeState());
+        //        isTracing = false;
+        //    }
+        //    else
+        //        isTracing = true;
+        //}
+        //else if (quadrant == 3)
+        //{
+        //    if (down.tag == "obstacle" && left.tag == "obstacle")
+        //    {
+        //        StopAllCoroutines();
+        //        StartCoroutine(ChangeState());
+        //        isTracing = false;
+        //    }
+        //    else
+        //        isTracing = true;
+        //}
+        //else if (quadrant == 4)
+        //{
+        //    if (down.tag == "obstacle" && right.tag == "obstacle")
+        //    {
+        //        StopAllCoroutines();
+        //        StartCoroutine(ChangeState());
+        //        isTracing = false;
+        //    }
+        //    else
+        //        isTracing = true;
+        //}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -480,6 +481,10 @@ public class EnemyAStar : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             isMoving = false;
+            if (isMoving == true)
+                isMoving = false;
+            else if (isTracing && isMoving)
+                StartCoroutine(move());
         }
 
     }
