@@ -17,14 +17,4 @@ public class CGSlot : MonoBehaviour, IPointerDownHandler
             FindObjectOfType<CGGallearyManager>().ShowFullSizeCG(image);
         }
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

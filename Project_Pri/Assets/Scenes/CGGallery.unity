@@ -837,7 +837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1009406448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1447,7 +1447,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1840703428205916, guid: 2eb5aaa7d7fd65c45aadc77c99c15766, type: 2}
       propertyPath: m_Name
-      value: CGManager111
+      value: CGManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2eb5aaa7d7fd65c45aadc77c99c15766, type: 2}

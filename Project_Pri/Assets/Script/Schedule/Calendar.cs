@@ -115,15 +115,12 @@ public class Calendar : MonoBehaviour {
 
     private void JsonCalendarEventLoad()
     {
-        TextAsset file = Resources.Load<TextAsset>("JsonDB/calendarEvent");
+        TextAsset file = Resources.Load<TextAsset>("JsonDB/CALENDAR_EVENT");
         string JsonStrings = file.ToString();
         //Debug.Log(JsonStrings);
 
         JsonData eventData = JsonMapper.ToObject(JsonStrings);
         //Debug.Log("ID : " + eventData[1]["ID"]); // 25002
-        //Debug.Log("GAME_YEAR : " + eventData[1]["GAME_YEAR"]); // 190
-        //Debug.Log("GAME_MONTH : " + eventData[1]["GAME_MONTH"]); // 2
-        //Debug.Log("VACANCE_GG : " + eventData[0]["VACANCE_CG"]);
 
         for (int i = 0; i < eventData.Count; i++)
         {
@@ -131,20 +128,15 @@ public class Calendar : MonoBehaviour {
                 JsonDataToInt(eventData[i]["ID"]),
                 JsonDataToInt(eventData[i]["GAME_YEAR"]),
                 JsonDataToInt(eventData[i]["GAME_MONTH"]),
-                eventData[i]["VACANCE_CG"].ToString()
+                eventData[i]["VACANCE_CG"].ToString(),
+                JsonDataToInt(eventData[i]["FESTIVAL_EVENT"])
             );
 
             eventList.Add(tmpEvent);
         }
 
         //Debug.Log(eventList.Count); // 85
-        //Debug.Log(eventList[0].ID);
-        //Debug.Log(eventList[0].GAME_YEAR);
-        //Debug.Log(eventList[0].GAME_MONTH);
-
-        //Debug.Log(eventList[1].ID); // 25002
-        //Debug.Log(eventList[1].GAME_YEAR); // 190
-        //Debug.Log(eventList[1].GAME_MONTH); // 2
+        //Debug.Log(eventList[0].FESTIVAL_EVENT);
     }
 
     public void IncreaseMonthDebug()
@@ -276,7 +268,6 @@ public class Calendar : MonoBehaviour {
             // 현재년도와 현재달에 해당하는 자료를 찾는다.
             if (currentYear == yearList[i].GAME_YEAR && currentMonth == yearList[i].GAME_MONTH)
             {
-                //Debug.Log("1");
                 //Debug.Log(yearList[i].DAYSLIST.Count);
                 tmpDays = yearList[i].DAYSLIST; // 리스트 복사
                 break; // For문을 빠져나온다.
@@ -330,11 +321,6 @@ public class Calendar : MonoBehaviour {
 
         //Debug.Log("DAY3_MAX : " + tmpYear.DAY3_MAX);
         //Debug.Log(firstStart);
-        //Debug.Log(firstEnd);
-        //Debug.Log(middleStart);
-        //Debug.Log(middleEnd);
-        //Debug.Log(lastStart);
-        //Debug.Log(lastEnd);
 
         // 스케줄 이미지 처리
         for (int i = 0; i < dayImages.Length; i++)
