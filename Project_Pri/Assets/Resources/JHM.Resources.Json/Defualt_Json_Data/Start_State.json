@@ -1,0 +1,25 @@
+[
+  {
+    "ID": 10101,
+    "NAME": "START_STATE",
+    "MUSCULAR_STRENGTH": 8,
+    "MAGIC_POWER": 5,
+    "INTEELECT": 10,
+    "CHARM": 12,
+    "SENSE": 15,
+    "RELIABILITY": 14,
+    "PRIDE": 13,
+    "STRESS": 0,
+    "ARTISTIC": 9,
+    "ELEGANCE": 6,
+    "MORALITY": 10,
+    "STAMINA": 12,
+    "OFFENSE_POWER": 4,
+    "ARMOR": 0,
+    "MAGIC_ATTACK_POWER": 5,
+    "MAGICAL_RESISTANCE": 0,
+    "ATTACK_SPEED": 5,
+    "FULL_HP": 20,
+    "FULL_MP": 15
+  }
+]
