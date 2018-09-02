@@ -33,6 +33,10 @@ public class TurnToWall : MonoBehaviour {
 
 
         }
+        else if (collision.gameObject.tag == "MonsterSpawn")
+        {
+            Game.spawnpos.Add(this.gameObject.transform.parent.gameObject);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

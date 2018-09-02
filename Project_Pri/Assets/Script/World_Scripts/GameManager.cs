@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour {
 	public MyPathNode[,] grid;
 	public GameObject enemy;
 	public GameObject gridBox;
+    public List<GameObject> spawnpos;
 	public int gridWidth;
 	public int gridHeight;
+    public int monsterNum;
 
     public int[] spawnx;
     public int[] spawny;
@@ -26,32 +28,33 @@ public class GameManager : MonoBehaviour {
     //This is what you need to show in the inspector.
     public static int distance = 2;
 
+    string[] splitter = new string[2];
 
-	void Start () {
-      
-	
-		//Generate a grid - nodes according to the specified size
-		grid = new MyPathNode[gridWidth, gridHeight];
+    void Start() {
 
-		for (int x = 0; x < gridWidth; x++) {
-			for (int y = 0; y < gridHeight; y++) {
-				//Boolean isWall = ((y % 2) != 0) && (rnd.Next (0, 10) != 8);
-				Boolean isWall = false;
-				grid [x, y] = new MyPathNode ()
-				{
-					IsWall = isWall,
-					X = x,
-					Y = y,
-				};
-			}
-		}
 
-		//instantiate grid gameobjects to display on the scene
-		createGrid ();
+        //Generate a grid - nodes according to the specified size
+        grid = new MyPathNode[gridWidth, gridHeight];
 
-		//instantiate enemy object
-		createEnemy(2,4);
-        createEnemy(7,6);
+        for (int x = 0; x < gridWidth; x++) {
+            for (int y = 0; y < gridHeight; y++) {
+                //Boolean isWall = ((y % 2) != 0) && (rnd.Next (0, 10) != 8);
+                Boolean isWall = false;
+                grid[x, y] = new MyPathNode()
+                {
+                    IsWall = isWall,
+                    X = x,
+                    Y = y,
+                };
+            }
+        }
+
+        //instantiate grid gameobjects to display on the scene
+        createGrid();
+
+        //instantiate enemy object
+        StartCoroutine(MonsterSpawn());
+        
 	
 	}
 
@@ -80,7 +83,7 @@ public class GameManager : MonoBehaviour {
 		GameObject nb = (GameObject)GameObject.Instantiate (enemy);
         nb.transform.parent = WorldObject.transform;
         nb.GetComponent<EnemyAStar>().spawnx = x;
-        nb.GetComponent<EnemyAStar>().spawnx = y;
+        nb.GetComponent<EnemyAStar>().spawny = y;
         nb.SetActive (true);
 	}
 
@@ -100,4 +103,15 @@ public class GameManager : MonoBehaviour {
 		grid [x, y].IsWall = false;
 	}
 
+    IEnumerator MonsterSpawn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < monsterNum; i++)
+        {
+            splitter = spawnpos[i].gameObject.name.Split(',');
+            createEnemy(int.Parse(splitter[0]), int.Parse(splitter[1]));
+           
+        }
+        yield return null;
+    }
 }

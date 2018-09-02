@@ -11,6 +11,7 @@ TagManager:
   - obstacle
   - GridBox
   - checkBox
+  - MonsterSpawn
   layers:
   - Default
   - TransparentFX

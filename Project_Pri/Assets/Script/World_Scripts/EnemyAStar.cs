@@ -210,12 +210,14 @@ public class EnemyAStar : MonoBehaviour {
         if (!isTracing)
         {
 
-            transform.position += moveVelocity * speed * Time.deltaTime;
+          //  transform.position += moveVelocity * speed * Time.deltaTime;
 
         }
         else if (isMoving) {
+            Debug.Log(1);
+
             isTracing = true;
-            moveVelocity = Vector3.zero;
+         
             initializePosition(startx, starty);
             InitPath();
             StopAllCoroutines();
@@ -247,9 +249,16 @@ public class EnemyAStar : MonoBehaviour {
     {
 
         movementState = UnityEngine.Random.Range(1, 5);
-        SetMoveState();
-        Move();
-
+        if (!isTracing)
+        {
+           // SetMoveState();
+           // Move();
+        }
+        else
+        {
+            dist = " ";
+            moveVelocity = Vector3.zero;
+        }
         yield return new WaitForSeconds(2f);
         moveVelocity = Vector2.zero;
         yield return new WaitForSeconds(1f);
@@ -300,7 +309,7 @@ public class EnemyAStar : MonoBehaviour {
 		
 		
 		
-		isMoving = false;
+		//isMoving = false;
 		getNextMovement ();
 		
 		yield return 0;
@@ -396,15 +405,19 @@ public class EnemyAStar : MonoBehaviour {
 
             case 1:
                 dist = "Left";
+             
                 break;
             case 2:
                 dist = "Right";
+             
                 break;
             case 3:
                 dist = "Up";
+              
                 break;
             case 4:
                 dist = "Down";
+               
                 break;
         }
     }
@@ -468,8 +481,10 @@ public class EnemyAStar : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+           
+            dist = "";
+            moveVelocity = Vector3.zero;
             traceTarget = collision.gameObject;
-            StopAllCoroutines();
             isMoving = true;
             isTracing = true;
         }
@@ -480,11 +495,11 @@ public class EnemyAStar : MonoBehaviour {
 
         if (collision.gameObject.tag == "Player")
         {
-            isMoving = false;
-            if (isMoving == true)
-                isMoving = false;
-            else if (isTracing && isMoving)
-                StartCoroutine(move());
+            //isMoving = false;
+            //if (isMoving == true)
+            //    isMoving = false;
+            //else if (isTracing && isMoving)
+            //    StartCoroutine(move());
         }
 
     }
