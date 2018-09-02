@@ -9,6 +9,7 @@ public class Game_Controller : MonoBehaviour
 
     public static Game_Controller instance = null;
 
+    public GameObject statement_Panel;
     public GameObject origin_Panel;
     public GameObject condition_Panel;
     public GameObject save_List_Panel;
@@ -57,6 +58,7 @@ public class Game_Controller : MonoBehaviour
     // ---------------
     public void Clicked_Button_Origin_Panel()
     {
+        statement_Panel.SetActive(false);
         origin_Panel.SetActive(true);
         condition_Panel.SetActive(false);
         save_List_Panel.SetActive(false);
@@ -75,7 +77,18 @@ public class Game_Controller : MonoBehaviour
     }
     public void Clicked_Button_To_Condition_Panel_From_Load()
     {
+        statement_Panel.SetActive(false);
         origin_Panel.SetActive(true);
+        condition_Panel.SetActive(false);
+        load_List_Panel.SetActive(false);
+        save_List_Panel.SetActive(false);
+        save_Description.SetActive(false);
+        error_Panel.SetActive(false);
+    }
+    public void Button_Load_To_Statement_Panel()
+    {
+        statement_Panel.SetActive(true);
+        origin_Panel.SetActive(false);
         condition_Panel.SetActive(false);
         load_List_Panel.SetActive(false);
         save_List_Panel.SetActive(false);

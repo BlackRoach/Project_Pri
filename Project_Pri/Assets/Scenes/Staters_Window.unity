@@ -4131,7 +4131,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1000
+  m_MaxValue: 100
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -4733,6 +4733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867060a7a0eae81468ba669dfba2fe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statement_Panel: {fileID: 1261520813}
   origin_Panel: {fileID: 1813377962}
   condition_Panel: {fileID: 1898700519}
   save_List_Panel: {fileID: 1969322941}
@@ -5477,6 +5478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579f552cac9afc54e80677edd7122244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state_Count_List: {fileID: 1336521885}
+  state_Slider_List: {fileID: 1279224892}
   basic_State:
     s_muscular_strength: 0
     s_magic_power: 0
@@ -8789,7 +8792,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1000
+  m_MaxValue: 200
   m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
@@ -9633,8 +9636,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 808158286}
-        m_MethodName: Clicked_Button_Load_List_Panel
-        m_Mode: 6
+        m_MethodName: Button_Load_To_Statement_Panel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
