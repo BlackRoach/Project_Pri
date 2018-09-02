@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script Execution Order : -100
 public class CGManager : MonoBehaviour {
 
     
-    public static List<CGInfo> CgInfoList; //= new List<CGInfo>();
-    public static bool bSetting;
+    public static List<CGInfo> CgInfoList;
+    public static bool bSetting; // 최초 오브젝트 생성시에만 들어오게 하는 장치
 
     private void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
         DontDestroyOnLoad(gameObject);
 
         if (FindObjectsOfType<CGManager>().Length > 1)
             Destroy(gameObject);
 
-        if(!bSetting)
+        if (!bSetting)
         {
             CgInfoList = new List<CGInfo>();
             CgInfoList.Add(new CGInfo("VACANCE_CG_1", false));
@@ -26,12 +27,6 @@ public class CGManager : MonoBehaviour {
             CgInfoList.Add(new CGInfo("VACANCE_CG_5", false));
             bSetting = true; // Start()에서 최초 한번만 들어온다.
         }
-
-        Debug.Log(CgInfoList[0].IS_UNLOCK);
-        Debug.Log(CgInfoList[1].IS_UNLOCK);
-        Debug.Log(CgInfoList[2].IS_UNLOCK);
-        Debug.Log(CgInfoList[3].IS_UNLOCK);
-        Debug.Log(CgInfoList[4].IS_UNLOCK);
 
         //Debug.Log(CgInfoList.Count);
         

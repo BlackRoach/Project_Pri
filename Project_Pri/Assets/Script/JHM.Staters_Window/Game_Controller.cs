@@ -75,8 +75,8 @@ public class Game_Controller : MonoBehaviour
     }
     public void Clicked_Button_To_Condition_Panel_From_Load()
     {
-        origin_Panel.SetActive(false);
-        condition_Panel.SetActive(true);
+        origin_Panel.SetActive(true);
+        condition_Panel.SetActive(false);
         load_List_Panel.SetActive(false);
         save_List_Panel.SetActive(false);
         save_Description.SetActive(false);

@@ -100,3 +100,6 @@ public class CGGallearyManager : MonoBehaviour {
     }
 }
 
+// CGManager 클래스에서 맨처음에 Slot를 모두 LOCK(잠금)한다.
+// 스케줄 씬에서 해당 이벤트 CG를 보면 해당 Slot이 UNLOCK(잠금해제)된다.
+

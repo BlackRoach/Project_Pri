@@ -14,7 +14,13 @@ public class ScheduleManager : MonoBehaviour {
     public GameObject nextButton; // 다음 버튼
     public GameObject performingPanel; // 실행 패널
     public Text DetailsText; // 실행 패널의 글자정보
-    public InfoPanel infoPanel;
+    public InfoPanel infoPanel; // 날짜 요일 정보 패널
+
+    public GameObject NewYearFes; // 신년축제
+    public GameObject HarvestFes; // 수학제
+    public GameObject CherryBlossomFes; // 벚꽃축제
+    public GameObject BirthdayParty; // 생일파티
+    public GameObject Ending; // 엔딩
 
     public List<GameObject> schedules; // 일정표안에 표시되는 활동버튼들
     public List<Activity> activities = new List<Activity>(); // 일정표안에 들어갈 활동정보들
@@ -31,6 +37,7 @@ public class ScheduleManager : MonoBehaviour {
     private void Start()
     {
         backGroundPosition = 0;
+        CheckFestivalEvent();
     }
 
     public void NextButton()
@@ -110,6 +117,20 @@ public class ScheduleManager : MonoBehaviour {
         DrawSchedule();
     }
 
+    public void DeleteSchedule()
+    {
+        if (activities.Count <= 0)
+        {
+            Debug.Log("스케줄이 비었습니다.");
+        }
+        else
+        {
+            int lastIndex = activities.Count - 1;
+            activities.RemoveAt(lastIndex);
+        }
+        DrawSchedule();
+    }
+
     // 동일한 이름의 특수카드가 일정안에 있는지를 검사한다.
     private bool CheckSpecialCard(Activity card)
     {
@@ -131,18 +152,40 @@ public class ScheduleManager : MonoBehaviour {
         return false;
     }
 
-    public void DeleteSchedule()
+    // 달마다 참가 가능한 축제만 선택해서 보여준다.
+    public void CheckFestivalEvent()
     {
-        if (activities.Count <= 0)
+        int festival = CalendarManager.instance.GetCurrentFestivalEvent();
+        //Debug.Log(festival);
+
+        NewYearFes.SetActive(false);
+        HarvestFes.SetActive(false);
+        CherryBlossomFes.SetActive(false);
+        BirthdayParty.SetActive(false);
+        Ending.SetActive(false);
+
+        switch (festival)
         {
-            Debug.Log("스케줄이 비었습니다.");
+            case 0:
+                break;
+            case 1:
+                NewYearFes.SetActive(true);
+                break;
+            case 2:
+                HarvestFes.SetActive(true);
+                break;
+            case 3:
+                CherryBlossomFes.SetActive(true);
+                break;
+            case 4:
+                BirthdayParty.SetActive(true);
+                break;
+            case 5:
+                Ending.SetActive(true);
+                break;
+            default:
+                break;
         }
-        else
-        {
-            int lastIndex = activities.Count - 1;
-            activities.RemoveAt(lastIndex);
-        }
-        DrawSchedule();
     }
 
     private void ClearSchedule()
@@ -269,6 +312,7 @@ public class ScheduleManager : MonoBehaviour {
         }
         
     }
+
     public void ChangeScene(string sceneMane)
     {
         SceneManager.LoadSceneAsync(sceneMane);

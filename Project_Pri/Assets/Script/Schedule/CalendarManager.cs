@@ -22,7 +22,10 @@ public class CalendarManager : MonoBehaviour {
     public int CurrentMonth
     {
         get { return currentMonth; }
-        set { currentMonth = value; }
+        set {
+            currentMonth = value;
+            currentStrMonth = GetCurrentStrMonth();
+        }
     }
     public string CurrentStrMonth
     {
@@ -32,7 +35,10 @@ public class CalendarManager : MonoBehaviour {
     public int CurrentDate
     {
         get { return currentDate; }
-        set { currentDate = value; }
+        set {
+            currentDate = value;
+            currentDay = GetCurrentDay();
+        }
     }
     public string CurrentDay
     {
@@ -42,7 +48,7 @@ public class CalendarManager : MonoBehaviour {
 
     private List<Year> yearList = new List<Year>();
     private List<CalendarWhatDay> dayList = new List<CalendarWhatDay>();
-
+    private List<CalendarEvent> eventList = new List<CalendarEvent>();
     
     private void Awake()
     {
@@ -57,19 +63,15 @@ public class CalendarManager : MonoBehaviour {
         }
         GAME_CALENDAR_LOAD();
         GAME_WAHT_DAY_LOAD();
+        CALENDAR_EVENT_LOAD();
 
         currentYear = yearList[0].GAME_YEAR;
-        //currentMonth = yearList[0].GAME_MONTH;
-        currentMonth = 11;
+        currentMonth = yearList[0].GAME_MONTH;
         currentStrMonth = GetCurrentStrMonth();
         currentDate = yearList[0].DAYSLIST[0];
         currentDay = GetCurrentDay();
     }
 
-    // Use this for initialization
-    void Start () {
-      
-	}
 
     public string GetCurrentStrMonth()
     {
@@ -163,6 +165,24 @@ public class CalendarManager : MonoBehaviour {
         //Debug.Log(dayList.Count);
     }
 
+    private void CALENDAR_EVENT_LOAD()
+    {
+        TextAsset file = Resources.Load<TextAsset>("JsonDB/CALENDAR_EVENT");
+        JsonData eventData = JsonMapper.ToObject(file.text);
+
+        for(int i = 0; i < eventData.Count; i++)
+        {
+            CalendarEvent tmpEvent = new CalendarEvent(
+            JsonDataToInt(eventData[i]["ID"]),
+            JsonDataToInt(eventData[i]["GAME_YEAR"]),
+            JsonDataToInt(eventData[i]["GAME_MONTH"]),
+            eventData[i]["VACANCE_CG"].ToString(),
+            JsonDataToInt(eventData[i]["FESTIVAL_EVENT"]));
+            eventList.Add(tmpEvent);
+        }
+        //Debug.Log(eventList[0].FESTIVAL_EVENT);
+    }
+
     public Year GetCurrentYear()
     {
         Year tmpYear = null;
@@ -178,12 +198,26 @@ public class CalendarManager : MonoBehaviour {
         return tmpYear;
     }
 
-    // JSON 정보를 불러온다. o
+    // 현재 년도와 현재 달에 해당하는 축제번호를 얻어낸다.
+    public int GetCurrentFestivalEvent()
+    {
+        bool bFind;
+        for(int i = 0; i < eventList.Count; i++)
+        {
+            bFind = eventList[i].GAME_YEAR == currentYear &&
+                eventList[i].GAME_MONTH == currentMonth;
+            if (bFind)
+                return eventList[i].FESTIVAL_EVENT;
+        }
+        return -1; // 못찾음
+    }
+
+    // JSON 정보를 불러온다. 
     // 현재 날짜를 저장한다.
     // 씬이 바껴도 현재 날짜를 유지한다.
     // - CalendarManager 클래스를 DontDestroy 처리해주어야 한다.
     // 날짜 정보가 필요한 오브젝트에 날짜 정보를 제공해주어야 한다.
-    // 년/월/일/요일 정보는 어떤 씬에서는 유지되야 한다.
+    // 년/월/일/요일 정보는 어떤 씬에서든 유지되야 한다.
     // 필요한 Json 파일
-    // - GAME_CALENDAR / CALENDAR_WHAT_DAY
+    // - GAME_CALENDAR / CALENDAR_WHAT_DAY / CALENDAR_EVENT
 }
