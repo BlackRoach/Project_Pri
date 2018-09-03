@@ -9,19 +9,38 @@ public class State_Controller : MonoBehaviour {
 
     public GameObject state_Count_List;
     public GameObject state_Slider_List;
+    public Text text_Count;
 
     public Statement basic_State;
 
+
     private JsonData state_Data;
 
+    [SerializeField]
+    private int current_Count;
     
     private void Start()
     {
         TextAsset event_List = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Start_State");
 
         state_Data = JsonMapper.ToObject(event_List.text);
-    }
 
+        current_Count = 0;
+        text_Count.text = current_Count.ToString();
+    }
+    public void Count_Add_One()
+    {
+        current_Count++;
+        text_Count.text = current_Count.ToString();
+    }
+    public void Count_Sub_One()
+    {
+        if(current_Count > 0)
+        {
+            current_Count--;
+            text_Count.text = current_Count.ToString();
+        }        
+    }
     public void Button_Defualt_State_Input()
     {
         basic_State.s_muscular_strength = (int)state_Data[0]["MUSCULAR_STRENGTH"];
@@ -47,10 +66,12 @@ public class State_Controller : MonoBehaviour {
 
         Input_State_Count_Value_List();
         Input_State_Value_Slider_List();
+        current_Count = 0;
+        text_Count.text = current_Count.ToString();
     }
 
     private void Input_State_Count_Value_List()
-    {
+    {        
         state_Count_List.transform.GetChild(0).GetComponent<Text>().text = basic_State.s_muscular_strength.ToString();
         state_Count_List.transform.GetChild(1).GetComponent<Text>().text = basic_State.s_magic_power.ToString();
         state_Count_List.transform.GetChild(2).GetComponent<Text>().text = basic_State.s_intellect.ToString();
@@ -79,7 +100,36 @@ public class State_Controller : MonoBehaviour {
         state_Slider_List.transform.GetChild(10).GetComponent<Slider>().value = basic_State.s_reliability;
         state_Slider_List.transform.GetChild(11).GetComponent<Slider>().value = basic_State.s_stress;
     }
-
+    public void Button_Input_Include_Mussle_Strength_Add()
+    {
+        basic_State.s_muscular_strength += current_Count;
+        if(basic_State.s_muscular_strength <= 1000)
+        {
+            state_Count_List.transform.GetChild(0).GetComponent<Text>().text = basic_State.s_muscular_strength.ToString();
+            state_Slider_List.transform.GetChild(0).GetComponent<Slider>().value = basic_State.s_muscular_strength;
+        }
+        else
+        {
+            basic_State.s_muscular_strength = 1000;
+            state_Count_List.transform.GetChild(0).GetComponent<Text>().text = basic_State.s_muscular_strength.ToString();
+            state_Slider_List.transform.GetChild(0).GetComponent<Slider>().value = basic_State.s_muscular_strength;
+        }
+    }
+    public void Button_Input_Include_Masic_Power_Add()
+    {
+        basic_State.s_magic_power += current_Count;
+        if (basic_State.s_magic_power <= 1000)
+        {
+            state_Count_List.transform.GetChild(1).GetComponent<Text>().text = basic_State.s_magic_power.ToString();
+            state_Slider_List.transform.GetChild(1).GetComponent<Slider>().value = basic_State.s_magic_power;
+        }
+        else
+        {
+            basic_State.s_magic_power = 1000;
+            state_Count_List.transform.GetChild(1).GetComponent<Text>().text = basic_State.s_magic_power.ToString();
+            state_Slider_List.transform.GetChild(1).GetComponent<Slider>().value = basic_State.s_magic_power;
+        }
+    }
 } // class
 
 
