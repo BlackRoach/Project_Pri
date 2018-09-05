@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
     public int targetx;
     public int targety;
 
-
+    
     [SerializeField] private GameObject WorldObject;
 
     //This is what you need to show in the inspector.

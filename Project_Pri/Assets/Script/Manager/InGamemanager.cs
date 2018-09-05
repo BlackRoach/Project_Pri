@@ -51,7 +51,7 @@ public class InGamemanager : MonoBehaviour
     public int[] position_money;
 
     public bool isRespawn = false;
-
+    public bool isFight = false;
     public PlayerDataContainer PlayerDataContainer_readonly
     { get { return playerDataContainer; } }
 
@@ -165,6 +165,7 @@ public class InGamemanager : MonoBehaviour
         EnemyAStar enemyAstar = monster.GetComponent<EnemyAStar>();
         enemyAstar.JustInitPosition(enemyAstar.spawnx, enemyAstar.spawny);
         yield return new WaitForSeconds(15f);
+    
         monster.SetActive(true);
         yield return null;
     }

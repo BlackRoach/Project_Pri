@@ -161,6 +161,7 @@ public class BattleManager : MonoBehaviour
         ingameManager.opponent.SetActive(false);
         ingameManager.TurnOnWorldObjects();
         ingameManager.isRespawn = true;
+        ingameManager.isFight = true;
         SceneManager.LoadScene("WorldMap");
        
     }

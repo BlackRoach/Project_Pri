@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+public enum State { Idle, Left, Right, Up, Down}
 
 public class EnemyAStar : MonoBehaviour {
 
 
     public GameManager Game;
+    
   
     public MyPathNode nextNode;
     bool gray = false;
@@ -37,6 +39,7 @@ public class EnemyAStar : MonoBehaviour {
     private Vector2 input;
     private bool isMoving = false;
     private bool isTracing = false;
+   
     private Vector3 startPosition;
     private Vector3 endPosition;
     private float t;
@@ -51,8 +54,8 @@ public class EnemyAStar : MonoBehaviour {
     private float distance = 0;
 
     private string dist = "";
-
-
+    
+    private InGamemanager ingamemanager;
 
     public class MySolver<TPathNode, TUserContext> : SettlersEngine.SpatialAStar<TPathNode, 
 	TUserContext> where TPathNode : SettlersEngine.IPathNode<TUserContext>
@@ -108,6 +111,7 @@ public class EnemyAStar : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+   
 	
 		myColor = getRandomColor();
 
@@ -120,8 +124,12 @@ public class EnemyAStar : MonoBehaviour {
     }
     private void OnEnable()
     {
-        if(!isTracing)
-           StartCoroutine(ChangeState());
+        ingamemanager = InGamemanager.Instance;
+        if (!isTracing && ingamemanager.isFight)
+        {
+            StartCoroutine(ChangeState());
+            ingamemanager.isFight = false;
+        }
     }
 
     void InitPath()
@@ -214,14 +222,14 @@ public class EnemyAStar : MonoBehaviour {
 
         }
         else if (isMoving) {
-            Debug.Log(1);
 
+            isMoving = false;
             isTracing = true;
          
             initializePosition(startx, starty);
-            InitPath();
-            StopAllCoroutines();
-			StartCoroutine(move());
+            updatePath();
+           // StopAllCoroutines();
+			//StartCoroutine(move());
 		}
        
     }
@@ -247,27 +255,109 @@ public class EnemyAStar : MonoBehaviour {
 
     IEnumerator ChangeState()
     {
+        
+        State c = (State)UnityEngine.Random.Range(1, 5);
+        Debug.Log(c);
+        startPosition = transform.position;
+      
 
-        movementState = UnityEngine.Random.Range(1, 5);
-        if (!isTracing)
+        input.x = 0;
+        input.y = 0;
+        switch (c)
         {
-           // SetMoveState();
-           // Move();
+            case State.Left:
+                if (GameObject.Find((currentGridPosition.x - 1) + "," + currentGridPosition.y) != null)
+                {
+                    if (GameObject.Find((currentGridPosition.x - 1) + "," + currentGridPosition.y).GetComponent<Renderer>().material.color != Color.red)
+                        input.x = -1;
+
+                }
+
+             
+                break;
+            case State.Right:
+                if (GameObject.Find((currentGridPosition.x + 1) + "," + currentGridPosition.y) != null)
+                {
+                    if (GameObject.Find((currentGridPosition.x + 1) + "," + currentGridPosition.y).GetComponent<Renderer>().material.color != Color.red)
+                        input.x = 1;
+
+                }
+
+
+                break;
+            case State.Up:
+                if (GameObject.Find(currentGridPosition.x + "," + (currentGridPosition.y + 1)) != null)
+                {
+                    if (GameObject.Find(currentGridPosition.x + "," + (currentGridPosition.y + 1)).GetComponent<Renderer>().material.color != Color.red)
+                        input.y = 1;
+                }
+
+
+                break;
+            case State.Down:
+                if (GameObject.Find(currentGridPosition.x + "," + (currentGridPosition.y - 1)) != null)
+                {
+                    if (GameObject.Find(currentGridPosition.x + "," + (currentGridPosition.y - 1)).GetComponent<Renderer>().material.color != Color.red)
+                        input.y = - 1;
+                }
+
+
+                break;
+           
+        }
+        startPosition = transform.position;
+        t = 0;
+
+        if (gridOrientation == Orientation.Horizontal)
+        {
+            endPosition = new Vector2(startPosition.x + System.Math.Sign(input.x) * Game.gridSize,
+                                      startPosition.y);
+            currentGridPosition.x += System.Math.Sign(input.x);
         }
         else
         {
-            dist = " ";
-            moveVelocity = Vector3.zero;
+            endPosition = new Vector2(startPosition.x + System.Math.Sign(input.x) * Game.gridSize,
+                                      startPosition.y + System.Math.Sign(input.y) * Game.gridSize);
+
+            currentGridPosition.x += System.Math.Sign(input.x);
+            currentGridPosition.y += System.Math.Sign(input.y);
         }
-        yield return new WaitForSeconds(2f);
-        moveVelocity = Vector2.zero;
+
+        if (allowDiagonals && correctDiagonalSpeed && input.x != 0 && input.y != 0)
+        {
+            factor = 0.9071f;
+        }
+        else
+        {
+            factor = 1f;
+        }
+
+        while (t < 1f)
+        {
+          //  if (!isTracing)
+          //  {
+                t += Time.deltaTime * (moveSpeed / Game.gridSize) * factor;
+                transform.position = Vector2.Lerp(startPosition, endPosition, t);
+                yield return null;
+           // }
+        }
+
         yield return new WaitForSeconds(1f);
+
+
         //if (movementState == 0)
         //    Debug.Log("stop");
         //else
         //    Debug.Log("play");
+        if (isTracing)
+        {
+            StopAllCoroutines();
+            StartCoroutine(move());
+            yield break;
+        }
         StartCoroutine(ChangeState());
-     
+
+        yield return 0;
     }
 
     private enum Orientation {
@@ -277,8 +367,8 @@ public class EnemyAStar : MonoBehaviour {
 
 	
 	public IEnumerator move() {
-        isMoving = false;
-        TraceDir();
+         isMoving = false;
+       // TraceDir();
 		startPosition = transform.position;
 		t = 0;
 		
@@ -302,13 +392,18 @@ public class EnemyAStar : MonoBehaviour {
 
 	
 		while (t < 1f) {
+            
 			t += Time.deltaTime * (moveSpeed/Game.gridSize) * factor;
 			transform.position = Vector2.Lerp(startPosition, endPosition, t);
 			yield return null;
 		}
-		
-		
-		
+
+        if (!isTracing)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ChangeState());
+            yield break;
+        }
 		//isMoving = false;
 		getNextMovement ();
 		
@@ -507,10 +602,10 @@ public class EnemyAStar : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            isMoving = false;
+            isMoving = true;
             isTracing = false;
-            StopAllCoroutines();
-            StartCoroutine(ChangeState());
+        
+       //     StartCoroutine(ChangeState());
 
        
         }

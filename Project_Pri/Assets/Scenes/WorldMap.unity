@@ -161,7 +161,8 @@ Prefab:
       propertyPath: Game
       value: 
       objectReference: {fileID: 1537399564}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 61719308332499504, guid: 83f2fa5bf7ec225479b13d6ed74176c6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 83f2fa5bf7ec225479b13d6ed74176c6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &58340329 stripped
@@ -382,7 +383,7 @@ GameObject:
   - component: {fileID: 132869384}
   m_Layer: 8
   m_Name: '@QuestPanel'
-  m_TagString: QuestPanel
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6274,6 +6275,7 @@ MonoBehaviour:
   - {fileID: 1922402635}
   position_money: 
   isRespawn: 0
+  isFight: 0
 --- !u!114 &1537399563
 MonoBehaviour:
   m_ObjectHideFlags: 0
