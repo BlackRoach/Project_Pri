@@ -9,6 +9,7 @@ public class State_Controller : MonoBehaviour {
 
     public GameObject state_Count_List;
     public GameObject state_Slider_List;
+    public GameObject Character_Skills_List;
     public Text text_Count;
 
     public Statement basic_State;
@@ -68,6 +69,8 @@ public class State_Controller : MonoBehaviour {
         Input_State_Value_Slider_List();
         current_Count = 0;
         text_Count.text = current_Count.ToString();
+
+        Input_Character_Skills_List();
     }
 
     private void Input_State_Count_Value_List()
@@ -100,6 +103,13 @@ public class State_Controller : MonoBehaviour {
         state_Slider_List.transform.GetChild(10).GetComponent<Slider>().value = basic_State.s_reliability;
         state_Slider_List.transform.GetChild(11).GetComponent<Slider>().value = basic_State.s_stress;
     }
+    private void Input_Character_Skills_List()
+    {
+        int temp_A = basic_State.s_offense_power + (basic_State.s_muscular_strength / 50);
+        int temp_B = basic_State.s_magic_attack_power + (basic_State.s_magic_power / 25);
+        Character_Skills_List.transform.GetChild(0).GetComponent<Text>().text = temp_A.ToString();
+        Character_Skills_List.transform.GetChild(2).GetComponent<Text>().text = temp_B.ToString();
+    }
     public void Button_Input_Include_Mussle_Strength_Add()
     {
         basic_State.s_muscular_strength += current_Count;
@@ -114,6 +124,7 @@ public class State_Controller : MonoBehaviour {
             state_Count_List.transform.GetChild(0).GetComponent<Text>().text = basic_State.s_muscular_strength.ToString();
             state_Slider_List.transform.GetChild(0).GetComponent<Slider>().value = basic_State.s_muscular_strength;
         }
+        Input_Character_Skills_List();
     }
     public void Button_Input_Include_Masic_Power_Add()
     {
@@ -129,7 +140,10 @@ public class State_Controller : MonoBehaviour {
             state_Count_List.transform.GetChild(1).GetComponent<Text>().text = basic_State.s_magic_power.ToString();
             state_Slider_List.transform.GetChild(1).GetComponent<Slider>().value = basic_State.s_magic_power;
         }
+        Input_Character_Skills_List();
     }
+    
+
 } // class
 
 
