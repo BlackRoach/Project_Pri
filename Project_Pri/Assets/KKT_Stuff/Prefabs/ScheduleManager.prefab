@@ -41,12 +41,22 @@ MonoBehaviour:
   background: {fileID: 0}
   studyPanel: {fileID: 0}
   arbeitPanel: {fileID: 0}
+  restPanel: {fileID: 0}
   nextButton: {fileID: 0}
+  performingPanel: {fileID: 0}
+  DetailsText: {fileID: 0}
+  infoPanel: {fileID: 0}
+  NewYearFes: {fileID: 0}
+  HarvestFes: {fileID: 0}
+  CherryBlossomFes: {fileID: 0}
+  BirthdayParty: {fileID: 0}
+  Ending: {fileID: 0}
   schedules:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   activities: []
+  decidedActivities: []
 --- !u!224 &224576129249958000
 RectTransform:
   m_ObjectHideFlags: 1
