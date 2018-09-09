@@ -6330,7 +6330,7 @@ MonoBehaviour:
   spawnpos: []
   gridWidth: 30
   gridHeight: 20
-  monsterNum: 3
+  monsterNum: 1
   spawnx: 
   spawny: 
   gridSize: 0.5

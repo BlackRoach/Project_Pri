@@ -266,7 +266,7 @@ public class EnemyAStar : MonoBehaviour {
             yield break;
         }
         State c = (State)UnityEngine.Random.Range(0, 5);
-        Debug.Log(c);
+      
         startPosition = transform.position;
       
 
@@ -375,8 +375,9 @@ public class EnemyAStar : MonoBehaviour {
 	
 	public IEnumerator move() {
          isMoving = false;
-       // TraceDir();
-		startPosition = transform.position;
+        // TraceDir();
+        getNextMovement();
+        startPosition = transform.position;
 		t = 0;
 		
 		if(gridOrientation == Orientation.Horizontal) {
@@ -411,10 +412,10 @@ public class EnemyAStar : MonoBehaviour {
             StartCoroutine(ChangeState());
             yield break;
         }
-		//isMoving = false;
-		getNextMovement ();
 		
-		yield return 0;
+	
+        StartCoroutine(move());
+        yield return 0;
 		
 		
 		
@@ -451,7 +452,7 @@ public class EnemyAStar : MonoBehaviour {
 		
 		}
 		
-		StartCoroutine (move ());
+	
 	}
 	
 	public Vector2 getGridPosition(int x, int y)
@@ -479,50 +480,7 @@ public class EnemyAStar : MonoBehaviour {
 
 	}
 
-    void Move()
-    {
-
-
-        if (dist == "Left")
-        {
-            moveVelocity = Vector3.left;
-        }
-        else if (dist == "Right")
-        {
-            moveVelocity = Vector3.right;
-        }
-        else if (dist == "Up")
-        {
-            moveVelocity = Vector3.up;
-        }
-        else if (dist == "Down")
-        {
-            moveVelocity = Vector3.down;
-        }
-    }
-    void SetMoveState()
-    {
-        switch (movementState)
-        {
-
-            case 1:
-                dist = "Left";
-             
-                break;
-            case 2:
-                dist = "Right";
-             
-                break;
-            case 3:
-                dist = "Up";
-              
-                break;
-            case 4:
-                dist = "Down";
-               
-                break;
-        }
-    }
+   
     void TraceDir()
     {
         playerpos = traceTarget.transform.position;
@@ -589,8 +547,7 @@ public class EnemyAStar : MonoBehaviour {
             traceTarget = collision.gameObject;
             isMoving = true;
             isTracing = true;
-            input.x = 0;
-            input.y = 0;
+           
         }
       
     }
