@@ -124,14 +124,18 @@ public class EnemyAStar : MonoBehaviour {
     }
     private void OnEnable()
     {
-        ingamemanager = InGamemanager.Instance;
-        if (!isTracing && ingamemanager.isFight)
+
+        
+            ingamemanager = InGamemanager.Instance;
+        if (!isTracing)
         {
             StartCoroutine(ChangeState());
-            ingamemanager.isFight = false;
-        }
-    }
 
+        }
+        else
+            StartCoroutine(move());
+        
+    }
     void InitPath()
     {
      
@@ -255,8 +259,13 @@ public class EnemyAStar : MonoBehaviour {
 
     IEnumerator ChangeState()
     {
-        
-        State c = (State)UnityEngine.Random.Range(1, 5);
+        if (isTracing)
+        {
+            StopAllCoroutines();
+            StartCoroutine(move());
+            yield break;
+        }
+        State c = (State)UnityEngine.Random.Range(0, 5);
         Debug.Log(c);
         startPosition = transform.position;
       
@@ -300,7 +309,10 @@ public class EnemyAStar : MonoBehaviour {
                     if (GameObject.Find(currentGridPosition.x + "," + (currentGridPosition.y - 1)).GetComponent<Renderer>().material.color != Color.red)
                         input.y = - 1;
                 }
-
+                break;
+            case State.Idle:
+                input.x = 0;
+                input.y = 0;
 
                 break;
            
@@ -336,25 +348,20 @@ public class EnemyAStar : MonoBehaviour {
         {
           //  if (!isTracing)
           //  {
-                t += Time.deltaTime * (moveSpeed / Game.gridSize) * factor;
+                t += Time.deltaTime * (speed / Game.gridSize) * factor;
                 transform.position = Vector2.Lerp(startPosition, endPosition, t);
                 yield return null;
            // }
         }
 
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
 
 
         //if (movementState == 0)
         //    Debug.Log("stop");
         //else
         //    Debug.Log("play");
-        if (isTracing)
-        {
-            StopAllCoroutines();
-            StartCoroutine(move());
-            yield break;
-        }
+       
         StartCoroutine(ChangeState());
 
         yield return 0;
@@ -582,6 +589,8 @@ public class EnemyAStar : MonoBehaviour {
             traceTarget = collision.gameObject;
             isMoving = true;
             isTracing = true;
+            input.x = 0;
+            input.y = 0;
         }
       
     }
