@@ -29,7 +29,10 @@ public class Level_Manager : MonoBehaviour {
     {
         SceneManager.LoadScene("Main");
     }
-    
+    public void Load_To_Ending_Scene()
+    {
+        SceneManager.LoadScene("Ending");
+    }
 
 
 
