@@ -10,8 +10,13 @@ public class Ending_Manager : MonoBehaviour {
     public GameObject ending_Page_1, ending_Page_2, ending_Page_3, ending_Page_4;
     public GameObject btn_Loading_Panel;
     public GameObject ending_Event_Panel;
+    public GameObject ending_Last_Panel;
+    public GameObject last_Text_Box;
     public Text text_Loading;
+    public Text text_Last_Ending;
     public Text text_Current_Page;
+
+    public Animator anim;
     [SerializeField]
     private Statement load_State_Data;
 
@@ -20,10 +25,13 @@ public class Ending_Manager : MonoBehaviour {
     private int current_Page;
     [SerializeField]
     private bool[] btn_Array;
+    private string ending_Text;
+    private bool is_Ending;
     private void Start()
     {
         Current_State_List_Load_Data();
         Ending_Data_Json_Parsing();
+        ending_Last_Panel.SetActive(false);
         btn_Loading_Panel.SetActive(true);
         ending_Event_Panel.SetActive(false);
         Loading_Text_Auto_Typing();
@@ -31,6 +39,8 @@ public class Ending_Manager : MonoBehaviour {
         current_Page = 1;
         btn_Array = new bool[ending_Data.Count];
         Input_Ending_List_Page_Fuction();
+        is_Ending = false;
+        last_Text_Box.SetActive(false);
     }
     private void Ending_Data_Json_Parsing()
     {
@@ -351,10 +361,65 @@ public class Ending_Manager : MonoBehaviour {
     {       
         if(btn_Array[i] == true)
         {
-            Debug.Log(i);
+            ending_Page_1.SetActive(false);
+            ending_Page_2.SetActive(false);
+            ending_Page_3.SetActive(false);
+            ending_Page_4.SetActive(false);
+
+            btn_Loading_Panel.SetActive(false);
+            ending_Event_Panel.SetActive(false);
+            ending_Last_Panel.SetActive(true);
+            StartCoroutine(Ending_Text_Box());
+            // ------------------------
+            string last_Text = ending_Data[i]["CONDITION_COMENT_1"].ToString();
+            ending_Text = ending_Data[i]["CONDITION_COMENT_2"].ToString();
+            text_Last_Ending.text = " ";
+            StartCoroutine(Auto_Typing_Last(last_Text));
         }
     }
 
+    IEnumerator Auto_Typing_Last(string sr)
+    {
+        yield return new WaitForSeconds(0.5f);
+        foreach (char text in sr.ToCharArray())
+        {
+            text_Last_Ending.text += text.ToString();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    IEnumerator Ending_Text_Box()
+    {
+        yield return new WaitForSeconds(0.5f);
+        On_Last_Text_Box();
+    }
+
+    public void Button_Last_Ending_Panel_Finished()
+    {
+        if (!is_Ending)
+        {
+            text_Last_Ending.text = " ";
+            StartCoroutine(Auto_Typing_Last(ending_Text));
+            is_Ending = true;
+        }
+        else
+        {
+            Off_Last_Text_Box();
+            anim.Play("Ending_Finished");
+        }
+    }
+    private void On_Last_Text_Box()
+    {
+        last_Text_Box.SetActive(true);
+    }
+    private void Off_Last_Text_Box()
+    {
+        last_Text_Box.SetActive(false);
+    }
+    IEnumerator Load_To_Title_Scene()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+    }
 } // class
 
 

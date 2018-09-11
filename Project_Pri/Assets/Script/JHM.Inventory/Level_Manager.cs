@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Level_Manager : MonoBehaviour {
 
-    
-
     public void Go_To_Game_Origin_Scene()
     {
         // 인벤토리씬에 나갈때 이함수 반드시 이용하기 
@@ -33,7 +31,10 @@ public class Level_Manager : MonoBehaviour {
     {
         SceneManager.LoadScene("Ending");
     }
-
+    public void Load_To_Title_Scene()
+    {
+        SceneManager.LoadScene("Title");
+    }
 
 
 
