@@ -1,0 +1,5 @@
+[{"ID":1001,"TALK_GROUP_NAME":"main_shop_restaurant","TALK_1":"요리점에 잘오셨어요.\\n 어떤 음식을\\n 준비해 드릴까요?","TALK_2":"2번째 메세지","TALK_3":"3번째 메세지","TALK_4":"금액이 부족하군요."},
+{"ID":1002,"TALK_GROUP_NAME":"main_shop_store","TALK_1":"오우~ 이것 좀 봐~!\\n 엘레강스한 샤르테의\\n 이 다양한 물건들을 \\n 좀 보라구~!","TALK_2":"2번째 메세지","TALK_3":"3번째 메세지","TALK_4":"금액이 부족하군요."},
+{"ID":1003,"TALK_GROUP_NAME":"main_shop_smithy","TALK_1":"노련한 모험가라면\\n 드워프장인의 물건을\\n 알아봐 주겠지?","TALK_2":"2번째 메세지","TALK_3":"3번째 메세지","TALK_4":"금액이 부족하군요."},
+{"ID":1004,"TALK_GROUP_NAME":"main_shop_temple","TALK_1":"어서와요.\\n 어딘가 아픈 곳이\\n 있나요?","TALK_2":"2번째 메세지","TALK_3":"3번째 메세지","TALK_4":"금액이 부족하군요."},
+{"ID":1005,"TALK_GROUP_NAME":"main_shop_gem","TALK_1":"이곳은 신비한 보석을\\n 원하는 아이템으로\\n 교환해 주고 있어요.","TALK_2":"2번째 메세지","TALK_3":"3번째 메세지","TALK_4":"금액이 부족하군요."}]
