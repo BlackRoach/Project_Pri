@@ -19,7 +19,8 @@ public class State_Controller : MonoBehaviour {
 
     [SerializeField]
     private int current_Count;
-    
+
+
     private void Start()
     {
         TextAsset event_List = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Start_State");
@@ -71,6 +72,8 @@ public class State_Controller : MonoBehaviour {
         text_Count.text = current_Count.ToString();
 
         Input_Character_Skills_List();
+
+        Current_State_List_Save_Data();
     }
 
     private void Input_State_Count_Value_List()
@@ -125,6 +128,7 @@ public class State_Controller : MonoBehaviour {
             state_Slider_List.transform.GetChild(0).GetComponent<Slider>().value = basic_State.s_muscular_strength;
         }
         Input_Character_Skills_List();
+        Current_State_List_Save_Data();
     }
     public void Button_Input_Include_Masic_Power_Add()
     {
@@ -141,9 +145,28 @@ public class State_Controller : MonoBehaviour {
             state_Slider_List.transform.GetChild(1).GetComponent<Slider>().value = basic_State.s_magic_power;
         }
         Input_Character_Skills_List();
+        Current_State_List_Save_Data();
     }
-    
 
+
+    // 씬 이동할때 데이터 저장 Player.Prefs 이용
+    private void Current_State_List_Save_Data()
+    {
+        PlayerPrefs.SetInt("s_muscular_strength", basic_State.s_muscular_strength);
+        PlayerPrefs.SetInt("s_magic_power", basic_State.s_magic_power);
+        PlayerPrefs.SetInt("s_intellect", basic_State.s_intellect);
+        PlayerPrefs.SetInt("s_charm", basic_State.s_charm);
+        PlayerPrefs.SetInt("s_sense", basic_State.s_sense);
+        PlayerPrefs.SetInt("s_pride", basic_State.s_pride);
+        PlayerPrefs.SetInt("s_artistic", basic_State.s_artistic);
+        PlayerPrefs.SetInt("s_elegance", basic_State.s_elegance);
+        PlayerPrefs.SetInt("s_morality", basic_State.s_morality);
+        PlayerPrefs.SetInt("s_stamina", basic_State.s_stamina);
+        PlayerPrefs.SetInt("s_reliability", basic_State.s_reliability);
+
+        PlayerPrefs.Save();
+    }
+    // ----------------------------
 } // class
 
 
