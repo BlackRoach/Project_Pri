@@ -21,11 +21,12 @@ public class ShopTalkList {
         }
     }
 
+    public int ID
+    {
+        get { return id; }
+    }
     public List<string> TALK_LIST
     {
-        get
-        {
-            return talkList;
-        }
+        get{ return talkList; }
     }
 }

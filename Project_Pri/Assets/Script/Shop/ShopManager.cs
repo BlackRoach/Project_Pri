@@ -7,19 +7,30 @@ using System;
 
 public class ShopManager : MonoBehaviour {
 
-    private List<ShopList> shopList;
-    private List<ShopTalkList> shopTalkList;
+    private List<ShopList> shopList; // 상점 정보 목록
+    private List<ShopTalkList> shopTalkList; // NPC 대사 목록
     public List<ShopItemSlot> ItemSlots; // 6개의 아이템 슬롯
     public List<GameObject> tabs; // 5개의 탭
 
     public Sprite activeTap; // 활성화된 탭 그림
     public Sprite inactiveTap; // 비활성화된 탭 그림
+    public Image npcImage; // 상점 NPC 초상화
+    public Text npcName; // 상점 NPC 이름표
+    public Text npcMessage; // 상점 NPC 대화창
     private int curActiveTap; // 현재 활성화된 탭 번호
+
+    private int shopID;
+    private ShopList activeShop; // 활성화 되어있는 상점정보
+
     private void Awake()
     {
         SHOP_LIST_LOAD();
         SHOP_TALK_LIST_LOAD();
         curActiveTap = 0;
+        shopID = 501;
+        
+        DeployItems(501);
+        ChangeTab(0);
     }
     // Use this for initialization
     void Start () {
@@ -110,14 +121,17 @@ public class ShopManager : MonoBehaviour {
         return Int32.Parse(json.ToString());
     }
 
-    // 탭을 선택하면 탭모양이 바뀐다.
+    // 탭을 선택하면 여러가지가 바뀐다.
     public void ChangeTab(int tabNumber)
     {
-        ChangeTabProperties("#685247FF", inactiveTap); // 비활성화
+        ChangeTabProperties("#685247FF", inactiveTap); // 이전탭 비활성화
         curActiveTap = tabNumber;
-        ChangeTabProperties("#E4C496FF", activeTap); // 활성화
+        ChangeTabProperties("#E4C496FF", activeTap); // 현재탭 활성화
+
+        NPC_Change();
     }
 
+    // 탭 모양을 바꾼다.
     private void ChangeTabProperties(string hexColor, Sprite image)
     {
         Color tmpColor;
@@ -128,26 +142,45 @@ public class ShopManager : MonoBehaviour {
         tabs[curActiveTap].transform.GetComponentInChildren<Text>().color = tmpColor;
     }
 
+    // 상점 NPC 를 바꾼다.
+    private void NPC_Change()
+    {
+        string characterImage = activeShop.SHOP_CHARACTER;
+        npcImage.sprite = Resources.Load<Sprite>("KKT_Resources/Shop/" + characterImage);
+        npcName.text = activeShop.CHARACTER_NAME_KR;
+
+        int shopTalkID = activeShop.SHOP_TALK_ID;
+
+        for(int i = 0; i < shopTalkList.Count; i++)
+        {
+            if(activeShop.SHOP_TALK_ID == shopTalkList[i].ID)
+            {
+                npcMessage.text = shopTalkList[i].TALK_LIST[0];
+                break;
+            }
+        }
+
+    }
+
     // 아이템 배치
     public void DeployItems(int shopID)
     {
-        int id = shopID; // 상점 ID
+        this.shopID = shopID; // 상점 ID
         int phase = 1; // 상점 페이지 (SHOP_PHASE)
         int itemNumber = 0; // 찾은 아이템 숫자
 
         // 선택된 탭에 해당하는 상점에 접근한다. ID와 Phase로 구분한다.
-        ShopList tmpShop = null;
         for(int i = 0; i < shopList.Count; i++)
         {
-            if(shopList[i].ID == id && shopList[i].SHOP_PHASE == phase)
+            if(shopList[i].ID == shopID && shopList[i].SHOP_PHASE == phase)
             {
-                tmpShop = shopList[i];
+                activeShop = shopList[i];
                 break;
             }
         }
 
         // 상점에서 아이템 정보를 받아서 슬롯에 넣어준다.
-        List<ShopItem> tmpItem = tmpShop.SHOP_ITEM_LIST;
+        List<ShopItem> tmpItem = activeShop.SHOP_ITEM_LIST;
         for(int i = 0; i < tmpItem.Count; i++)
         {
             ItemSlots[i].ChangeValues(
@@ -166,7 +199,12 @@ public class ShopManager : MonoBehaviour {
         }
 
     }
-    // SHOP_LIST Excel 파일의 
+    // <수정사항>
+    // SHOP_LIST Excel 파일 
     // - ITEM_?_PRICE 부분 맨뒤에 G 없애야 함.
+    // - SHOP_CHARACTER 부분에 확장자 .png 없애야 함.
     // - ITEM_?_ICON 부분 맨뒤에 확장자 .png 없애야 함.
+    // - character 파라돈 SHOP_CHARACTER 값 오타
+    // SHOP_LIST Excel 파일
+    // - TALK_? 에 \\n을 \n으로 교체해야 함
 }

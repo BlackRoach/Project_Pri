@@ -44,6 +44,18 @@ public class ShopList  {
     {
         get { return shopPhase; }
     }
+    public string SHOP_CHARACTER // NPC 이미지 파일이름
+    {
+        get { return shopCharacter; }
+    }
+    public string CHARACTER_NAME_KR
+    {
+        get { return characterNameKr; }
+    }
+    public int SHOP_TALK_ID
+    {
+        get { return shopTalkID; }
+    }
     public List<ShopItem> SHOP_ITEM_LIST
     {
         get { return shopItemList; }
