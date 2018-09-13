@@ -5,23 +5,21 @@ using UnityEngine.UI;
 
 public class ShopItemSlot : MonoBehaviour {
 
+    private int id; // id가 -1이면 아이템이 없는 것을 의미한다.
+
     public Text nameText;
     public Text priceText;
     public Text infoText;
     public Image itemImage;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void ChangeValues(string name, string price, string info, string image)
+	public void SelectItem()
     {
+        ShopManager.instance.SelectItem(id);
+    }
+
+    public void ChangeValues(int id, string name, string price, string info, string image)
+    {
+        this.id = id;
         nameText.text = name;
         if(price == "")
         {

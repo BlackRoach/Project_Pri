@@ -22,8 +22,6 @@ public class Shop : MonoBehaviour {
     public Scrollbar Scrollbar2;
     public Scrollbar Scrollbar3;
 
-    private Item_Json_DataBase item_Database;
-
     private static int money = 200000; // Static 변수는 씬이 바껴도 값이 유지된다.
     private static int diamond = 0; 
     public Text moneyTxt;
@@ -49,9 +47,6 @@ public class Shop : MonoBehaviour {
 
         Scrollbar1.size = 0.05f;
         Scrollbar2.size = 0.05f;
-
-        item_Database = GameObject.Find("ItemJsonDataBase").
-            GetComponent<Item_Json_DataBase>();
 
         for(int i=0; i<5; i++)
         {
@@ -100,7 +95,7 @@ public class Shop : MonoBehaviour {
 
     private void AddItem(int _id, GameObject ShopScrollRect)
     {
-        Items_Info add_Item = item_Database.Search_For_Item(_id);
+        Items_Info add_Item = Item_Json_DataBase.instance.Search_For_Item(_id);
         GameObject tmp = Instantiate(SlotPrefab, ShopScrollRect.transform);
         //tmp.transform.SetParent(ShopPanel.transform); // 안드로이드폰에서 슬롯이 작아지는 문제가 생김
         ShopSlot slot = tmp.GetComponent<ShopSlot>();
@@ -136,7 +131,7 @@ public class Shop : MonoBehaviour {
     
     public void BuyItem(int _id)
     {
-        itemInfo = item_Database.Search_For_Item(_id);
+        itemInfo = Item_Json_DataBase.instance.Search_For_Item(_id);
         int price = itemInfo.price;
         //Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
         Debug.Log("구매전 인벤토리에 들어있는 아이템 수 : " + inventoryAddItem.current_Index);

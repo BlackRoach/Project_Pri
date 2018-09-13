@@ -32,13 +32,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BGMTest.unity
     guid: 5aaadc70a7a507342b24fa0e93124499
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: a7326227f74513449bcaf06dc5d7cf37
   - enabled: 0
     path: Assets/Scenes/CGGallery.unity
     guid: f3800533a3e6867449d8f37dfd80bdce
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Game_Inventory.unity
     guid: f9c01d5d3cce2184aa37c87992c4f0c6
   - enabled: 0

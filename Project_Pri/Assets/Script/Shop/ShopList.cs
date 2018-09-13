@@ -40,6 +40,10 @@ public class ShopList  {
     {
         get { return id; }
     }
+    public int PHASE_MAX_COUNT
+    {
+        get { return phaseMaxCount; }
+    }
     public int SHOP_PHASE
     {
         get { return shopPhase; }

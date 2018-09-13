@@ -10,6 +10,9 @@ public class MainSceneController : MonoBehaviour {
     public Image scheduleButton; // 스케줄 버튼 이미지
     private bool IsOpenSchedule = false;
 
+    public Sprite scheduleClose;
+    public Sprite scheduleOpen;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -25,12 +28,12 @@ public class MainSceneController : MonoBehaviour {
         if (!IsOpenSchedule)
         {
             schedulePanel.SetActive(true);
-            scheduleButton.sprite = Resources.Load<Sprite>("Sprites/main/Icon_01_00");
+            scheduleButton.sprite = scheduleOpen;
         }
         else
         {
             schedulePanel.SetActive(false);
-            scheduleButton.sprite = Resources.Load<Sprite>("Sprites/main/Icon_01");
+            scheduleButton.sprite = scheduleClose;
         }
 
         IsOpenSchedule = !IsOpenSchedule;
