@@ -31,10 +31,6 @@ public class Level_Manager : MonoBehaviour {
     {
         SceneManager.LoadScene("Ending");
     }
-    public void Load_To_Title_Scene()
-    {
-        SceneManager.LoadScene("Title");
-    }
 
 
 

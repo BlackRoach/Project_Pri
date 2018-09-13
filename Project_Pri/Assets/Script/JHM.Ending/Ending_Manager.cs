@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Ending_Manager : MonoBehaviour {
 
@@ -16,6 +17,8 @@ public class Ending_Manager : MonoBehaviour {
     public Text text_Last_Ending;
     public Text text_Current_Page;
 
+    public Image img_BG; // 조건에 맞는 ending img 출력
+
     public Animator anim;
     [SerializeField]
     private Statement load_State_Data;
@@ -27,6 +30,8 @@ public class Ending_Manager : MonoBehaviour {
     private bool[] btn_Array;
     private string ending_Text;
     private bool is_Ending;
+
+    private bool is_Lock;
     private void Start()
     {
         Current_State_List_Load_Data();
@@ -41,6 +46,7 @@ public class Ending_Manager : MonoBehaviour {
         Input_Ending_List_Page_Fuction();
         is_Ending = false;
         last_Text_Box.SetActive(false);
+        is_Lock = false;
     }
     private void Ending_Data_Json_Parsing()
     {
@@ -327,9 +333,78 @@ public class Ending_Manager : MonoBehaviour {
             }
 
             // ------------------------------
+            // Text_Input
+            // page_1
             if (i < 3)
             {
                 ending_Page_1.transform.GetChild(0).transform.GetChild(i).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            } else if( i == 3)
+            {
+                ending_Page_1.transform.GetChild(0).transform.GetChild(i).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 4 && i < 8)
+            {
+                ending_Page_1.transform.GetChild(1).transform.GetChild(i - 4).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if(i >= 8 && i < 12)
+            {
+                ending_Page_1.transform.GetChild(2).transform.GetChild(i - 8).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 12 && i < 16)
+            {
+                ending_Page_1.transform.GetChild(3).transform.GetChild(i - 12).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            // page_2
+            if (i >= 16 && i < 20)
+            {
+                ending_Page_2.transform.GetChild(0).transform.GetChild(i - 16).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 20 && i < 24)
+            {
+                ending_Page_2.transform.GetChild(1).transform.GetChild(i - 20).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 24 && i < 28)
+            {
+                ending_Page_2.transform.GetChild(2).transform.GetChild(i - 24).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 28 && i < 32)
+            {
+                ending_Page_2.transform.GetChild(3).transform.GetChild(i - 28).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            // page_3
+            if (i >= 32 && i < 36)
+            {
+                ending_Page_3.transform.GetChild(0).transform.GetChild(i - 32).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 36 && i < 40)
+            {
+                ending_Page_3.transform.GetChild(1).transform.GetChild(i - 36).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 40 && i < 44)
+            {
+                ending_Page_3.transform.GetChild(2).transform.GetChild(i - 40).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            if (i >= 44 && i < 48)
+            {
+                ending_Page_3.transform.GetChild(3).transform.GetChild(i - 44).transform.GetChild(0).GetComponent<Text>()
+                    .text = ending_Data[i]["ENDING_NAME"].ToString();
+            }
+            // page_4
+            if (i >= 48 && i < 50)
+            {
+                ending_Page_4.transform.GetChild(0).transform.GetChild(i - 48).transform.GetChild(0).GetComponent<Text>()
                     .text = ending_Data[i]["ENDING_NAME"].ToString();
             }
         }
@@ -358,8 +433,8 @@ public class Ending_Manager : MonoBehaviour {
         return set;
     }
     public void Button_Ending_Pressed(int i)
-    {       
-        if(btn_Array[i] == true)
+    {
+        if (btn_Array[i] == true)
         {
             ending_Page_1.SetActive(false);
             ending_Page_2.SetActive(false);
@@ -375,9 +450,26 @@ public class Ending_Manager : MonoBehaviour {
             ending_Text = ending_Data[i]["CONDITION_COMENT_2"].ToString();
             text_Last_Ending.text = " ";
             StartCoroutine(Auto_Typing_Last(last_Text));
+
+            // --------------------------
+            // 조건에 맞는 이미지 출력
+            if (i == 0)
+            {
+                img_BG.sprite = Resources.Load<Sprite>("JHM.Img/" + "ending_1");
+            } else if(i == 1)
+            {
+                img_BG.sprite = Resources.Load<Sprite>("JHM.Img/" + "ending_2");
+            }
+            else if (i == 2)
+            {
+                img_BG.sprite = Resources.Load<Sprite>("JHM.Img/" + "ending_3");
+            }
+            else
+            {
+                img_BG.sprite = Resources.Load<Sprite>("JHM.Img/" + "ending_1");
+            }
         }
     }
-
     IEnumerator Auto_Typing_Last(string sr)
     {
         yield return new WaitForSeconds(0.5f);
@@ -386,25 +478,29 @@ public class Ending_Manager : MonoBehaviour {
             text_Last_Ending.text += text.ToString();
             yield return new WaitForSeconds(0.1f);
         }
+        is_Lock = true;
     }
     IEnumerator Ending_Text_Box()
     {
         yield return new WaitForSeconds(0.5f);
         On_Last_Text_Box();
     }
-
     public void Button_Last_Ending_Panel_Finished()
     {
-        if (!is_Ending)
+        if (is_Lock)
         {
-            text_Last_Ending.text = " ";
-            StartCoroutine(Auto_Typing_Last(ending_Text));
-            is_Ending = true;
-        }
-        else
-        {
-            Off_Last_Text_Box();
-            anim.Play("Ending_Finished");
+            if (!is_Ending)
+            {
+                is_Ending = true;
+                text_Last_Ending.text = " ";
+                StartCoroutine(Auto_Typing_Last(ending_Text));
+            }
+            else
+            {
+                Off_Last_Text_Box();
+                anim.Play("Ending_Finished");
+                StartCoroutine(Load_To_Title_Scene());
+            }
         }
     }
     private void On_Last_Text_Box()
@@ -418,7 +514,7 @@ public class Ending_Manager : MonoBehaviour {
     IEnumerator Load_To_Title_Scene()
     {
         yield return new WaitForSeconds(0.5f);
-        
+        SceneManager.LoadScene("Title 1");
     }
 } // class
 
