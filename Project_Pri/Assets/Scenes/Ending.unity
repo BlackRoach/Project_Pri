@@ -6302,6 +6302,7 @@ MonoBehaviour:
   text_Loading: {fileID: 266580925}
   text_Last_Ending: {fileID: 133262851}
   text_Current_Page: {fileID: 1135891139}
+  img_BG: {fileID: 1807414330}
   anim: {fileID: 1807414332}
   load_State_Data:
     s_muscular_strength: 0
@@ -9212,48 +9213,6 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
---- !u!1001 &1408303683
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6e0db920eecfee34993901543700898c, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1423423479
 GameObject:
   m_ObjectHideFlags: 0
@@ -10579,7 +10538,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6b117a691c1ad064c88206898a3e7d1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2d2abd5d49d2724a951129bf7b7762b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
