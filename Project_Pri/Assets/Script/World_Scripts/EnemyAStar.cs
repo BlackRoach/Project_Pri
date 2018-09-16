@@ -53,7 +53,7 @@ public class EnemyAStar : MonoBehaviour {
     private float ypoint = 0;
     private float distance = 0;
 
-    private string dist = "";
+  
     
     private InGamemanager ingamemanager;
 
@@ -542,7 +542,7 @@ public class EnemyAStar : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
            
-            dist = "";
+          
             moveVelocity = Vector3.zero;
             traceTarget = collision.gameObject;
             isMoving = true;

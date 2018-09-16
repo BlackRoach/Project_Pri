@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
 		for (int i =0; i<gridHeight; i++) {
 			for (int j =0; j<gridWidth; j++) {
 				GameObject nobj = (GameObject)GameObject.Instantiate(gridBox);
-				nobj.transform.position = new Vector2(gridBox.transform.position.x + (gridSize*j), gridBox.transform.position.y + (0.5f*i));
+				nobj.transform.position = new Vector2(gridBox.transform.position.x + (gridSize*j), gridBox.transform.position.y + (1f*i));
 				nobj.name = j+","+i;
 
 				nobj.gameObject.transform.parent = gridBox.transform.parent;
