@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Event_Manger : MonoBehaviour
 {
@@ -508,6 +509,11 @@ public class Event_Manger : MonoBehaviour
             }
             rena_Face.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + "STATE2_OLD2");
         }
+    }
+    // 씬 이동
+    public void Load_To_Talk_Scene()
+    {
+        SceneManager.LoadScene("Talk_Scene");
     }
 } // class
 
