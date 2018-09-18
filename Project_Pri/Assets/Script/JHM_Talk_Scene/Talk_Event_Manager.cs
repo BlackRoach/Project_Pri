@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
-
+using UnityEngine.SceneManagement;
 
 public class Talk_Event_Manager : MonoBehaviour {
 
@@ -14,7 +14,10 @@ public class Talk_Event_Manager : MonoBehaviour {
     public GameObject Text_Box;
 
     private JsonData talk_Data;
-
+    [SerializeField]
+    private Text text_Charm_Value;
+    [SerializeField]
+    private Text text_Elegance_Value;
     [SerializeField]
     private int charm;
     [SerializeField]
@@ -34,6 +37,9 @@ public class Talk_Event_Manager : MonoBehaviour {
         // text line
         charm = 12;
         elegance = 6;
+
+        text_Charm_Value.text = charm.ToString();
+        text_Elegance_Value.text = elegance.ToString();
         // ---------
     }
 
@@ -44,8 +50,28 @@ public class Talk_Event_Manager : MonoBehaviour {
 
         talk_Data = JsonMapper.ToObject(json_File.text);
     }
-
-
+    // 매력 , 기품 수치 조절 함수
+    public void Button_Charm_Value_Add_Five_Input()
+    {
+        charm += 5;
+        text_Charm_Value.text = charm.ToString();
+    }
+    public void Button_Charm_Value_Sub_Five_Input()
+    {
+        charm -= 5;
+        text_Charm_Value.text = charm.ToString();
+    }
+    public void Button_Elegance_Value_Add_Five_Input()
+    {
+        elegance += 5;
+        text_Elegance_Value.text = elegance.ToString();
+    }
+    public void Button_Elegance_Value_Sub_Five_Input()
+    {
+        elegance -= 5;
+        text_Elegance_Value.text = elegance.ToString();
+    }
+    // ----------------
     public void Button_Select_Castle_Of_Men()
     {
         Button_State_One.SetActive(false);
@@ -112,7 +138,10 @@ public class Talk_Event_Manager : MonoBehaviour {
         Button_State_Two.SetActive(false);
     }
 
-
+    public void Button_Exit_From_Talk_Scene()
+    {
+        SceneManager.LoadScene("Main");
+    }
 
 
 
