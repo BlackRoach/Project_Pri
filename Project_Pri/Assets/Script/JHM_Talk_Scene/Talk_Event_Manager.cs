@@ -14,6 +14,8 @@ public class Talk_Event_Manager : MonoBehaviour {
     public GameObject Text_Box;
 
     private JsonData talk_Data;
+    private JsonData talk_Value; // 매력 , 기품 데이터 가져오기
+
     [SerializeField]
     private Text text_Charm_Value;
     [SerializeField]
@@ -35,8 +37,8 @@ public class Talk_Event_Manager : MonoBehaviour {
         text_Massage = " ";
 
         // text line
-        charm = 12;
-        elegance = 6;
+        charm = (int)talk_Value[0]["CHARM"];
+        elegance = (int)talk_Value[0]["ELEGANCE"];
 
         text_Charm_Value.text = charm.ToString();
         text_Elegance_Value.text = elegance.ToString();
@@ -49,6 +51,12 @@ public class Talk_Event_Manager : MonoBehaviour {
         TextAsset json_File = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/TALK_SCENE_DATA");
 
         talk_Data = JsonMapper.ToObject(json_File.text);
+
+        // --------------------------
+
+        TextAsset json_Talk = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/Start_State");
+
+        talk_Value = JsonMapper.ToObject(json_Talk.text);
     }
     // 매력 , 기품 수치 조절 함수
     public void Button_Charm_Value_Add_Five_Input()
