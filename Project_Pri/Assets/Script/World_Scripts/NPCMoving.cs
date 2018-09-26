@@ -124,7 +124,7 @@ public class NPCMoving : MonoBehaviour
                         anim.Play("Npc1_MoveLeft");
                     }
                     else
-                       anim.Play("Npc1_MoveLeftIdle");
+                       anim.Play("Npc1_MoveLeft_Idle");
                 }
 
 
@@ -138,7 +138,7 @@ public class NPCMoving : MonoBehaviour
                         anim.Play("Npc1_MoveRight");
                     }
                     else
-                     anim.Play("Npc1_MoveRightIdle");
+                     anim.Play("Npc1_MoveRight_Idle");
                 }
 
 
@@ -152,7 +152,7 @@ public class NPCMoving : MonoBehaviour
                         anim.Play("Npc1_MoveUp");
                     }
                     else
-                        anim.Play("Npc1_MoveUpIdle");
+                        anim.Play("Npc1_MoveUp_Idle");
                 }
 
 
@@ -166,13 +166,13 @@ public class NPCMoving : MonoBehaviour
                         anim.Play("Npc1_MoveDown");
                     }
                     else
-                        anim.Play("Npc1_MoveDownIdle");
+                        anim.Play("Npc1_MoveDown_Idle");
                 }
                 break;
             case State.Idle:
                 input.x = 0;
                 input.y = 0;
-                anim.Play("Npc1_MoveDownIdle");
+                anim.Play("Npc1_MoveDown_Idle");
                 break;
          
 
