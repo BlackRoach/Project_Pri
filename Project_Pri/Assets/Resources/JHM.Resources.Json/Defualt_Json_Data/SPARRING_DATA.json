@@ -1,0 +1,38 @@
+[
+  {
+    "ID": 82001,
+    "SPARRING_ENTRY": 1,
+    "NAME": "문지기",
+    "CHARACTER_SD": "character_sd_gurdman",
+    "STATE": 100,
+    "STATE_BASIC": 20,
+    "STATE_PLUS": 30,
+    "START_TEXT": "문지기와의 대련을 시작한다.",
+    "WIN_TEXT": "문지기에게 한판 이겼다.",
+    "LOSE_TEXT": "문지기에게 한판 졌다."
+  },
+  {
+    "ID": 82002,
+    "SPARRING_ENTRY": 2,
+    "NAME": "드워프",
+    "CHARACTER_SD": "character_sd_warrior",
+    "STATE": 100,
+    "STATE_BASIC": 30,
+    "STATE_PLUS": 40,
+    "START_TEXT": "드워프와의 대련을 시작한다.",
+    "WIN_TEXT": "드워프에게 한판 이겼다.",
+    "LOSE_TEXT": "드워프에게 한판 졌다."
+  },
+  {
+    "ID": 82003,
+    "SPARRING_ENTRY": 3,
+    "NAME": "아이린",
+    "CHARACTER_SD": "character_sd_eileen",
+    "STATE": 100,
+    "STATE_BASIC": 40,
+    "STATE_PLUS": 50,
+    "START_TEXT": "아이린과의 대련을 시작한다.",
+    "WIN_TEXT": "아이린에게 한판 이겼다.",
+    "LOSE_TEXT": "아이린에게 한판 졌다."
+  }
+]
