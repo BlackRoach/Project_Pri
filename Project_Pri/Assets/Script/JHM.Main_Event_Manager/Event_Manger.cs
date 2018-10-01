@@ -515,6 +515,11 @@ public class Event_Manger : MonoBehaviour
     {
         SceneManager.LoadScene("Talk_Scene");
     }
+    public void Load_To_Status_Scene()
+    {
+        SceneManager.LoadScene("Staters_Window");
+    }
+    // --------------
 } // class
 
 

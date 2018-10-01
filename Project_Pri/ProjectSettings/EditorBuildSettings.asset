@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Staters_Window.unity
     guid: 4b9c80574ba20394baa0c26f32b2cd51
+  - enabled: 1
+    path: Assets/Scenes/Fight_Scene.unity
+    guid: ea8d3884b51dbdb4fbbcb7c777dce846
   - enabled: 0
     path: Assets/Scenes/Ending.unity
     guid: 05ad062c4e3995645acdaeb1f7cf86d9

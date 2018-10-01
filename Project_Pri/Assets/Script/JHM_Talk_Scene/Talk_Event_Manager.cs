@@ -146,11 +146,16 @@ public class Talk_Event_Manager : MonoBehaviour {
         Button_State_Two.SetActive(false);
     }
 
+
+    // 씬 이동 
     public void Button_Exit_From_Talk_Scene()
     {
         SceneManager.LoadScene("Main");
     }
-
+    public void Button_Load_To_Sparring_Scene()
+    {
+        SceneManager.LoadScene("Fight_Scene");
+    }
 
 
 } // class
