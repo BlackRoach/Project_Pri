@@ -830,17 +830,19 @@ MonoBehaviour:
   text_Winner: {fileID: 320578525}
   text_Sparring_Char_Score: {fileID: 1856551119}
   text_Main_Char_Score: {fileID: 397502118}
+  battle_Done_1: 0
+  battle_Done_2: 0
+  is_Done: 0
   gambling: 0
   mainChar_Muscularstrength: 0
   current_Year: 0
   sparring_Char_Score: 0
   main_Char_Score: 0
   battle_Start: 0
-  battle_Done_1: 0
-  battle_Done_2: 0
-  is_Done: 0
   score_main: 0
   score_target: 0
+  event_Over: 0
+  _off: 0
 --- !u!1 &570577730
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +896,7 @@ GameObject:
   - component: {fileID: 580103814}
   m_Layer: 5
   m_Name: Main_Character_Move
-  m_TagString: Untagged
+  m_TagString: Sparring_Scene_Main
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -929,7 +931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad7799d09ec78d45be48424f30241b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  who_Is: 0
   greenPos_1: {fileID: 1686497715}
   greenPos_2: {fileID: 1172355517}
   bluePos_1: {fileID: 1050582599}
@@ -1025,7 +1026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad7799d09ec78d45be48424f30241b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  who_Is: 1
   greenPos_1: {fileID: 1645604306}
   greenPos_2: {fileID: 1462490359}
   bluePos_1: {fileID: 1925240293}

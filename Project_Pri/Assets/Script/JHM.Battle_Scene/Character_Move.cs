@@ -77,25 +77,26 @@ public class Character_Move : MonoBehaviour {
         }
         if(transform.position.x == redPos_2.position.x)
         {
-            _speed = 0.9f;
+            _speed = 0.45f;
             transform.position = new Vector3(purplePos_2.position.x, transform.position.y, transform.position.z);
             new_Direction = new Vector3(purplePos_1.position.x, transform.position.y, transform.position.z);
+            if (this.gameObject.CompareTag("Sparring_Scene_Main"))
+            {
+                Battle_Manager.instance.Setting_Score();
+                Battle_Manager.instance.Round_sparring_Battle_Score();
+            }
         }
         if(transform.position.x == purplePos_1.position.x)
-        {         
+        {
+            _speed = 0.9f;
             Battle_Manager.instance.battle_Start = false;
 
             transform.position = new Vector3(greenPos_1.position.x, transform.position.y, transform.position.z);
             new_Direction = new Vector3(greenPos_2.position.x, transform.position.y, transform.position.z);
-
             do_Again = 0;
-            _speed = 0.9f;           
+            _speed = 0.9f;
         }
     }
-
-
-
-
 
 
 } // class
