@@ -12,7 +12,7 @@ public class Character_Move : MonoBehaviour {
     private Vector3 new_Direction;
     [SerializeField]
     private int do_Again; // 케릭터가 동선따라 이동할때 어느 색 동선은 한번더 반복
-
+    [SerializeField]
     private float _speed;
 
     private void Start()
@@ -21,7 +21,7 @@ public class Character_Move : MonoBehaviour {
         new_Direction= new Vector3(greenPos_2.position.x,transform.position.y, transform.position.z);
 
         do_Again = 0;
-        _speed = 0.9f;
+        _speed = 1.5f; // 0.9f
     }
     private void Update()
     {
@@ -49,7 +49,7 @@ public class Character_Move : MonoBehaviour {
     {
          transform.position = Vector3.MoveTowards(transform.position, new_Direction, _speed);
 
-         yield return new WaitForSeconds(1f);
+         yield return new WaitForSeconds(0f);
         if(transform.position.x == greenPos_2.position.x)
         {
             transform.position = new Vector3(bluePos_1.position.x, transform.position.y, transform.position.z);
@@ -71,13 +71,13 @@ public class Character_Move : MonoBehaviour {
         }
         if(do_Again == 4 && transform.position.x == bluePos_1.position.x)
         {
-            _speed = 1.8f;
+            _speed = 1.8f;  // 1.8f
             transform.position = new Vector3(redPos_1.position.x, transform.position.y, transform.position.z);
             new_Direction = new Vector3(redPos_2.position.x, transform.position.y, transform.position.z);
         }
         if(transform.position.x == redPos_2.position.x)
         {
-            _speed = 0.45f;
+            _speed = 1f; // 0.45f
             transform.position = new Vector3(purplePos_2.position.x, transform.position.y, transform.position.z);
             new_Direction = new Vector3(purplePos_1.position.x, transform.position.y, transform.position.z);
             if (this.gameObject.CompareTag("Sparring_Scene_Main"))
@@ -88,13 +88,12 @@ public class Character_Move : MonoBehaviour {
         }
         if(transform.position.x == purplePos_1.position.x)
         {
-            _speed = 0.9f;
+            _speed = 1.5f; // 0.9f
             Battle_Manager.instance.battle_Start = false;
 
             transform.position = new Vector3(greenPos_1.position.x, transform.position.y, transform.position.z);
             new_Direction = new Vector3(greenPos_2.position.x, transform.position.y, transform.position.z);
             do_Again = 0;
-            _speed = 0.9f;
         }
     }
 
