@@ -40,6 +40,7 @@ public class ScheduleManager : MonoBehaviour {
         CheckFestivalEvent();
     }
 
+    // 다음 버튼을 눌렀을 때 화면을 변화시킨다.
     public void NextButton()
     {
         if (backGroundPosition < 2)
@@ -99,6 +100,7 @@ public class ScheduleManager : MonoBehaviour {
         nextButton.GetComponent<Button>().enabled = true;
     }
 
+    // 스케줄을 추가한다.
     public void AddSchedule(GameObject activity)
     {
         Activity tmp = activity.GetComponent<Activity>();
@@ -117,6 +119,7 @@ public class ScheduleManager : MonoBehaviour {
         DrawSchedule();
     }
 
+    // 스케줄을 지운다.
     public void DeleteSchedule()
     {
         if (activities.Count <= 0)
@@ -194,6 +197,7 @@ public class ScheduleManager : MonoBehaviour {
         DrawSchedule();
     }
 
+    // 일정실행전에 스케줄을 화면에 그려준다.
     private void DrawSchedule()
     {
         for(int i = 0; i < activities.Count; i++)
@@ -235,6 +239,7 @@ public class ScheduleManager : MonoBehaviour {
         InvokeRepeating("RunSchedule", 0.1f, 1.0f);
     }
 
+    // 한달 동안의 스케줄을 생성한다.
     private void MakeSchedule()
     {
         // 현재 년도 월에 해당하는 Year정보를 받아온다.
@@ -272,6 +277,7 @@ public class ScheduleManager : MonoBehaviour {
             decidedActivities.Add(activities[2]);
     }
 
+    // 스케줄을 실행하고 메인씬으로 넘어간다.
     private void RunSchedule()
     {
         bool notEnd = day < decidedActivities.Count;
@@ -317,14 +323,4 @@ public class ScheduleManager : MonoBehaviour {
     {
         SceneManager.LoadSceneAsync(sceneMane);
     }
-
-    // 활동(Activity)정보를 받아온다. 
-    // 리스트에 넣는다. 
-    // 일정표에 그려준다. 
-    // - 리스트에 들어있는 것까지만 그려준다. (활성화시킨다.)
-    // - 나머지는 안보이게 한다. (비활성화시킨다.)
-    // - 그려준 슬롯을 다시 클릭하면 제일 뒤에 슬롯부터 차례대로 비활성화 시킨다.
-    // 특수카드는 일정에 한번만 등록가능하다. 
-    // 다음 버튼을 누르면 화면 애니메이션이 움직인다. 
-    // 일정버튼을 누르면 일정을 실행한다.
 }

@@ -118,6 +118,4 @@ public class CalendarTest : MonoBehaviour {
     }
 }
 
-// 시작시 현재 날짜 값을 받아온다.
-// 그리고 Input 상자에 값을 보여준다.
-// +버튼 -버튼으로 날짜를 변경한다.
+// 코드가 제대로 동작하는지 확인하는 클래스
