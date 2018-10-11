@@ -40,7 +40,7 @@ public class ShopItemSlot : MonoBehaviour {
         else
         {
             itemImage.enabled = true;
-            itemImage.sprite = Resources.Load<Sprite>("KKT_Resources/Shop/" + image);
+            itemImage.sprite = Resources.Load<Sprite>("JHM_Resources/Shop/" + image);
         }
     }
 }

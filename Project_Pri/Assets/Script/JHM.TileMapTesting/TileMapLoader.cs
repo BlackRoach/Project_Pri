@@ -61,7 +61,7 @@ public class TileMapLoader : MonoBehaviour {
         //Debug.Log(tilemapName);
 
         // tile은 Asset 폴더 안에 있는 원본이다.
-        GameObject tile = Resources.Load<GameObject>("Prefabs/KIM_Prefab/KIM_TileMap/" + tilemapName);
+        GameObject tile = Resources.Load<GameObject>("Prefabs/JHM.Prefab/TileMap/" + tilemapName);
         if (tile != null)
         {
             DeleteMap();
@@ -100,7 +100,7 @@ public class TileMapLoader : MonoBehaviour {
         }
 
         // tile은 Asset 폴더 안에 있는 원본이다.
-        GameObject tile = Resources.Load<GameObject>("Prefabs/KIM_Prefab/KIM_TileMap/" + tilemapName);
+        GameObject tile = Resources.Load<GameObject>("Prefabs/JHM.Prefab/TileMap/" + tilemapName);
         if (tile != null)
         {
             currentTileMap = Instantiate(tile, Grid.transform);
