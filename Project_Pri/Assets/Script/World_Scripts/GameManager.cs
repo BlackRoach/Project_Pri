@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 public class GameManager : MonoBehaviour {
    
-	public MyPathNode[,] grid;
+    public MyPathNode[,] grid;
 	public GameObject enemy;
 	public GameObject gridBox;
     public List<GameObject> spawnpos;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 
     public void TargetPosition(int x, int y) { targetx = x; targety = y; }
    
-    void createGrid()
+    public void createGrid()
 	{
 	//Generate Gameobjects of GridBox to show on the Screen
 		for (int i =0; i<gridHeight; i++) {
@@ -77,8 +77,22 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
-
-	void createEnemy(int x,int y)
+    public void destroyGrid()
+    {
+        Transform[] childList = GameObject.Find("TracePanel").GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+          
+            for (int i = 3; i < childList.Length; i++)
+            {
+                //if (childList[i] != transform&&childList[i].name !="GridBox")
+                //    Destroy(childList[i].gameObject);
+                if (childList[i].name == "check")
+                    childList[i].GetComponent<TurnToWall>().Initgrid();
+            }
+        }
+    }
+    void createEnemy(int x,int y)
 	{
 		GameObject nb = (GameObject)GameObject.Instantiate (enemy);
         nb.transform.parent = WorldObject.transform;
@@ -88,10 +102,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
 	
 	public void addWall (int x, int y)
 	{

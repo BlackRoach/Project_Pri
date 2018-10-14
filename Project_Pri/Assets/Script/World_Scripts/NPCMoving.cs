@@ -61,10 +61,16 @@ public class NPCMoving : MonoBehaviour
     }
 
     // Use this for initialization
+    void OnEnable()
+    {
+        anim = GetComponent<Animator>();
+        once = false;
+        anim.Play("Npc1_MoveDown_Idle");
+    }
     void Start()
     {
 
-        anim = GetComponent<Animator>();
+        Game = GameObject.Find("*Manager").GetComponent<GameManager>();
 
        // startGridPosition = new gridPosition(spawnx, spawny);
        // initializePosition(spawnx, spawny);
@@ -73,15 +79,7 @@ public class NPCMoving : MonoBehaviour
         //StartCoroutine(ChangeState());
 
     }
-    private void Update()
-    {
-   
-    }
-    private void OnEnable()
-    {
-        //StartCoroutine(ChangeState());
-
-    }
+  
    
 
 
@@ -206,22 +204,14 @@ public class NPCMoving : MonoBehaviour
 
         while (t < 1f)
         {
-            //  if (!isTracing)
-            //  {
+         
             t += Time.deltaTime * (speed / Game.gridSize) * factor;
             transform.position = Vector2.Lerp(startPosition, endPosition, t);
             yield return null;
-            // }
+      
         }
 
-        //yield return new WaitForSeconds(1f);
-
-
-        //if (movementState == 0)
-        //    Debug.Log("stop");
-        //else
-        //    Debug.Log("play");
-
+     
         
         StartCoroutine(ChangeState());
 
@@ -275,6 +265,7 @@ public class NPCMoving : MonoBehaviour
              
                 currentGridPosition.x = int.Parse(splitter[0]);
                 currentGridPosition.y = int.Parse(splitter[1]);
+                initializePosition(currentGridPosition.x, currentGridPosition.y);
                 StartCoroutine(ChangeState());
             }
         }

@@ -5,17 +5,16 @@ public class TurnToWall : MonoBehaviour {
 
 	public GameManager Game;
     public GameObject grid;
- 
+  
     string[] splitter = new string[2];
 
     bool isWall;
     // Use this for initialization
     void Start () {
-	
 
+     
 	}
-
-	
+  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         splitter = grid.gameObject.name.Split(',');
@@ -69,9 +68,11 @@ public class TurnToWall : MonoBehaviour {
 
         }
     }
-    // Update is called once per frame
-    void Update () {
-	
-	}
+    public void Initgrid()
+    {
+        isWall = false;
+        grid.GetComponent<Renderer>().material.color = Color.white;
+        this.GetComponent<BoxCollider2D>().enabled = true;
+    }
 
 }

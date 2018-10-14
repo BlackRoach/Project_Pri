@@ -7,8 +7,29 @@ using LitJson;
 
 public class TileMapLoader : MonoBehaviour {
 
+    private static TileMapLoader instance = null;
+    public static TileMapLoader Instance
+    {
+        get
+        {
+            return instance;
+
+        }
+    }
+    private void Awake()
+    {
+
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+    }
+
+    private GameManager game;
     private int tilemapNum;
-    public Text tileNumTxt;
+  
     public GameObject Grid; // 타일맵을 여기에 자식으로 넣어준다.
     private GameObject currentTileMap;
 
@@ -16,12 +37,13 @@ public class TileMapLoader : MonoBehaviour {
     private JsonData loadData;
     private string tilemapName; // 찾는 타일맵 파일 이름
 
-    // Use this for initialization
+  
     void Start () {
+        game = GameObject.Find("*Manager").GetComponent<GameManager>();
         LoadJson();
-        tilemapNum = 1;
-        tileNumTxt.text = tilemapNum.ToString();
-        LoadMap();
+
+        LoadMap(7);
+       
     }
 
     private void LoadJson()
@@ -34,7 +56,7 @@ public class TileMapLoader : MonoBehaviour {
     public void IncreaseNumber()
     {
         tilemapNum++;
-        tileNumTxt.text = tilemapNum.ToString();
+     
     }
 
     public void ReduceNumber()
@@ -42,13 +64,13 @@ public class TileMapLoader : MonoBehaviour {
         if (tilemapNum == 1)
             return;
         tilemapNum--;
-        tileNumTxt.text = tilemapNum.ToString();
+     
     }
 
-    public void LoadMap()
+    public void LoadMap(int num)
     {
         
-        string id = "5500" + tilemapNum; // 찾는 아이디 번호
+        string id = "5500" + num; // 찾는 아이디 번호
         //Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
         {
@@ -82,13 +104,13 @@ public class TileMapLoader : MonoBehaviour {
     private void DeleteMap()
     {
         Destroy(currentTileMap);
-
+        
     }
 
     public void ChangeMap(int mapID)
     {
-        Destroy(currentTileMap);
-
+        DeleteMap();
+        game.destroyGrid();
         string id = mapID.ToString(); // 찾는 아이디 번호
         //Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
@@ -104,6 +126,9 @@ public class TileMapLoader : MonoBehaviour {
         if (tile != null)
         {
             currentTileMap = Instantiate(tile, Grid.transform);
+           
+            tile.GetComponent<TileMapInformation>().SpawnPlayer(0);
+          
         }
         else
         {
@@ -111,6 +136,7 @@ public class TileMapLoader : MonoBehaviour {
         }
         // 현재맵을 지운다.
         // 새맵을 불러온다.
+       
     }
 
     // Json에서 타일맵 리스트 데이터를 불러온다. 
@@ -120,6 +146,6 @@ public class TileMapLoader : MonoBehaviour {
     // 로드시 기존맵을 지우고 새로운 맵을 불러온다.
     // QualitySettings에서 Anti Aliasing을 Disable 해줘서 타일사이의 공백을 안보이게 한다.
 
-
+    
 
 }
