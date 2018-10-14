@@ -16,6 +16,7 @@ TagManager:
   - Talking
   - MoveArea
   - SpawnPos
+  - Sparring_Scene_Main
   layers:
   - Default
   - TransparentFX

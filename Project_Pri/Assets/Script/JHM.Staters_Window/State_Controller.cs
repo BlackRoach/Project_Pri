@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class State_Controller : MonoBehaviour {
 
@@ -29,6 +30,10 @@ public class State_Controller : MonoBehaviour {
 
         current_Count = 0;
         text_Count.text = current_Count.ToString();
+
+        // -------------
+
+        Current_State_List_Save_Data();
     }
     public void Count_Add_One()
     {

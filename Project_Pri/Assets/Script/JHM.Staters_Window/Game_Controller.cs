@@ -148,6 +148,7 @@ public class Game_Controller : MonoBehaviour
         Application.Quit();
     }
 
+    // 씬 이동
     public void Load_To_Main_Scene()
     {
         SceneManager.LoadScene("Main");

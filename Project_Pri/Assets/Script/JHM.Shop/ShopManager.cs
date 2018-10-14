@@ -173,7 +173,7 @@ public class ShopManager : MonoBehaviour {
     private void NPC_Change()
     {
         string characterImage = activeShop.SHOP_CHARACTER;
-        npcImage.sprite = Resources.Load<Sprite>("KKT_Resources/Shop/" + characterImage);
+        npcImage.sprite = Resources.Load<Sprite>("JHM_Resources/Shop/" + characterImage);
         npcName.text = activeShop.CHARACTER_NAME_KR;
 
         ChangeMessage(0);
@@ -300,7 +300,7 @@ public class ShopManager : MonoBehaviour {
         switch(message)
         {
             case KIND_OF_MESSAGEBOX.ASK_BUY:
-                buyItemImage.sprite = Resources.Load<Sprite>("KKT_Resources/Shop/"
+                buyItemImage.sprite = Resources.Load<Sprite>("JHM_Resources/Shop/"
                     + selectedItem.ICON);
                 buyItemInfo.text = Item_Json_DataBase.
                     instance.Search_For_Item(selectedItem.ID).description;
