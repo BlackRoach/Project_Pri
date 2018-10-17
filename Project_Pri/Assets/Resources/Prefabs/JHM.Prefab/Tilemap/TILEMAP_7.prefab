@@ -1325,6 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilenum: 55008
+  spawnnum: 0
 --- !u!114 &114065906614324372
 MonoBehaviour:
   m_ObjectHideFlags: 1

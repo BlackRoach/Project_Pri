@@ -107,7 +107,7 @@ public class TileMapLoader : MonoBehaviour {
         
     }
 
-    public void ChangeMap(int mapID)
+    public void ChangeMap(int mapID,int spawnnum)
     {
         DeleteMap();
         game.destroyGrid();
@@ -127,7 +127,7 @@ public class TileMapLoader : MonoBehaviour {
         {
             currentTileMap = Instantiate(tile, Grid.transform);
            
-            tile.GetComponent<TileMapInformation>().SpawnPlayer(0);
+            tile.GetComponent<TileMapInformation>().SpawnPlayer(spawnnum);
           
         }
         else

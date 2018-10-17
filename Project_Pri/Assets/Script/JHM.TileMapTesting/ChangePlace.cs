@@ -24,7 +24,7 @@ public class ChangePlace : MonoBehaviour {
         if(collision.CompareTag("Player"))
         {
             //Debug.Log("Player");
-            tmLoader.ChangeMap(tilemapID);
+          //  tmLoader.ChangeMap(tilemapID);
             player.transform.SetPositionAndRotation(playerPosition,
                 Quaternion.identity);
         }

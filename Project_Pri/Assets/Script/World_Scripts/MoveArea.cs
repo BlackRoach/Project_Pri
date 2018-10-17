@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveArea : MonoBehaviour {
 
     public int tilenum;
-
+    public int spawnnum;
     private TileMapLoader tileMapLoader;
 	
 	void Start () {
@@ -15,7 +15,7 @@ public class MoveArea : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            tileMapLoader.ChangeMap(tilenum);
+            tileMapLoader.ChangeMap(tilenum,spawnnum);
         }
 
     }
