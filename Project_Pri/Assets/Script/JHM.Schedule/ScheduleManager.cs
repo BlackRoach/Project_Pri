@@ -170,6 +170,7 @@ public class ScheduleManager : MonoBehaviour {
         switch (festival)
         {
             case 0:
+                NewYearFes.SetActive(true);
                 break;
             case 1:
                 NewYearFes.SetActive(true);
@@ -288,6 +289,11 @@ public class ScheduleManager : MonoBehaviour {
 
             DetailsText.text = CalendarManager.instance.CurrentMonth + "월"
                 + (day + 1) + "일, ";
+
+            if(decidedActivities[day].title == "무술도장")
+            {
+                decidedActivities[day].title = "무술학교";
+            }
             DetailsText.text += decidedActivities[day].title + " 활동을 하였는데..";
             CalendarManager.instance.CurrentDate = day + 1;
             CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();

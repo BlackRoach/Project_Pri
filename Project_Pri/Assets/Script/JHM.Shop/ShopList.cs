@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class ShopList  {
 
-    private int id; 
-    private int phaseMaxCount; // 상점 전체 페이지수
-    private int shopPhase; // 상점 페이지 숫자
-    private string shopName; // 상점 이름
-    private string shopCharacter; // 상점 캐릭터 이미지 파일명
-    private string characterNameKr; // 상점 캐릭터 한국어 이름
-    private int shopTalkID; // 상점 캐릭터 대사 ID
-    private int phaseInCount; // 상점 페이지당 아이템 개수
+   public int id; 
+   public int phaseMaxCount; // 상점 전체 페이지수
+   public int shopPhase; // 상점 페이지 숫자
+   public string shopName; // 상점 이름
+   public string shopCharacter; // 상점 캐릭터 이미지 파일명
+   public string characterNameKr; // 상점 캐릭터 한국어 이름
+   public int shopTalkID; // 상점 캐릭터 대사 ID
+   public int phaseInCount; // 상점 페이지당 아이템 개수
 
-    private List<ShopItem> shopItemList; // 상점 페이지당 아이템 리스트
+   public List<ShopItem> shopItemList; // 상점 페이지당 아이템 리스트
 
     public ShopList(int id, int phaseMaxCount, int shopPhase,
         string shopName, string shopCharacter, string characterNameKr,
@@ -30,7 +30,7 @@ public class ShopList  {
 
         this.shopItemList = new List<ShopItem>();
 
-        for(int i = 0; i < shopItemList.Count; i++)
+        for (int i = 0; i < shopItemList.Count; i++)
         {
             this.shopItemList.Add(shopItemList[i]);
         }

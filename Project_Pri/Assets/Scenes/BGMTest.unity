@@ -214,6 +214,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 82571525701522776, guid: a1ad2f0bc36b00b44a8a0a5ae5f14243,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 82452728679581688, guid: a1ad2f0bc36b00b44a8a0a5ae5f14243,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a1ad2f0bc36b00b44a8a0a5ae5f14243, type: 2}
   m_IsPrefabParent: 0
@@ -511,6 +521,7 @@ MonoBehaviour:
   clipLists:
   - {fileID: 8300000, guid: c940e7befffff5f43a363730f357b424, type: 3}
   - {fileID: 8300000, guid: e1fe738db429e0d419c50558e2908665, type: 3}
+  - {fileID: 8300000, guid: 9910026d8f6d22547a3638ba48356c9d, type: 3}
 --- !u!4 &1359938761
 Transform:
   m_ObjectHideFlags: 0
