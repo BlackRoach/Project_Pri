@@ -5107,6 +5107,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 521538053}
+--- !u!1 &526964973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 526964974}
+  m_Layer: 5
+  m_Name: Market_Prefab_Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &526964974
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 526964973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 781684658}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &528982406
 Prefab:
   m_ObjectHideFlags: 0
@@ -7422,6 +7455,7 @@ RectTransform:
   - {fileID: 416562278}
   - {fileID: 810020785}
   - {fileID: 1894740314}
+  - {fileID: 526964974}
   - {fileID: 2075825398}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -8831,6 +8865,11 @@ Prefab:
       propertyPath: activities.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: market_Prefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 224576129249958000, guid: 2411c6c52f9d72445b9e088873e03d75,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -9031,6 +9070,34 @@ Prefab:
       propertyPath: CherryBlossomFes
       value: 
       objectReference: {fileID: 828499882}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: market_Prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1354505934171842, guid: 0a2ec2ca20ff3564081e23ee49526543,
+        type: 2}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: market_Prefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1686908462097744, guid: 1fc51adaf58ee1c488e97a2ceeaace82,
+        type: 2}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: market_Prefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1986465299963014, guid: 7941a9aacf7b4a240a361de1bd6e9079,
+        type: 2}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: market_Parent
+      value: 
+      objectReference: {fileID: 526964973}
+    - target: {fileID: 114551547050976682, guid: 2411c6c52f9d72445b9e088873e03d75,
+        type: 2}
+      propertyPath: main_Panel
+      value: 
+      objectReference: {fileID: 1962714511}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2411c6c52f9d72445b9e088873e03d75, type: 2}
   m_IsPrefabParent: 0
@@ -9885,6 +9952,14 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335583326727082, guid: 8d75228358d24ac4aaadf013c04c3574, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522269092623940, guid: 8d75228358d24ac4aaadf013c04c3574, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053764445421652, guid: 8d75228358d24ac4aaadf013c04c3574, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -17134,7 +17209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.945015, y: 22.600098}
+  m_AnchoredPosition: {x: 3.9450073, y: 22.600098}
   m_SizeDelta: {x: 44.25, y: 34.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833615920
@@ -17369,7 +17444,7 @@ Prefab:
     - target: {fileID: 224735074458736742, guid: cb77109f8b6b53e43a220c2ae5b5d7b6,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224735074458736742, guid: cb77109f8b6b53e43a220c2ae5b5d7b6,
         type: 2}

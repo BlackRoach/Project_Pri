@@ -22,6 +22,11 @@ public class ScheduleManager : MonoBehaviour {
     public GameObject BirthdayParty; // 생일파티
     public GameObject Ending; // 엔딩
 
+    public GameObject main_Panel;
+    public GameObject[] market_Prefabs; // 시장 스케쥴 실행시 프리펩 작동
+    public GameObject market_Parent;
+
+
     public List<GameObject> schedules; // 일정표안에 표시되는 활동버튼들
     public List<Activity> activities = new List<Activity>(); // 일정표안에 들어갈 활동정보들
     public List<Activity> decidedActivities = new List<Activity>(); // 최종적으로 선택된 활동
@@ -34,8 +39,11 @@ public class ScheduleManager : MonoBehaviour {
     private int lastEnd; // 하순 종료일
     private int day = 0; // 스케줄 진행 날짜
 
+    private GameObject market_Obj;
+
     private void Start()
     {
+        market_Obj = null;
         backGroundPosition = 0;
         CheckFestivalEvent();
     }
@@ -204,7 +212,7 @@ public class ScheduleManager : MonoBehaviour {
         for(int i = 0; i < activities.Count; i++)
         {
             schedules[i].SetActive(true);
-            schedules[i].GetComponent<Activity>().ChangeValues(activities[i]);
+            schedules[i].GetComponent<Activity>().ChangeValues(activities[i]);            
         }
 
         if(activities.Count == 0)
@@ -224,7 +232,7 @@ public class ScheduleManager : MonoBehaviour {
         if(activities.Count == 2)
         {
             schedules[2].SetActive(false);
-        }
+        }        
     }
 
     // 일정실행 버튼 클릭
@@ -235,7 +243,7 @@ public class ScheduleManager : MonoBehaviour {
             Debug.Log("일정을 전부 채워야 합니다.");
             return;
         }
-
+        
         MakeSchedule();
         InvokeRepeating("RunSchedule", 0.1f, 1.0f);
     }
@@ -254,13 +262,12 @@ public class ScheduleManager : MonoBehaviour {
         middleEnd = currentYear.DAYSLIST.IndexOf(currentYear.DAY2_MAX); // 중순 마지막날 인덱스
         lastStart = currentYear.DAYSLIST.IndexOf(currentYear.DAY3_MIN); // 하순 첫날 인덱스
         lastEnd = currentYear.DAYSLIST.IndexOf(currentYear.DAY3_MAX); // 하순 마지막날 인덱스
-        //Debug.Log(firstStart);
-        //Debug.Log(firstEnd);
-        //Debug.Log(middleStart);
-        //Debug.Log(middleEnd);
-        //Debug.Log(lastStart);
-        //Debug.Log(lastEnd);
-
+       // Debug.Log(firstStart);
+       // Debug.Log(firstEnd);
+       // Debug.Log(middleStart);
+       // Debug.Log(middleEnd);
+       // Debug.Log(lastStart);
+       // Debug.Log(lastEnd);
         // 상순, 중순, 하순 기간을 알아낸다.
         int firstDays = firstEnd - firstStart + 1;
         int middleDays = middleEnd - middleStart + 1;
@@ -287,6 +294,59 @@ public class ScheduleManager : MonoBehaviour {
         {
             performingPanel.SetActive(true);
 
+            if(decidedActivities[day].title == "시장")
+            {
+                performingPanel.transform.GetChild(1).gameObject.SetActive(false);
+                performingPanel.transform.GetChild(2).gameObject.SetActive(false);
+                if (day == 0)
+                {
+                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
+                    market_Obj.transform.SetParent(market_Parent.transform);
+                    market_Obj.transform.localPosition = Camera.main.transform.position;
+
+                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+                }
+                if(day == 10)
+                {
+                    if(market_Obj != null)
+                    {
+                        Destroy(market_Obj.gameObject);
+                    }
+                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
+                    market_Obj.transform.SetParent(market_Parent.transform);
+                    market_Obj.transform.localPosition = Camera.main.transform.position;
+
+                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+                } 
+                if(day == 20)
+                {
+                    if (market_Obj != null)
+                    {
+                        Destroy(market_Obj.gameObject);
+                    }
+                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
+                    market_Obj.transform.SetParent(market_Parent.transform);
+                    market_Obj.transform.localPosition = Camera.main.transform.position;
+
+                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (market_Obj != null)
+                {
+                    Destroy(market_Obj.gameObject);
+                }
+                performingPanel.transform.GetChild(1).gameObject.SetActive(true);
+                performingPanel.transform.GetChild(2).gameObject.SetActive(true);
+
+                infoPanel.transform.SetParent(main_Panel.transform);
+                infoPanel.transform.GetChild(2).gameObject.SetActive(true);
+            }
+
             DetailsText.text = CalendarManager.instance.CurrentMonth + "월"
                 + (day + 1) + "일, ";
 
@@ -294,6 +354,7 @@ public class ScheduleManager : MonoBehaviour {
             {
                 decidedActivities[day].title = "무술학교";
             }
+
             DetailsText.text += decidedActivities[day].title + " 활동을 하였는데..";
             CalendarManager.instance.CurrentDate = day + 1;
             CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();
