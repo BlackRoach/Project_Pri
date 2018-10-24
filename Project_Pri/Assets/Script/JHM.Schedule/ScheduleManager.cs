@@ -303,9 +303,11 @@ public class ScheduleManager : MonoBehaviour {
                     market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
                     market_Obj.transform.SetParent(market_Parent.transform);
                     market_Obj.transform.localPosition = Camera.main.transform.position;
+                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.SetParent(performingPanel.transform);
                     infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+
                 }
                 if(day == 10)
                 {
@@ -316,8 +318,9 @@ public class ScheduleManager : MonoBehaviour {
                     market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
                     market_Obj.transform.SetParent(market_Parent.transform);
                     market_Obj.transform.localPosition = Camera.main.transform.position;
+                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.SetParent(performingPanel.transform);
                     infoPanel.transform.GetChild(2).gameObject.SetActive(false);
                 } 
                 if(day == 20)
@@ -329,8 +332,9 @@ public class ScheduleManager : MonoBehaviour {
                     market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
                     market_Obj.transform.SetParent(market_Parent.transform);
                     market_Obj.transform.localPosition = Camera.main.transform.position;
+                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                    infoPanel.transform.SetParent(market_Parent.transform);
+                    infoPanel.transform.SetParent(performingPanel.transform);
                     infoPanel.transform.GetChild(2).gameObject.SetActive(false);
                 }
             }
