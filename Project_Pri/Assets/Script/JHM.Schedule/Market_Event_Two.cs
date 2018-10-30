@@ -11,11 +11,7 @@ public class Market_Event_Two : MonoBehaviour {
 
     private void Start()
     {
-        sd_Character[0].transform.localPosition = sd_Pos[0].localPosition;
-        NewPos[0] = sd_Pos[1].localPosition;
-
-        sd_Character[2].transform.localPosition = sd_Pos[2].localPosition;
-        NewPos[1] = sd_Pos[1].localPosition;
+        Default_Pos();
     }
 
     private void Update()
@@ -42,6 +38,14 @@ public class Market_Event_Two : MonoBehaviour {
         {
             NewPos[1] = sd_Pos[0].localPosition;
         }
+    }
+    public void Default_Pos()
+    {
+        sd_Character[0].transform.localPosition = sd_Pos[0].localPosition;
+        NewPos[0] = sd_Pos[1].localPosition;
+
+        sd_Character[2].transform.localPosition = sd_Pos[2].localPosition;
+        NewPos[1] = sd_Pos[1].localPosition;
     }
 
 } // class

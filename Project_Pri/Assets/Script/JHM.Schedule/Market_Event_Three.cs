@@ -9,23 +9,17 @@ public class Market_Event_Three : MonoBehaviour {
 
     private Vector3[] NewPos = new Vector3[3];
 
+
+    private Vector3 tiger_Start_Pos;
     private void Start()
     {
-        sd_Character[0].transform.localPosition = sd_Pos[0].localPosition;
-        NewPos[0] = sd_Pos[2].localPosition;
-
-        NewPos[1] = sd_Pos[2].localPosition;
-
-        sd_Character[4].transform.localPosition = sd_Pos[5].localPosition;
-        NewPos[2] = sd_Pos[2].localPosition;
+        tiger_Start_Pos = sd_Character[2].transform.localPosition;
+        Default_Pos();
     }
-
     private void Update()
     {
         StartCoroutine(Character_Move_Toward_Root());
     }
-
-
     IEnumerator Character_Move_Toward_Root()
     {
         sd_Character[0].transform.localPosition = Vector3.MoveTowards(sd_Character[0].transform.localPosition,
@@ -52,7 +46,17 @@ public class Market_Event_Three : MonoBehaviour {
             NewPos[2] = sd_Pos[1].localPosition;
         }
     }
+    public void Default_Pos()
+    {
+        sd_Character[0].transform.localPosition = sd_Pos[0].localPosition;
+        NewPos[0] = sd_Pos[2].localPosition;
 
+        sd_Character[2].transform.localPosition = tiger_Start_Pos;
+        NewPos[1] = sd_Pos[2].localPosition;
+
+        sd_Character[4].transform.localPosition = sd_Pos[5].localPosition;
+        NewPos[2] = sd_Pos[2].localPosition;
+    }
 
 
 

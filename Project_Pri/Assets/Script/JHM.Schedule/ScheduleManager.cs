@@ -39,11 +39,9 @@ public class ScheduleManager : MonoBehaviour {
     private int lastEnd; // 하순 종료일
     private int day = 0; // 스케줄 진행 날짜
 
-    private GameObject market_Obj;
 
     private void Start()
     {
-        market_Obj = null;
         backGroundPosition = 0;
         CheckFestivalEvent();
     }
@@ -86,6 +84,7 @@ public class ScheduleManager : MonoBehaviour {
         }
         //Debug.Log(backGroundPosition);
 
+        
     }
 
     private void ActiveArbeitPanel()
@@ -300,50 +299,23 @@ public class ScheduleManager : MonoBehaviour {
                 performingPanel.transform.GetChild(2).gameObject.SetActive(false);
                 if (day == 0)
                 {
-                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
-                    market_Obj.transform.SetParent(market_Parent.transform);
-                    market_Obj.transform.localPosition = Camera.main.transform.position;
-                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                    infoPanel.transform.SetParent(performingPanel.transform);
-                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
-
+                    Market_Event_Panel_Randomaize();
                 }
                 if(day == 10)
                 {
-                    if(market_Obj != null)
-                    {
-                        Destroy(market_Obj.gameObject);
-                    }
-                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
-                    market_Obj.transform.SetParent(market_Parent.transform);
-                    market_Obj.transform.localPosition = Camera.main.transform.position;
-                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                    infoPanel.transform.SetParent(performingPanel.transform);
-                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+                    Market_Event_Panel_Randomaize();
                 } 
                 if(day == 20)
                 {
-                    if (market_Obj != null)
-                    {
-                        Destroy(market_Obj.gameObject);
-                    }
-                    market_Obj = Instantiate(market_Prefabs[Random.Range(0, market_Prefabs.Length)].gameObject);
-                    market_Obj.transform.SetParent(market_Parent.transform);
-                    market_Obj.transform.localPosition = Camera.main.transform.position;
-                    market_Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                    infoPanel.transform.SetParent(performingPanel.transform);
-                    infoPanel.transform.GetChild(2).gameObject.SetActive(false);
+                    Market_Event_Panel_Randomaize();
                 }
             }
             else
             {
-                if (market_Obj != null)
-                {
-                    Destroy(market_Obj.gameObject);
-                }
+                market_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                market_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                market_Parent.transform.GetChild(2).gameObject.SetActive(false);
+
                 performingPanel.transform.GetChild(1).gameObject.SetActive(true);
                 performingPanel.transform.GetChild(2).gameObject.SetActive(true);
 
@@ -386,8 +358,41 @@ public class ScheduleManager : MonoBehaviour {
             CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();
             CalendarManager.instance.CurrentStrMonth = CalendarManager.instance.GetCurrentStrMonth();
             ChangeScene("Main");
+        }    
+    }
+
+    private void Market_Event_Panel_Randomaize()
+    {
+        int random = Random.Range(0, market_Prefabs.Length);
+        Debug.Log(random);
+        switch (random)
+        {
+            case 0:
+                {
+                    market_Parent.transform.GetChild(0).gameObject.SetActive(true);
+                    market_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(0).gameObject.GetComponent<Market_Event_One>().Default_Pos();
+                } break;
+            case 1:
+                {
+                    market_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(1).gameObject.SetActive(true);
+                    market_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(1).gameObject.GetComponent<Market_Event_Two>().Default_Pos();
+                } break;
+            case 2:
+                {
+                    market_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                    market_Parent.transform.GetChild(2).gameObject.SetActive(true);
+                    market_Parent.transform.GetChild(2).gameObject.GetComponent<Market_Event_Three>().Default_Pos();
+                }
+                break;
         }
-        
+
+        infoPanel.transform.SetParent(performingPanel.transform);
+        infoPanel.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     public void ChangeScene(string sceneMane)
