@@ -24,7 +24,7 @@ public class ScheduleManager : MonoBehaviour {
 
     public GameObject main_Panel;
     public GameObject[] market_Prefabs; // 시장 스케쥴 실행시 프리펩 작동
-    public GameObject market_Parent;
+    public GameObject schedules_Mode_Parent;
 
 
     public List<GameObject> schedules; // 일정표안에 표시되는 활동버튼들
@@ -291,12 +291,26 @@ public class ScheduleManager : MonoBehaviour {
 
         if (notEnd)
         {
+            if (decidedActivities[day].title == "무술도장")
+            {
+                decidedActivities[day].title = "무술학교";
+            }
+
             performingPanel.SetActive(true);
 
             if(decidedActivities[day].title == "시장")
             {
-                performingPanel.transform.GetChild(1).gameObject.SetActive(false);
-                performingPanel.transform.GetChild(2).gameObject.SetActive(false);
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
                 if (day == 0)
                 {
                     Market_Event_Panel_Randomaize();
@@ -310,12 +324,129 @@ public class ScheduleManager : MonoBehaviour {
                     Market_Event_Panel_Randomaize();
                 }
             }
+            else if(decidedActivities[day].title == "학교")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if(decidedActivities[day].title == "술집")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "무술학교")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "무용학교")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "요리학교")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "농장")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "극장")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(true);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+            }
+            else if (decidedActivities[day].title == "예절학교")
+            {
+                Schedules_Mode_Setting();
+
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(true);
+            }
             else
             {
-                market_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                market_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                market_Parent.transform.GetChild(2).gameObject.SetActive(false);
-
+                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
                 performingPanel.transform.GetChild(1).gameObject.SetActive(true);
                 performingPanel.transform.GetChild(2).gameObject.SetActive(true);
 
@@ -325,12 +456,6 @@ public class ScheduleManager : MonoBehaviour {
 
             DetailsText.text = CalendarManager.instance.CurrentMonth + "월"
                 + (day + 1) + "일, ";
-
-            if(decidedActivities[day].title == "무술도장")
-            {
-                decidedActivities[day].title = "무술학교";
-            }
-
             DetailsText.text += decidedActivities[day].title + " 활동을 하였는데..";
             CalendarManager.instance.CurrentDate = day + 1;
             CalendarManager.instance.CurrentDay = CalendarManager.instance.GetCurrentDay();
@@ -369,27 +494,32 @@ public class ScheduleManager : MonoBehaviour {
         {
             case 0:
                 {
-                    market_Parent.transform.GetChild(0).gameObject.SetActive(true);
-                    market_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(0).gameObject.GetComponent<Market_Event_One>().Default_Pos();
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<Market_Event_One>().Default_Pos();
                 } break;
             case 1:
                 {
-                    market_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(1).gameObject.SetActive(true);
-                    market_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(1).gameObject.GetComponent<Market_Event_Two>().Default_Pos();
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(true);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Market_Event_Two>().Default_Pos();
                 } break;
             case 2:
                 {
-                    market_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                    market_Parent.transform.GetChild(2).gameObject.SetActive(true);
-                    market_Parent.transform.GetChild(2).gameObject.GetComponent<Market_Event_Three>().Default_Pos();
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(true);
+                    schedules_Mode_Parent.transform.GetChild(0).transform.GetChild(2).gameObject.GetComponent<Market_Event_Three>().Default_Pos();
                 }
                 break;
         }
+    }
+    private void Schedules_Mode_Setting()
+    {
+        performingPanel.transform.GetChild(1).gameObject.SetActive(false);
+        performingPanel.transform.GetChild(2).gameObject.SetActive(false);
 
         infoPanel.transform.SetParent(performingPanel.transform);
         infoPanel.transform.GetChild(2).gameObject.SetActive(false);
