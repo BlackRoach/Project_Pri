@@ -1408,6 +1408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9777c0072fb29e4da4946a2660cf692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopList: []
   ItemSlots:
   - {fileID: 1784592294}
   - {fileID: 935843204}
@@ -1438,6 +1439,15 @@ MonoBehaviour:
   buyItemEffect: {fileID: 59992513}
   buyItemPrice: {fileID: 1189691120}
   gold: 0
+  activeShop:
+    id: 0
+    phaseMaxCount: 0
+    shopPhase: 0
+    shopName: 
+    shopCharacter: 
+    characterNameKr: 
+    shopTalkID: 0
+    phaseInCount: 0
 --- !u!4 &230499257
 Transform:
   m_ObjectHideFlags: 0
@@ -2356,6 +2366,16 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 224197353397816844, guid: 9cfee9ef4011ade4196529aa105bce97,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -12.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 224197353397816844, guid: 9cfee9ef4011ade4196529aa105bce97,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 92.41
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cfee9ef4011ade4196529aa105bce97, type: 2}
@@ -5922,6 +5942,16 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 224197353397816844, guid: 9cfee9ef4011ade4196529aa105bce97,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -23.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 224197353397816844, guid: 9cfee9ef4011ade4196529aa105bce97,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 70.78
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cfee9ef4011ade4196529aa105bce97, type: 2}

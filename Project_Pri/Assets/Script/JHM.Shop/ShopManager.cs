@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour {
         ASK_BUY, NOT_ENOUGH_MONEY, INVENTORY_FULL,
     }
     public static ShopManager instance;
-
+    [SerializeField]
     private List<ShopList> shopList; // 상점 정보 목록
     private List<ShopTalkList> shopTalkList; // NPC 대사 목록
     public List<ShopItemSlot> ItemSlots; // 6개의 아이템 슬롯
@@ -39,6 +39,7 @@ public class ShopManager : MonoBehaviour {
     private int curActiveTap; // 현재 활성화된 탭 번호
     private int shopID;
     private int openedPage; // 펼쳐진 페이지
+    [SerializeField]
     private ShopList activeShop; // 활성화 되어있는 상점정보
     private ShopItem selectedItem; // 선택된 아이템
 
@@ -175,7 +176,6 @@ public class ShopManager : MonoBehaviour {
         string characterImage = activeShop.SHOP_CHARACTER;
         npcImage.sprite = Resources.Load<Sprite>("JHM_Resources/Shop/" + characterImage);
         npcName.text = activeShop.CHARACTER_NAME_KR;
-
         ChangeMessage(0);
     }
 
@@ -189,7 +189,7 @@ public class ShopManager : MonoBehaviour {
         {
             if (shopList[i].ID == shopID && shopList[i].SHOP_PHASE == openedPage)
             {
-                activeShop = shopList[i];
+                 activeShop = shopList[i];                
                 break;
             }
         }
@@ -207,7 +207,7 @@ public class ShopManager : MonoBehaviour {
             );
             itemNumber++;
         }
-
+   
         for (int i = itemNumber; i < ItemSlots.Count; i++)
         {
             ItemSlots[i].ChangeValues(-1, "", "", "", "");
@@ -287,7 +287,15 @@ public class ShopManager : MonoBehaviour {
         {
             if (activeShop.SHOP_TALK_ID == shopTalkList[i].ID)
             {
-                npcMessage.text = shopTalkList[i].TALK_LIST[talkNum];
+                if (i == 0)
+                {
+                    npcMessage.text = shopTalkList[i].TALK_LIST[talkNum] + " / 수정 가능 +" +
+                        "그리고 요리점 1페이지 추가 그리고 아이템 하나 추가 확인가능";
+                }
+                else
+                {
+                    npcMessage.text = shopTalkList[i].TALK_LIST[talkNum];
+                }
                 break;
             }
         }

@@ -64,12 +64,13 @@ public class CalendarManager : MonoBehaviour {
         GAME_CALENDAR_LOAD();
         GAME_WAHT_DAY_LOAD();
         CALENDAR_EVENT_LOAD();
-
+        // calender  시작일
         currentYear = yearList[0].GAME_YEAR;
-        currentMonth = yearList[0].GAME_MONTH;
+        currentMonth = yearList[1].GAME_MONTH;
         currentStrMonth = GetCurrentStrMonth();
         currentDate = yearList[0].DAYSLIST[0];
         currentDay = GetCurrentDay();
+        // ---------
     }
 
 

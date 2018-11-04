@@ -27,7 +27,15 @@ public class ShopItemSlot : MonoBehaviour {
         }
         else
         {
-            priceText.text = price + "G";
+            int temp = int.Parse(price);
+            if (temp == 1000 || temp == 2000)
+            {
+                priceText.text = price + "원";
+            }
+            else
+            {
+                priceText.text = price + "G";
+            }
         }
         
         infoText.text = info;

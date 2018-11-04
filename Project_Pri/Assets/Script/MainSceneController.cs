@@ -13,15 +13,8 @@ public class MainSceneController : MonoBehaviour {
     public Sprite scheduleClose;
     public Sprite scheduleOpen;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField] private GameObject option_Panel;
+
 
     public  void OpenSchedule() // 토글 버튼
     {
@@ -44,5 +37,16 @@ public class MainSceneController : MonoBehaviour {
         SceneManager.LoadSceneAsync(sceneName);
     }
 
-
+    public void Option_Panel_On()
+    {
+        option_Panel.SetActive(true);
+    }
+    public void Option_Panel_Off()
+    {
+        option_Panel.SetActive(false);
+    }
+    public void Load_To_Title_Scene()
+    {
+        SceneManager.LoadScene("Title 1");
+    }
 }
