@@ -20,7 +20,11 @@ public class TurnToWall : MonoBehaviour {
         splitter = grid.gameObject.name.Split(',');
         if (collision.gameObject.tag == "obstacle")
         {
-           
+            Game.addWall(int.Parse(splitter[0]), int.Parse(splitter[1]));
+            isWall = true;
+            grid.GetComponent<Renderer>().material.color = Color.red;
+            this.GetComponent<BoxCollider2D>().enabled = false;
+
         }
         else if (collision.gameObject.tag == "Player")
         {

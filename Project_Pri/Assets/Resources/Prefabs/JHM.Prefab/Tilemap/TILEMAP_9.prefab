@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 50763960119818526}
   - component: {fileID: 95543461245040260}
   m_Layer: 10
-  m_Name: talk2
+  m_Name: talk1
   m_TagString: Talking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,9 +140,8 @@ GameObject:
   - component: {fileID: 212789953693833202}
   - component: {fileID: 50334662159040680}
   - component: {fileID: 61328163037321810}
-  - component: {fileID: 114541143348038948}
   m_Layer: 0
-  m_Name: Npc2
+  m_Name: Npc1
   m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   talkingIcon: {fileID: 1613050289690966}
+  id: 0
 --- !u!114 &114391711102349354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -544,17 +544,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilenum: 55008
   spawnnum: 1
---- !u!114 &114541143348038948
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1630286431325494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b8bb841d900774ab6aa548191d4e00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114705320579602402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -566,7 +555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c3b96455cc0dd4c856d65a1be383e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  num: 2
+  num: 1
+  npc_id: 90001
 --- !u!114 &114888225693824014
 MonoBehaviour:
   m_ObjectHideFlags: 1

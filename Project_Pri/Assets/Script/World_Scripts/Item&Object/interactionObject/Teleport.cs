@@ -5,10 +5,10 @@ using UnityEngine;
 public class Teleport : InteractionObject, IInteractive
 {
 
-
     private InGamemanager inGameManager;
     private Transform player_trans;
-	void Start () {
+    void Start()
+    {
         inGameManager = InGamemanager.Instance;
         player_trans = inGameManager.PlayerDataContainer_readonly.PlayerTrans;
     }
@@ -19,12 +19,13 @@ public class Teleport : InteractionObject, IInteractive
         {
             base.OnTriggerExit2D(col);
             inGameManager.CloseTeleportWindow();
-          
+
         }
     }
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
     public void Teleportation(int pos)
     {
         player_trans.position = inGameManager.trans_list[pos].position;

@@ -77,6 +77,23 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+    public void turnonGrid()
+    {
+        Transform[] childList = GameObject.Find("TracePanel").GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+
+            for (int i = 3; i < childList.Length; i++)
+            {
+                if (childList[i] != transform && childList[i].name != "GridBox")
+                {
+                    childList[i].gameObject.SetActive(true);
+                 }
+               
+
+            }
+        }
+    }
     public void destroyGrid()
     {
         Transform[] childList = GameObject.Find("TracePanel").GetComponentsInChildren<Transform>(true);
@@ -85,12 +102,18 @@ public class GameManager : MonoBehaviour {
           
             for (int i = 3; i < childList.Length; i++)
             {
-                //if (childList[i] != transform&&childList[i].name !="GridBox")
-                //    Destroy(childList[i].gameObject);
-                if (childList[i].name == "check")
-                    childList[i].GetComponent<TurnToWall>().Initgrid();
+                if (childList[i] != transform && childList[i].name != "GridBox")
+                {
+                    childList[i].gameObject.SetActive(false);
+                    if(childList[i].name == "check")
+                        childList[i].GetComponent<TurnToWall>().Initgrid();
+                }
+              
+
             }
         }
+
+        turnonGrid();
     }
     void createEnemy(int x,int y)
 	{

@@ -39,12 +39,12 @@ public class InGamemanager : MonoBehaviour
     [SerializeField] private GameObject worldUI;
 
     [SerializeField] private GameObject WorldCamera;
-
     private QuestManager questManager;
-
+    public Inventory_Add_Item additemManager;
     public Text nameText;
     public Text scoreText;
 
+    public GameObject textBox;
     public GameObject opponent;
 
     public Transform[] trans_list;
@@ -80,12 +80,42 @@ public class InGamemanager : MonoBehaviour
 
     public void BattleButton()
     {
+     
         WorldCamera.SetActive(false); 
         worldObjects.SetActive(false);
         worldUI.SetActive(false);
         DontDestroyOnLoad(this);
         SceneManager.LoadScene("BattleScene");
    
+    }
+    public void GuildScene()
+    {
+       
+        WorldCamera.SetActive(false);
+        worldObjects.SetActive(false);
+        worldUI.SetActive(false);
+        DontDestroyOnLoad(this);
+        SceneManager.LoadScene("Guild");
+
+    }
+    public void PartyScene()
+    {
+
+        WorldCamera.SetActive(false);
+        worldObjects.SetActive(false);
+        worldUI.SetActive(false);
+        DontDestroyOnLoad(this);
+        SceneManager.LoadScene("Party");
+
+    }
+    public void InventoryScene()
+    {
+        WorldCamera.SetActive(false);
+        worldObjects.SetActive(false);
+        worldUI.SetActive(false);
+        DontDestroyOnLoad(this);
+        SceneManager.LoadScene("Game_Inventory");
+
     }
     public void TurnOnWorldObjects()
     {
@@ -158,6 +188,10 @@ public class InGamemanager : MonoBehaviour
     public void EnableInfoButton()
     {
         infoButtons.SetActive(false);
+    }
+    public void EnableTextBox()
+    {
+        textBox.SetActive(false);
     }
     
     public IEnumerator ReSpawnMonster(GameObject monster)

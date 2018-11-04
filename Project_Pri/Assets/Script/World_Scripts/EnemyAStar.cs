@@ -26,10 +26,6 @@ public class EnemyAStar : MonoBehaviour {
     private int startx;
     private int starty;
     [SerializeField] private float speed = 1f;
-    [SerializeField] private checkObstacle up;
-    [SerializeField] private checkObstacle down;
-    [SerializeField] private checkObstacle left;
-    [SerializeField] private checkObstacle right;
     private RaycastHit hit;
     private Vector3 movement;
     private Vector3 playerpos;

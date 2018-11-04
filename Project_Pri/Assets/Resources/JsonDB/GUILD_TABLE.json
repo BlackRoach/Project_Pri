@@ -1,0 +1,14 @@
+[{
+"GUILD_ID":81001,
+"GUILD_NAME":"TILEMAP_9번의 모험가 길드",
+"GUILD_FRONT_NAME":"안내원 아데나",
+"GUILD_FRONT_CHARACTER":"characrer_adena",
+"GUILD_FRONT_TEXT_NUM":2,
+"GUILD_FRONT_TEXT_1":"어서와요.\n여기는 모험가길드랍니다.",
+"GUILD_FRONT_TEXT_2":"그 기능은 아직 구현되지 않았어요.",
+ "GUILD_PARTY_NUM":2,
+ "GUILD_PARTY_1_ID":1001,
+ "GUILD_PARTY_1_FACE":"character_face_berona",
+ "GUILD_PARTY_2_ID":1002,
+ "GUILD_PARTY_2_FACE":"character_face_patricia"
+ }]

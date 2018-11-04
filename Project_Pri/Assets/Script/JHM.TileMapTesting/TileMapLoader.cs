@@ -110,7 +110,7 @@ public class TileMapLoader : MonoBehaviour {
     public void ChangeMap(int mapID,int spawnnum)
     {
         DeleteMap();
-        game.destroyGrid();
+
         string id = mapID.ToString(); // 찾는 아이디 번호
         //Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
@@ -136,7 +136,8 @@ public class TileMapLoader : MonoBehaviour {
         }
         // 현재맵을 지운다.
         // 새맵을 불러온다.
-       
+        game.destroyGrid();
+
     }
 
     // Json에서 타일맵 리스트 데이터를 불러온다. 
@@ -146,6 +147,6 @@ public class TileMapLoader : MonoBehaviour {
     // 로드시 기존맵을 지우고 새로운 맵을 불러온다.
     // QualitySettings에서 Anti Aliasing을 Disable 해줘서 타일사이의 공백을 안보이게 한다.
 
-    
+
 
 }

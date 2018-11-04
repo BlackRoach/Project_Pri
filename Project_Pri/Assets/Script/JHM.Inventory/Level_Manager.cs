@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Level_Manager : MonoBehaviour {
 
+    private InGamemanager ingameManager;
+    private void Start()
+    {
+        ingameManager = InGamemanager.Instance;
+    }
     public void Go_To_Game_Origin_Scene()
     {
         // 인벤토리씬에 나갈때 이함수 반드시 이용하기 
@@ -14,7 +19,8 @@ public class Level_Manager : MonoBehaviour {
     IEnumerator Load_To_Game_Origin_Scene()
     {
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("Game_Origin");
+        ingameManager.TurnOnWorldObjects();
+        SceneManager.LoadScene("WorldMap");
     }
     
     public void Go_To_Inventory_Scene()

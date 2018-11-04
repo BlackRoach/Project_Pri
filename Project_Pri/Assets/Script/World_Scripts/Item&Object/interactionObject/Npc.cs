@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Npc : MonoBehaviour {
 
+    private InGamemanager ingamemanager;
     [SerializeField] GameObject talkingIcon;
+    
 
-	void Start () {
+    void Start () {
+        ingamemanager = InGamemanager.Instance;
         talkingIcon.SetActive(false);
-	}
+       
+    }
 	
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +34,7 @@ public class Npc : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             talkingIcon.SetActive(false);
+            ingamemanager.textBox.SetActive(false);
         }
     }
 }

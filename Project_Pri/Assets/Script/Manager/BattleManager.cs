@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] enemys;
     private GameObject presentlyAttackChar;
-  [SerializeField]  private InGamemanager ingameManager;
+    private InGamemanager ingameManager;
     private float fillamount;
     private float currentCoolTime;
     private float cooltime = 10f;

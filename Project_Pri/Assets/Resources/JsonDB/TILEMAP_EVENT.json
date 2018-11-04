@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 101,
+    "NAME": "treasure_1",
+    "TRIGER": 0,
+    "TEXT_1": "노브헬멧을 얻었다",
+    "TEXT_2": "상자는 비어 있다",
+    "TEXT_3": "",
+    "ITEM_ID": 30001,
+    "COUNT": 1
+  },
+  {
+"ID":102,
+"NAME":"treasure_2",
+"TRIGER":2,
+"TEXT_1":"A포션을 얻었다",
+"TEXT_2": "상자는 비어 있다",
+"TEXT_3":"상자를 발견했다",
+"ITEM_ID":30002,
+"COUNT":1
+ }
+]

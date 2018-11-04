@@ -55,6 +55,7 @@ public class TitleButtonManager : MonoBehaviour {
     {
         // 새게임 버튼
         //초기화 진행
+        
         SceneManager.LoadScene("WorldMap");
     }
     public void LoadGameButtonOn()
