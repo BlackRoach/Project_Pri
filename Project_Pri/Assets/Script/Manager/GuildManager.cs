@@ -11,11 +11,10 @@ public class GuildManager : MonoBehaviour {
 
     
     private InGamemanager ingameManager;
-    private TextAsset jsonFile;
-    private JsonData loadData;
-    private JsonData loadPartyData;
+    private JsonFileWriter jsonFileWriter;
 
-   
+    private JsonData loadPartyData;
+    private JsonData loadData;
     [SerializeField] private GameObject FrontWindow;
     [SerializeField] private GameObject PartyWindow;
     [SerializeField] private GameObject InfoWindow;
@@ -56,21 +55,23 @@ public class GuildManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ingameManager = InGamemanager.Instance;
-        if (PlayerPrefs.GetInt("NewGame") == 1)
-        {
-            jsonFile = Resources.Load<TextAsset>("JsonDB/GUILD_TABLE") as TextAsset;
-            loadData = JsonMapper.ToObject(jsonFile.text);
-            jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE") as TextAsset;
-            loadPartyData = JsonMapper.ToObject(jsonFile.text);
-        }
-        else
-        {
-            jsonFile = Resources.Load<TextAsset>("JsonDB/GUILD_TABLE") as TextAsset;
-            loadData = JsonMapper.ToObject(jsonFile.text);
-            jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE") as TextAsset;
-            loadPartyData = JsonMapper.ToObject(jsonFile.text);
-        }
-
+        jsonFileWriter = JsonFileWriter.Instance;
+        //if (PlayerPrefs.GetInt("NewGame") == 1)
+        //{
+        //    jsonFile = Resources.Load<TextAsset>("JsonDB/GUILD_TABLE") as TextAsset;
+        //    loadData = JsonMapper.ToObject(jsonFile.text);
+        //    jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE") as TextAsset;
+        //    loadPartyData = JsonMapper.ToObject(jsonFile.text);
+        //}
+        //else
+        //{
+        //    jsonFile = Resources.Load<TextAsset>("JsonDB/GUILD_TABLE") as TextAsset;
+        //    loadData = JsonMapper.ToObject(jsonFile.text);
+        //    jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE") as TextAsset;
+        //    loadPartyData = JsonMapper.ToObject(jsonFile.text);
+        //}
+        loadData = jsonFileWriter.SerializeData("GUILD_TABLE");
+        loadPartyData = jsonFileWriter.SerializeData("PARTY_TABLE");
         guild_id = PlayerPrefs.GetString("current_guild_id");
         LoadFrontData();
         name.text = guild_front_name;
@@ -176,13 +177,14 @@ public class GuildManager : MonoBehaviour {
 
             }
         }
-        
-        SaveData(loadPartyData);
+
+        jsonFileWriter.DeserializeData(loadPartyData);
         Char_Face_init();
         PartyInfoOff();
     }
     private void LoadFrontData()
     {
+        
         for (int i = 0; i < loadData.Count; i++)
         {
             if (loadData[i]["GUILD_ID"].ToString() == guild_id)
@@ -233,10 +235,5 @@ public class GuildManager : MonoBehaviour {
             }
         }
     }
-    private void SaveData(JsonData mudoMember)
-    {
-        string save;
-        save = JsonMapper.ToJson(mudoMember);
-        File.WriteAllText(Application.dataPath + "/Resources/JsonDB/PARTY_TABLE.json", save);
-    }
+  
 }

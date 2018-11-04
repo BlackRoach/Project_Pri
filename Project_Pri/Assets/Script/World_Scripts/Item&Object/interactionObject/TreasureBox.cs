@@ -10,8 +10,8 @@ public class TreasureBox : MonoBehaviour {
 
     public Sprite[] box = new Sprite[2];
     private InGamemanager ingameManager;
-    
-    private TextAsset jsonFile;
+    private JsonFileWriter jsonFileWriter;
+   
     private JsonData loadData;
 
     private GameObject textbox;
@@ -27,10 +27,11 @@ public class TreasureBox : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ingameManager = InGamemanager.Instance;
+        jsonFileWriter = JsonFileWriter.Instance;
         textbox = ingameManager.textBox;
         textbox_t = ingameManager.textBox.GetComponentInChildren<Text>();
-        jsonFile = Resources.Load<TextAsset>("JsonDB/TILEMAP_EVENT");
-        loadData = JsonMapper.ToObject(jsonFile.text);
+        loadData = jsonFileWriter.SerializeData("TILEMAP_EVENT");
+     
         LoadData();
         if(trigger == "0")
         {
@@ -64,6 +65,7 @@ public class TreasureBox : MonoBehaviour {
             textbox.SetActive(true);
             textbox_t.text = text[1];
         }
+        jsonFileWriter.DeserializeData(loadData);
     }
     private void LoadData()
     {
@@ -84,12 +86,7 @@ public class TreasureBox : MonoBehaviour {
 
         }
     }
-    private void SaveData(JsonData mudoMember)
-    {
-        string save;
-        save = JsonMapper.ToJson(mudoMember);
-        File.WriteAllText(Application.persistentDataPath + "/" + "PARTY_TABLE.json", save);
-    }
+  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")

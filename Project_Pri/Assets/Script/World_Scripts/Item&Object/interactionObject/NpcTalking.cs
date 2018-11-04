@@ -10,7 +10,7 @@ public class NpcTalking : MonoBehaviour {
     public int num;
     public int npc_id;
     private InGamemanager ingamemanager;
-    private TextAsset jsonFile;
+    private JsonFileWriter jsonFileWriter;
     private JsonData loadData;
  
     private string npc_type;
@@ -22,8 +22,9 @@ public class NpcTalking : MonoBehaviour {
     private void Start()
     {
         ingamemanager = InGamemanager.Instance;
-        jsonFile = Resources.Load<TextAsset>("JsonDB/NPC_TABLE");
-        loadData = JsonMapper.ToObject(jsonFile.text);
+        jsonFileWriter = JsonFileWriter.Instance;
+        loadData = jsonFileWriter.SerializeData("JsonDB/NPC_TABLE");
+
         LoadData();
     }
 

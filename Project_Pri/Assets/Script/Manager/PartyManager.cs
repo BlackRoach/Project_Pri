@@ -9,7 +9,7 @@ using LitJson;
 public class PartyManager : MonoBehaviour {
 
     private InGamemanager ingameManager;
-    private TextAsset jsonFile;
+    private JsonFileWriter jsonFileWriter;
     private JsonData loadPartyData;
     [SerializeField] private Image[] partyImg = new Image[3];
     [SerializeField] private Text status;
@@ -37,10 +37,8 @@ public class PartyManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ingameManager = InGamemanager.Instance;
-#if UNITY_EDITOR
-        jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE")as TextAsset;
-        loadPartyData = JsonMapper.ToObject(jsonFile.text);
-#endif
+        jsonFileWriter = JsonFileWriter.Instance;
+        loadPartyData = jsonFileWriter.SerializeData("PARTY_TABLE");
         Getparty();
         Party_Face_init();
     }
@@ -89,13 +87,7 @@ public class PartyManager : MonoBehaviour {
             }
         }
     }
-    private void SaveData(JsonData mudoMember)
-    {
-        string save;
-        save = JsonMapper.ToJson(mudoMember);
-        File.WriteAllText(Application.dataPath + "/Resources/JsonDB/PARTY_TABLE.json", save);
-
-    }
+  
 
     private void Party_Face_init()
     {
@@ -149,7 +141,7 @@ public class PartyManager : MonoBehaviour {
 
             }
         }
-        SaveData(loadPartyData);
+        jsonFileWriter.DeserializeData("PARTY_TABLE");
         status.text = "";
         Party_Face_init();
         current_party = "";
