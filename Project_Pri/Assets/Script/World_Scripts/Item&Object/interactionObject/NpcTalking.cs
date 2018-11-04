@@ -23,7 +23,7 @@ public class NpcTalking : MonoBehaviour {
     {
         ingamemanager = InGamemanager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
-        loadData = jsonFileWriter.SerializeData("JsonDB/NPC_TABLE");
+        loadData = jsonFileWriter.SerializeData("NPC_TABLE");
 
         LoadData();
     }
