@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-
-
 public class CGGallearyManager : MonoBehaviour {
 
     public List<CGInfo> cgList = new List<CGInfo>();
@@ -82,12 +79,6 @@ public class CGGallearyManager : MonoBehaviour {
             CG5.GetComponent<CGSlot>().active = true;
         }
     }
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void GoToSchedule()
     {
         SceneManager.LoadScene("schedule");

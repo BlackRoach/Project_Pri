@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LitJson;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class ScheduleManager : MonoBehaviour {
@@ -26,7 +28,6 @@ public class ScheduleManager : MonoBehaviour {
     public GameObject[] market_Prefabs; // 시장 스케쥴 실행시 프리펩 작동
     public GameObject schedules_Mode_Parent;
 
-
     public List<GameObject> schedules; // 일정표안에 표시되는 활동버튼들
     public List<Activity> activities = new List<Activity>(); // 일정표안에 들어갈 활동정보들
     public List<Activity> decidedActivities = new List<Activity>(); // 최종적으로 선택된 활동
@@ -39,13 +40,21 @@ public class ScheduleManager : MonoBehaviour {
     private int lastEnd; // 하순 종료일
     private int day = 0; // 스케줄 진행 날짜
 
+    private JsonData vacance_CG_Data;
 
     private void Start()
     {
+        Calender_Event_Json_Parsing();
         backGroundPosition = 0;
         CheckFestivalEvent();
     }
 
+    private void Calender_Event_Json_Parsing()
+    {
+        TextAsset json_File = Resources.Load<TextAsset>("JHM.Resources.Json/Defualt_Json_Data/CALENDER_EVENT");
+
+        vacance_CG_Data = JsonMapper.ToObject(json_File.text);
+    }
     // 다음 버튼을 눌렀을 때 화면을 변화시킨다.
     public void NextButton()
     {
@@ -82,9 +91,7 @@ public class ScheduleManager : MonoBehaviour {
             Invoke("ActiveStudyPanel", 1.7f);
             Invoke("ActiveNextButton", 1.8f);
         }
-        //Debug.Log(backGroundPosition);
-
-        
+        //Debug.Log(backGroundPosition);        
     }
 
     private void ActiveArbeitPanel()
@@ -301,16 +308,7 @@ public class ScheduleManager : MonoBehaviour {
             if(decidedActivities[day].title == "시장")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(0);
                 if (day == 0)
                 {
                     Market_Event_Panel_Randomaize();
@@ -327,114 +325,57 @@ public class ScheduleManager : MonoBehaviour {
             else if(decidedActivities[day].title == "학교")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(1);
             }
             else if(decidedActivities[day].title == "술집")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(2);
             }
             else if (decidedActivities[day].title == "무술학교")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(3);
             }
             else if (decidedActivities[day].title == "무용학교")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(4);
             }
             else if (decidedActivities[day].title == "요리학교")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(5);
             }
             else if (decidedActivities[day].title == "농장")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(6);
             }
             else if (decidedActivities[day].title == "극장")
             {
                 Schedules_Mode_Setting();
-
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(true);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                Schedule_Current_Mode_Setting_Image(7);
             }
             else if (decidedActivities[day].title == "예절학교")
             {
                 Schedules_Mode_Setting();
+                Schedule_Current_Mode_Setting_Image(8);
+            }
+            else if (decidedActivities[day].title == "바캉스")
+            {
+                Schedules_Mode_Setting();
+                Schedule_Current_Mode_Setting_Image(9);
+                for(int i =0; i< vacance_CG_Data.Count; i++)
+                {
+                    if(CalendarManager.instance.CurrentYear == (int)vacance_CG_Data[i]["GAME_YEAR"] &&
+                        CalendarManager.instance.CurrentMonth == (int)vacance_CG_Data[i]["GAME_MONTH"])
+                    {
+                        schedules_Mode_Parent.transform.GetChild(9).gameObject.transform.GetChild(0).GetComponent<Image>().
+                            sprite = Resources.Load<Sprite>("JHM.Img/VACANCE_CG/"+ vacance_CG_Data[i]["VACANCE_CG"]);
 
-                schedules_Mode_Parent.transform.GetChild(0).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(1).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(2).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(3).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(4).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(5).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
-                schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(true);
+                    }
+                }
             }
             else
             {
@@ -447,6 +388,7 @@ public class ScheduleManager : MonoBehaviour {
                 schedules_Mode_Parent.transform.GetChild(6).gameObject.SetActive(false);
                 schedules_Mode_Parent.transform.GetChild(7).gameObject.SetActive(false);
                 schedules_Mode_Parent.transform.GetChild(8).gameObject.SetActive(false);
+                schedules_Mode_Parent.transform.GetChild(9).gameObject.SetActive(false);
                 performingPanel.transform.GetChild(1).gameObject.SetActive(true);
                 performingPanel.transform.GetChild(2).gameObject.SetActive(true);
 
@@ -485,6 +427,15 @@ public class ScheduleManager : MonoBehaviour {
             ChangeScene("Main");
         }    
     }
+    private void Schedule_Current_Mode_Setting_Image(int input)
+    {
+        for(int i = 0; i < schedules_Mode_Parent.transform.childCount; i++)
+        {
+            schedules_Mode_Parent.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        schedules_Mode_Parent.transform.GetChild(input).gameObject.SetActive(true);
+    }
+
 
     private void Market_Event_Panel_Randomaize()
     {
@@ -524,7 +475,6 @@ public class ScheduleManager : MonoBehaviour {
         infoPanel.transform.SetParent(performingPanel.transform);
         infoPanel.transform.GetChild(2).gameObject.SetActive(false);
     }
-
     public void ChangeScene(string sceneMane)
     {
         SceneManager.LoadSceneAsync(sceneMane);
