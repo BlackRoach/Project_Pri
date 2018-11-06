@@ -10,6 +10,7 @@ public class VacanceCG_Manager : MonoBehaviour {
     private bool[] is_CG = new bool[29];
     public GameObject[] cg_Slot;
 
+    public Image FullSizeCG;
 
     public GameObject page_Panel;
     // Use this for initialization
@@ -37,6 +38,7 @@ public class VacanceCG_Manager : MonoBehaviour {
                 cg_Slot[i].GetComponent<Image>().sprite =
                 Resources.Load<Sprite>("JHM.Img/VACANCE_CG/VACANCE_CG_"+temp.ToString());
                 cg_Slot[i].transform.GetChild(0).gameObject.SetActive(false);
+                cg_Slot[i].GetComponent<CGSlot_1>().active = true;
             }
         }
     }
@@ -57,6 +59,12 @@ public class VacanceCG_Manager : MonoBehaviour {
         page_Panel.transform.GetChild(0).gameObject.SetActive(false);
         page_Panel.transform.GetChild(1).gameObject.SetActive(false);
         page_Panel.transform.GetChild(2).gameObject.SetActive(true);
+    }
+
+    public void ShowFullSizeCG(Sprite image)
+    {
+        FullSizeCG.gameObject.SetActive(true);
+        FullSizeCG.sprite = image;
     }
 
     public void Load_To_Exit()
