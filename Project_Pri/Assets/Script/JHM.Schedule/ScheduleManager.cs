@@ -374,6 +374,14 @@ public class ScheduleManager : MonoBehaviour {
                         schedules_Mode_Parent.transform.GetChild(9).gameObject.transform.GetChild(0).GetComponent<Image>().
                             sprite = Resources.Load<Sprite>("JHM.Img/VACANCE_CG/"+ vacance_CG_Data[i]["VACANCE_CG"]);
 
+                        for(int j = 0; j < CG_2_Manager.CgInfoList.Count; j++)
+                        {
+                            if(CG_2_Manager.CgInfoList[j].CG_NAME == vacance_CG_Data[i]["VACANCE_CG"].ToString())
+                            {
+                                CG_2_Manager.CgInfoList[j].IS_UNLOCK = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }

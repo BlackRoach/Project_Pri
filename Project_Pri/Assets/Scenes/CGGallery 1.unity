@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 41401477}
   - component: {fileID: 41401476}
   m_Layer: 5
-  m_Name: CGSlot_5
+  m_Name: CGSlot_29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 260455115}
   - component: {fileID: 260455114}
   m_Layer: 5
-  m_Name: CGSlot_11
+  m_Name: CGSlot_23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1410,7 +1410,7 @@ GameObject:
   - component: {fileID: 661234500}
   - component: {fileID: 661234499}
   m_Layer: 5
-  m_Name: CGSlot_8
+  m_Name: CGSlot_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1577,6 +1577,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29115f47a71d2e42aefd1e33fc680d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_CG: 0000000000000000000000000000000000000000000000000000000000
+  cg_Slot:
+  - {fileID: 199580372}
+  - {fileID: 2077074460}
+  - {fileID: 849317998}
+  - {fileID: 997598468}
+  - {fileID: 1719566279}
+  - {fileID: 532436219}
+  - {fileID: 772875386}
+  - {fileID: 663781220}
+  - {fileID: 1223799440}
+  - {fileID: 1259034503}
+  - {fileID: 2056878571}
+  - {fileID: 958060279}
+  - {fileID: 1217648888}
+  - {fileID: 1506283222}
+  - {fileID: 1686814932}
+  - {fileID: 1161447445}
+  - {fileID: 1637271867}
+  - {fileID: 1008209800}
+  - {fileID: 1758505620}
+  - {fileID: 661234497}
+  - {fileID: 1933290356}
+  - {fileID: 1583260483}
+  - {fileID: 260455112}
+  - {fileID: 1692307657}
+  - {fileID: 1902778879}
+  - {fileID: 795239198}
+  - {fileID: 952850659}
+  - {fileID: 973843607}
+  - {fileID: 41401474}
   page_Panel: {fileID: 1192933541}
 --- !u!1 &708525752
 GameObject:
@@ -1967,7 +1998,7 @@ GameObject:
   - component: {fileID: 795239201}
   - component: {fileID: 795239200}
   m_Layer: 5
-  m_Name: CGSlot_2
+  m_Name: CGSlot_26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2025,6 +2056,46 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 795239198}
+--- !u!1 &826903152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 826903153}
+  - component: {fileID: 826903154}
+  m_Layer: 0
+  m_Name: CG_2_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &826903153
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 826903152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4768608, y: 2.3728848, z: -0.2265625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &826903154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 826903152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537f03bf058d2174a963a25bf45a02ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &849317998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,7 +2448,7 @@ GameObject:
   - component: {fileID: 952850662}
   - component: {fileID: 952850661}
   m_Layer: 5
-  m_Name: CGSlot_3
+  m_Name: CGSlot_27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2583,7 +2654,7 @@ GameObject:
   - component: {fileID: 973843610}
   - component: {fileID: 973843609}
   m_Layer: 5
-  m_Name: CGSlot_4
+  m_Name: CGSlot_28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2789,7 +2860,7 @@ GameObject:
   - component: {fileID: 1008209803}
   - component: {fileID: 1008209802}
   m_Layer: 5
-  m_Name: CGSlot_6
+  m_Name: CGSlot_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3062,7 +3133,7 @@ GameObject:
   - component: {fileID: 1161447448}
   - component: {fileID: 1161447447}
   m_Layer: 5
-  m_Name: CGSlot_4
+  m_Name: CGSlot_16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3550,7 +3621,7 @@ GameObject:
   - component: {fileID: 1217648891}
   - component: {fileID: 1217648890}
   m_Layer: 5
-  m_Name: CGSlot_1
+  m_Name: CGSlot_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4562,7 +4633,7 @@ GameObject:
   - component: {fileID: 1506283225}
   - component: {fileID: 1506283224}
   m_Layer: 5
-  m_Name: CGSlot_2
+  m_Name: CGSlot_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4631,7 +4702,7 @@ GameObject:
   - component: {fileID: 1583260486}
   - component: {fileID: 1583260485}
   m_Layer: 5
-  m_Name: CGSlot_10
+  m_Name: CGSlot_22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4764,7 +4835,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1615521677}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 669290032}
+        m_MethodName: Load_To_Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1615521677
@@ -4811,7 +4893,7 @@ GameObject:
   - component: {fileID: 1637271870}
   - component: {fileID: 1637271869}
   m_Layer: 5
-  m_Name: CGSlot_5
+  m_Name: CGSlot_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5035,7 +5117,7 @@ GameObject:
   - component: {fileID: 1686814935}
   - component: {fileID: 1686814934}
   m_Layer: 5
-  m_Name: CGSlot_3
+  m_Name: CGSlot_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5104,7 +5186,7 @@ GameObject:
   - component: {fileID: 1692307660}
   - component: {fileID: 1692307659}
   m_Layer: 5
-  m_Name: CGSlot_12
+  m_Name: CGSlot_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5318,7 +5400,7 @@ GameObject:
   - component: {fileID: 1758505623}
   - component: {fileID: 1758505622}
   m_Layer: 5
-  m_Name: CGSlot_7
+  m_Name: CGSlot_19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5529,7 +5611,7 @@ GameObject:
   - component: {fileID: 1902778882}
   - component: {fileID: 1902778881}
   m_Layer: 5
-  m_Name: CGSlot_1
+  m_Name: CGSlot_25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5598,7 +5680,7 @@ GameObject:
   - component: {fileID: 1933290359}
   - component: {fileID: 1933290358}
   m_Layer: 5
-  m_Name: CGSlot_9
+  m_Name: CGSlot_21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
