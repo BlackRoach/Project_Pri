@@ -26,6 +26,10 @@ public class VacanceCG_Manager : MonoBehaviour {
         }
 
         LoadCG();
+
+        page_Panel.transform.GetChild(0).gameObject.SetActive(true);
+        page_Panel.transform.GetChild(1).gameObject.SetActive(false);
+        page_Panel.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     private void LoadCG()

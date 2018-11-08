@@ -14,8 +14,15 @@ public class MainSceneController : MonoBehaviour {
     public Sprite scheduleOpen;
 
     [SerializeField] private GameObject option_Panel;
+    [SerializeField] private GameObject settingPanel;
+    [SerializeField] private GameObject supportPanel;
+    [SerializeField] private Slider BGMVolume;
+    [SerializeField] private Slider SFVolume;
 
-
+    private void Start()
+    {
+        SetSliderValues();
+    }
     public  void OpenSchedule() // 토글 버튼
     {
         if (!IsOpenSchedule)
@@ -45,6 +52,39 @@ public class MainSceneController : MonoBehaviour {
     {
         option_Panel.SetActive(false);
     }
+
+    public void SetBGMVolume(float value)
+    {
+        AudioManager AM = FindObjectOfType<AudioManager>();
+        AM.SetBGMVolume(value);
+    }
+
+    public void SetSoundEffectVolume(float value)
+    {
+        AudioManager AM = FindObjectOfType<AudioManager>();
+        AM.SetSoundEffectVolume(value);
+    }
+
+    public void EnterSupportPanel()
+    {
+        settingPanel.SetActive(false);
+        supportPanel.SetActive(true);
+    }
+
+    public void ExitSupportPanel()
+    {
+        supportPanel.SetActive(false);
+        settingPanel.SetActive(true);
+    }
+
+    // BGM과 효과음의 볼륨값을 BGM 슬라이더와 효과음 슬라이더 값에 입력합니다.
+    private void SetSliderValues()
+    {
+        AudioManager AM = FindObjectOfType<AudioManager>();
+        BGMVolume.value = AM.BGM.volume;
+        SFVolume.value = AM.SoundEffect.volume;
+    }
+
     public void Load_To_Title_Scene()
     {
         SceneManager.LoadScene("Title 1");
