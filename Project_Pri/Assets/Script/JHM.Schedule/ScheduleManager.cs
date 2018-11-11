@@ -58,6 +58,25 @@ public class ScheduleManager : MonoBehaviour {
     // 다음 버튼을 눌렀을 때 화면을 변화시킨다.
     public void NextButton()
     {
+        // 엔딩 
+        if (CalendarManager.instance.CurrentYear == 197 && CalendarManager.instance.CurrentMonth == 1)
+        {
+            for(int i = 0; i < restPanel.transform.childCount; i++)
+            {
+                restPanel.transform.GetChild(i).gameObject.SetActive(false);
+            }
+            restPanel.transform.GetChild(restPanel.transform.childCount - 1).gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            restPanel.transform.GetChild(3).gameObject.SetActive(true);
+            restPanel.transform.GetChild(4).gameObject.SetActive(true);
+            studyPanel.SetActive(false);
+            arbeitPanel.SetActive(false);
+            restPanel.SetActive(false);
+        }
+        // -----------
         if (backGroundPosition < 2)
         {
             backGroundPosition++;
@@ -487,4 +506,5 @@ public class ScheduleManager : MonoBehaviour {
     {
         SceneManager.LoadSceneAsync(sceneMane);
     }
+
 }

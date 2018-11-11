@@ -115,6 +115,25 @@ public class CalendarTest : MonoBehaviour {
 
         FindObjectOfType<InfoPanel>().ShowDateInfo();
         FindObjectOfType<ScheduleManager>().CheckFestivalEvent();
+
+        if(year == 197 && month == 1)
+        {
+            FindObjectOfType<ScheduleManager>().studyPanel.SetActive(false);
+            FindObjectOfType<ScheduleManager>().arbeitPanel.SetActive(false);
+            FindObjectOfType<ScheduleManager>().restPanel.SetActive(true);
+
+            for (int i = 0; i < FindObjectOfType<ScheduleManager>().restPanel.transform.childCount; i++)
+            {
+                FindObjectOfType<ScheduleManager>().restPanel.transform.GetChild(i).gameObject.SetActive(false);
+            }
+            FindObjectOfType<ScheduleManager>().restPanel.transform.GetChild(
+                FindObjectOfType<ScheduleManager>().restPanel.transform.childCount - 1).gameObject.SetActive(true);
+        }
+        else
+        {
+            FindObjectOfType<ScheduleManager>().restPanel.transform.GetChild(3).gameObject.SetActive(true);
+            FindObjectOfType<ScheduleManager>().restPanel.transform.GetChild(4).gameObject.SetActive(true);
+        }
     }
 }
 

@@ -5966,7 +5966,7 @@ Prefab:
     - target: {fileID: 114605260066865406, guid: f3635ccf009273a4a807acd8e429d4d9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddSchedule
+      value: ChangeScene
       objectReference: {fileID: 0}
     - target: {fileID: 114412575593116926, guid: f3635ccf009273a4a807acd8e429d4d9,
         type: 2}
@@ -5983,7 +5983,32 @@ Prefab:
       propertyPath: m_Color.a
       value: 0.6666667
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1463358348428264, guid: f3635ccf009273a4a807acd8e429d4d9, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114605260066865406, guid: f3635ccf009273a4a807acd8e429d4d9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114605260066865406, guid: f3635ccf009273a4a807acd8e429d4d9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114605260066865406, guid: f3635ccf009273a4a807acd8e429d4d9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114605260066865406, guid: f3635ccf009273a4a807acd8e429d4d9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Ending
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114412575593116926, guid: f3635ccf009273a4a807acd8e429d4d9, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f3635ccf009273a4a807acd8e429d4d9, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &534742229 stripped
@@ -9900,7 +9925,7 @@ Prefab:
     - target: {fileID: 224576129249958000, guid: 2411c6c52f9d72445b9e088873e03d75,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 224576129249958000, guid: 2411c6c52f9d72445b9e088873e03d75,
         type: 2}
@@ -14763,7 +14788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -74.66504, y: -20.300018}
+  m_AnchoredPosition: {x: -74.66504, y: -20.300049}
   m_SizeDelta: {x: 59.92, y: 41.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1353598610
@@ -19258,7 +19283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.945198, y: 22.600098}
+  m_AnchoredPosition: {x: 3.9451904, y: 22.600098}
   m_SizeDelta: {x: 44.25, y: 34.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833615920
