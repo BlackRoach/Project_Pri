@@ -468,6 +468,20 @@ public class Ending_Manager : MonoBehaviour {
             {
                 img_BG.sprite = Resources.Load<Sprite>("JHM.Img/" + "ending_1");
             }
+            
+            if(img_BG.sprite.name == "ending_1")
+            {
+                CG_Mode_Ending.ending_Data[0].CG_Ending_Name = "ending_1";
+                CG_Mode_Ending.ending_Data[0].IS_UNLOCK = true;
+            } else if (img_BG.sprite.name == "ending_2")
+            {
+                CG_Mode_Ending.ending_Data[1].CG_Ending_Name = "ending_2";
+                CG_Mode_Ending.ending_Data[1].IS_UNLOCK = true;
+            } else if (img_BG.sprite.name == "ending_3")
+            {
+                CG_Mode_Ending.ending_Data[2].CG_Ending_Name = "ending_3";
+                CG_Mode_Ending.ending_Data[2].IS_UNLOCK = true;
+            }
         }
     }
     IEnumerator Auto_Typing_Last(string sr)
