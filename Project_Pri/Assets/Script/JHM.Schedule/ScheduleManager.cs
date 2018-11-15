@@ -47,6 +47,7 @@ public class ScheduleManager : MonoBehaviour {
         Calender_Event_Json_Parsing();
         backGroundPosition = 0;
         CheckFestivalEvent();
+        FindObjectOfType<CalendarTest>().ApplyDate();
     }
 
     private void Calender_Event_Json_Parsing()
@@ -462,12 +463,9 @@ public class ScheduleManager : MonoBehaviour {
         }
         schedules_Mode_Parent.transform.GetChild(input).gameObject.SetActive(true);
     }
-
-
     private void Market_Event_Panel_Randomaize()
     {
         int random = Random.Range(0, market_Prefabs.Length);
-        Debug.Log(random);
         switch (random)
         {
             case 0:
