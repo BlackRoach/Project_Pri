@@ -3,7 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 public class GameManager : MonoBehaviour {
-   
+    private static GameManager instance = null;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance)
+                return instance;
+            else
+                return instance = new GameObject("*Manager").AddComponent<GameManager>();
+        }
+    }
     public MyPathNode[,] grid;
 	public GameObject enemy;
 	public GameObject gridBox;
@@ -29,8 +39,11 @@ public class GameManager : MonoBehaviour {
     public static int distance = 2;
 
     string[] splitter = new string[2];
-
-    void Start() {
+    private void Awake()
+    {
+        instance = this;
+    }
+    public void Init() {
 
 
         //Generate a grid - nodes according to the specified size
@@ -57,8 +70,7 @@ public class GameManager : MonoBehaviour {
         
 	
 	}
-
-
+   
 
     public void TargetPosition(int x, int y) { targetx = x; targety = y; }
    

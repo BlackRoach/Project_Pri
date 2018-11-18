@@ -14,6 +14,7 @@ public class Monster : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
+            PlayerPrefs.SetString("Current_group_id", "40005");
             inGameManager.opponent = this.transform.parent.gameObject;
             inGameManager.BattleButton();
         }

@@ -42,7 +42,7 @@ public class TileMapLoader : MonoBehaviour {
         game = GameObject.Find("*Manager").GetComponent<GameManager>();
         LoadJson();
 
-        LoadMap(7);
+        LoadMap(10);
        
     }
 
@@ -69,8 +69,8 @@ public class TileMapLoader : MonoBehaviour {
 
     public void LoadMap(int num)
     {
-        
-        string id = "5500" + num; // 찾는 아이디 번호
+        num += 55000;
+        string id = num.ToString(); // 찾는 아이디 번호
         //Debug.Log(id);
         for (int i = 0; i < loadData.Count; i++)
         {

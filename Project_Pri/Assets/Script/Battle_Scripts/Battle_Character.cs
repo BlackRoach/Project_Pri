@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using LitJson;
 public class Battle_Character : MonoBehaviour
 {
 
@@ -10,21 +10,24 @@ public class Battle_Character : MonoBehaviour
     [SerializeField] protected GameObject StatusUI;
     [SerializeField] protected Image guageBar;
     [SerializeField] protected Image hpBar;
-    [SerializeField] protected float filled_speed;
-    [SerializeField] protected float max_gauge;
-
+    [SerializeField] protected float filled_speed = 30;
+    [SerializeField] protected float max_gauge = 100;
+    protected string sd_model;
+   
 
     protected BattleManager battleManager;
-
+    protected JsonFileWriter jsonFileWriter;
+    protected JsonData loadData;
     protected int hp = 100;
+    protected float progress_gauge = 0;
 
-    [SerializeField] protected float progress_gauge = 0;
-
+    public GameObject status;
+    public string id;
     public bool isInQ = false;
 
     private Vector2 own_position;
- 
 
+ 
    
     private void Awake()
     {
@@ -52,6 +55,7 @@ public class Battle_Character : MonoBehaviour
         effect.SetActive(true);
         hp -= 10;
     }
+   
     public IEnumerator IbackToOwnPosition()
     {
         Vector2 thisPosition = this.gameObject.transform.position;
@@ -74,6 +78,7 @@ public class Battle_Character : MonoBehaviour
     {
        
         Vector2 enemypos;
+
         if (enemy.transform.position.x > own_position.x)
             enemypos = new Vector2(enemy.transform.position.x - 1, enemy.transform.position.y);
         else
