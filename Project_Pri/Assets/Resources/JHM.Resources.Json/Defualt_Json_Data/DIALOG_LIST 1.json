@@ -1,0 +1,11 @@
+[{"ID":70001,"DIALOG_NUMBER":1,"DIALOG_POSITION":1,"DIALOG_TEXT":"첫번째 연습용 텍스트입니다.","DIALOG_NAME":"마리엔느","DIALOG_FACE":"marienne_face_s"},
+{"ID":70002,"DIALOG_NUMBER":2,"DIALOG_POSITION":1,"DIALOG_TEXT":"두번째도 연습용이지요","DIALOG_NAME":"마리엔느","DIALOG_FACE":"marienne_face_s"},
+{"ID":70003,"DIALOG_NUMBER":3,"DIALOG_POSITION":1,"DIALOG_TEXT":"시장에 처음 가보는 구나..","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"},
+{"ID":70004,"DIALOG_NUMBER":4,"DIALOG_POSITION":1,"DIALOG_TEXT":"뭔가 재밌는 일이 일어 날 것만 같아요.","DIALOG_NAME":"마리엔느","DIALOG_FACE":"marienne_face_s"},
+{"ID":70005,"DIALOG_NUMBER":5,"DIALOG_POSITION":1,"DIALOG_TEXT":"(두근두근)","DIALOG_NAME":"마리엔느","DIALOG_FACE":"marienne_face_s"},
+{"ID":70006,"DIALOG_NUMBER":6,"DIALOG_POSITION":1,"DIALOG_TEXT":"벌써 학교를 5번이나 왔다니","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"},
+{"ID":70007,"DIALOG_NUMBER":7,"DIALOG_POSITION":1,"DIALOG_TEXT":"기분이 어떠세요?","DIALOG_NAME":"마리엔느","DIALOG_FACE":"marienne_face_s"},
+{"ID":70008,"DIALOG_NUMBER":8,"DIALOG_POSITION":1,"DIALOG_TEXT":"이것은 연습용입니다.","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"},
+{"ID":70009,"DIALOG_NUMBER":9,"DIALOG_POSITION":1,"DIALOG_TEXT":"1번 선택지를 선택했군요","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"},
+{"ID":70010,"DIALOG_NUMBER":10,"DIALOG_POSITION":1,"DIALOG_TEXT":"2번 선택지를 선택했군요","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"},
+{"ID":70011,"DIALOG_NUMBER":11,"DIALOG_POSITION":1,"DIALOG_TEXT":"3번 선택지를 선택했군요","DIALOG_NAME":"레나","DIALOG_FACE":"rena_ex_face_s"}]
