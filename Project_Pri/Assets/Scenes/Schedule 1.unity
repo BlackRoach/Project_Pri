@@ -1345,7 +1345,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   talk_Event_Parent: {fileID: 774357399}
-  bg_Img: {fileID: 448150541}
+  bg_Img: {fileID: 448150539}
+  dialog_Box: {fileID: 2128327026}
+  select_Box: {fileID: 5983617}
   left_Character: {fileID: 1216652661}
   middle_Character: {fileID: 1810126355}
   right_Character: {fileID: 291992463}
@@ -2693,7 +2695,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128327027}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2732,7 +2734,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC218\uC0C1\uD55C\uC790\uC640\uB294 \uB9D0\uC744 \uD558\uC9C0 \uC54A\uACA0\uB2E4. "
+  m_Text: '  '
 --- !u!222 &273590850
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2890,7 +2892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &291992464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2953,6 +2955,10 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
+  - {fileID: 7400000, guid: 23c4755e016ce0242b73649d08340526, type: 2}
+  - {fileID: 7400000, guid: 136c23c8ddf860746a5bca763558c7b0, type: 2}
+  - {fileID: 7400000, guid: 4b6f350b75bd43d498cbc0f317fb986c, type: 2}
+  - {fileID: 7400000, guid: a30169e06d755df42b0005e53a734481, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -5338,7 +5344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &448150540
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5376,7 +5382,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bb1717cbc454efb4688e2c29c8e65351, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9374,7 +9380,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: da009be3adc6d6c4fb054e2b226a3fc6, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11625,7 +11631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 73.69998, y: -20.300049}
+  m_AnchoredPosition: {x: 73.70007, y: -20.300049}
   m_SizeDelta: {x: 64.57, y: 39.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012590631
@@ -14148,7 +14154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1216652662
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14211,6 +14217,11 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
+  - {fileID: 7400000, guid: 8a806194f61dc974dbfaa7ac13b2f096, type: 2}
+  - {fileID: 7400000, guid: 421bd1c760e1c3245b768827240b376d, type: 2}
+  - {fileID: 7400000, guid: a1a4e5a0889f6e5448cc7a8a8f7b51be, type: 2}
+  - {fileID: 7400000, guid: d7962e285ce9f8a43b94c84dd222427a, type: 2}
+  - {fileID: 7400000, guid: 4ed88f8fa194c62458f67e03952d3490, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -17684,7 +17695,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128327027}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -17723,7 +17734,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBB38\uC9C0\uAE30 "
+  m_Text: '  '
 --- !u!222 &1551616494
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20767,7 +20778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1810126356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20827,8 +20838,10 @@ Animation:
   m_GameObject: {fileID: 1810126355}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 47f89e03fcfbafc4881c6cdfbcd76ba0, type: 2}
+  - {fileID: 7400000, guid: 58840cb8f599e7948b40b4f713d72c2e, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -21089,7 +21102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.945198, y: 22.600098}
+  m_AnchoredPosition: {x: 3.945076, y: 22.600098}
   m_SizeDelta: {x: 44.25, y: 34.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833615920
@@ -24797,8 +24810,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000798, y: 1.0000798, z: 1.0000798}
   m_Children:
-  - {fileID: 1551616492}
   - {fileID: 273590848}
+  - {fileID: 1551616492}
   - {fileID: 801093002}
   - {fileID: 1766967432}
   m_Father: {fileID: 774357400}
@@ -24848,8 +24861,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Button_Text_Box_Exit
+      - m_Target: {fileID: 91944948}
+        m_MethodName: Button_Dialog_Text_Next_Or_Exit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
