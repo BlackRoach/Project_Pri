@@ -42,7 +42,8 @@ public class BattleManager : MonoBehaviour
     private GameObject presentlyAttackChar;
     private InGamemanager ingameManager;
     private JsonFileWriter jsonFileWriter;
-    private JsonData loadData;
+    private JsonData loadMonsterData;
+    private JsonData loadPartyData;
 
     private string group_id;
     private string stage_background;
@@ -55,6 +56,7 @@ public class BattleManager : MonoBehaviour
     private float cooltime = 10f;
     private bool isAttack = false;
     private bool isResult = false;
+    private List<string> partyid = new List<string>();
 
     public bool isFightWhile = false;
     public bool isCommandOn = false;
@@ -66,6 +68,7 @@ public class BattleManager : MonoBehaviour
     public Transform[] enemypos;
     public Transform[] partypos;
 
+
     // Use this for initialization
     void Start()
     {
@@ -73,12 +76,18 @@ public class BattleManager : MonoBehaviour
         ingameManager = InGamemanager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
         group_id = PlayerPrefs.GetString("Current_group_id");
-        loadData = jsonFileWriter.SerializeData("MONSTER_GROUP_TABLE");
+        loadMonsterData = jsonFileWriter.SerializeData("MONSTER_GROUP_TABLE");
+        loadPartyData = jsonFileWriter.SerializeData("PARTY_TABLE");
 
-        LoadData(group_id);
+        Getparty();
+        LoadMonsterData(group_id);
         enemys = new GameObject[monster_cnt];
+        partys = new GameObject[partyid.Count + 1];
         backGround.sprite = Resources.Load<Sprite>("전투배경/" + stage_background);
+        player.transform.position = partypos[0].position;
+        partys[0] = player;
         SpawnMonster();
+        SpawnParty();
         
     }
     
@@ -119,7 +128,7 @@ public class BattleManager : MonoBehaviour
             isFightWhile = true;
             presentlyAttackChar = attackQueue.Dequeue();
             if (presentlyAttackChar.tag == "Monster")
-                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(player);
+                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(partys[UnityEngine.Random.Range(0,partyid.Count+1)]);
             else if (presentlyAttackChar.tag == "Player")
             {
 
@@ -196,22 +205,38 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("WorldMap");
        
     }
-    private void LoadData(string id)
+    private void LoadMonsterData(string id)
     {
-        for (int i = 0; i < loadData.Count; i++)
+        for (int i = 0; i < loadMonsterData.Count; i++)
         {
-            if (loadData[i]["ID"].ToString() == id)
+            if (loadMonsterData[i]["ID"].ToString() == id)
             {
-                stage_background = loadData[i]["STAGE_BACKGROUND"].ToString();
-                monster_cnt = Int32.Parse(loadData[i]["MONSTER_COUNT"].ToString());
+                stage_background = loadMonsterData[i]["STAGE_BACKGROUND"].ToString();
+                monster_cnt = Int32.Parse(loadMonsterData[i]["MONSTER_COUNT"].ToString());
                 monster_id = new string[monster_cnt];
                 monster_pos = new int[monster_cnt];
                 for(int k = 0; k<monster_cnt;k++)
                 {
-                    monster_id[k] = loadData[i]["MONSTER" + (k + 1) + "_ID"].ToString();
-                    monster_pos[k] = Int32.Parse(loadData[i]["MONSTER" + (k + 1) + "_POINT"].ToString());
+                    monster_id[k] = loadMonsterData[i]["MONSTER" + (k + 1) + "_ID"].ToString();
+                    monster_pos[k] = Int32.Parse(loadMonsterData[i]["MONSTER" + (k + 1) + "_POINT"].ToString());
                 }
                 break;
+            }
+        }
+
+    }
+    private void Getparty()
+    {
+
+        for (int i = 0, n = 0; i < loadPartyData.Count; i++)
+        {
+
+            if (loadPartyData[i]["IS_PARTY"].ToString() == "1")
+            {
+                partyid.Add(loadPartyData[i]["ID"].ToString());
+                n++;
+                if (n == 2)
+                    break;
             }
         }
 
@@ -226,6 +251,19 @@ public class BattleManager : MonoBehaviour
             nobj.name = "Monster" + i;
             nobj.gameObject.transform.parent = enemy.transform.parent;
             enemys[i] = nobj;
+            nobj.SetActive(true);
+        }
+    }
+    private void SpawnParty()
+    {
+        for(int i = 0; i < partyid.Count; i++)
+        {
+            GameObject nobj = (GameObject)GameObject.Instantiate(party);
+            nobj.GetComponent<Battle_Party>().id = partyid[i];
+            nobj.transform.position = partypos[i+1].position;
+            nobj.name = "Party" + i;
+            nobj.gameObject.transform.parent = party.transform.parent;
+            partys[i+1] = nobj;
             nobj.SetActive(true);
         }
     }

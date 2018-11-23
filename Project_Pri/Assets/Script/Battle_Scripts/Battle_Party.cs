@@ -2,23 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class Battle_Monster : Battle_Character {
-
-  
-    [SerializeField] private GameObject cursur;
+public class Battle_Party : Battle_Character
+{
 
 	// Use this for initialization
 	void Start () {
-        Vector3 scale = transform.localScale;
-        scale.x = -Mathf.Abs(scale.x);
-        transform.localScale = scale;
-
         if (battleManager == null)
             battleManager = BattleManager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
-        loadData = jsonFileWriter.SerializeData("MONSTER_TABLE");
+        loadData = jsonFileWriter.SerializeData("PARTY_TABLE");
         LoadData();
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("SD몬스터/" + sd_model);
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("SD캐릭터/" + sd_model);
         GameObject nobj = (GameObject)GameObject.Instantiate(status);
         nobj.gameObject.transform.parent = status.transform.parent;
         StatusUI = nobj;
@@ -30,18 +24,7 @@ public class Battle_Monster : Battle_Character {
 	
 	// Update is called once per frame
 	void Update () {
-
         update();
-        if (BattleManager.Instance.isAttack_readonly)
-        {
-            cursur.SetActive(true);
-         
-        }
-        else
-            cursur.SetActive(false);
-
-       
-
     }
 
     public void LoadData()
@@ -50,7 +33,7 @@ public class Battle_Monster : Battle_Character {
         {
             if (loadData[i]["ID"].ToString() == id)
             {
-                sd_model = loadData[i]["MONSTER_MODEL"].ToString();
+                sd_model = loadData[i]["PARTY_SD_MODEL"].ToString();
 
                 break;
             }

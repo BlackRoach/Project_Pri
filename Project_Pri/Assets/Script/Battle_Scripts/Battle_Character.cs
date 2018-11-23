@@ -35,7 +35,28 @@ public class Battle_Character : MonoBehaviour
         own_position = this.gameObject.transform.position;
         battleManager = BattleManager.Instance;
     }
+    protected void update()
+    {
+        StatusUI.transform.position = new Vector2(this.transform.position.x + 0.3f,
+                                             this.transform.position.y - 1.7f);
 
+        hpBar.fillAmount = hp * 0.01f;
+        if (progress_gauge >= max_gauge && !isInQ)
+        {
+            battleManager.AddToArray(this.gameObject);
+            isInQ = true;
+        }
+        else if (progress_gauge <= max_gauge)
+        {
+            progress_gauge += Time.deltaTime * filled_speed;
+            guageBar.fillAmount = progress_gauge * 0.01f;
+        }
+        if (hp < 0)
+        {
+            this.gameObject.SetActive(false);
+            StatusUI.SetActive(false);
+        }
+    }
     public void MoveToEnemy(GameObject enemy)
     {
         StartCoroutine(ImoveToEnemy(enemy));
@@ -55,7 +76,7 @@ public class Battle_Character : MonoBehaviour
         effect.SetActive(true);
         hp -= 10;
     }
-   
+    
     public IEnumerator IbackToOwnPosition()
     {
         Vector2 thisPosition = this.gameObject.transform.position;

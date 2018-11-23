@@ -25,24 +25,7 @@ public class Battle_Player : Battle_Character
     void Update()
     {
 
-        StatusUI.transform.position = new Vector2(this.transform.position.x+0.3f,
-                                                  this.transform.position.y-1.7f);
-
-        hpBar.fillAmount = hp*0.01f;
-        if (progress_gauge >= max_gauge && !isInQ)
-        {
-            battleManager.AddToArray(this.gameObject);
-            isInQ = true;
-        }
-        else if (progress_gauge <= max_gauge)
-        {
-            progress_gauge += Time.deltaTime * filled_speed;
-            guageBar.fillAmount = progress_gauge * 0.01f;
-           
-
-           
-        }
-
+        update();
         if (skill_guage >= max_gauge && !battleManager.isCommandOn)
         {
             // 커맨드 버튼 활성화
@@ -59,12 +42,7 @@ public class Battle_Player : Battle_Character
 
         }
 
-        if (hp < 0)
-        {
-            this.gameObject.SetActive(false);
-            StatusUI.SetActive(false);
-            battleManager.GetResult(false);
-        }
+      
 
     }
     public void Skillused()
