@@ -269,6 +269,7 @@ public class ScheduleManager : MonoBehaviour {
             Debug.Log("일정을 전부 채워야 합니다.");
             return;
         }
+        Play_Talk_Event.instance.Decited_Schedule_Manager(activities[0].title);
         
         MakeSchedule();
         InvokeRepeating("RunSchedule", 0.1f, 1.0f);
