@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class ScheduleManager : MonoBehaviour {
 
+    public static ScheduleManager instance = null;
+
     private int backGroundPosition;
     public GameObject background; // 배경 이미지
     public GameObject studyPanel; // 공부 패널
@@ -42,6 +44,17 @@ public class ScheduleManager : MonoBehaviour {
 
     private JsonData vacance_CG_Data;
 
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     private void Start()
     {
         Calender_Event_Json_Parsing();
@@ -268,13 +281,16 @@ public class ScheduleManager : MonoBehaviour {
         {
             Debug.Log("일정을 전부 채워야 합니다.");
             return;
-        }
-        Play_Talk_Event.instance.Decited_Schedule_Manager(activities[0].title);
-        
+        }      
         MakeSchedule();
         InvokeRepeating("RunSchedule", 0.1f, 1.0f);
     }
-
+    // 대화 이벤트 사용시 스케쥴 Loop Control
+    public void Schedule_Loop_Start_Again()
+    {
+        InvokeRepeating("RunSchedule", 0.1f, 1.0f);
+    }
+    // -----------------------
     // 한달 동안의 스케줄을 생성한다.
     private void MakeSchedule()
     {
@@ -314,7 +330,51 @@ public class ScheduleManager : MonoBehaviour {
 
     // 스케줄을 실행하고 메인씬으로 넘어간다.
     private void RunSchedule()
-    {
+    {   
+        if(day == 0)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[0].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }else if (day == 9)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[0].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }
+        else if (day == 10)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[1].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }
+        else if (day == 19)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[1].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }
+        else if (day == 20)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[2].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }
         bool notEnd = day < decidedActivities.Count;
 
         if (notEnd)
@@ -456,6 +516,7 @@ public class ScheduleManager : MonoBehaviour {
             ChangeScene("Main");
         }    
     }
+    // End Run 스케쥴
     private void Schedule_Current_Mode_Setting_Image(int input)
     {
         for(int i = 0; i < schedules_Mode_Parent.transform.childCount; i++)

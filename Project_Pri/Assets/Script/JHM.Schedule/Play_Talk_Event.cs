@@ -22,7 +22,11 @@ public class Play_Talk_Event : MonoBehaviour {
     // --------------------
     public Schedule_Each_Count event_List = new Schedule_Each_Count();  // 대화 이벤트 횟수
 
+    public Talk_Event_Trigger_Manager[] trigger_List = new Talk_Event_Trigger_Manager[10]; // 대화 이벤트 트리거
+
     public Current_Talk_Event current_Event = new Current_Talk_Event(); // 대화이벤트 실행매니저
+
+    public bool is_Trigger; // 스케쥴실행때 1이면 기존 일정 정지 0이면 진행 , 도와주는 boolean
 
     private JsonData play_Count_Data;
     private JsonData trigger_List_Data;
@@ -40,9 +44,20 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
+        is_Trigger = false;
     }
     private void Start()
     {
+        for(int i = 0; i < trigger_List.Length; i++)
+        {
+            trigger_List[i] = new Talk_Event_Trigger_Manager();
+        }
+        for(int i = 0; i < trigger_List.Length; i++)
+        {
+            trigger_List[i].Trigger_Num = i + 1;
+            trigger_List[i].Command_Event = ("EVENT_" + (i + 1).ToString());
+        }
+
         talk_Event_Parent.SetActive(false);
         bg_Img.SetActive(false);
         left_Character.SetActive(false);
@@ -305,10 +320,11 @@ public class Play_Talk_Event : MonoBehaviour {
             {
                 if(count == (int)play_Count_Data[i]["COMMAND_COUNT"])
                 {
-                    if((int)play_Count_Data[i]["TRIGGER_NOT"] != 0)
+                    if((int)play_Count_Data[i]["TRIGGER_NOT"] == 1)
                     {
+                        is_Trigger = true; // 기존 스케쥴 정지
                         // 트리거 작동
-                        if((int)play_Count_Data[i]["TRIGGER_NUM"] == 1)
+                        if ((int)play_Count_Data[i]["TRIGGER_NUM"] == 1)
                         {
                             current_Event.event_Name = event_List_Data[0]["EVENT_NAME"].ToString();
                             current_Event.end_Event_Count = (int)event_List_Data[0]["EVENT_COUNT"];
@@ -316,9 +332,40 @@ public class Play_Talk_Event : MonoBehaviour {
                             current_Event.event_Fuction = event_List_Data[0]["EVENT_1"].ToString();
                             current_Event.input_Value = event_List_Data[0]["EVENT_IN_1"].ToString();
 
-                            Event_Run_Manager();
-                            break;
+                            trigger_List[0].Play_Count += 2;
                         }
+                        if((int)play_Count_Data[i]["TRIGGER_NUM"] == 2)
+                        {
+                            current_Event.event_Name = event_List_Data[1]["EVENT_NAME"].ToString();
+                            current_Event.end_Event_Count = (int)event_List_Data[1]["EVENT_COUNT"];
+                            current_Event.current_Event_Count++;
+                            current_Event.event_Fuction = event_List_Data[1]["EVENT_1"].ToString();
+                            current_Event.input_Value = event_List_Data[1]["EVENT_IN_1"].ToString();
+
+                            trigger_List[1].Play_Count += 2;
+                        }
+                        if ((int)play_Count_Data[i]["TRIGGER_NUM"] == 3)
+                        {
+                            current_Event.event_Name = event_List_Data[2]["EVENT_NAME"].ToString();
+                            current_Event.end_Event_Count = (int)event_List_Data[2]["EVENT_COUNT"];
+                            current_Event.current_Event_Count++;
+                            current_Event.event_Fuction = event_List_Data[2]["EVENT_1"].ToString();
+                            current_Event.input_Value = event_List_Data[2]["EVENT_IN_1"].ToString();
+
+                            trigger_List[1].Play_Count += 2;
+                        }
+                        if ((int)play_Count_Data[i]["TRIGGER_NUM"] == 4)
+                        {
+                            current_Event.event_Name = event_List_Data[3]["EVENT_NAME"].ToString();
+                            current_Event.end_Event_Count = (int)event_List_Data[3]["EVENT_COUNT"];
+                            current_Event.current_Event_Count++;
+                            current_Event.event_Fuction = event_List_Data[3]["EVENT_1"].ToString();
+                            current_Event.input_Value = event_List_Data[3]["EVENT_IN_1"].ToString();
+
+                            trigger_List[1].Play_Count += 2;
+                        }
+                        Event_Run_Manager();
+                        break;
                     }
                 }
             }
@@ -344,10 +391,7 @@ public class Play_Talk_Event : MonoBehaviour {
         bg_Img.SetActive(true);
         bg_Img.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         // --------------------
-        current_Event.current_Event_Count++;
-        current_Event.event_Fuction = "CHA_MAKE_L";
-        current_Event.input_Value = "marienne";
-        Event_Run_Manager();
+        Talk_Event_Next_Input();
     }
     public void BG_OUT()
     {
@@ -355,9 +399,12 @@ public class Play_Talk_Event : MonoBehaviour {
         bg_Img.SetActive(false);
         talk_Event_Parent.SetActive(false);
         // --------------------
-        current_Event.current_Event_Count++;
-        current_Event.event_Fuction = "0";
-        current_Event.input_Value = "0";
+        if(current_Event.event_Name == "EVENT_1")
+        {
+            trigger_List[0].Play_Count++;
+        }
+        current_Event = new Current_Talk_Event(); // 대화실행 매니저 데이터 초기화
+        ScheduleManager.instance.Schedule_Loop_Start_Again();
     }
     public void Char_Make_Left()
     {
@@ -365,10 +412,7 @@ public class Play_Talk_Event : MonoBehaviour {
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_In");
         left_Character.GetComponent<Animation>().Play();
         // --------------------
-        current_Event.current_Event_Count++;
-        current_Event.event_Fuction = "DIALOG_MAKE";
-        current_Event.input_Value = "70001";
-        Event_Run_Manager();
+        Talk_Event_Next_Input();
     }
     public void Char_Make_Right()
     {
@@ -436,17 +480,13 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         dialog_Box.SetActive(true);
         dialog_Box.transform.GetChild(3).gameObject.SetActive(false);
-        if (current_Event.input_Value == dialog_List_Data[0]["ID"].ToString())
+        if (current_Event.input_Value == "70001")
         {
             StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[0]["DIALOG_TEXT"].ToString()));
             dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[0]["DIALOG_NAME"].ToString();
             dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
                 Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[0]["DIALOG_FACE"].ToString());
         }
-        // --------------------------
-        current_Event.current_Event_Count++;
-        current_Event.event_Fuction = "DIALOG_MAKE";
-        current_Event.input_Value = "70002";
     }
     public void SELECT_MAKE()
     {
@@ -458,9 +498,6 @@ public class Play_Talk_Event : MonoBehaviour {
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_out");
         left_Character.GetComponent<Animation>().Play();
         // -----------------------------
-        current_Event.current_Event_Count++;
-        current_Event.event_Fuction = "BG_OUT";
-        current_Event.input_Value = "school_img";
         StartCoroutine(Left_Character_Fade_Out_Done());
     }
     // 케릭터 fade out 끝나고 난후 false 작업
@@ -468,67 +505,109 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.2f);
         left_Character.SetActive(false);
-        Event_Run_Manager();
+        Talk_Event_Next_Input();
     }
     // ---------------------------
     public void Button_Dialog_Text_Next_Or_Exit()
-    {
-        if (current_Event.current_Event_Count == 4)
+    {        
+        if (current_Event.current_Event_Count == 3)
         {
+            current_Event.current_Event_Count++;
+            current_Event.event_Fuction = "DIALOG_MAKE";
+            current_Event.input_Value = "70002";
+            // ------------------------
             dialog_Box.SetActive(true);
             dialog_Box.transform.GetChild(3).gameObject.SetActive(false);
-            if (current_Event.input_Value == dialog_List_Data[1]["ID"].ToString())
+            if (current_Event.input_Value == "70002")
             {
                 StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[1]["DIALOG_TEXT"].ToString()));
             }
-            // ------------------------
-            current_Event.current_Event_Count++;
-            current_Event.event_Fuction = "CHA_OUT";
-            current_Event.input_Value = "marienne";
         }
         else
         {
             dialog_Box.SetActive(false);
-            Event_Run_Manager();
+            Talk_Event_Next_Input();
         }
     }
     // end 함수 모음
+    private void Talk_Event_Next_Input()
+    {
+        current_Event.current_Event_Count++;
+        if (current_Event.event_Name == "EVENT_1")
+        {
+            if(current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "CHA_MAKE_L";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 3)
+            {
+                current_Event.event_Fuction = "DIALOG_MAKE";
+                current_Event.input_Value = "70001";
+            }
+            if (current_Event.current_Event_Count == 5)
+            {
+                current_Event.event_Fuction = "CHA_OUT";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 6)
+            {
+                current_Event.event_Fuction = "BG_OUT";
+                current_Event.input_Value = "school_img";
+            }
+        }
+        if (current_Event.event_Name == "EVENT_2")
+        {
+            if(current_Event.current_Event_Count == 2)
+            {
+
+            }
+        }
+        if (current_Event.event_Name == "EVENT_3")
+        {
+
+        }
+        if (current_Event.event_Name == "EVENT_4")
+        {
+
+        }
+        Event_Run_Manager();
+    }
+
+
     // 각종 이벤트 실행 매니저
     private void Event_Run_Manager()
     {
-        if(current_Event.event_Name == "EVENT_1")
+        if (current_Event.current_Event_Count <= current_Event.end_Event_Count)
         {
-            if (current_Event.current_Event_Count <= current_Event.end_Event_Count)
+            switch (current_Event.event_Fuction)
             {
-                switch (current_Event.event_Fuction)
-                {
-                    case "BG_MAKE":
-                        {
-                            BG_MAKE();
-                        }break;
-                    case "CHA_MAKE_L":
-                        {
-                            Char_Make_Left();
-                        }break;
-                    case "DIALOG_MAKE":
-                        {
-                            DIALOG_MAKE();
-                        }break;
-                    case "CHA_OUT":
-                        {
-                            Character_Fade_Out();
-                        }
-                        break;
-                    case "BG_OUT":
-                        {
-                            BG_OUT();
-                        }
-                        break;
-                }
+                case "BG_MAKE":
+                    {
+                        BG_MAKE();
+                    }break;
+                case "CHA_MAKE_L":
+                    {
+                        Char_Make_Left();
+                    }break;
+                case "DIALOG_MAKE":
+                    {
+                        DIALOG_MAKE();
+                    }break;
+                case "CHA_OUT":
+                    {
+                        Character_Fade_Out();
+                    }
+                    break;
+                case "BG_OUT":
+                    {
+                        BG_OUT();
+                    }
+                    break;
             }
-        }
+        }        
     }
-
+    // ---------
 
 
 
