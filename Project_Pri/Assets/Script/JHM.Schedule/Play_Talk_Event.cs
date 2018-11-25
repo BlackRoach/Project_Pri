@@ -409,6 +409,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_Left()
     {
         left_Character.SetActive(true);
+        left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_In");
         left_Character.GetComponent<Animation>().Play();
         // --------------------
@@ -416,8 +417,12 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Char_Make_Right()
     {
+        right_Character.SetActive(true);
+        right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
         right_Character.GetComponent<Animation>().Play();
+        // ---------------------
+        Talk_Event_Next_Input();
     }
     public void Char_Make_Middle()
     {
@@ -466,12 +471,12 @@ public class Play_Talk_Event : MonoBehaviour {
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
         right_Character.GetComponent<Animation>().Play();
     }
-    public void Char_Out_Left()
+    public void Char_Out_Move_Left()
     {
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Move_Fade_Out");
         left_Character.GetComponent<Animation>().Play();
     }
-    public void Char_Out_Right()
+    public void Char_Out_Move_Right()
     {
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Move_Fade_Out");
         right_Character.GetComponent<Animation>().Play();
@@ -487,12 +492,19 @@ public class Play_Talk_Event : MonoBehaviour {
             dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
                 Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[0]["DIALOG_FACE"].ToString());
         }
+        if (current_Event.input_Value == "70003")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[2]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[2]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[2]["DIALOG_FACE"].ToString());
+        }
     }
     public void SELECT_MAKE()
     {
         select_Box.SetActive(true);
     }
-    public void Character_Fade_Out()
+    public void Left_Character_Fade_Out()
     {
         left_Character.SetActive(true);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_out");
@@ -505,12 +517,28 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.2f);
         left_Character.SetActive(false);
+    //    Talk_Event_Next_Input();
+    }
+    public void Right_Character_Fade_Out()
+    {
+        right_Character.SetActive(true);
+        right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_out");
+        right_Character.GetComponent<Animation>().Play();
+        // -----------------------------
+        StartCoroutine(Right_Character_Fade_Out_Done());
+    }
+    // 케릭터 fade out 끝나고 난후 false 작업
+    IEnumerator Right_Character_Fade_Out_Done()
+    {
+        yield return new WaitForSeconds(1.2f);
+        right_Character.SetActive(false);
         Talk_Event_Next_Input();
     }
     // ---------------------------
+    // 대화 풍선 클릭시 다음행동 ( 다음 텍스트나 , 나가기)
     public void Button_Dialog_Text_Next_Or_Exit()
     {        
-        if (current_Event.current_Event_Count == 3)
+        if (current_Event.current_Event_Count == 3 && current_Event.event_Name == "EVENT_1")
         {
             current_Event.current_Event_Count++;
             current_Event.event_Fuction = "DIALOG_MAKE";
@@ -522,7 +550,38 @@ public class Play_Talk_Event : MonoBehaviour {
             {
                 StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[1]["DIALOG_TEXT"].ToString()));
             }
-        }
+        }else if (current_Event.event_Name == "EVENT_2" && current_Event.current_Event_Count <= 5)
+        {
+            switch (current_Event.current_Event_Count)
+            {
+                case 4:
+                    {
+                        current_Event.current_Event_Count++;
+                        current_Event.event_Fuction = "DIALOG_MAKE";
+                        current_Event.input_Value = "70004";
+                        // ------------------------
+                        dialog_Box.SetActive(true);
+                        dialog_Box.transform.GetChild(3).gameObject.SetActive(false);
+                        if (current_Event.input_Value == "70004")
+                        {
+                            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[3]["DIALOG_TEXT"].ToString()));
+                        }
+                    } break;
+                case 5:
+                    {
+                        current_Event.current_Event_Count++;
+                        current_Event.event_Fuction = "DIALOG_MAKE";
+                        current_Event.input_Value = "70005";
+                        // ------------------------
+                        dialog_Box.SetActive(true);
+                        dialog_Box.transform.GetChild(3).gameObject.SetActive(false);
+                        if (current_Event.input_Value == "70005")
+                        {
+                            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[4]["DIALOG_TEXT"].ToString()));
+                        }
+                    } break;
+            }
+        } 
         else
         {
             dialog_Box.SetActive(false);
@@ -560,7 +619,23 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             if(current_Event.current_Event_Count == 2)
             {
-
+                current_Event.event_Fuction = "CHA_MAKE_L";
+                current_Event.input_Value = "rena_ex";
+            }
+            if (current_Event.current_Event_Count == 3)
+            {
+                current_Event.event_Fuction = "CHA_MAKE_R";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 4)
+            {
+                current_Event.event_Fuction = "DIALOG_MAKE";
+                current_Event.input_Value = "70003";
+            }
+            if (current_Event.current_Event_Count == 7)
+            {
+                current_Event.event_Fuction = "CHA_OUT_L";
+                current_Event.input_Value = "rena_ex";
             }
         }
         if (current_Event.event_Name == "EVENT_3")
@@ -590,13 +665,18 @@ public class Play_Talk_Event : MonoBehaviour {
                     {
                         Char_Make_Left();
                     }break;
+                case "CHA_MAKE_R":
+                    {
+                        Char_Make_Right();
+                    }
+                    break;
                 case "DIALOG_MAKE":
                     {
                         DIALOG_MAKE();
                     }break;
-                case "CHA_OUT":
+                case "CHA_OUT_L":
                     {
-                        Character_Fade_Out();
+                        Left_Character_Fade_Out();
                     }
                     break;
                 case "BG_OUT":

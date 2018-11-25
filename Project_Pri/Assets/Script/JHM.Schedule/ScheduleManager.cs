@@ -331,6 +331,7 @@ public class ScheduleManager : MonoBehaviour {
     // 스케줄을 실행하고 메인씬으로 넘어간다.
     private void RunSchedule()
     {   
+        // 대화 이벤트 실행여부
         if(day == 0)
         {
             Play_Talk_Event.instance.Decited_Schedule_Manager(activities[0].title);
@@ -375,6 +376,7 @@ public class ScheduleManager : MonoBehaviour {
                 Play_Talk_Event.instance.is_Trigger = false;
             }
         }
+        // --------------------------
         bool notEnd = day < decidedActivities.Count;
 
         if (notEnd)
