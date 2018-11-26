@@ -399,10 +399,9 @@ public class Play_Talk_Event : MonoBehaviour {
         bg_Img.SetActive(false);
         talk_Event_Parent.SetActive(false);
         // --------------------
-        if(current_Event.event_Name == "EVENT_1")
-        {
-            trigger_List[0].Play_Count++;
-        }
+        if(current_Event.event_Name == "EVENT_1") trigger_List[0].Play_Count++;
+        if (current_Event.event_Name == "EVENT_2") trigger_List[1].Play_Count++;
+
         current_Event = new Current_Talk_Event(); // 대화실행 매니저 데이터 초기화
         ScheduleManager.instance.Schedule_Loop_Start_Again();
     }
@@ -410,6 +409,7 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         left_Character.SetActive(true);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_In");
         left_Character.GetComponent<Animation>().Play();
         // --------------------
@@ -419,6 +419,7 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         right_Character.SetActive(true);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
         right_Character.GetComponent<Animation>().Play();
         // ---------------------
@@ -431,13 +432,23 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Char_Make_LM()
     {
+        left_Character.SetActive(true);
+        left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Fade_In");
         left_Character.GetComponent<Animation>().Play();
+        // --------------------
+        Talk_Event_Next_Input();
     }
     public void Char_Make_RM()
     {
+        right_Character.SetActive(true);
+        right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Fade_In");
         right_Character.GetComponent<Animation>().Play();
+        // ---------------------
+        Talk_Event_Next_Input();
     }
     public void Char_Make_MDM()
     {
@@ -475,11 +486,26 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Move_Fade_Out");
         left_Character.GetComponent<Animation>().Play();
+
+        StartCoroutine(Left_Char_FO_LM());
+        Talk_Event_Next_Input();
+    }
+    IEnumerator Left_Char_FO_LM()
+    {
+        yield return new WaitForSeconds(1.2f);
+        left_Character.SetActive(false);
     }
     public void Char_Out_Move_Right()
     {
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Move_Fade_Out");
         right_Character.GetComponent<Animation>().Play();
+        StartCoroutine(Right_Char_FO_RM());
+    }
+    IEnumerator Right_Char_FO_RM()
+    {
+        yield return new WaitForSeconds(1.2f);
+        right_Character.SetActive(false);
+        Talk_Event_Next_Input();
     }
     public void DIALOG_MAKE()
     {
@@ -499,6 +525,13 @@ public class Play_Talk_Event : MonoBehaviour {
             dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
                 Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[2]["DIALOG_FACE"].ToString());
         }
+        if (current_Event.input_Value == "70006")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[5]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[5]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[5]["DIALOG_FACE"].ToString());
+        }
     }
     public void SELECT_MAKE()
     {
@@ -517,7 +550,7 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.2f);
         left_Character.SetActive(false);
-    //    Talk_Event_Next_Input();
+        Talk_Event_Next_Input();
     }
     public void Right_Character_Fade_Out()
     {
@@ -532,7 +565,7 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.2f);
         right_Character.SetActive(false);
-        Talk_Event_Next_Input();
+      //  Talk_Event_Next_Input();
     }
     // ---------------------------
     // 대화 풍선 클릭시 다음행동 ( 다음 텍스트나 , 나가기)
@@ -541,7 +574,7 @@ public class Play_Talk_Event : MonoBehaviour {
         if (current_Event.current_Event_Count == 3 && current_Event.event_Name == "EVENT_1")
         {
             current_Event.current_Event_Count++;
-            current_Event.event_Fuction = "DIALOG_MAKE";
+            current_Event.event_Fuction = "DM";
             current_Event.input_Value = "70002";
             // ------------------------
             dialog_Box.SetActive(true);
@@ -550,14 +583,14 @@ public class Play_Talk_Event : MonoBehaviour {
             {
                 StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[1]["DIALOG_TEXT"].ToString()));
             }
-        }else if (current_Event.event_Name == "EVENT_2" && current_Event.current_Event_Count <= 5)
+        }else if (current_Event.event_Name == "EVENT_2" && current_Event.current_Event_Count <= current_Event.end_Event_Count)
         {
             switch (current_Event.current_Event_Count)
             {
                 case 4:
                     {
                         current_Event.current_Event_Count++;
-                        current_Event.event_Fuction = "DIALOG_MAKE";
+                        current_Event.event_Fuction = "DM";
                         current_Event.input_Value = "70004";
                         // ------------------------
                         dialog_Box.SetActive(true);
@@ -570,7 +603,7 @@ public class Play_Talk_Event : MonoBehaviour {
                 case 5:
                     {
                         current_Event.current_Event_Count++;
-                        current_Event.event_Fuction = "DIALOG_MAKE";
+                        current_Event.event_Fuction = "DM";
                         current_Event.input_Value = "70005";
                         // ------------------------
                         dialog_Box.SetActive(true);
@@ -581,7 +614,22 @@ public class Play_Talk_Event : MonoBehaviour {
                         }
                     } break;
             }
-        } 
+        } else if(current_Event.event_Name == "EVENT_3" && current_Event.current_Event_Count <= current_Event.end_Event_Count)
+        {
+            if(current_Event.current_Event_Count == 4)
+            {
+                current_Event.current_Event_Count++;
+                current_Event.event_Fuction = "DM";
+                current_Event.input_Value = "70007";
+                // ------------------------
+                dialog_Box.SetActive(true);
+                dialog_Box.transform.GetChild(3).gameObject.SetActive(false);
+                if (current_Event.input_Value == "70007")
+                {
+                    StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[6]["DIALOG_TEXT"].ToString()));
+                }
+            }
+        }
         else
         {
             dialog_Box.SetActive(false);
@@ -596,60 +644,82 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             if(current_Event.current_Event_Count == 2)
             {
-                current_Event.event_Fuction = "CHA_MAKE_L";
+                current_Event.event_Fuction = "CM_L";
                 current_Event.input_Value = "marienne";
             }
             if (current_Event.current_Event_Count == 3)
             {
-                current_Event.event_Fuction = "DIALOG_MAKE";
+                current_Event.event_Fuction = "DM";
                 current_Event.input_Value = "70001";
             }
             if (current_Event.current_Event_Count == 5)
             {
-                current_Event.event_Fuction = "CHA_OUT";
+                current_Event.event_Fuction = "CO";
                 current_Event.input_Value = "marienne";
             }
             if (current_Event.current_Event_Count == 6)
             {
-                current_Event.event_Fuction = "BG_OUT";
+                current_Event.event_Fuction = "BO";
                 current_Event.input_Value = "school_img";
             }
-        }
+        } // end event_1
         if (current_Event.event_Name == "EVENT_2")
         {
             if(current_Event.current_Event_Count == 2)
             {
-                current_Event.event_Fuction = "CHA_MAKE_L";
+                current_Event.event_Fuction = "CM_L";
                 current_Event.input_Value = "rena_ex";
             }
             if (current_Event.current_Event_Count == 3)
             {
-                current_Event.event_Fuction = "CHA_MAKE_R";
+                current_Event.event_Fuction = "CM_R";
                 current_Event.input_Value = "marienne";
             }
             if (current_Event.current_Event_Count == 4)
             {
-                current_Event.event_Fuction = "DIALOG_MAKE";
+                current_Event.event_Fuction = "DM";
                 current_Event.input_Value = "70003";
             }
             if (current_Event.current_Event_Count == 7)
             {
-                current_Event.event_Fuction = "CHA_OUT_L";
+                current_Event.event_Fuction = "CO_ML";
                 current_Event.input_Value = "rena_ex";
             }
-        }
+            if (current_Event.current_Event_Count == 8)
+            {
+                current_Event.event_Fuction = "CO_MR";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 9)
+            {
+                current_Event.event_Fuction = "BO";
+                current_Event.input_Value = "market_img";
+            }
+        } // end event_2
         if (current_Event.event_Name == "EVENT_3")
         {
-
-        }
+            if (current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "CM_LM";
+                current_Event.input_Value = "rena_ex";
+            }
+            if (current_Event.current_Event_Count == 3)
+            {
+                current_Event.event_Fuction = "CM_RM";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 4)
+            {
+                current_Event.event_Fuction = "DM";
+                current_Event.input_Value = "70006";
+            }
+        } // end event_3
         if (current_Event.event_Name == "EVENT_4")
         {
 
-        }
+        } // end event_4
         Event_Run_Manager();
     }
-
-
     // 각종 이벤트 실행 매니저
     private void Event_Run_Manager()
     {
@@ -657,40 +727,58 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             switch (current_Event.event_Fuction)
             {
-                case "BG_MAKE":
+                case "BM": 
                     {
-                        BG_MAKE();
-                    }break;
-                case "CHA_MAKE_L":
-                    {
-                        Char_Make_Left();
-                    }break;
-                case "CHA_MAKE_R":
-                    {
-                        Char_Make_Right();
+                        BG_MAKE();  // 배경화면 IN
                     }
                     break;
-                case "DIALOG_MAKE":
+                case "CM_L":
                     {
-                        DIALOG_MAKE();
+                        Char_Make_Left(); // 왼쪽케릭터 제자리 FADE_IN
                     }break;
-                case "CHA_OUT_L":
+                case "CM_R":
                     {
-                        Left_Character_Fade_Out();
+                        Char_Make_Right(); // 오른쪽케릭터 제자지 FADE_IN
                     }
                     break;
-                case "BG_OUT":
+                case "DM":
                     {
-                        BG_OUT();
+                        DIALOG_MAKE(); // 대화 풍선 IN
+                    }break;
+                case "CO":
+                    {
+                        Left_Character_Fade_Out(); // 왼쪽 케릭터 제자리 FADE_OUT
+                    }
+                    break;
+                case "CO_ML":
+                    {
+                        Char_Out_Move_Left(); // 왼쪽 케릭터 왼쪽으로 이동하면서 FADE_OUT
+                    }
+                    break;
+                case "CO_MR":
+                    {
+                        Char_Out_Move_Right(); // 오른쪽 케릭터 왼쪽으로 이동하면서 FADE_OUT
+                    }
+                    break;
+                case "CM_LM":
+                    {
+                        Char_Make_LM(); // 왼쪽 케릭터 왼쪽 밖에서 오른쪽 방향 이동하면서 FADE IN
+                    }
+                    break;
+                case "CM_RM":
+                    {
+                        Char_Make_RM(); // 오른쪽 케릭터 오른쪽 밖에서 왼쪽 방향 이동하면서 FADE IN
+                    }
+                    break;
+                case "BO":
+                    {
+                        BG_OUT(); // 배경화면 OUT
                     }
                     break;
             }
         }        
     }
-    // ---------
-
-
-
+    // -------------------------------
 } // class
 
 

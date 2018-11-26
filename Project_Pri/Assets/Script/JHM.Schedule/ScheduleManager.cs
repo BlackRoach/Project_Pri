@@ -376,6 +376,15 @@ public class ScheduleManager : MonoBehaviour {
                 Play_Talk_Event.instance.is_Trigger = false;
             }
         }
+        else if (day == 27)
+        {
+            Play_Talk_Event.instance.Decited_Schedule_Manager(activities[2].title);
+            if (Play_Talk_Event.instance.is_Trigger)
+            {
+                CancelInvoke("RunSchedule");
+                Play_Talk_Event.instance.is_Trigger = false;
+            }
+        }
         // --------------------------
         bool notEnd = day < decidedActivities.Count;
 
