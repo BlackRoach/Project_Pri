@@ -8,7 +8,6 @@ using System.IO;
 
 public class Play_Talk_Event : MonoBehaviour {
 
-
     public static Play_Talk_Event instance = null;
 
     public GameObject talk_Event_Parent;
@@ -20,11 +19,9 @@ public class Play_Talk_Event : MonoBehaviour {
     public GameObject middle_Character;
     public GameObject right_Character;
     // --------------------
-    public Schedule_Each_Count event_List = new Schedule_Each_Count();  // 대화 이벤트 횟수
-
-    public Talk_Event_Trigger_Manager[] trigger_List = new Talk_Event_Trigger_Manager[10]; // 대화 이벤트 트리거
-
-    public Current_Talk_Event current_Event = new Current_Talk_Event(); // 대화이벤트 실행매니저
+    public Schedule_Each_Count event_List;  // 대화 이벤트 횟수
+    public Talk_Event_Trigger_Manager[] trigger_List; // 대화 이벤트 트리거
+    public Current_Talk_Event current_Event; // 대화이벤트 실행매니저
 
     public bool is_Trigger; // 스케쥴실행때 1이면 기존 일정 정지 0이면 진행 , 도와주는 boolean
 
@@ -44,7 +41,10 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-        is_Trigger = false;
+    event_List = new Schedule_Each_Count();  // 대화 이벤트 횟수
+    trigger_List = new Talk_Event_Trigger_Manager[10]; // 대화 이벤트 트리거
+    current_Event = new Current_Talk_Event(); // 대화이벤트 실행매니저
+    is_Trigger = false;
     }
     private void Start()
     {
@@ -63,7 +63,8 @@ public class Play_Talk_Event : MonoBehaviour {
         left_Character.SetActive(false);
         middle_Character.SetActive(false);
         right_Character.SetActive(false);
-
+        dialog_Box.SetActive(false);
+        select_Box.SetActive(false);
         Json_Data_All_Parsing();
     }
     private void Json_Data_All_Parsing()
@@ -306,10 +307,8 @@ public class Play_Talk_Event : MonoBehaviour {
                 }
                 break;
         } // end switch 
-
         Searching_Play_Count_Data(str, count);
     } // end Decited_Schedule_Manager
-
     // json 파일에 스케쥴 이벤트 실행횟수 찾아 트리거 동작
     // select place and count 일치 검색
     private void Searching_Play_Count_Data(string str,int count)
@@ -352,7 +351,7 @@ public class Play_Talk_Event : MonoBehaviour {
                             current_Event.event_Fuction = event_List_Data[2]["EVENT_1"].ToString();
                             current_Event.input_Value = event_List_Data[2]["EVENT_IN_1"].ToString();
 
-                            trigger_List[1].Play_Count += 2;
+                            trigger_List[2].Play_Count += 2;
                         }
                         if ((int)play_Count_Data[i]["TRIGGER_NUM"] == 4)
                         {
@@ -362,7 +361,7 @@ public class Play_Talk_Event : MonoBehaviour {
                             current_Event.event_Fuction = event_List_Data[3]["EVENT_1"].ToString();
                             current_Event.input_Value = event_List_Data[3]["EVENT_IN_1"].ToString();
 
-                            trigger_List[1].Play_Count += 2;
+                            trigger_List[3].Play_Count += 2;
                         }
                         Event_Run_Manager();
                         break;
@@ -383,7 +382,6 @@ public class Play_Talk_Event : MonoBehaviour {
         }
         dialog_Box.transform.GetChild(3).gameObject.SetActive(true);
     }
-
     // 이벤트 함수 모음
     public void BG_MAKE()
     {
@@ -401,6 +399,10 @@ public class Play_Talk_Event : MonoBehaviour {
         // --------------------
         if(current_Event.event_Name == "EVENT_1") trigger_List[0].Play_Count++;
         if (current_Event.event_Name == "EVENT_2") trigger_List[1].Play_Count++;
+        if (current_Event.event_Name == "EVENT_4") trigger_List[3].Play_Count++;
+        if (current_Event.event_Name == "EVENT_5") trigger_List[4].Play_Count++;
+        if (current_Event.event_Name == "EVENT_6") trigger_List[5].Play_Count++;
+        if (current_Event.event_Name == "EVENT_7") trigger_List[6].Play_Count++;
 
         current_Event = new Current_Talk_Event(); // 대화실행 매니저 데이터 초기화
         ScheduleManager.instance.Schedule_Loop_Start_Again();
@@ -408,6 +410,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_Left()
     {
         left_Character.SetActive(true);
+        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_In");
@@ -418,6 +421,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_Right()
     {
         right_Character.SetActive(true);
+        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
@@ -433,6 +437,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_LM()
     {
         left_Character.SetActive(true);
+        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Fade_In");
@@ -443,6 +448,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_RM()
     {
         right_Character.SetActive(true);
+        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Fade_In");
@@ -457,13 +463,25 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Char_Make_LDM()
     {
+        left_Character.SetActive(true);
+        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Down_Fade_In");
         left_Character.GetComponent<Animation>().Play();
+        // --------------------
+        Talk_Event_Next_Input();
     }
     public void Char_Make_RDM()
     {
+        right_Character.SetActive(true);
+        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
+        right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Down_Fade_In");
         right_Character.GetComponent<Animation>().Play();
+        // --------------------
+        Talk_Event_Next_Input();
     }
     public void Char_Move_To_Left()
     {
@@ -475,28 +493,23 @@ public class Play_Talk_Event : MonoBehaviour {
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Move_Char");
         right_Character.GetComponent<Animation>().Play();
     }
-    public void Char_Out()
-    {
-        left_Character.SetActive(true);
-        right_Character.SetActive(true);
-        right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
-        right_Character.GetComponent<Animation>().Play();
-    }
     public void Char_Out_Move_Left()
     {
+        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Move_Fade_Out");
         left_Character.GetComponent<Animation>().Play();
 
         StartCoroutine(Left_Char_FO_LM());
-        Talk_Event_Next_Input();
     }
     IEnumerator Left_Char_FO_LM()
     {
         yield return new WaitForSeconds(1.2f);
         left_Character.SetActive(false);
+        Talk_Event_Next_Input();
     }
     public void Char_Out_Move_Right()
     {
+        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Move_Fade_Out");
         right_Character.GetComponent<Animation>().Play();
         StartCoroutine(Right_Char_FO_RM());
@@ -532,14 +545,38 @@ public class Play_Talk_Event : MonoBehaviour {
             dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
                 Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[5]["DIALOG_FACE"].ToString());
         }
-    }
-    public void SELECT_MAKE()
-    {
-        select_Box.SetActive(true);
+        if (current_Event.input_Value == "70008")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[7]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[7]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[7]["DIALOG_FACE"].ToString());
+        }
+        if (current_Event.input_Value == "70009")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[8]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[8]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[8]["DIALOG_FACE"].ToString());
+        }
+        if (current_Event.input_Value == "70010")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[9]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[9]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[9]["DIALOG_FACE"].ToString());
+        }
+        if (current_Event.input_Value == "70011")
+        {
+            StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[10]["DIALOG_TEXT"].ToString()));
+            dialog_Box.transform.GetChild(1).GetComponent<Text>().text = dialog_List_Data[10]["DIALOG_NAME"].ToString();
+            dialog_Box.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite =
+                Resources.Load<Sprite>("JHM.Img/" + dialog_List_Data[10]["DIALOG_FACE"].ToString());
+        }
     }
     public void Left_Character_Fade_Out()
     {
-        left_Character.SetActive(true);
+        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_out");
         left_Character.GetComponent<Animation>().Play();
         // -----------------------------
@@ -554,7 +591,7 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Right_Character_Fade_Out()
     {
-        right_Character.SetActive(true);
+        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_out");
         right_Character.GetComponent<Animation>().Play();
         // -----------------------------
@@ -565,7 +602,7 @@ public class Play_Talk_Event : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.2f);
         right_Character.SetActive(false);
-      //  Talk_Event_Next_Input();
+        Talk_Event_Next_Input();
     }
     // ---------------------------
     // 대화 풍선 클릭시 다음행동 ( 다음 텍스트나 , 나가기)
@@ -583,7 +620,7 @@ public class Play_Talk_Event : MonoBehaviour {
             {
                 StartCoroutine(Auto_Typing_Dialog_Text(dialog_List_Data[1]["DIALOG_TEXT"].ToString()));
             }
-        }else if (current_Event.event_Name == "EVENT_2" && current_Event.current_Event_Count <= current_Event.end_Event_Count)
+        }else if (current_Event.event_Name == "EVENT_2" && current_Event.current_Event_Count <= 5)
         {
             switch (current_Event.current_Event_Count)
             {
@@ -614,7 +651,7 @@ public class Play_Talk_Event : MonoBehaviour {
                         }
                     } break;
             }
-        } else if(current_Event.event_Name == "EVENT_3" && current_Event.current_Event_Count <= current_Event.end_Event_Count)
+        } else if(current_Event.event_Name == "EVENT_3" && current_Event.current_Event_Count <= 4)
         {
             if(current_Event.current_Event_Count == 4)
             {
@@ -636,7 +673,58 @@ public class Play_Talk_Event : MonoBehaviour {
             Talk_Event_Next_Input();
         }
     }
+    // SELECT_MAKE 함수
+    public void SELECT_MAKE()
+    {
+        select_Box.SetActive(true);
+    }
+    public void Button_Select_Make_Pressed(int count)
+    {
+        select_Box.SetActive(false);
+        Select_Event(count);
+    }
+    // Select 버튼 누를시 발동하는 이벤트 
+    private void Select_Event(int count)
+    {
+        current_Event = new Current_Talk_Event();
+        switch (count)
+        {
+            case 1:
+                {
+                    current_Event.event_Name = event_List_Data[4]["EVENT_NAME"].ToString();
+                    current_Event.end_Event_Count = (int)event_List_Data[4]["EVENT_COUNT"];
+                    current_Event.current_Event_Count++;
+                    current_Event.event_Fuction = event_List_Data[4]["EVENT_1"].ToString();
+                    current_Event.input_Value = event_List_Data[4]["EVENT_IN_1"].ToString();
+                    trigger_List[4].Play_Count += 2;
+                }
+                break;
+            case 2:
+                {
+                    current_Event.event_Name = event_List_Data[5]["EVENT_NAME"].ToString();
+                    current_Event.end_Event_Count = (int)event_List_Data[5]["EVENT_COUNT"];
+                    current_Event.current_Event_Count++;
+                    current_Event.event_Fuction = event_List_Data[5]["EVENT_1"].ToString();
+                    current_Event.input_Value = event_List_Data[5]["EVENT_IN_1"].ToString();
+                    trigger_List[5].Play_Count += 2;
+                }
+                break;
+            case 3:
+                {
+                    current_Event.event_Name = event_List_Data[6]["EVENT_NAME"].ToString();
+                    current_Event.end_Event_Count = (int)event_List_Data[6]["EVENT_COUNT"];
+                    current_Event.current_Event_Count++;
+                    current_Event.event_Fuction = event_List_Data[6]["EVENT_1"].ToString();
+                    current_Event.input_Value = event_List_Data[6]["EVENT_IN_1"].ToString();
+                    trigger_List[6].Play_Count += 2;
+                }
+                break;
+        }
+        if (current_Event.event_Name == "EVENT_3") trigger_List[2].Play_Count++;
+        Event_Run_Manager();
+    }
     // end 함수 모음
+    // --------------------------------
     private void Talk_Event_Next_Input()
     {
         current_Event.current_Event_Count++;
@@ -654,7 +742,7 @@ public class Play_Talk_Event : MonoBehaviour {
             }
             if (current_Event.current_Event_Count == 5)
             {
-                current_Event.event_Fuction = "CO";
+                current_Event.event_Fuction = "CO_L";
                 current_Event.input_Value = "marienne";
             }
             if (current_Event.current_Event_Count == 6)
@@ -713,11 +801,84 @@ public class Play_Talk_Event : MonoBehaviour {
                 current_Event.event_Fuction = "DM";
                 current_Event.input_Value = "70006";
             }
+            if (current_Event.current_Event_Count == 6)
+            {
+                current_Event.event_Fuction = "CO_L";
+                current_Event.input_Value = "rena_ex";
+            }
+            if (current_Event.current_Event_Count == 7)
+            {
+                current_Event.event_Fuction = "CO_R";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 8)
+            {
+                current_Event.event_Fuction = "SELECT_MAKE";
+                current_Event.input_Value = "78001";
+            }
         } // end event_3
         if (current_Event.event_Name == "EVENT_4")
         {
-
+            if (current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "CM_LDM";
+                current_Event.input_Value = "rena_ex";
+            }
+            if (current_Event.current_Event_Count == 3)
+            {
+                current_Event.event_Fuction = "CM_RDM";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 4)
+            {
+                current_Event.event_Fuction = "DM";
+                current_Event.input_Value = "70008";
+            }
+            if (current_Event.current_Event_Count == 5)
+            {
+                current_Event.event_Fuction = "CO_L";
+                current_Event.input_Value = "rena_ex";
+            }
+            if (current_Event.current_Event_Count == 6)
+            {
+                current_Event.event_Fuction = "CO_R";
+                current_Event.input_Value = "marienne";
+            }
+            if (current_Event.current_Event_Count == 7)
+            {
+                current_Event.event_Fuction = "BO";
+                current_Event.input_Value = "grassland_img";
+            }
         } // end event_4
+        if (current_Event.event_Name == "EVENT_5")
+        {
+            if (current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "BO";
+                current_Event.input_Value = "grassland_img";
+            }
+        } // end event_5
+        if (current_Event.event_Name == "EVENT_6")
+        {
+            if (current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "BO";
+                current_Event.input_Value = "grassland_img";
+            }
+        } // end event_6
+        if (current_Event.event_Name == "EVENT_7")
+        {
+            if (current_Event.current_Event_Count == 2)
+            {
+                current_Event.event_Fuction = "DM";
+                current_Event.input_Value = "70011";
+            }
+            if (current_Event.current_Event_Count == 3)
+            {
+                current_Event.event_Fuction = "BO";
+                current_Event.input_Value = "grassland_img";
+            }
+        } // end event_7
         Event_Run_Manager();
     }
     // 각종 이벤트 실행 매니저
@@ -727,7 +888,7 @@ public class Play_Talk_Event : MonoBehaviour {
         {
             switch (current_Event.event_Fuction)
             {
-                case "BM": 
+                case "BM":
                     {
                         BG_MAKE();  // 배경화면 IN
                     }
@@ -745,9 +906,14 @@ public class Play_Talk_Event : MonoBehaviour {
                     {
                         DIALOG_MAKE(); // 대화 풍선 IN
                     }break;
-                case "CO":
+                case "CO_L":
                     {
                         Left_Character_Fade_Out(); // 왼쪽 케릭터 제자리 FADE_OUT
+                    }
+                    break;
+                case "CO_R":
+                    {
+                        Right_Character_Fade_Out(); // 오른쪽 케릭터 제자리 FADE_OUT
                     }
                     break;
                 case "CO_ML":
@@ -757,7 +923,7 @@ public class Play_Talk_Event : MonoBehaviour {
                     break;
                 case "CO_MR":
                     {
-                        Char_Out_Move_Right(); // 오른쪽 케릭터 왼쪽으로 이동하면서 FADE_OUT
+                        Char_Out_Move_Right(); // 오른쪽 케릭터 오른쪽으로 이동하면서 FADE_OUT
                     }
                     break;
                 case "CM_LM":
@@ -768,6 +934,21 @@ public class Play_Talk_Event : MonoBehaviour {
                 case "CM_RM":
                     {
                         Char_Make_RM(); // 오른쪽 케릭터 오른쪽 밖에서 왼쪽 방향 이동하면서 FADE IN
+                    }
+                    break;
+                case "CM_LDM":
+                    {
+                        Char_Make_LDM(); // 왼쪽 케릭터 왼쪽 아래에서 부터 올라와서 FADE IN
+                    }
+                    break;
+                case "CM_RDM":
+                    {
+                        Char_Make_RDM(); // 오른쪽 케릭터 오른쪽 아래에서 부터 올라와서 FADE IN
+                    }
+                    break;
+                case "SELECT_MAKE":
+                    {
+                        SELECT_MAKE(); // 선택지 생성
                     }
                     break;
                 case "BO":
