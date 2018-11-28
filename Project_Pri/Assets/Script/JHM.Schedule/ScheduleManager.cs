@@ -330,7 +330,7 @@ public class ScheduleManager : MonoBehaviour {
 
     // 스케줄을 실행하고 메인씬으로 넘어간다.
     private void RunSchedule()
-    {   
+    {
         // 대화 이벤트 실행여부
         if(day == 0)
         {
@@ -405,14 +405,14 @@ public class ScheduleManager : MonoBehaviour {
                 {
                     Market_Event_Panel_Randomaize();
                 }
-                if(day == 10)
-                {
-                    Market_Event_Panel_Randomaize();
-                } 
-                if(day == 20)
+                if (day == 10)
                 {
                     Market_Event_Panel_Randomaize();
                 }
+                if (day == 20)
+                {
+                    Market_Event_Panel_Randomaize();
+                }                
             }
             else if(decidedActivities[day].title == "학교")
             {
@@ -536,7 +536,7 @@ public class ScheduleManager : MonoBehaviour {
         }
         schedules_Mode_Parent.transform.GetChild(input).gameObject.SetActive(true);
     }
-    private void Market_Event_Panel_Randomaize()
+    public void Market_Event_Panel_Randomaize()
     {
         int random = Random.Range(0, market_Prefabs.Length);
         switch (random)

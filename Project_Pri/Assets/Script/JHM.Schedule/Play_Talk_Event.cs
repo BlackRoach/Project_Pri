@@ -381,6 +381,17 @@ public class Play_Talk_Event : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
         }
         dialog_Box.transform.GetChild(3).gameObject.SetActive(true);
+        StartCoroutine(Text_Box_Click_Arrow_Notice());
+    }
+    IEnumerator Text_Box_Click_Arrow_Notice()
+    {
+        dialog_Box.transform.GetChild(3).transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 60f);
+        dialog_Box.transform.GetChild(3).transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 60f);
+        yield return new WaitForSeconds(0.25f);
+        dialog_Box.transform.GetChild(3).transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 50f);
+        dialog_Box.transform.GetChild(3).transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 50f);
+        yield return new WaitForSeconds(0.25f);
+        StartCoroutine(Text_Box_Click_Arrow_Notice());
     }
     // 이벤트 함수 모음
     public void BG_MAKE()
@@ -406,11 +417,12 @@ public class Play_Talk_Event : MonoBehaviour {
 
         current_Event = new Current_Talk_Event(); // 대화실행 매니저 데이터 초기화
         ScheduleManager.instance.Schedule_Loop_Start_Again();
+        ScheduleManager.instance.Market_Event_Panel_Randomaize();
     }
     public void Char_Make_Left()
     {
         left_Character.SetActive(true);
-        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.transform.localPosition = new Vector3(-300f, 0f, 0f);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_In");
@@ -421,7 +433,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_Right()
     {
         right_Character.SetActive(true);
-        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.transform.localPosition = new Vector3(300f, 0f, 0f);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_In");
@@ -437,7 +449,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_LM()
     {
         left_Character.SetActive(true);
-        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.transform.localPosition = new Vector3(-300f, 0f, 0f);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Fade_In");
@@ -448,7 +460,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_RM()
     {
         right_Character.SetActive(true);
-        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.transform.localPosition = new Vector3(300f, 0f, 0f);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Fade_In");
@@ -464,7 +476,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_LDM()
     {
         left_Character.SetActive(true);
-        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.transform.localPosition = new Vector3(-300f, 0f, 0f);
         left_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         left_Character.GetComponent<Image>().SetNativeSize();
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Down_Fade_In");
@@ -475,7 +487,7 @@ public class Play_Talk_Event : MonoBehaviour {
     public void Char_Make_RDM()
     {
         right_Character.SetActive(true);
-        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.transform.localPosition = new Vector3(300f, 0f, 0f);
         right_Character.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/" + current_Event.input_Value);
         right_Character.GetComponent<Image>().SetNativeSize();
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Down_Fade_In");
@@ -495,7 +507,7 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Char_Out_Move_Left()
     {
-        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.transform.localPosition = new Vector3(-300f, 0f, 0f);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Left_Move_Fade_Out");
         left_Character.GetComponent<Animation>().Play();
 
@@ -509,7 +521,7 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Char_Out_Move_Right()
     {
-        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.transform.localPosition = new Vector3(300f, 0f, 0f);
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Right_Move_Fade_Out");
         right_Character.GetComponent<Animation>().Play();
         StartCoroutine(Right_Char_FO_RM());
@@ -576,7 +588,7 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Left_Character_Fade_Out()
     {
-        left_Character.transform.localPosition = new Vector3(-400f, 0f, 0f);
+        left_Character.transform.localPosition = new Vector3(-300f, 0f, 0f);
         left_Character.GetComponent<Animation>().clip = left_Character.GetComponent<Animation>().GetClip("Fade_out");
         left_Character.GetComponent<Animation>().Play();
         // -----------------------------
@@ -591,7 +603,7 @@ public class Play_Talk_Event : MonoBehaviour {
     }
     public void Right_Character_Fade_Out()
     {
-        right_Character.transform.localPosition = new Vector3(400f, 0f, 0f);
+        right_Character.transform.localPosition = new Vector3(300f, 0f, 0f);
         right_Character.GetComponent<Animation>().clip = right_Character.GetComponent<Animation>().GetClip("Fade_out");
         right_Character.GetComponent<Animation>().Play();
         // -----------------------------
@@ -607,7 +619,8 @@ public class Play_Talk_Event : MonoBehaviour {
     // ---------------------------
     // 대화 풍선 클릭시 다음행동 ( 다음 텍스트나 , 나가기)
     public void Button_Dialog_Text_Next_Or_Exit()
-    {        
+    {
+        StopAllCoroutines();
         if (current_Event.current_Event_Count == 3 && current_Event.event_Name == "EVENT_1")
         {
             current_Event.current_Event_Count++;
