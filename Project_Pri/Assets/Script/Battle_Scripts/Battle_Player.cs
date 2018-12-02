@@ -8,7 +8,7 @@ public class Battle_Player : Battle_Character
 
     [SerializeField] private float skill_max_guage;
     [SerializeField] private float skill_filled_speed;
-    [SerializeField] Image skillGuagebar;
+    [SerializeField] private Image skillGuagebar;
     
  
     private float skill_guage = 0;
@@ -18,7 +18,9 @@ public class Battle_Player : Battle_Character
     {
         if (battleManager == null)
             battleManager = BattleManager.Instance;
-        
+        StatusInit();
+        skillGuagebar = battleManager.PartyPanel[0].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+
     }
 
     // Update is called once per frame
@@ -26,15 +28,7 @@ public class Battle_Player : Battle_Character
     {
 
         update();
-        if (skill_guage >= max_gauge && !battleManager.isCommandOn)
-        {
-            // 커맨드 버튼 활성화
-            battleManager.CommandButtonOn();
-            battleManager.isCommandOn = true;
-
-
-        }
-        else if (skill_guage <= max_gauge && !battleManager.isCommandOn)
+        if (skill_guage <= max_gauge && !battleManager.isCommandOn)
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
             skillGuagebar.fillAmount = skill_guage * 0.01f;

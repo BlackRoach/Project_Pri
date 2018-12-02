@@ -62,7 +62,7 @@ public class GuildManager : MonoBehaviour {
         //    loadData = JsonMapper.ToObject(jsonFile.text);
         //    jsonFile = Resources.Load<TextAsset>("JsonDB/PARTY_TABLE") as TextAsset;
         //    loadPartyData = JsonMapper.ToObject(jsonFile.text);
-        //}
+        //}    //
         //else
         //{
         //    jsonFile = Resources.Load<TextAsset>("JsonDB/GUILD_TABLE") as TextAsset;

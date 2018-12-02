@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 public class Battle_Monster : Battle_Character {
@@ -19,13 +20,7 @@ public class Battle_Monster : Battle_Character {
         loadData = jsonFileWriter.SerializeData("MONSTER_TABLE");
         LoadData();
         this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("SD몬스터/" + sd_model);
-        GameObject nobj = (GameObject)GameObject.Instantiate(status);
-        nobj.gameObject.transform.parent = status.transform.parent;
-        StatusUI = nobj;
-        hpBar = nobj.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        guageBar = nobj.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>();
-        nobj.transform.localScale = new Vector3(1, 1, 1);
-        nobj.SetActive(true);
+        StatusInit();
     }
 	
 	// Update is called once per frame
@@ -40,7 +35,14 @@ public class Battle_Monster : Battle_Character {
         else
             cursur.SetActive(false);
 
-       
+        status_t.GetComponent<Text>().text =
+           "이름: " + name +
+           "\nATK: " + atk +
+           "\nDEF: " + def +
+           "\nMAG: " + mag +
+           "\nREP: " + rep +
+           "\nSP: " + sp +
+           "\nHP: " + hp;
 
     }
 
@@ -51,7 +53,21 @@ public class Battle_Monster : Battle_Character {
             if (loadData[i]["ID"].ToString() == id)
             {
                 sd_model = loadData[i]["MONSTER_MODEL"].ToString();
-
+                name = loadData[i]["MONSTER_NAME"].ToString();
+                hp = Int32.Parse(loadData[i]["MONSTER_HP"].ToString());
+                atk = Int32.Parse(loadData[i]["MONSTER_PHY_ATK"].ToString());
+                def = Int32.Parse(loadData[i]["MONSTER_DEF"].ToString());
+                mag = Int32.Parse(loadData[i]["MONSTER_MAG_ATK"].ToString());
+                rep = Int32.Parse(loadData[i]["MONSTER_MAG_DEF"].ToString());
+                sp = float.Parse(loadData[i]["MONSTER_SP"].ToString());
+                attack_num = Int32.Parse(loadData[i]["MONSTER_ATTACK_NUM"].ToString());
+                attack_val = new int[attack_num];
+                attack_id = new string[attack_num];
+                for(int j = 1; j<=attack_num;j++)
+                {
+                    attack_id[j-1] = loadData[i]["MONSTER_ATTACK"+j].ToString();
+                    attack_val[j-1] = Int32.Parse(loadData[i]["MONSTER_ATTACK"+j+"_VALUE"].ToString());
+                }
                 break;
             }
         }

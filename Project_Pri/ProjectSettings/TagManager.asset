@@ -17,6 +17,7 @@ TagManager:
   - MoveArea
   - SpawnPos
   - Sparring_Scene_Main
+  - Scan
   layers:
   - Default
   - TransparentFX

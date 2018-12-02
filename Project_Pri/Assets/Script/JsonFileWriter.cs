@@ -33,6 +33,7 @@ public class JsonFileWriter : MonoBehaviour
             return;
         }
         instance = this;
+       
     }
 
     public JsonData SerializeData(string filename)
@@ -41,12 +42,16 @@ public class JsonFileWriter : MonoBehaviour
         this.filename = filename;
         if (!File.Exists(path))
         {
+
             jsonfile = Resources.Load<TextAsset>("JsonDB/" + filename) as TextAsset;
+          
             data = JsonMapper.ToObject(jsonfile.text);
         }
         else
         {
+            
             load = File.ReadAllText(path);
+           
             data = JsonMapper.ToObject(load);
         }
         return data;

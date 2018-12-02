@@ -26,14 +26,16 @@ public class BattleManager : MonoBehaviour
         instance = this;
     }
 
+    [SerializeField] private GameObject status_all;
     [SerializeField] private GameObject resultWindow;
     [SerializeField] private GameObject victoryPopup;
     [SerializeField] private GameObject defeatPopup;
     [SerializeField] private GameObject skillButtons;
-    [SerializeField] private GameObject commandButton;
+
     [SerializeField] private GameObject megami;
     [SerializeField] private Image attackButton;
     [SerializeField] private Image backGround;
+  
     [SerializeField] private Queue<GameObject> attackQueue = new Queue<GameObject>();
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] partys;
@@ -67,7 +69,7 @@ public class BattleManager : MonoBehaviour
 
     public Transform[] enemypos;
     public Transform[] partypos;
-
+    public GameObject[] PartyPanel = new GameObject[4];
 
     // Use this for initialization
     void Start()
@@ -78,7 +80,7 @@ public class BattleManager : MonoBehaviour
         group_id = PlayerPrefs.GetString("Current_group_id");
         loadMonsterData = jsonFileWriter.SerializeData("MONSTER_GROUP_TABLE");
         loadPartyData = jsonFileWriter.SerializeData("PARTY_TABLE");
-
+        
         Getparty();
         LoadMonsterData(group_id);
         enemys = new GameObject[monster_cnt];
@@ -115,7 +117,7 @@ public class BattleManager : MonoBehaviour
                     skillButtons.SetActive(false);
                     StartCoroutine(Cooltime(attackButton));
                 }
-
+               
 
             }
 
@@ -136,6 +138,7 @@ public class BattleManager : MonoBehaviour
             }
         }
         // else if(enemys.count == 0) -> result 출력
+
     }
     IEnumerator Cooltime(Image skillFilter)
     {
@@ -187,13 +190,10 @@ public class BattleManager : MonoBehaviour
     {
         attackQueue.Enqueue(character);
     }
-    public void CommandButtonOn()
-    {
-        commandButton.SetActive(true);
-    }
+   
     public void SkillStatusOn()
     {
-        commandButton.SetActive(false);
+       
         skillButtons.SetActive(true);
     }
     public void BackToWorld()
@@ -204,6 +204,18 @@ public class BattleManager : MonoBehaviour
         ingameManager.isFight = true;
         SceneManager.LoadScene("WorldMap");
        
+    }
+    public void ScanOn()
+    {
+        status_all.SetActive(true);
+    }
+    public void ScanOff()
+    {
+        status_all.SetActive(false);
+    }
+    public GameObject GetParty(int i)
+    {
+        return partys[i];
     }
     private void LoadMonsterData(string id)
     {
@@ -256,10 +268,13 @@ public class BattleManager : MonoBehaviour
     }
     private void SpawnParty()
     {
+        partys[0] = player;
         for(int i = 0; i < partyid.Count; i++)
         {
             GameObject nobj = (GameObject)GameObject.Instantiate(party);
             nobj.GetComponent<Battle_Party>().id = partyid[i];
+            nobj.GetComponent<Battle_Party>().num = i + 1;
+            PartyPanel[i + 1].SetActive(true);
             nobj.transform.position = partypos[i+1].position;
             nobj.name = "Party" + i;
             nobj.gameObject.transform.parent = party.transform.parent;
