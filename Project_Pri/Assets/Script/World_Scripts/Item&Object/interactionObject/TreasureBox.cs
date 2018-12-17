@@ -58,7 +58,7 @@ public class TreasureBox : MonoBehaviour {
             textbox.SetActive(true);
             textbox_t.text = text[0];
             
-            ingameManager.additemManager.Add_Item_Value(Int32.Parse(item_id));
+        //    ingameManager.additemManager.Add_Item_Value(Int32.Parse(item_id));
         }
         else if (trigger == "1")
         {
