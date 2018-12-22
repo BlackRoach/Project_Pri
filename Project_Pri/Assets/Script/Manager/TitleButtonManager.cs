@@ -8,6 +8,11 @@ public class TitleButtonManager : MonoBehaviour {
 
     // 싱글톤 패턴
     private static TitleButtonManager instance = null;
+
+    public GameObject save_Location_Panel;
+    public GameObject load_Location_Panel;
+    public GameObject game_Start_Panel;
+
     public static TitleButtonManager Instance
     {
         get
@@ -35,11 +40,14 @@ public class TitleButtonManager : MonoBehaviour {
     void Start() {
         touchToStartButton.SetActive(true);
         selectableButtons.SetActive(false);
+        // ----------------------------------------
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
 
-        touchToStartImg = touchToStartButton.GetComponent<Image>();
+    touchToStartImg = touchToStartButton.GetComponent<Image>();
         StartCoroutine(TouchButtonInvisible());
     }
-
 
     void Update() {
 
@@ -79,7 +87,7 @@ public class TitleButtonManager : MonoBehaviour {
         // 끝내기 버튼
         Application.Quit();
     }
-
+    // 로드 씬
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -122,5 +130,34 @@ public class TitleButtonManager : MonoBehaviour {
         yield return null;
         if(!isTitle)
             StartCoroutine(TouchButtonInvisible());
+    }
+    // ---------------------------------------------
+    // 수정 코드 여기서부터 끝까지 ( 형만 )
+
+    public void Button_Save_Location_Panel()
+    {
+        save_Location_Panel.SetActive(true);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Load_Location_Panel()
+    {
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(true);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Select_Location_Panel_Out()
+    {
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Game_Start_Panel_On()
+    {
+        game_Start_Panel.SetActive(true);
+    }
+    public void Button_Game_Start_Panel_Off()
+    {
+        game_Start_Panel.SetActive(false);
     }
 }
