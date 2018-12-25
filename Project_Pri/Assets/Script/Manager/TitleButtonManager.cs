@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using LitJson;
+using System.IO;
 
 public class TitleButtonManager : MonoBehaviour {
 
@@ -12,6 +14,8 @@ public class TitleButtonManager : MonoBehaviour {
     public GameObject save_Location_Panel;
     public GameObject load_Location_Panel;
     public GameObject game_Start_Panel;
+
+    
 
     public static TitleButtonManager Instance
     {
@@ -87,10 +91,38 @@ public class TitleButtonManager : MonoBehaviour {
         // 끝내기 버튼
         Application.Quit();
     }
-    // 로드 씬
-    public void LoadScene(string sceneName)
+    // 로드 메인 씬
+    public void Load_MainScene()
     {
-        SceneManager.LoadScene(sceneName);
+        if (NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.selected_Save_Location - 1].id == 0)
+        {
+            switch (NewInventory_JsonData.instance.selected_Save_Location)
+            {
+                case 1:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+                case 2:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+                case 3:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+            }
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
+        }
+        // -----------------------------
+        SceneManager.LoadScene("Main");
+
     }
 
     public void SoundEffectTest(AudioClip clip)
@@ -152,9 +184,12 @@ public class TitleButtonManager : MonoBehaviour {
         load_Location_Panel.SetActive(false);
         game_Start_Panel.SetActive(false);
     }
-    public void Button_Game_Start_Panel_On()
+    public void Button_Game_Start_Panel_On(int i)
     {
         game_Start_Panel.SetActive(true);
+        // ---------------------------------------
+        NewInventory_JsonData.instance.selected_Save_Location = i;
+        game_Start_Panel.transform.GetChild(0).GetComponent<Text>().text = i.ToString() + " 번위치에 데이터를 저장합니다";
     }
     public void Button_Game_Start_Panel_Off()
     {
