@@ -94,7 +94,7 @@ public class TitleButtonManager : MonoBehaviour {
     // 로드 메인 씬
     public void Load_MainScene()
     {
-        if (NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.selected_Save_Location - 1].id == 0)
+        if (NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.selected_Save_Location - 1].ID == 0)
         {
             switch (NewInventory_JsonData.instance.selected_Save_Location)
             {

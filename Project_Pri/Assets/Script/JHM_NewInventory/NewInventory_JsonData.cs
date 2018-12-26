@@ -99,7 +99,7 @@ public class NewInventory_JsonData : MonoBehaviour {
         int p = 4;  
         for (int j = 0; j < party_Status.Length; j++)
         {
-            if (party_Status[j].save_Num == i)
+            if (party_Status[j].SAVE_NUM == i)
             {                
                 party_Status[j] = new Party_Status((int)party_Status_Data[p]["SAVE_NUM"], (int)party_Status_Data[p]["PARTY_NUM"], (int)party_Status_Data[k]["PARTY_ID"], party_Status_Data[k]["PARTY_FACE_ICON"].ToString(), party_Status_Data[k]["PARTY_NAME"].ToString(), (int)party_Status_Data[k]["DISMISSIBILITY_TYPE"]
                         , party_Status_Data[k]["PARTY_GRADE"].ToString(), (int)party_Status_Data[k]["FAME"], (int)party_Status_Data[k]["ATK"], (int)party_Status_Data[k]["DEF"]

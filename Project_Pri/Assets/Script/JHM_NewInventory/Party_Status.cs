@@ -4,36 +4,36 @@ using UnityEngine;
 
 [System.Serializable]
 public class Party_Status  {
-    public int save_Num;
-    public int party_Num;
-    public int party_Id;
-    public string party_Face_Icon;
-    public string party_Name;
-    public int dismissibility_Type;
-    public string party_Grade;
-    public int fame;
-    public int atk;
-    public int def;
-    public int mag;
-    public int rep;
-    public int sp;
-    public int sp2;
-    public int hp;
-    public int hp_Max;
-    public int weapon_Id;
-    public int armor_Id;
-    public int equip_Atk;
-    public int equip_Def;
-    public int equip_Mag;
-    public int equip_Rep;
-    public int equip_Sp;
-    public int equip_Sp2;
-    public int equip_Hp_Max;
-    public string sd_Character_Model;
-    public int party_Attack_Num;
-    public int party_Attack1;
-    public int party_Attack2;
-    public int party_Attack3;
+    private int save_Num;
+    private int party_Num;
+    private int party_Id;
+    private string party_Face_Icon;
+    private string party_Name;
+    private int dismissibility_Type;
+    private string party_Grade;
+    private int fame;
+    private int atk;
+    private int def;
+    private int mag;
+    private int rep;
+    private int sp;
+    private int sp2;
+    private int hp;
+    private int hp_Max;
+    private int weapon_Id;
+    private int armor_Id;
+    private int equip_Atk;
+    private int equip_Def;
+    private int equip_Mag;
+    private int equip_Rep;
+    private int equip_Sp;
+    private int equip_Sp2;
+    private int equip_Hp_Max;
+    private string sd_Character_Model;
+    private int party_Attack_Num;
+    private int party_Attack1;
+    private int party_Attack2;
+    private int party_Attack3;
 
     public Party_Status(int _save_Num, int _party_Num, int _party_Id,string _party_Face_Icon,string _party_Name,
         int _dismissibility_Type , string _party_Grade,int _fame,int _atk,int _def,int _mag ,int _rep,int _sp, int _sp2
@@ -82,19 +82,157 @@ public class Party_Status  {
         this.party_Grade = " ";
         this.sd_Character_Model = " ";
     }
-
-    
+    public int SAVE_NUM
+    {
+        get { return this.save_Num; }
+        set { this.save_Num = value; }
+    }
+    public int PARTY_NUM
+    {
+        get { return this.party_Num; }
+        set { this.party_Num = value; }
+    }
+    public int PARTY_ID
+    {
+        get { return this.party_Id; }
+        set { this.party_Id = value; }
+    }
+    public string PARTY_FACE_ICON
+    {
+        get { return this.party_Face_Icon; }
+        set { this.party_Face_Icon = value; }
+    }
+    public string PARTY_NAME
+    {
+        get { return this.party_Name; }
+        set { this.party_Name = value; }
+    }
+    public int DISMISSIBILITY_TYPE
+    {
+        get { return this.dismissibility_Type; }
+        set { this.dismissibility_Type = value; }
+    }
+    public string PARTY_GRADE
+    {
+        get { return this.party_Grade; }
+        set { this.party_Grade = value; }
+    }
+    public int FAME
+    {
+        get { return this.fame; }
+        set { this.fame = value; }
+    }
+    public int ATK
+    {
+        get { return this.atk; }
+        set { this.atk = value; }
+    }
+    public int DEF
+    {
+        get { return this.def; }
+        set { this.def = value; }
+    }
+    public int MAG
+    {
+        get { return this.mag; }
+        set { this.mag = value; }
+    }
+    public int REP
+    {
+        get { return this.rep; }
+        set { this.rep = value; }
+    }
+    public int SP
+    {
+        get { return this.sp; }
+        set { this.sp = value; }
+    }
+    public int SP2
+    {
+        get { return this.sp2; }
+        set { this.sp2 = value; }
+    }
+    public int HP
+    {
+        get { return this.hp; }
+        set { this.hp = value; }
+    }
+    public int HP_MAX
+    {
+        get { return this.hp_Max; }
+        set { this.hp_Max = value; }
+    }
+    public int WEAPON_ID
+    {
+        get { return this.weapon_Id; }
+        set { this.weapon_Id = value; }
+    }
+    public int ARMOR_ID
+    {
+        get { return this.armor_Id; }
+        set { this.armor_Id = value; }
+    }
+    public int EQUIP_ATK
+    {
+        get { return this.equip_Atk; }
+        set { this.equip_Atk = value; }
+    }
+    public int EQUIP_DEF
+    {
+        get { return this.equip_Def; }
+        set { this.equip_Def = value; }
+    }
+    public int EQUIP_MAG
+    {
+        get { return this.equip_Mag; }
+        set { this.equip_Mag = value; }
+    }
+    public int EQUIP_REP
+    {
+        get { return this.equip_Rep; }
+        set { this.equip_Rep = value; }
+    }
+    public int EQUIP_SP
+    {
+        get { return this.equip_Sp; }
+        set { this.equip_Sp = value; }
+    }
+    public int EQUIP_SP2
+    {
+        get { return this.equip_Sp2; }
+        set { this.equip_Sp2 = value; }
+    }
+    public int EQUIP_HP_MAX
+    {
+        get { return this.equip_Hp_Max; }
+        set { this.equip_Hp_Max = value; }
+    }
+    public string SD_CHARACTER_MODEL
+    {
+        get { return this.sd_Character_Model; }
+        set { this.sd_Character_Model = value; }
+    }
+    public int PARTY_ATTACK_NUM
+    {
+        get { return this.party_Attack_Num; }
+        set { this.party_Attack_Num = value; }
+    }
+    public int PARTY_ATTACK1
+    {
+        get { return this.party_Attack1; }
+        set { this.party_Attack1 = value; }
+    }
+    public int PARTY_ATTACK2
+    {
+        get { return this.party_Attack2; }
+        set { this.party_Attack2 = value; }
+    }
+    public int PARTY_ATTACK3
+    {
+        get { return this.party_Attack3; }
+        set { this.party_Attack3 = value; }
+    }
 } // class
-
-
-
-
-
-
-
-
-
-
 
 
 
