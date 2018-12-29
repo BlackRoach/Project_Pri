@@ -5,25 +5,25 @@ using UnityEngine;
 [System.Serializable]
 public class Save_Type_Option {
 
-    private int language;
+    private int language_Type;
 
     private int save_Type;
 
     public Save_Type_Option(int _language,int _save_Type)
     {
-        this.language = _language;
+        this.language_Type = _language;
         this.save_Type = _save_Type;
     }
 
     public Save_Type_Option()
     {
-        language = 1;
-        save_Type = 0;
+        this.language_Type = 1;
+        this.save_Type = 0;
     }
-	public int Language
+	public int LANGUAGE_TYPE
     {
-        get { return this.language;  }
-        set { this.language = value; }
+        get { return this.language_Type;  }
+        set { this.language_Type = value; }
     }
     public int SAVE_TYPE
     {

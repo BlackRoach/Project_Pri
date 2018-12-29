@@ -117,8 +117,10 @@ public class TitleButtonManager : MonoBehaviour {
                     }
                     break;
             }
+            NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE = NewInventory_JsonData.instance.selected_Save_Location;
             NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
             NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
         }
         // -----------------------------
         SceneManager.LoadScene("Main");

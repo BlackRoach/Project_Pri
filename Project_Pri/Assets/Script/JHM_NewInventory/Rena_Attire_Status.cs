@@ -121,7 +121,7 @@ public class Rena_Attire_Status
         get { return this.charm; }
         set { this.charm = value; }
     }
-    public int SCENSE
+    public int SENSE
     {
         get { return this.sense; }
         set { this.sense = value; }

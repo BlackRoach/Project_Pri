@@ -25,6 +25,7 @@ public class NewInventory_JsonData : MonoBehaviour {
     private bool is_Begin; // 처음 게임 들어올때 한번 실행
     private void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -38,11 +39,9 @@ public class NewInventory_JsonData : MonoBehaviour {
         rena_Attire_Status = new Rena_Attire_Status[3];
         mobile_Path = Application.persistentDataPath;
         Json_Data_Parsing(); // defualt data 파싱 
-        select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"], 
-            (int)save_Type_Option[0]["SAVE_TYPE"]);
-
-
         LOAD_NEW_DATA_JSON_Rena_Attire_Status();
+        LOAD_NEW_DATA_JSON_Party_Status();
+        LOAD_NEW_DATA_JSON_Save_Type_Option();
         if (is_Begin)
         {
             is_Begin = false;
@@ -58,6 +57,8 @@ public class NewInventory_JsonData : MonoBehaviour {
                 rena_Attire_Status[i] = new Rena_Attire_Status((int)rena_Attire_Status_Data[helper_2]["SAVE_NUM"]);
                 helper_2++;
             }
+            select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"],
+            (int)save_Type_Option[0]["SAVE_TYPE"]);
         }
     }
     private void Start()
@@ -114,7 +115,13 @@ public class NewInventory_JsonData : MonoBehaviour {
             p++;
         }
     }
+    // Json 저장 PARTY_STATUS_DATA
+    public void SAVE_NEW_DATA_JSON_Save_Type_Option()
+    {
+        JsonData save_Json = JsonMapper.ToJson(select_Type_Option);
 
+        File.WriteAllText(mobile_Path + "/" + "Save_Type_Option_Data.json", save_Json.ToString());
+    }
     // Json 저장 PARTY_STATUS_DATA
     public void SAVE_NEW_DATA_JSON_Party_Status()
     {
@@ -129,6 +136,20 @@ public class NewInventory_JsonData : MonoBehaviour {
 
         File.WriteAllText(mobile_Path + "/" + "Rena_Attire_Status_Data.json", save_Json.ToString());
     }
+    // Json 로드 Save_Type_Option_Data
+    public void LOAD_NEW_DATA_JSON_Save_Type_Option()
+    {
+        if (File.Exists(mobile_Path + "/" + "Save_Type_Option_Data.json"))
+        {
+            string json_String = File.ReadAllText(mobile_Path + "/" + "Save_Type_Option_Data.json");
+            JsonData load_Json = JsonMapper.ToObject(json_String);
+            select_Type_Option = new Save_Type_Option((int)load_Json["LANGUAGE_TYPE"],(int)load_Json["SAVE_TYPE"]);             
+        }
+        else
+        {
+            Debug.Log("file is not found!");
+        }
+    }
     // Json 로드 PARTY_STATUS_DATA
     public void LOAD_NEW_DATA_JSON_Party_Status()
     {
@@ -138,14 +159,14 @@ public class NewInventory_JsonData : MonoBehaviour {
             JsonData load_Json = JsonMapper.ToObject(json_String);
             for (int i = 0; i < party_Status.Length; i++)
             {
-                party_Status[i] = new Party_Status((int)load_Json[i]["save_Num"], (int)load_Json[i]["party_Num"], (int)load_Json[i]["party_Id"], load_Json[i]["party_Face_Icon"].ToString(), load_Json[i]["party_Name"].ToString(), (int)load_Json[i]["dismissibility_Type"]
-                    , load_Json[i]["party_Grade"].ToString(), (int)load_Json[i]["fame"], (int)load_Json[i]["atk"], (int)load_Json[i]["def"]
-                    , (int)load_Json[i]["mag"], (int)load_Json[i]["rep"], (int)load_Json[i]["sp"], (int)load_Json[i]["sp2"], (int)load_Json[i]["hp"]
-                    , (int)load_Json[i]["hp_Max"], (int)load_Json[i]["weapon_Id"], (int)load_Json[i]["armor_Id"], (int)load_Json[i]["equip_Atk"]
-                    , (int)load_Json[i]["equip_Def"], (int)load_Json[i]["equip_Mag"], (int)load_Json[i]["equip_Rep"], (int)load_Json[i]["equip_Sp"]
-                    , (int)load_Json[i]["equip_Sp2"], (int)load_Json[i]["equip_Hp_Max"], load_Json[i]["sd_Character_Model"].ToString()
-                    , (int)load_Json[i]["party_Attack_Num"], (int)load_Json[i]["party_Attack1"], (int)load_Json[i]["party_Attack2"]
-                    , (int)load_Json[i]["party_Attack3"]);
+                party_Status[i] = new Party_Status((int)load_Json[i]["SAVE_NUM"], (int)load_Json[i]["PARTY_NUM"], (int)load_Json[i]["PARTY_ID"], load_Json[i]["PARTY_FACE_ICON"].ToString(), load_Json[i]["PARTY_NAME"].ToString(), (int)load_Json[i]["DISMISSIBILITY_TYPE"]
+                    , load_Json[i]["PARTY_GRADE"].ToString(), (int)load_Json[i]["FAME"], (int)load_Json[i]["ATK"], (int)load_Json[i]["DEF"]
+                    , (int)load_Json[i]["MAG"], (int)load_Json[i]["REP"], (int)load_Json[i]["SP"], (int)load_Json[i]["SP2"], (int)load_Json[i]["HP"]
+                    , (int)load_Json[i]["HP_MAX"], (int)load_Json[i]["WEAPON_ID"], (int)load_Json[i]["ARMOR_ID"], (int)load_Json[i]["EQUIP_ATK"]
+                    , (int)load_Json[i]["EQUIP_DEF"], (int)load_Json[i]["EQUIP_MAG"], (int)load_Json[i]["EQUIP_REP"], (int)load_Json[i]["EQUIP_SP"]
+                    , (int)load_Json[i]["EQUIP_SP2"], (int)load_Json[i]["EQUIP_HP_MAX"], load_Json[i]["SD_CHARACTER_MODEL"].ToString()
+                    , (int)load_Json[i]["PARTY_ATTACK_NUM"], (int)load_Json[i]["PARTY_ATTACK1"], (int)load_Json[i]["PARTY_ATTACK2"]
+                    , (int)load_Json[i]["PARTY_ATTACK3"]);
             }
         }
         else
@@ -162,15 +183,15 @@ public class NewInventory_JsonData : MonoBehaviour {
             JsonData load_Json = JsonMapper.ToObject(json_String);
             for (int i = 0; i < rena_Attire_Status.Length; i++)
             {
-                rena_Attire_Status[i] = new Rena_Attire_Status((int)load_Json[i]["save_Num"], (int)load_Json[i]["id"],load_Json[i]["name"].ToString()
-                    , (int)load_Json[i]["muscular_Strength"], (int)load_Json[i]["magic_power"], (int)load_Json[i]["stamina"]
-                    , (int)load_Json[i]["intellect"], (int)load_Json[i]["charm"], (int)load_Json[i]["sense"], (int)load_Json[i]["pride"]
-                    , (int)load_Json[i]["artistic"], (int)load_Json[i]["elegance"], (int)load_Json[i]["morality"], (int)load_Json[i]["reliability"], (int)load_Json[i]["stress"]
-                    , (int)load_Json[i]["old"], (int)load_Json[i]["mood"], (int)load_Json[i]["attire_Id"], (int)load_Json[i]["equip_Muscular_Strength"]
-                    , (int)load_Json[i]["equip_Magic_Power"], (int)load_Json[i]["equip_Stamina"], (int)load_Json[i]["equip_Intellect"], (int)load_Json[i]["equip_Charm"]
-                    , (int)load_Json[i]["equip_Sense"], (int)load_Json[i]["equip_Pride"], (int)load_Json[i]["equip_Artistic"]
-                    , (int)load_Json[i]["equip_Elegance"], (int)load_Json[i]["equip_Morality"], (int)load_Json[i]["equip_Reliability"]
-                    , (int)load_Json[i]["equip_Stress"]);
+                rena_Attire_Status[i] = new Rena_Attire_Status((int)load_Json[i]["SAVE_NUM"], (int)load_Json[i]["ID"],load_Json[i]["NAME"].ToString()
+                    , (int)load_Json[i]["MUSCULAR_STRENGTH"], (int)load_Json[i]["MAGIC_POWER"], (int)load_Json[i]["STAMINA"]
+                    , (int)load_Json[i]["INTELLECT"], (int)load_Json[i]["CHARM"], (int)load_Json[i]["SENSE"], (int)load_Json[i]["PRIDE"]
+                    , (int)load_Json[i]["ARTISTIC"], (int)load_Json[i]["ELEGANCE"], (int)load_Json[i]["MORALITY"], (int)load_Json[i]["RELIABILITY"], (int)load_Json[i]["STRESS"]
+                    , (int)load_Json[i]["OLD"], (int)load_Json[i]["MOOD"], (int)load_Json[i]["ATTIRE_ID"], (int)load_Json[i]["EQUIP_MUSCULAR_STRENGTH"]
+                    , (int)load_Json[i]["EQUIP_MAGIC_POWER"], (int)load_Json[i]["EQUIP_STAMINA"], (int)load_Json[i]["EQUIP_INTELLECT"], (int)load_Json[i]["EQUIP_CHARM"]
+                    , (int)load_Json[i]["EQUIP_SENSE"], (int)load_Json[i]["EQUIP_PRIDE"], (int)load_Json[i]["EQUIP_ARTISTIC"]
+                    , (int)load_Json[i]["EQUIP_ELEGANCE"], (int)load_Json[i]["EQUIP_MORALITY"], (int)load_Json[i]["EQUIP_RELIABILITY"]
+                    , (int)load_Json[i]["EQUIP_STRESS"]);
             }
         }
         else
@@ -181,9 +202,6 @@ public class NewInventory_JsonData : MonoBehaviour {
     }
 
 } // class
-
-
-
 
 
 
