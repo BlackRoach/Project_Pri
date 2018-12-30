@@ -12,6 +12,8 @@ public class NewInventory_Manager : MonoBehaviour {
 
     public GameObject rena_Attire_Status_Panel; // 의상 패널
     public GameObject party_Status_Panel; // 모험 패널
+    public GameObject inventory_Panel; // 인벤토리 패널
+    public GameObject item_Status_Panel; // 아이템 상세설명 패널
 
     private GameObject rena_Character_Image_Panel; // 레나 케릭터 이미지 패널
     private GameObject rena_Attire_Status_Text; // 레나 의상 스테이터스 텍스트 관련 패널
@@ -34,6 +36,8 @@ public class NewInventory_Manager : MonoBehaviour {
         Json_Data_Parsing();
         is_Changed = false;  
         rena_Attire_Status_Panel.SetActive(true);
+        inventory_Panel.SetActive(true);
+        item_Status_Panel.SetActive(false);
         party_Status_Panel.SetActive(false);
         Setting_Rena_Attire_Status_Text_Input();
         Setting_Party_Status_Text_Input();
@@ -333,6 +337,28 @@ public class NewInventory_Manager : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         StartCoroutine(Rena_Character_Image_Eye_Running()); // 레나 눈깜박임
     }
+    // 인벤토리 타입 1 (의상)
+    public void Button_Pressed_Inventory_Type_1()
+    {
+        inventory_Panel.transform.GetChild(0).gameObject.SetActive(true);
+        inventory_Panel.transform.GetChild(1).gameObject.SetActive(false);
+        inventory_Panel.transform.GetChild(2).gameObject.SetActive(false);
+    }
+    // 인벤토리 타입 2 (퀘스트)
+    public void Button_Pressed_Inventory_Type_2()
+    {
+        inventory_Panel.transform.GetChild(0).gameObject.SetActive(false);
+        inventory_Panel.transform.GetChild(1).gameObject.SetActive(true);
+        inventory_Panel.transform.GetChild(2).gameObject.SetActive(false);
+    }
+    // 인벤토리 타입 3 (잡화)
+    public void Button_Pressed_Inventory_Type_3()
+    {
+        inventory_Panel.transform.GetChild(0).gameObject.SetActive(false);
+        inventory_Panel.transform.GetChild(1).gameObject.SetActive(false);
+        inventory_Panel.transform.GetChild(2).gameObject.SetActive(true);
+    }
+
     // 나가기 버튼 (메인씬)
     public void Button_Pressed_Load_To_MainScene()
     {
