@@ -30,7 +30,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject resultWindow;
     [SerializeField] private GameObject victoryPopup;
     [SerializeField] private GameObject defeatPopup;
-    [SerializeField] private GameObject skillButtons;
+
 
     [SerializeField] private GameObject megami;
     [SerializeField] private Image attackButton;
@@ -71,6 +71,10 @@ public class BattleManager : MonoBehaviour
     public Transform[] partypos;
     public GameObject[] PartyPanel = new GameObject[4];
 
+
+    private GameObject atk_chr;
+    
+    
     // Use this for initialization
     void Start()
     {
@@ -114,7 +118,7 @@ public class BattleManager : MonoBehaviour
                     player.GetComponent<Battle_Player>().Skillused();
                     isAttack = false;
                     isCommandOn = false;
-                    skillButtons.SetActive(false);
+
                     StartCoroutine(Cooltime(attackButton));
                 }
                
@@ -191,11 +195,7 @@ public class BattleManager : MonoBehaviour
         attackQueue.Enqueue(character);
     }
    
-    public void SkillStatusOn()
-    {
-       
-        skillButtons.SetActive(true);
-    }
+    
     public void BackToWorld()
     {
         ingameManager.opponent.SetActive(false);

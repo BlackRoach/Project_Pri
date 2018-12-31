@@ -65,10 +65,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Schedule 1.unity
     guid: fbdc502ee66ce284491a9a217359a12d
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guild.unity
     guid: 0debc65457c27a740912cdb1ea6e08f4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Party.unity
     guid: d25a6c9b03dda484a88145771070247c
   - enabled: 1

@@ -14,26 +14,28 @@ public class SkillManager : MonoBehaviour {
     [SerializeField] private GameObject item_panel;
     [SerializeField] private GameObject attack_panel;
     [SerializeField] private Image[] skillButton = new Image[4];
+    [SerializeField] private Image[] skillButtonCool = new Image[4];
 
     private GameObject current_char;
 
     private string[] skill_list;
     private string skill_icon;
     private string skill_target;
-    private string projectile_type;
-    private string skill_type;
-    private string effect_ability;
-    private string up_down;
-    private string casting_motion;
-    private string hit_effect;
-    private string effect_target;
-    private string projectile_model;
+    private string projectile_type; // 투사체 여부
+    private string skill_type;      //스킬 타입
+    private string effect_ability;  //영향을 주는 능력치
+    private string up_down;         //effect abil 과 ability_value 에 따른 수치만큼 가산 차감
+    private string casting_motion;  // 캐릭터 스킬캐스팅 애니메이션
+    private string hit_effect;      // 스킬 타격 애니메이션
+    private string effect_target;   // 스킬 이펙트 위치
+    private string projectile_model;// 투사체 모델 이름
 
     private int ability_value;
-    private int cool_down_time;
-    private int num_repet;
-    private int projectile_speed;
-    private int projectile_time;
+    private int cool_down_time;     // 쿨타임 시간
+    private int num_repet;          // 스킬 연속 사용? 아마 
+    private int projectile_speed;   // 투사체 속도
+    private int projectile_time;    // 투사체가 빗나갔을 경우 지속시간
+    private int current_atknum;     
 
     private float coefficient;
     private float repeat_interval;
@@ -54,11 +56,23 @@ public class SkillManager : MonoBehaviour {
     void Update () {
 		
 	}
+    IEnumerator Cooltime(Image skillFilter, float cooltime)
+    {
+        skillFilter.fillAmount = 0;
+        while (skillFilter.fillAmount < 1)
+        {
+            skillFilter.fillAmount += 1 * Time.smoothDeltaTime / cooltime;
+
+            yield return null;
+        }
+
+        yield break;
+    }
     public void OpenSkillPanel(int i)
     {
         current_char = battleManager.GetParty(i);
         Battle_Character character = current_char.GetComponent<Battle_Character>();
-   
+        current_atknum = character.attack_num;
         skill_list = new string[character.attack_num];
         string skill_id;
         for (int j = 0; j < character.attack_num; j++)
@@ -66,12 +80,21 @@ public class SkillManager : MonoBehaviour {
             skill_id = character.attack_id[j];
          
             LoadSkill(skill_id);
-            Debug.Log(skill_icon);
             skillButton[j].sprite = Resources.Load<Sprite>("skill_icon/"+skill_icon);
+            skillButtonCool[j].sprite = Resources.Load<Sprite>("skill_icon/" + skill_icon+"_2");
 
         }
         skill_panel.SetActive(true);
     }
+    public void ClickSkillButton(int i)
+    {
+        if (i >= current_atknum)
+            return;
+        string id = skill_list[i];
+        battleManager.AttackButton();
+
+    }
+
     public void CloseSkillPanel()
     {
         for(int i = 0; i< 4;i++)
