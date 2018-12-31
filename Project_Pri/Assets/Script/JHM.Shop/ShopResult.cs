@@ -25,12 +25,12 @@ public class ShopResult : MonoBehaviour {
 
     public void ShowInventory()
     {
-        Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
-        for(int i=0; i< DataTunnel.ItemInfos.Count; i++)
-        {
-            buyItems[i].text = DataTunnel.ItemInfos[i].id.ToString();
-
-            //buyItems[i].text = DataTunnel.ItemInfos[i].name;
-        }
+ //       Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
+ //       for(int i=0; i< DataTunnel.ItemInfos.Count; i++)
+ //       {
+  //         buyItems[i].text = DataTunnel.ItemInfos[i].id.ToString();
+  //
+  //         //buyItems[i].text = DataTunnel.ItemInfos[i].name;
+  //     }
     }
 }

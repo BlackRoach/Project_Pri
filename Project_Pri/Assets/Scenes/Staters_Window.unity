@@ -10062,7 +10062,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1757745501}
+      - m_Target: {fileID: 0}
         m_MethodName: Load_To_Ending_Scene
         m_Mode: 1
         m_Arguments:
@@ -11321,54 +11321,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743485044}
---- !u!1001 &1757745500
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4928309408970742, guid: 6e0db920eecfee34993901543700898c, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6e0db920eecfee34993901543700898c, type: 2}
-  m_IsPrefabParent: 0
---- !u!114 &1757745501 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114933978147732326, guid: 6e0db920eecfee34993901543700898c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1757745500}
-  m_Script: {fileID: 11500000, guid: 96314aeea0e201547a8d8e05003f4f12, type: 3}
 --- !u!1 &1775764645
 GameObject:
   m_ObjectHideFlags: 0

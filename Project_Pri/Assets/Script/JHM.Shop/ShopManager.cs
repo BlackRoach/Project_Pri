@@ -18,7 +18,7 @@ public class ShopManager : MonoBehaviour {
     public List<ShopItemSlot> ItemSlots; // 6개의 아이템 슬롯
     public List<GameObject> tabs; // 5개의 탭
 
-    public Inventory_Add_Item inventoryAddItem;
+ //   public Inventory_Add_Item inventoryAddItem;
     public Sprite activeTap; // 활성화된 탭 그림
     public Sprite inactiveTap; // 비활성화된 탭 그림
     public Image npcImage; // 상점 NPC 초상화
@@ -270,11 +270,11 @@ public class ShopManager : MonoBehaviour {
             OpenDialogueBox(KIND_OF_MESSAGEBOX.NOT_ENOUGH_MONEY);
             return;
         }
-        else if(inventoryAddItem.current_Index >= 20)
+  /*      else if(inventoryAddItem.current_Index >= 20)
         {
             OpenDialogueBox(KIND_OF_MESSAGEBOX.INVENTORY_FULL);
             return;
-        }
+        } */
         
         ChangeMessage(Random.Range(1,3)); // 1 ~ 2 랜덤
         OpenDialogueBox(KIND_OF_MESSAGEBOX.ASK_BUY);
@@ -310,8 +310,8 @@ public class ShopManager : MonoBehaviour {
             case KIND_OF_MESSAGEBOX.ASK_BUY:
                 buyItemImage.sprite = Resources.Load<Sprite>("JHM_Resources/Shop/"
                     + selectedItem.ICON);
-                buyItemInfo.text = Item_Json_DataBase.
-                    instance.Search_For_Item(selectedItem.ID).description;
+        //        buyItemInfo.text = Item_Json_DataBase.
+        //            instance.Search_For_Item(selectedItem.ID).description;
                 buyItemEffect.text = selectedItem.EFFECT;
                 buyItemPrice.text = selectedItem.PRICE.ToString();
                 AskBuyItem.SetActive(true);
@@ -339,7 +339,7 @@ public class ShopManager : MonoBehaviour {
     {
         gold -= selectedItem.PRICE;
         goldText.text = gold.ToString();
-        inventoryAddItem.Add_Item_Value(selectedItem.ID);
+   //     inventoryAddItem.Add_Item_Value(selectedItem.ID);
         CloseDialogueBox();
     }
 

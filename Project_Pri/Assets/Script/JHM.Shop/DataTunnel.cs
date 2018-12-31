@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class DataTunnel : MonoBehaviour {
 
-    private static List<Items_Info> itemInfos = new List<Items_Info>();
-
+//    private static List<Items_Info> itemInfos = new List<Items_Info>();
+ /*
     public static List<Items_Info> ItemInfos // 프로퍼티
     {
         get { return itemInfos; }
@@ -32,6 +32,6 @@ public class DataTunnel : MonoBehaviour {
 
     }
 
-
+    */
     
 }

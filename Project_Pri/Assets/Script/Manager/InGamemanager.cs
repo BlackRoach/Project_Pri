@@ -40,7 +40,6 @@ public class InGamemanager : MonoBehaviour
 
     [SerializeField] private GameObject WorldCamera;
     private QuestManager questManager;
-    public Inventory_Add_Item additemManager;
     public Text nameText;
     public Text scoreText;
 

@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using LitJson;
+using System.IO;
 
 public class TitleButtonManager : MonoBehaviour {
 
     // 싱글톤 패턴
     private static TitleButtonManager instance = null;
+
+    public GameObject save_Location_Panel;
+    public GameObject load_Location_Panel;
+    public GameObject game_Start_Panel;
+
+    
+
     public static TitleButtonManager Instance
     {
         get
@@ -35,11 +44,14 @@ public class TitleButtonManager : MonoBehaviour {
     void Start() {
         touchToStartButton.SetActive(true);
         selectableButtons.SetActive(false);
+        // ----------------------------------------
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
 
-        touchToStartImg = touchToStartButton.GetComponent<Image>();
+    touchToStartImg = touchToStartButton.GetComponent<Image>();
         StartCoroutine(TouchButtonInvisible());
     }
-
 
     void Update() {
 
@@ -79,10 +91,40 @@ public class TitleButtonManager : MonoBehaviour {
         // 끝내기 버튼
         Application.Quit();
     }
-
-    public void LoadScene(string sceneName)
+    // 로드 메인 씬
+    public void Load_MainScene()
     {
-        SceneManager.LoadScene(sceneName);
+        if (NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.selected_Save_Location - 1].ID == 0)
+        {
+            switch (NewInventory_JsonData.instance.selected_Save_Location)
+            {
+                case 1:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+                case 2:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+                case 3:
+                    {
+                        NewInventory_JsonData.instance.Default_Save_Data_Rena_Attire_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                        NewInventory_JsonData.instance.Default_Save_Data_Party_Status(NewInventory_JsonData.instance.selected_Save_Location);
+                    }
+                    break;
+            }
+            NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE = NewInventory_JsonData.instance.selected_Save_Location;
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
+        }
+        // -----------------------------
+        SceneManager.LoadScene("Main");
+
     }
 
     public void SoundEffectTest(AudioClip clip)
@@ -122,5 +164,37 @@ public class TitleButtonManager : MonoBehaviour {
         yield return null;
         if(!isTitle)
             StartCoroutine(TouchButtonInvisible());
+    }
+    // ---------------------------------------------
+    // 수정 코드 여기서부터 끝까지 ( 형만 )
+
+    public void Button_Save_Location_Panel()
+    {
+        save_Location_Panel.SetActive(true);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Load_Location_Panel()
+    {
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(true);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Select_Location_Panel_Out()
+    {
+        save_Location_Panel.SetActive(false);
+        load_Location_Panel.SetActive(false);
+        game_Start_Panel.SetActive(false);
+    }
+    public void Button_Game_Start_Panel_On(int i)
+    {
+        game_Start_Panel.SetActive(true);
+        // ---------------------------------------
+        NewInventory_JsonData.instance.selected_Save_Location = i;
+        game_Start_Panel.transform.GetChild(0).GetComponent<Text>().text = i.ToString() + " 번위치에 데이터를 저장합니다";
+    }
+    public void Button_Game_Start_Panel_Off()
+    {
+        game_Start_Panel.SetActive(false);
     }
 }

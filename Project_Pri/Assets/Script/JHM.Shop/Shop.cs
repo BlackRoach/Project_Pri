@@ -31,12 +31,12 @@ public class Shop : MonoBehaviour {
     private int price = 0;
     private int itemID = 0;
 
-    private Items_Info itemInfo;
+ //   private Items_Info itemInfo;
 
     // 인벤토리연결
     // - Hierarchy안에 Inventory_Add_Item_Json 스크립트 컴포넌트를 가진 오브젝트가 한개 꼭 있어야 한다.
     // - Hierarchy안에 Inventory_Manager 스크립트 컴포넌트를 가진 오브젝트가 한개 꼭 있어야 한다. 
-    public Inventory_Add_Item inventoryAddItem;
+ //    public Inventory_Add_Item inventoryAddItem;
     
 
     // Script Excution Order 사용함 
@@ -95,15 +95,15 @@ public class Shop : MonoBehaviour {
 
     private void AddItem(int _id, GameObject ShopScrollRect)
     {
-        Items_Info add_Item = Item_Json_DataBase.instance.Search_For_Item(_id);
+  //      Items_Info add_Item = Item_Json_DataBase.instance.Search_For_Item(_id);
         GameObject tmp = Instantiate(SlotPrefab, ShopScrollRect.transform);
         //tmp.transform.SetParent(ShopPanel.transform); // 안드로이드폰에서 슬롯이 작아지는 문제가 생김
         ShopSlot slot = tmp.GetComponent<ShopSlot>();
         //Debug.Log(add_Item.name);
-        slot.nameTxt.text = add_Item.name; // 이름 입력
-        slot.priceTxt.text = "가격 : " + add_Item.price.ToString(); // 가격 입력
-        slot.infoTxt.text = add_Item.description; // 설명 입력
-        slot.itemImage.sprite = add_Item.item_Img; // 이미지 입력
+    //    slot.nameTxt.text = add_Item.name; // 이름 입력
+    //    slot.priceTxt.text = "가격 : " + add_Item.price.ToString(); // 가격 입력
+    //    slot.infoTxt.text = add_Item.description; // 설명 입력
+    //    slot.itemImage.sprite = add_Item.item_Img; // 이미지 입력
         slot.id = _id; // ID 입력
     }
 
@@ -131,10 +131,10 @@ public class Shop : MonoBehaviour {
     
     public void BuyItem(int _id)
     {
-        itemInfo = Item_Json_DataBase.instance.Search_For_Item(_id);
-        int price = itemInfo.price;
+    //    itemInfo = Item_Json_DataBase.instance.Search_For_Item(_id); 
+  //      int price = itemInfo.price;
         //Debug.Log("DataTunnel의 아이템 개수 : " + DataTunnel.ItemInfos.Count);
-        Debug.Log("구매전 인벤토리에 들어있는 아이템 수 : " + inventoryAddItem.current_Index);
+   //     Debug.Log("구매전 인벤토리에 들어있는 아이템 수 : " + inventoryAddItem.current_Index);
         if (money < price)
         {
             Debug.Log("돈이 부족합니다.");
@@ -145,11 +145,11 @@ public class Shop : MonoBehaviour {
         //    DialoguePanelInvenFull.SetActive(true);
         //    return;
         //}
-        if(inventoryAddItem.current_Index >= 20)
+    /*    if(inventoryAddItem.current_Index >= 20)
         {
             DialoguePanelInvenFull.SetActive(true);
             return;
-        }
+        } */
         this.price = price;
         this.itemID = _id;
         DialoguePanelAskIfBuy.SetActive(true);
@@ -165,7 +165,7 @@ public class Shop : MonoBehaviour {
         DialoguePanelAskIfBuy.SetActive(false);
         //DataTunnel.AddItem(itemInfo); // 인벤토리에 넣기위해 장바구니에 아이템을 넣는다.
         price = 0;
-        inventoryAddItem.Add_Item_Value(itemID);
+  //       inventoryAddItem.Add_Item_Value(itemID);
     }
 
     public void No()
