@@ -19,9 +19,10 @@ public class NewInventory_Manager : MonoBehaviour {
     private GameObject rena_Attire_Status_Text; // 레나 의상 스테이터스 텍스트 관련 패널
     private GameObject party_Status_Text; // 파티 스테이터스 텍스트 관련 패널
     private GameObject party_Face_Icon_Member; // 파티 맴버 Face Icon parent
+    private GameObject inventory_Type_1, inventory_Type_2, inventory_Type_3; // 인벤토리 의상 , 퀘스트 , 잡화 3개 구성
 
     private bool is_Changed; // 레나 의상스테이터스 보여줄때 on / off 해주는 변수
-
+    private int Current_Page_1, Current_Page_2, Current_Page_3; // 페이지 현재 넘버
     // 디폴트 json_data
     private JsonData rena_Part_Data;
     private void Awake()
@@ -30,6 +31,9 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Attire_Status_Text = rena_Attire_Status_Panel.transform.GetChild(3).gameObject;
         party_Status_Text = party_Status_Panel.transform.GetChild(4).gameObject;
         party_Face_Icon_Member = party_Status_Panel.transform.GetChild(6).gameObject;
+        inventory_Type_1 = inventory_Panel.transform.GetChild(0).gameObject;
+        inventory_Type_2 = inventory_Panel.transform.GetChild(1).gameObject;
+        inventory_Type_3 = inventory_Panel.transform.GetChild(2).gameObject;
     }
     private void Start()
     {
@@ -43,6 +47,13 @@ public class NewInventory_Manager : MonoBehaviour {
         Setting_Party_Status_Text_Input();
         Party_Face_Icon_Member_Image_Input();
         Rena_Attire_Setting();
+        Current_Page_1 = Current_Page_2 = Current_Page_3 = 1;
+        inventory_Type_1.transform.GetChild(5).GetComponent<Text>().text = Current_Page_1.ToString() + " / 5";
+        inventory_Type_2.transform.GetChild(5).GetComponent<Text>().text = Current_Page_2.ToString() + " / 5";
+        inventory_Type_3.transform.GetChild(5).GetComponent<Text>().text = Current_Page_3.ToString() + " / 5";
+        inventory_Panel.transform.GetChild(0).gameObject.SetActive(true);
+        inventory_Panel.transform.GetChild(1).gameObject.SetActive(false);
+        inventory_Panel.transform.GetChild(2).gameObject.SetActive(false);
     }
     // defualt_Json_Data_Parsing
     private void Json_Data_Parsing()
@@ -277,14 +288,14 @@ public class NewInventory_Manager : MonoBehaviour {
             {
                 if (mood == (int)rena_Part_Data[i]["MOOD"])
                 {
-                    if (attire_Id == (int)rena_Part_Data[i]["ATTRIE_ID"])
+                    if (attire_Id == (int)rena_Part_Data[i]["ATTIRE_ID"])
                     {
                         // 바디 파츠
                         rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["BODY_PARTS"].ToString());
                         // 의상 파츠
                         rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
-                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["ATTRIE_PARTS"].ToString());
+                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["ATTIRE_PARTS"].ToString());
                         // 얼굴 파츠 1
                         rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_1"].ToString());
@@ -358,7 +369,105 @@ public class NewInventory_Manager : MonoBehaviour {
         inventory_Panel.transform.GetChild(1).gameObject.SetActive(false);
         inventory_Panel.transform.GetChild(2).gameObject.SetActive(true);
     }
-
+    // 인벤토리 페이지 1 ( 의 상 )
+    public void Button_Inventory_Type_1_LeftArrow()
+    {
+        if(Current_Page_1 > 1 && Current_Page_1 <= 5)
+        {
+            Current_Page_1--;
+            Inventory_Type_1_Setting(Current_Page_1);
+        }
+    }
+    public void Button_Inventory_Type_1_RightArrow()
+    {
+        if (Current_Page_1 >= 1  && Current_Page_1 < 5)
+        {
+            Current_Page_1++;
+            Inventory_Type_1_Setting(Current_Page_1);
+        }
+    }
+    private void Inventory_Type_1_Setting(int page_Num)
+    {
+        inventory_Type_1.transform.GetChild(5).GetComponent<Text>().text = page_Num.ToString() + " / 5";
+        for (int i = 0; i < 5; i++)
+        {
+            if(i == page_Num - 1)
+            {
+                inventory_Type_1.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                inventory_Type_1.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+    // ---------------------------------------
+    // 인벤토리 페이지 2 ( 퀘 스 트 )
+    public void Button_Inventory_Type_2_LeftArrow()
+    {
+        if (Current_Page_2 > 1 && Current_Page_2 <= 5)
+        {
+            Current_Page_2--;
+            Inventory_Type_2_Setting(Current_Page_2);
+        }
+    }
+    public void Button_Inventory_Type_2_RightArrow()
+    {
+        if (Current_Page_2 >= 1 && Current_Page_2 < 5)
+        {
+            Current_Page_2++;
+            Inventory_Type_2_Setting(Current_Page_2);
+        }
+    }
+    private void Inventory_Type_2_Setting(int page_Num)
+    {
+        inventory_Type_2.transform.GetChild(5).GetComponent<Text>().text = page_Num.ToString() + " / 5";
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == page_Num - 1)
+            {
+                inventory_Type_2.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                inventory_Type_2.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+    // ---------------------------------------
+    // 인벤토리 페이지 3 ( 잡 화 )
+    public void Button_Inventory_Type_3_LeftArrow()
+    {
+        if (Current_Page_3 > 1 && Current_Page_3 <= 5)
+        {
+            Current_Page_3--;
+            Inventory_Type_3_Setting(Current_Page_3);
+        }
+    }
+    public void Button_Inventory_Type_3_RightArrow()
+    {
+        if (Current_Page_3 >= 1 && Current_Page_3 < 5)
+        {
+            Current_Page_3++;
+            Inventory_Type_3_Setting(Current_Page_3);
+        }
+    }
+    private void Inventory_Type_3_Setting(int page_Num)
+    {
+        inventory_Type_3.transform.GetChild(5).GetComponent<Text>().text = page_Num.ToString() + " / 5";
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == page_Num - 1)
+            {
+                inventory_Type_3.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                inventory_Type_3.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+    // ---------------------------------------
     // 나가기 버튼 (메인씬)
     public void Button_Pressed_Load_To_MainScene()
     {

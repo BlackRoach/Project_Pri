@@ -24,8 +24,7 @@ public class NewInventory_JsonData : MonoBehaviour {
 
     private bool is_Begin; // 처음 게임 들어올때 한번 실행
     private void Awake()
-    {
-        
+    {       
         if (instance == null)
         {
             instance = this;
@@ -65,13 +64,14 @@ public class NewInventory_JsonData : MonoBehaviour {
     {
         selected_Save_Location = 0;
     }
+    // defualt json 리소스 파일 푸싱
     private void Json_Data_Parsing()
     {
         TextAsset json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/SAVE_TYPE_OPTION");
 
         save_Type_Option = JsonMapper.ToObject(json_File_1.text);
 
-        TextAsset json_File_2 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/RENA_ATTRIE_STATUS_DATA");
+        TextAsset json_File_2 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/RENA_ATTIRE_STATUS_DATA");
 
         rena_Attire_Status_Data = JsonMapper.ToObject(json_File_2.text);
 
@@ -86,7 +86,7 @@ public class NewInventory_JsonData : MonoBehaviour {
             , (int)rena_Attire_Status_Data[0]["STAMINA"], (int)rena_Attire_Status_Data[0]["INTEELECT"], (int)rena_Attire_Status_Data[0]["CHARM"]
             , (int)rena_Attire_Status_Data[0]["SENSE"], (int)rena_Attire_Status_Data[0]["PRIDE"], (int)rena_Attire_Status_Data[0]["ARTISTIC"]
             , (int)rena_Attire_Status_Data[0]["ELEGANCE"], (int)rena_Attire_Status_Data[0]["MORALITY"], (int)rena_Attire_Status_Data[0]["RELIABILITY"], (int)rena_Attire_Status_Data[0]["STRESS"]
-            , (int)rena_Attire_Status_Data[0]["OLD"], (int)rena_Attire_Status_Data[0]["MOOD"], (int)rena_Attire_Status_Data[0]["ATTRIE_ID"], (int)rena_Attire_Status_Data[0]["EQUIP_MUSCULAR_STRENGTH"]
+            , (int)rena_Attire_Status_Data[0]["OLD"], (int)rena_Attire_Status_Data[0]["MOOD"], (int)rena_Attire_Status_Data[0]["ATTIRE_ID"], (int)rena_Attire_Status_Data[0]["EQUIP_MUSCULAR_STRENGTH"]
             , (int)rena_Attire_Status_Data[0]["EQUIP_MAGIC_POWER"], (int)rena_Attire_Status_Data[0]["EQUIP_STAMINA"], (int)rena_Attire_Status_Data[0]["EQUIP_INTEELECT"]
             , (int)rena_Attire_Status_Data[0]["EQUIP_CHARM"], (int)rena_Attire_Status_Data[0]["EQUIP_SENSE"], (int)rena_Attire_Status_Data[0]["EQUIP_PRIDE"], (int)rena_Attire_Status_Data[0]["EQUIP_ARTISTIC"]
             , (int)rena_Attire_Status_Data[0]["EQUIP_ELEGANCE"], (int)rena_Attire_Status_Data[0]["EQUIP_MORALITY"], (int)rena_Attire_Status_Data[0]["EQUIP_RELIABILITY"]
