@@ -318,6 +318,11 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Character_Image_Panel.transform.GetChild(3).gameObject.SetActive(false);
         StartCoroutine(Rena_Character_Image_Eye_Running());
     }
+    IEnumerator Rena_Eye_Start()
+    {
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(Rena_Character_Image_Eye_Running()); // 레나 눈깜박임
+    }
     // 변경사항 있을경우 All Json Files data에 저장(덮어 씨우기)
     private void NewInventory_Json_Data_Saving_ALL()
     {
@@ -331,6 +336,8 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Attire_Status_Panel.SetActive(true);
         party_Status_Panel.SetActive(false);
         // --------------------------------------
+        StopAllCoroutines(); // 레나 눈깜박임 동작 멈춤 //  한번더 주는이유는 레나 fade in 모션이 이버튼 클릭햇을때 작동하기위해서 입니다
+        rena_Character_Image_Panel.SetActive(false);  // *****************
         rena_Character_Image_Panel.SetActive(true);
         StartCoroutine(Rena_Eye_Start());
     }
@@ -342,11 +349,6 @@ public class NewInventory_Manager : MonoBehaviour {
         // --------------------------------------
         rena_Character_Image_Panel.SetActive(false);
         StopAllCoroutines(); // 레나 눈깜박임 동작 멈춤
-    }
-    IEnumerator Rena_Eye_Start()
-    {
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(Rena_Character_Image_Eye_Running()); // 레나 눈깜박임
     }
     // 인벤토리 타입 1 (의상)
     public void Button_Pressed_Inventory_Type_1()
