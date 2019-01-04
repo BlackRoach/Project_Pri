@@ -10,16 +10,18 @@ using UnityEngine.SceneManagement;
 
 public class NewInventory_Manager : MonoBehaviour {
 
+    public static NewInventory_Manager instance = null;
+
     public GameObject rena_Attire_Status_Panel; // 의상 패널
     public GameObject party_Status_Panel; // 모험 패널
     public GameObject inventory_Panel; // 인벤토리 패널
     public GameObject item_Status_Panel; // 아이템 상세설명 패널
+    public GameObject inventory_Type_1, inventory_Type_2, inventory_Type_3; // 인벤토리 의상 , 퀘스트 , 잡화 3개 구성
 
     private GameObject rena_Character_Image_Panel; // 레나 케릭터 이미지 패널
     private GameObject rena_Attire_Status_Text; // 레나 의상 스테이터스 텍스트 관련 패널
     private GameObject party_Status_Text; // 파티 스테이터스 텍스트 관련 패널
     private GameObject party_Face_Icon_Member; // 파티 맴버 Face Icon parent
-    private GameObject inventory_Type_1, inventory_Type_2, inventory_Type_3; // 인벤토리 의상 , 퀘스트 , 잡화 3개 구성
 
     private bool is_Changed; // 레나 의상스테이터스 보여줄때 on / off 해주는 변수
     private int Current_Page_1, Current_Page_2, Current_Page_3; // 페이지 현재 넘버
@@ -27,13 +29,18 @@ public class NewInventory_Manager : MonoBehaviour {
     private JsonData rena_Part_Data;
     private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         rena_Character_Image_Panel = rena_Attire_Status_Panel.transform.GetChild(0).gameObject;
         rena_Attire_Status_Text = rena_Attire_Status_Panel.transform.GetChild(3).gameObject;
         party_Status_Text = party_Status_Panel.transform.GetChild(4).gameObject;
         party_Face_Icon_Member = party_Status_Panel.transform.GetChild(6).gameObject;
-        inventory_Type_1 = inventory_Panel.transform.GetChild(0).gameObject;
-        inventory_Type_2 = inventory_Panel.transform.GetChild(1).gameObject;
-        inventory_Type_3 = inventory_Panel.transform.GetChild(2).gameObject;
     }
     private void Start()
     {
@@ -88,6 +95,7 @@ public class NewInventory_Manager : MonoBehaviour {
                     {
                         party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
+                        party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().SetNativeSize();
                     }
                 }break;
             case 2:
@@ -96,6 +104,7 @@ public class NewInventory_Manager : MonoBehaviour {
                     {
                         party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
+                        party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().SetNativeSize();
                     }
                 }
                 break;
@@ -105,6 +114,7 @@ public class NewInventory_Manager : MonoBehaviour {
                     {
                         party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
+                        party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().SetNativeSize();
                     }
                 }
                 break;
@@ -293,16 +303,19 @@ public class NewInventory_Manager : MonoBehaviour {
                         // 바디 파츠
                         rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["BODY_PARTS"].ToString());
+                        rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
                         // 의상 파츠
                         rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["ATTIRE_PARTS"].ToString());
+                        rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().SetNativeSize();
                         // 얼굴 파츠 1
                         rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_1"].ToString());
+                        rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
                         // 얼굴 파츠 2
                         rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().sprite =
                             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_2"].ToString());
-
+                        rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().SetNativeSize();
                         StartCoroutine(Rena_Eye_Start()); // 눈깜박임
                         break;
                     }                    
@@ -470,6 +483,34 @@ public class NewInventory_Manager : MonoBehaviour {
         }
     }
     // ---------------------------------------
+    // 인벤토리 아이템 상세 설명 창
+    public void Item_Status_Info_Turn_On(string _item_Name,int _item_UseType,string _item_Icon,int _item_Price,
+        int _item_Price_Type,string _item_Description_1, string _item_Description_2)
+    {
+        item_Status_Panel.SetActive(true);
+        // 만약 _item_UseType 이 1 일경우 사용버튼 true  2일 경우 false
+        if(_item_UseType == 1)
+        {
+            item_Status_Panel.transform.GetChild(2).gameObject.SetActive(true);
+        } else if(_item_UseType == 2)
+        {
+            item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
+        }
+        // 이미지 
+        item_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + _item_Icon.ToString());
+        item_Status_Panel.transform.GetChild(1).GetComponent<Image>().SetNativeSize();
+        // ------------------------------------
+        // 설명 창 텍스트 
+        item_Status_Panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "[이름]: " + _item_Name.ToString();
+        item_Status_Panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "[설명]: " + _item_Description_1.ToString();
+        item_Status_Panel.transform.GetChild(0).transform.GetChild(2).GetComponent<Text>().text = "[효과]" + "\n" + _item_Description_2.ToString();
+        item_Status_Panel.transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = "[가격]" + "\n" + _item_Price.ToString()
+            + " 골드";
+    }
+
+
+
     // 나가기 버튼 (메인씬)
     public void Button_Pressed_Load_To_MainScene()
     {
