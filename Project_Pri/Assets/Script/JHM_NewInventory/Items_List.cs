@@ -53,6 +53,15 @@ public class Items_List  {
         this.item_Description_2 = _item_Description_2;
         this.item_Slug = _item_Slug;
     }
+    public Items_List()
+    {
+        this.id = -1;
+        this.item_Name = " ";
+        this.item_Icon = " ";
+        this.item_Description_1 = " ";
+        this.item_Description_2 = " ";
+        this.item_Slug = " ";
+    }
     public int ID
     {
         get { return this.id; }

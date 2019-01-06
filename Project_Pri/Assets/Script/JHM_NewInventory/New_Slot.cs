@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class New_Slot : MonoBehaviour {
 
-	
-
-
-
-
-
-
 
 
 

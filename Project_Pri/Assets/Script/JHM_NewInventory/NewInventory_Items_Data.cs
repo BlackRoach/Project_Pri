@@ -33,7 +33,6 @@ public class NewInventory_Items_Data : MonoBehaviour {
         mobile_Path = Application.persistentDataPath;
         Json_Data_Parsing();
         LOAD_NEW_DATA_JSON_ITEMS_LIST();
-
         if (is_Begin)  // 초기 값
         {
             is_Begin = false;

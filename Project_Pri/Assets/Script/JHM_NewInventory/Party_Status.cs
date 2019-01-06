@@ -77,6 +77,7 @@ public class Party_Status  {
     {
         this.save_Num = _save_Num;
         this.party_Num = _party_Num;
+        this.party_Id = 0;
         this.party_Face_Icon = " ";
         this.party_Name = " ";
         this.party_Grade = " ";
