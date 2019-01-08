@@ -20,6 +20,7 @@ public class NewInventory_Manager : MonoBehaviour {
     private GameObject rena_Attire_Status_Text; // 레나 의상 스테이터스 텍스트 관련 패널
     private GameObject party_Status_Text; // 파티 스테이터스 텍스트 관련 패널
     private GameObject party_Face_Icon_Member; // 파티 맴버 Face Icon parent
+    private GameObject party_character_Skills; // 파티 맴버 skills parent
 
     private bool is_Changed; // 레나 의상스테이터스 보여줄때 on / off 해주는 변수
     private int Current_Page_1, Current_Page_2, Current_Page_3; // 페이지 현재 넘버
@@ -28,6 +29,8 @@ public class NewInventory_Manager : MonoBehaviour {
     private JsonData party_List_Data;
     private Items_List selected_Item; // 인벤토리에서 선택한 아이템 
     private int[] rena_Item_Value = new int[12]; // 아이템 착용시 레나 스테이터스에 변화주기위해
+
+    private int selected_Party_Member; // 선택한 파티 맴버 케릭터
 
     private void Awake()
     {
@@ -43,10 +46,12 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Attire_Status_Text = rena_Attire_Status_Panel.transform.GetChild(3).gameObject;
         party_Status_Text = party_Status_Panel.transform.GetChild(4).gameObject;
         party_Face_Icon_Member = party_Status_Panel.transform.GetChild(6).gameObject;
+        party_character_Skills = party_Status_Panel.transform.GetChild(5).gameObject;
     }
     private void Start()
     {
-        for(int i = 0; i <rena_Item_Value.Length; i++)
+        selected_Party_Member = 1;
+        for (int i = 0; i <rena_Item_Value.Length; i++)
         {
             rena_Item_Value[i] = 0;
         }
@@ -61,13 +66,12 @@ public class NewInventory_Manager : MonoBehaviour {
         Setting_Party_Status_Text_Input();
         Party_Face_Icon_Member_Image_Input();
         Rena_Attire_Setting();
+        Party_Member_Selected_Character_Skills_Tree();
         Current_Page_1 = Current_Page_2 = Current_Page_3 = 1;
         inventory_Type_1.transform.GetChild(5).GetComponent<Text>().text = Current_Page_1.ToString() + " / 5";
         inventory_Type_2.transform.GetChild(5).GetComponent<Text>().text = Current_Page_2.ToString() + " / 5";
         inventory_Type_3.transform.GetChild(5).GetComponent<Text>().text = Current_Page_3.ToString() + " / 5";
-        inventory_Panel.transform.GetChild(0).gameObject.SetActive(true);
-        inventory_Panel.transform.GetChild(1).gameObject.SetActive(false);
-        inventory_Panel.transform.GetChild(2).gameObject.SetActive(false);
+        Button_Pressed_Inventory_Type_1();
     }
     // defualt_Json_Data_Parsing
     private void Json_Data_Parsing()
@@ -127,6 +131,96 @@ public class NewInventory_Manager : MonoBehaviour {
                     }
                 }
                 break;
+        }
+    }
+    // 파티 맴버 창에서 케릭터를 선택할 경우 모든 정보는 선택한 케릭터정보로 바뀜 (스테이터스창 , 스킬창 , 착용아이템 )
+    public void Button_Selected_Party_Member_First()
+    {
+        selected_Party_Member = 1;
+        Party_Member_Selected_Character_Skills_Tree();
+        Setting_Party_Status_Text_Input();
+    }
+    public void Button_Selected_Party_Member_Second()
+    {
+        selected_Party_Member = 2;
+        Party_Member_Selected_Character_Skills_Tree();
+        Setting_Party_Status_Text_Input();
+    }
+    public void Button_Selected_Party_Member_Thirth()
+    {
+        selected_Party_Member = 3;
+        Party_Member_Selected_Character_Skills_Tree();
+        Setting_Party_Status_Text_Input();
+    }
+    public void Button_Selected_Party_Member_Four()
+    {
+        selected_Party_Member = 4;
+        Party_Member_Selected_Character_Skills_Tree();
+        Setting_Party_Status_Text_Input();
+    }
+    // 파티 맴버의 선택한 케릭터의 소유하고있는 스킬트리 and SD 케릭터 모델
+    private void Party_Member_Selected_Character_Skills_Tree()
+    {
+        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
+        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
+        switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
+        {
+            case 1:
+                {
+                    Selected_Party_Member_Skills_Setting(selected_Party_Member - 1);
+                }
+                break;
+            case 2:
+                {
+                    Selected_Party_Member_Skills_Setting(selected_Party_Member + 3);
+                }
+                break;
+            case 3:
+                {
+                    Selected_Party_Member_Skills_Setting(selected_Party_Member + 7);
+                }
+                break;
+        }
+    } 
+    // 파티맴버 스킬 and SD 케릭터 모델 이미지 푸싱
+    private void Selected_Party_Member_Skills_Setting(int i)
+    {
+        // 스킬
+        party_character_Skills.transform.GetChild(0).GetComponent<Image>().sprite = 
+                        Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
+                        NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1);
+        party_character_Skills.transform.GetChild(1).GetComponent<Image>().sprite =
+                        Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
+                        NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK2);
+        party_character_Skills.transform.GetChild(2).GetComponent<Image>().sprite =
+                        Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
+                        NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK3);
+        // sd 케릭터 모델
+        party_Status_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
+            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].SD_CHARACTER_MODEL);
+        // Equip Items 장착아이템 무기 
+        GameObject weapon = Instantiate(NewInventory_Items_Data.instance.item_Prefab);
+        weapon.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "item_icon_" +
+                        NewInventory_JsonData.instance.party_Status[i].WEAPON_ID);
+        weapon.transform.parent = party_Status_Panel.transform.GetChild(1).transform;
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localScale = new Vector3(1f, 1f, 1f);
+        weapon.transform.GetComponent<Image>().SetNativeSize();
+        // Equip Items 장착아이템 아머
+        GameObject armor = Instantiate(NewInventory_Items_Data.instance.item_Prefab);
+        armor.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "item_icon_" +
+                        NewInventory_JsonData.instance.party_Status[i].ARMOR_ID);
+        armor.transform.parent = party_Status_Panel.transform.GetChild(2).transform;
+        armor.transform.localPosition = Vector3.zero;
+        armor.transform.localScale = new Vector3(1f, 1f, 1f);
+        armor.transform.GetComponent<Image>().SetNativeSize();
+        // 해고 버튼 true or false
+        if(NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 1)
+        {
+            party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(false);
+        } else if(NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 0)
+        {
+            party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(true);
         }
     }
     // 레나 의상 스테이터스 값 푸싱
@@ -189,17 +283,17 @@ public class NewInventory_Manager : MonoBehaviour {
         {
             case 1:
                 {
-                    Party_Status_Text(0);
+                    Party_Status_Text(selected_Party_Member - 1);
                 }
                 break;
             case 2:
                 {
-                    Party_Status_Text(4);
+                    Party_Status_Text(selected_Party_Member + 3);
                 }
                 break;
             case 3:
                 {
-                    Party_Status_Text(8);
+                    Party_Status_Text(selected_Party_Member + 7);
                 }
                 break;
         }
@@ -293,7 +387,8 @@ public class NewInventory_Manager : MonoBehaviour {
                 }
                 break;
         }
-        NewInventory_Json_Data_Saving_ALL();
+        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
+        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
     }
     // 조건에 맞는 레나의 파츠 세팅
     private void Rena_Attire_Parts_Setting()
@@ -345,13 +440,6 @@ public class NewInventory_Manager : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         StartCoroutine(Rena_Character_Image_Eye_Running()); // 레나 눈깜박임
-    }
-    // 변경사항 있을경우 All Json Files data에 저장(덮어 씨우기)
-    private void NewInventory_Json_Data_Saving_ALL()
-    {
-        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
-        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
-        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
     }
     // 레나 의상 패널  ON
     public void Button_Pressed_Rena_Attire_Status()
@@ -533,7 +621,7 @@ public class NewInventory_Manager : MonoBehaviour {
         selected_Item = select_Item;  // 아이템 사용버튼 누를시 어떤아이템인지 확인 item_value
 
     }
-    // 아이템 사용 버튼 누를시 실행되는 함수 ( 레나 의상 스테이터스 )
+    // 아이템 사용 버튼 누를시 실행되는 함수 
     public void Button_Pressed_Item_EquipType_Input()
     {
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
@@ -571,7 +659,7 @@ public class NewInventory_Manager : MonoBehaviour {
     {
         switch (selected_Item.ITEM_EQUIPTYPE)
         {
-            case 1: // 의상실 의상슬롯장착
+            case 1: // 의상실 의상슬롯장착 ( 좋은옷 )
                 {
                     if (selected_Item.ITEM_VALUETYPE_1 == 1) // 근력
                     {
@@ -589,7 +677,7 @@ public class NewInventory_Manager : MonoBehaviour {
                             rena_Item_Value[2] = selected_Item.ITEM_VALUE_2;
                         }
                     }
-                    for(int i = 0; i < NewInventory_Items_Data.instance.item_List.Count; i++)
+                    for(int i = 0; i < NewInventory_Items_Data.instance.item_List.Length; i++)
                     {
                         if (selected_Item.ID == 30005) // 좋은옷 창작시
                         {
@@ -599,7 +687,7 @@ public class NewInventory_Manager : MonoBehaviour {
                     }
                     Destory_Selected_Item_Data();
                 } break;
-            case 2:  // 의상실 소모품
+            case 2:  // 의상실 소모품 ( 시 집 )
                 {
                     if(selected_Item.ITEM_VALUETYPE_1 == 6) // 센스
                     {
@@ -648,16 +736,22 @@ public class NewInventory_Manager : MonoBehaviour {
                 break;
         }
     }
+    // 사용버튼 클릭완료시 데이터 추가 하고 인벤토리에있는아이템 삭제
     private void Destory_Selected_Item_Data()
     {
         Destroy(slot_Num.transform.GetChild(0).gameObject);
-        for (int i = 0; i < NewInventory_Items_Data.instance.item_List.Count; i++)
+
+        int index = 0;
+        for (int i = 0; i < NewInventory_Items_Data.instance.items_Data.Count; i++)
         {
-            if (selected_Item.ID == NewInventory_Items_Data.instance.item_List[i].ID)
+            if (selected_Item.ID == NewInventory_Items_Data.instance.items_Data[i].ID)
             {
-                NewInventory_Items_Data.instance.item_List.RemoveAt(i);
+                index = i;
+                break;
             }
         }
+        NewInventory_Items_Data.instance.items_Data.RemoveAt(index);
+        NewInventory_Items_Data.instance.Initailization_Item_List_Data_From_Items_Data();
     }
     // 나가기 버튼 (메인씬)
     public void Button_Pressed_Load_To_MainScene()

@@ -25,11 +25,11 @@ public class Items_List  {
     private int upDown_3;
     private string item_Description_1;
     private string item_Description_2;
-    private string item_Slug;               
+    private string item_Slug;
 
-    public Items_List(int _id,string _item_Name,int _inventory_Type,int _item_UseType,int _item_EquipType,string _item_Icon,int _item_Price,int _item_Price_Type
-        ,int _item_Sale_Possible_Type,int _item_ValueType_1,int _item_Value_1,int _upDown_1,int _item_ValueType_2,int _item_Value_2,int _upDown_2,int _item_ValueType_3
-        ,int _item_Value_3,int _upDown_3,string _item_Description_1,string _item_Description_2,string _item_Slug)
+    public Items_List(int _id, string _item_Name, int _inventory_Type, int _item_UseType, int _item_EquipType, string _item_Icon, int _item_Price, int _item_Price_Type
+        , int _item_Sale_Possible_Type, int _item_ValueType_1, int _item_Value_1, int _upDown_1, int _item_ValueType_2, int _item_Value_2, int _upDown_2, int _item_ValueType_3
+        , int _item_Value_3, int _upDown_3, string _item_Description_1, string _item_Description_2, string _item_Slug)
     {
         this.id = _id;
         this.item_Name = _item_Name;

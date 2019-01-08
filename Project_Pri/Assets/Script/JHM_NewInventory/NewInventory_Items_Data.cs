@@ -12,12 +12,11 @@ public class NewInventory_Items_Data : MonoBehaviour {
 
     public string mobile_Path; // 모바일 저장 경로
 
-    public List<Items_List> item_List;  // 현재 인벤토리 아이템 리스트
-
+    public List<New_Item_Data> items_Data; // json 파일에 저장,로드할 현재 아이템리스트
+    public Items_List[] item_List;  // 현재 인벤토리 아이템들의 데이터
     public GameObject item_Prefab; // 인벤토리에 들어갈 아이템 프리펩
     // 디폴트 json_data
     private JsonData item_List_Data;
-
     private bool is_Begin; // 게임 처음 실행 할때만 적용
     private void Awake()
     {
@@ -38,14 +37,10 @@ public class NewInventory_Items_Data : MonoBehaviour {
             is_Begin = false;
             for (int i = 0; i < item_List_Data.Count; i++)
             {
-                item_List.Add(new Items_List((int)item_List_Data[i]["ID"], item_List_Data[i]["ITEM_NAME"].ToString(), (int)item_List_Data[i]["INVENTORY_TYPE"],
-                    (int)item_List_Data[i]["ITEM_USETYPE"], (int)item_List_Data[i]["ITEM_EQUIPTYPE"], item_List_Data[i]["ITEM_ICON"].ToString(), (int)item_List_Data[i]["ITEM_PRICE"]
-                    , (int)item_List_Data[i]["ITEM_PRICE_TYPE"], (int)item_List_Data[i]["ITEM_SALE_POSSIBLE_TYPE"], (int)item_List_Data[i]["ITEM_VALUETYPE_1"]
-                    , (int)item_List_Data[i]["ITEM_VALUE_1"], (int)item_List_Data[i]["UPDOWN_1"], (int)item_List_Data[i]["ITEM_VALUETYPE_2"], (int)item_List_Data[i]["ITEM_VALUE_2"]
-                    , (int)item_List_Data[i]["UPDOWN_2"], (int)item_List_Data[i]["ITEM_VALUETYPE_3"], (int)item_List_Data[i]["ITEM_VALUE_3"], (int)item_List_Data[i]["UPDOWN_3"]
-                    , item_List_Data[i]["ITEM_DESCRIPTION_1"].ToString(), item_List_Data[i]["ITEM_DESCRIPTION_2"].ToString(), item_List_Data[i]["ITEM_SLUG"].ToString()));
+                items_Data.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
             }
             SAVE_NEW_DATA_JSON_ITEMS_LIST();
+            Initailization_Item_List_Data_From_Items_Data();
         }
     }
     private void Start()
@@ -59,10 +54,34 @@ public class NewInventory_Items_Data : MonoBehaviour {
 
         item_List_Data = JsonMapper.ToObject(json_File_1.text);
     }
+    public void Initailization_Item_List_Data_From_Items_Data()
+    {
+        item_List = new Items_List[items_Data.Count];
+        for(int i = 0; i < item_List.Length; i++)
+        {
+            item_List[i] = new Items_List();
+        }
+        for(int i = 0; i < items_Data.Count; i++)
+        {
+            for(int j = 0; j < item_List_Data.Count; j++)
+            {
+                if((int)item_List_Data[j]["ID"] == items_Data[i].ID)
+                {
+                    item_List[i] = new Items_List((int)item_List_Data[j]["ID"], item_List_Data[j]["ITEM_NAME"].ToString(), (int)item_List_Data[j]["INVENTORY_TYPE"],
+                    (int)item_List_Data[j]["ITEM_USETYPE"], (int)item_List_Data[j]["ITEM_EQUIPTYPE"], item_List_Data[j]["ITEM_ICON"].ToString(), (int)item_List_Data[j]["ITEM_PRICE"]
+                    , (int)item_List_Data[j]["ITEM_PRICE_TYPE"], (int)item_List_Data[j]["ITEM_SALE_POSSIBLE_TYPE"], (int)item_List_Data[j]["ITEM_VALUETYPE_1"]
+                    , (int)item_List_Data[j]["ITEM_VALUE_1"], (int)item_List_Data[j]["UPDOWN_1"], (int)item_List_Data[j]["ITEM_VALUETYPE_2"], (int)item_List_Data[j]["ITEM_VALUE_2"]
+                    , (int)item_List_Data[j]["UPDOWN_2"], (int)item_List_Data[j]["ITEM_VALUETYPE_3"], (int)item_List_Data[j]["ITEM_VALUE_3"], (int)item_List_Data[j]["UPDOWN_3"]
+                    , item_List_Data[j]["ITEM_DESCRIPTION_1"].ToString(), item_List_Data[j]["ITEM_DESCRIPTION_2"].ToString(), item_List_Data[j]["ITEM_SLUG"].ToString());
+                    break;
+                }
+            }
+        }
+    }
     // Json 저장 인벤토리 아이템 리스트
     public void SAVE_NEW_DATA_JSON_ITEMS_LIST()
     {
-        JsonData save_Json = JsonMapper.ToJson(item_List);
+        JsonData save_Json = JsonMapper.ToJson(items_Data);
 
         File.WriteAllText(mobile_Path + "/" + "Item_List_Data.json", save_Json.ToString());
     }
@@ -73,19 +92,12 @@ public class NewInventory_Items_Data : MonoBehaviour {
         {
             string json_String = File.ReadAllText(mobile_Path + "/" + "Item_List_Data.json");
             JsonData load_Json = JsonMapper.ToObject(json_String);
-            for(int i = 0; i < item_List.Count; i++)
-            {
-                item_List.RemoveAt(i);
-            }
+            items_Data.Clear();            
             for (int i = 0; i < load_Json.Count; i++)
             {
-                item_List.Add(new Items_List((int)load_Json[i]["ID"], load_Json[i]["ITEM_NAME"].ToString(), (int)load_Json[i]["INVENTORY_TYPE"],
-                    (int)load_Json[i]["ITEM_USETYPE"], (int)load_Json[i]["ITEM_EQUIPTYPE"], load_Json[i]["ITEM_ICON"].ToString(), (int)load_Json[i]["ITEM_PRICE"]
-                    , (int)load_Json[i]["ITEM_PRICE_TYPE"], (int)load_Json[i]["ITEM_SALE_POSSIBLE_TYPE"], (int)load_Json[i]["ITEM_VALUETYPE_1"]
-                    , (int)load_Json[i]["ITEM_VALUE_1"], (int)load_Json[i]["UPDOWN_1"], (int)load_Json[i]["ITEM_VALUETYPE_2"], (int)load_Json[i]["ITEM_VALUE_2"]
-                    , (int)load_Json[i]["UPDOWN_2"], (int)load_Json[i]["ITEM_VALUETYPE_3"], (int)load_Json[i]["ITEM_VALUE_3"], (int)load_Json[i]["UPDOWN_3"]
-                    , load_Json[i]["ITEM_DESCRIPTION_1"].ToString(), load_Json[i]["ITEM_DESCRIPTION_2"].ToString(), load_Json[i]["ITEM_SLUG"].ToString()));
+                items_Data.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
+            Initailization_Item_List_Data_From_Items_Data();
         }
         else
         {
@@ -104,7 +116,7 @@ public class NewInventory_Items_Data : MonoBehaviour {
         int index_2 = 0; // 인벤토리 (퀘스트)
         int index_3 = 0; // 인벤토리 (잡화)
         // -------------------
-        for (int i =0; i < item_List.Count; i++)
+        for (int i =0; i < item_List.Length; i++)
         {
             // 의상 인벤토리
             if(item_List[i].INVENTORY_TYPE == 1)
@@ -200,19 +212,18 @@ public class NewInventory_Items_Data : MonoBehaviour {
         }
     }
     // 아이템 transform , image 셋팅
-    IEnumerator Item_Setting_In_Inventory(GameObject _item,int _i)
+    IEnumerator Item_Setting_In_Inventory(GameObject _item, int _i)
     {
         _item.transform.localScale = Vector3.zero;
         _item.transform.GetComponent<New_Item>().this_Item = item_List[_i];
-        _item.transform.GetComponent<Image>().sprite = 
+        _item.transform.GetComponent<Image>().sprite =
             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + item_List[_i].ITEM_ICON.ToString());
         yield return new WaitForSeconds(0.05f);
         _item.transform.localRotation = Quaternion.identity;
         _item.transform.localPosition = Vector3.zero;
-        _item.transform.localScale = new Vector3(1f,1f,1f);
+        _item.transform.localScale = new Vector3(1f, 1f, 1f);
         _item.transform.GetComponent<Image>().SetNativeSize();
     }
-
 } // class
 
 
