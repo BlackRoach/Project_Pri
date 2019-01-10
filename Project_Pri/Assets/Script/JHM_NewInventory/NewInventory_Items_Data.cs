@@ -84,6 +84,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
         JsonData save_Json = JsonMapper.ToJson(items_Data);
 
         File.WriteAllText(mobile_Path + "/" + "Item_List_Data.json", save_Json.ToString());
+
+        Initailization_Item_List_Data_From_Items_Data();
     }
     // Json 로드 인벤토리 아이템 리스트
     public void LOAD_NEW_DATA_JSON_ITEMS_LIST()
@@ -210,6 +212,10 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 index_3++;
             }
         }
+    }
+    public void Destroy_All_Items_In_Inventory_Then_ReSpawn_Setting()
+    {
+
     }
     // 아이템 transform , image 셋팅
     IEnumerator Item_Setting_In_Inventory(GameObject _item, int _i)
