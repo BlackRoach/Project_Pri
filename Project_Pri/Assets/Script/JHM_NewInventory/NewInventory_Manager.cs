@@ -736,6 +736,7 @@ public class NewInventory_Manager : MonoBehaviour {
                         NewInventory_Items_Data.instance.items_Data.Add(
                             new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID,1));
                         NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST();
+                        NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
                     }
                     if (selected_Item.ITEM_VALUETYPE_1 == 1) // 근력
                     {
@@ -788,6 +789,17 @@ public class NewInventory_Manager : MonoBehaviour {
                     else if (save_Type == 3)
                     {
                         _index = 8;
+                    }
+                    if(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID != 0)
+                    {   // 착용전 무기 슬롯에 있는 아이템은 인벤토리로~~!  ( 최근 수정 코드 )
+                        if(party_Status_Panel.transform.GetChild(1).transform.childCount == 2)
+                        {
+                            Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
+                            NewInventory_Items_Data.instance.items_Data.Add(
+                            new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
+                            NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST();
+                            NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
+                        }
                     }
                     if (selected_Item.ITEM_VALUETYPE_1 == 14) // 강철검
                     {

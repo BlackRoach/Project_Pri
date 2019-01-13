@@ -213,9 +213,267 @@ public class NewInventory_Items_Data : MonoBehaviour {
             }
         }
     }
-    public void Destroy_All_Items_In_Inventory_Then_ReSpawn_Setting()
+    // 새로운 아이템 착용시 이미 착용 아이템은 다시 인벤토리로..
+    public void Previous_Item_Put_Back_To_Inventory()
     {
-
+        switch (item_List[item_List.Length - 1].INVENTORY_TYPE)
+        {
+            case 1:
+                {
+                    Previous_Item_Put_To_The_Inventory_Type_1();
+                }
+                break;
+            case 2:
+                {
+                    Previous_Item_Put_To_The_Inventory_Type_2();
+                }
+                break;
+            case 3:
+                {
+                    Previous_Item_Put_To_The_Inventory_Type_3();
+                }
+                break;
+        }
+    }
+    // 착용전 이전 아이템은 의상 인벤토리로 스폰
+    private void Previous_Item_Put_To_The_Inventory_Type_1()
+    {
+        bool is_Done = false;
+        int index = 0;
+        for (int i = 0; i < 100; i++) //  인벤토리 의상 
+        {
+            if (!is_Done)
+            {
+                if (i < 20)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(0).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 1
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_1(0, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 19)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 20 && i < 40)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 2
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_1(1, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 39)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 40 && i < 60)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 3
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_1(2, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 59)
+                    {
+                        index = 0;
+                    }
+                }else if (i >= 60 && i < 80)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 4
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_1(3, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 79)
+                    {
+                        index = 0;
+                    }
+                }else if (i >= 80 && i < 100)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 5
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_1(4,index);
+                        break;
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+    private void Spawn_Item__In_Inventory_Type_1(int page, int i)
+    {
+        GameObject item = Instantiate(item_Prefab);
+        item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(page).transform.GetChild(i).transform;
+        StartCoroutine(Item_Setting_In_Inventory(item, item_List.Length - 1));
+    }
+    // 착용전 이전 아이템은 퀘스트 인벤토리로 스폰
+    private void Previous_Item_Put_To_The_Inventory_Type_2()
+    {
+        bool is_Done = false;
+        int index = 0;
+        for (int i = 0; i < 100; i++) //  인벤토리 의상 
+        {
+            if (!is_Done)
+            {
+                if (i < 20)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(0).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 1
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_2(0, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 19)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 20 && i < 40)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 2
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_2(1, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 39)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 40 && i < 60)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 3
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_2(2, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 59)
+                    {
+                        index = 0;
+                    }
+                }else if (i >= 60 && i < 80)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 4
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_2(3, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 79)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 80 && i < 100)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 5
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_2(4,index);
+                        break;
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+    private void Spawn_Item__In_Inventory_Type_2(int page, int i)
+    {
+        GameObject item = Instantiate(item_Prefab);
+        item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(page).transform.GetChild(i).transform;
+        StartCoroutine(Item_Setting_In_Inventory(item, item_List.Length - 1));
+    }
+    // 착용전 이전 아이템은 잡화 인벤토리로 스폰
+    private void Previous_Item_Put_To_The_Inventory_Type_3()
+    {
+        bool is_Done = false;
+        int index = 0;
+        for (int i = 0; i < 100; i++) //  인벤토리 잡화
+        {
+            if (!is_Done)
+            {
+                if (i < 20)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(0).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 1
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_3(0, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 19)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 20 && i < 40)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 2
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_3(1, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 39)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 40 && i < 60)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 3
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_3(2, index);
+                        break;
+                    }
+                    index++;
+                    if (i == 59)
+                    {
+                        index = 0;
+                    }
+                }  else if (i >= 60 && i < 80)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 4
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_3(3,index);
+                        break;
+                    }
+                    index++;
+                    if (i == 79)
+                    {
+                        index = 0;
+                    }
+                } else if (i >= 80 && i < 100)
+                {
+                    if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
+                    {   // 페이지 5
+                        is_Done = true;
+                        Spawn_Item__In_Inventory_Type_3(4, index);
+                        break;
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+    private void Spawn_Item__In_Inventory_Type_3(int page,int i)
+    {
+        GameObject item = Instantiate(item_Prefab);
+        item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(page).transform.GetChild(i).transform;
+        StartCoroutine(Item_Setting_In_Inventory(item, item_List.Length - 1));
     }
     // 아이템 transform , image 셋팅
     IEnumerator Item_Setting_In_Inventory(GameObject _item, int _i)
