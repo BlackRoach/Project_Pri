@@ -5,25 +5,32 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Battle_Party : Battle_Character
 {
-   
+    private SkillManager skillmanager;
+
+
     [SerializeField] private float sp2;
     [SerializeField] private float skill_max_guage;
     [SerializeField] private float skill_filled_speed;
     [SerializeField] private Image skillGuagebar;
 
+   
 
     private float skill_guage = 0;
     // Use this for initialization
     void Start () {
         if (battleManager == null)
             battleManager = BattleManager.Instance;
+        skillmanager = SkillManager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
         loadData = jsonFileWriter.SerializeData("PARTY_TABLE");
         LoadData();
         this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("SD캐릭터/" + sd_model);
         StatusInit();
         skillGuagebar = battleManager.PartyPanel[num].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-
+        skillCoolTime = new int[attack_num];
+        skillCoolAmount = new float[attack_num];
+        for (int i = 0; i < attack_num; i++)
+            skillCoolAmount[i] = 1;
     }
 
     // Update is called once per frame
@@ -44,6 +51,11 @@ public class Battle_Party : Battle_Character
             skillGuagebar.fillAmount = skill_guage * 0.01f;
 
 
+        }
+        for (int i = 0; i < attack_num; i++)
+        {
+            if(skillCoolAmount[i]<1)
+                skillCoolAmount[i] += 1 * Time.smoothDeltaTime / skillCoolTime[i];
         }
 
     }
@@ -73,4 +85,6 @@ public class Battle_Party : Battle_Character
             }
         }
     }
+
+    
 }

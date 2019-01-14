@@ -6,6 +6,25 @@ using UnityEngine.UI;
 using LitJson;
 public class SkillManager : MonoBehaviour {
 
+    private static SkillManager instance = null;
+    public static SkillManager Instance
+    {
+        get
+        {
+            return instance;
+
+        }
+    }
+    private void Awake()
+    {
+        if (instance)
+        {
+            DestroyImmediate(gameObject.GetComponent<SkillManager>());
+            return;
+        }
+        instance = this;
+    }
+
     private JsonFileWriter jsonFileWriter;
     private BattleManager battleManager;
     private JsonData loadSkillData;
@@ -17,7 +36,7 @@ public class SkillManager : MonoBehaviour {
     [SerializeField] private Image[] skillButtonCool = new Image[4];
 
     private GameObject current_char;
-
+    private Battle_Character character;
     private string[] skill_list;
     private string skill_icon;
     private string skill_target;
@@ -35,13 +54,18 @@ public class SkillManager : MonoBehaviour {
     private int num_repet;          // 스킬 연속 사용? 아마 
     private int projectile_speed;   // 투사체 속도
     private int projectile_time;    // 투사체가 빗나갔을 경우 지속시간
-    private int current_atknum;     
+    private int current_atknum;
+
+ 
+
 
     private float coefficient;
     private float repeat_interval;
     private float casting_time;
     private float effect_time;
 
+    private bool is_click;
+    
     public Sprite normal_icon;
 
     // Use this for initialization
@@ -49,29 +73,27 @@ public class SkillManager : MonoBehaviour {
         battleManager = BattleManager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
         loadSkillData = jsonFileWriter.SerializeData("SKILL_LIST");
+        is_click = false;
 
     }
 
     // Update is called once per frame
     void Update () {
 		
-	}
-    IEnumerator Cooltime(Image skillFilter, float cooltime)
-    {
-        skillFilter.fillAmount = 0;
-        while (skillFilter.fillAmount < 1)
+        if(is_click) // 쿨타임 이미지 채우는 기능 
         {
-            skillFilter.fillAmount += 1 * Time.smoothDeltaTime / cooltime;
-
-            yield return null;
+            for(int i = 0; i<character.attack_num;i++)
+            {
+                skillButton[i].fillAmount = character.skillCoolAmount[i];
+            }
         }
-
-        yield break;
+       
     }
+   
     public void OpenSkillPanel(int i)
     {
         current_char = battleManager.GetParty(i);
-        Battle_Character character = current_char.GetComponent<Battle_Character>();
+        character= current_char.GetComponent<Battle_Character>();
         current_atknum = character.attack_num;
         skill_list = new string[character.attack_num];
         string skill_id;
@@ -79,20 +101,32 @@ public class SkillManager : MonoBehaviour {
         {
             skill_id = character.attack_id[j];
          
-            LoadSkill(skill_id);
+            LoadSkill(skill_id);                           
+            character.SetCoolTime(j, cool_down_time);       // 캐릭터 쿨타임 지정
             skillButton[j].sprite = Resources.Load<Sprite>("skill_icon/"+skill_icon);
-            skillButtonCool[j].sprite = Resources.Load<Sprite>("skill_icon/" + skill_icon+"_2");
-
+            skillButtonCool[j].sprite = Resources.Load<Sprite>("skill_icon/" + skill_icon+ "_2");
+          
+          
         }
+        is_click = true;
         skill_panel.SetActive(true);
     }
     public void ClickSkillButton(int i)
     {
-        if (i >= current_atknum)
+       
+        if (i >= current_atknum || character.skillCoolAmount[i] < 1)
             return;
         string id = skill_list[i];
-        battleManager.AttackButton();
+        character.skillCoolAmount[i] = 0;
+      
+        is_click = true;
+        //battleManager.AttackButton();
 
+       
+    }
+    public void SetSkillCoolTime(string id)
+    {
+        
     }
 
     public void CloseSkillPanel()
@@ -102,6 +136,7 @@ public class SkillManager : MonoBehaviour {
             skillButton[i].sprite = normal_icon;
         }
         skill_panel.SetActive(false);
+        is_click = false;
     }
     public void OpenItemPanel()
     {

@@ -26,8 +26,9 @@ public class Battle_Character : MonoBehaviour
     protected int mag;
     protected int rep;
     protected float sp;
-  
+
    
+
     protected string name;
     protected float progress_gauge = 0;
 
@@ -36,7 +37,8 @@ public class Battle_Character : MonoBehaviour
     public int num;
     public int attack_num;
     public int[] attack_val;
-
+    public int[] skillCoolTime;
+    public float[] skillCoolAmount;
     public string[] attack_id;
     public string id;
 
@@ -112,8 +114,11 @@ public class Battle_Character : MonoBehaviour
         effect.SetActive(true);
         hp -= 10;
     }
-   
-    
+    public void SetCoolTime(int i, int time)
+    {
+        skillCoolTime[i] = time;
+    }
+
     public IEnumerator IbackToOwnPosition()
     {
         Vector2 thisPosition = this.gameObject.transform.position;
