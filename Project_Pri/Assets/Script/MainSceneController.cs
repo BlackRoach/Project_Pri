@@ -84,7 +84,6 @@ public class MainSceneController : MonoBehaviour {
         BGMVolume.value = AM.BGM.volume;
         SFVolume.value = AM.SoundEffect.volume;
     }
-
     public void Load_To_Title_Scene()
     {
         SceneManager.LoadScene("Title 1");
