@@ -211,7 +211,6 @@ public class NewInventory_Manager : MonoBehaviour {
         {
             if (party_Status_Panel.transform.GetChild(1).childCount == 2)
             {
-                Debug.Log(1);
                 Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
             }
             GameObject weapon = Instantiate(NewInventory_Items_Data.instance.item_Prefab);
@@ -694,7 +693,7 @@ public class NewInventory_Manager : MonoBehaviour {
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
-        NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST();
+        Inventory_Item_Data_Loading();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
@@ -718,7 +717,7 @@ public class NewInventory_Manager : MonoBehaviour {
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
-        NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST();
+        Inventory_Item_Data_Saving();
         Party_Face_Icon_Member_Image_Input();
         item_Status_Panel.SetActive(false);
     }
@@ -733,9 +732,20 @@ public class NewInventory_Manager : MonoBehaviour {
                     if(NewInventory_JsonData.instance.rena_Attire_Status[save_Type -1].ATTIRE_ID != 0)
                     {
                         rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite = null;
-                        NewInventory_Items_Data.instance.items_Data.Add(
-                            new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID,1));
-                        NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST();
+                        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_1.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
+                        } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_2.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
+                        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_3.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
+                        }
+                        Inventory_Item_Data_Saving();
                         NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
                     }
                     if (selected_Item.ITEM_VALUETYPE_1 == 1) // 근력
@@ -795,9 +805,20 @@ public class NewInventory_Manager : MonoBehaviour {
                         if(party_Status_Panel.transform.GetChild(1).transform.childCount == 2)
                         {
                             Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
-                            NewInventory_Items_Data.instance.items_Data.Add(
-                            new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
-                            NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST();
+                            if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+                            {
+                                NewInventory_Items_Data.instance.items_Data_1.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
+                            } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+                            {
+                                NewInventory_Items_Data.instance.items_Data_2.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
+                            }else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+                            {
+                                NewInventory_Items_Data.instance.items_Data_3.Add(
+                                new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
+                            }
+                            Inventory_Item_Data_Saving();
                             NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
                         }
                     }
@@ -853,21 +874,75 @@ public class NewInventory_Manager : MonoBehaviour {
                 break;
         }
     }
+    // 인벤토리 아이템 Save
+    private void Inventory_Item_Data_Saving()
+    {
+        if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+        {
+            NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
+        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        {
+            NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
+        }else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        {
+            NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
+        }
+    }
+    // 인벤토리 아이템 Load
+    private void Inventory_Item_Data_Loading()
+    {
+        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+        {
+            NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
+        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        {
+            NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
+        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        {
+            NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
+        }
+    }
     // 아이템 사용버튼 클릭완료시 데이터 추가 하고 인벤토리에있는아이템 삭제
     private void Destory_Selected_Item_Data()
     {
         Destroy(slot_Num.transform.GetChild(0).gameObject);
-
-        int index = 0;
-        for (int i = 0; i < NewInventory_Items_Data.instance.items_Data.Count; i++)
+        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
         {
-            if (selected_Item.ID == NewInventory_Items_Data.instance.items_Data[i].ID)
+            int index = 0;
+            for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_1.Count; i++)
             {
-                index = i;
-                break;
+                if (selected_Item.ID == NewInventory_Items_Data.instance.items_Data_1[i].ID)
+                {
+                    index = i;
+                    break;
+                }
             }
+            NewInventory_Items_Data.instance.items_Data_1.RemoveAt(index);
+        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        {
+            int index = 0;
+            for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_2.Count; i++)
+            {
+                if (selected_Item.ID == NewInventory_Items_Data.instance.items_Data_2[i].ID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            NewInventory_Items_Data.instance.items_Data_2.RemoveAt(index);
+        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        {
+            int index = 0;
+            for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_3.Count; i++)
+            {
+                if (selected_Item.ID == NewInventory_Items_Data.instance.items_Data_3[i].ID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            NewInventory_Items_Data.instance.items_Data_3.RemoveAt(index);
         }
-        NewInventory_Items_Data.instance.items_Data.RemoveAt(index);
     }
     // 해고 버튼 누를시 선택한 케릭터 데이터 삭제
     public void Button_Selected_Character_Fire()
@@ -938,7 +1013,6 @@ public class NewInventory_Manager : MonoBehaviour {
             }
         }
     }
-    // ----------------------------------------------------------------------
     // 나가기 버튼 (메인씬)
     public void Button_Pressed_Load_To_MainScene()
     {
