@@ -32,6 +32,11 @@ public class SkillManager : MonoBehaviour {
     [SerializeField] private GameObject skill_panel;
     [SerializeField] private GameObject item_panel;
     [SerializeField] private GameObject attack_panel;
+
+    [SerializeField] private GameObject monster_ground;
+    [SerializeField] private GameObject ally_ground;
+
+
     [SerializeField] private Image[] skillButton = new Image[4];
     [SerializeField] private Image[] skillButtonCool = new Image[4];
 
@@ -99,6 +104,7 @@ public class SkillManager : MonoBehaviour {
                 {
                     Time.timeScale = 1;
                     current_clicked_chr = hit.transform.gameObject;
+                    Skill_Effect(current_clicked_chr);
                     isAttack = 0;
 
                 }
@@ -106,6 +112,7 @@ public class SkillManager : MonoBehaviour {
                 {
                     Time.timeScale = 1;
                     current_clicked_chr = hit.transform.gameObject;
+                    Skill_Effect(current_clicked_chr);
                     isAttack = 0;
                 }
 
@@ -135,7 +142,7 @@ public class SkillManager : MonoBehaviour {
         for (int j = 0; j < character.attack_num; j++)
         {
             skill_id = character.attack_id[j];
-         
+            skill_list[j] = skill_id;
             LoadSkill(skill_id);                           
             character.SetCoolTime(j, cool_down_time);       // 캐릭터 쿨타임 지정
             skillButton[j].sprite = Resources.Load<Sprite>("skill_icon/"+skill_icon);
@@ -149,45 +156,53 @@ public class SkillManager : MonoBehaviour {
     public void ClickSkillButton(int i)
     {
        
-        if (i >= current_atknum || character.skillCoolAmount[i] < 1)
+        if (i >= current_atknum || character.skillCoolAmount[i] < 1||
+            character.skill_guage<100)
             return;
 
         string id = skill_list[i];
         LoadSkill(id);
-
+     
         if (skill_target == "MONSTER_ALL")
         {
             //캐스팅
 
             //전체효과 및 이펙트 달고 끝내
-            return;
+            Skill_Effect();
+        
         }
         else if (skill_target == "MONSTER_TARGET")
         {
             Time.timeScale = 0;
             isAttack = 1;
             //캐스팅
-            Projectile_skill();
-            Skill_Type_setDMG(current_clicked_chr);
+          //  Projectile_skill();
+        
+
+           // Skill_Type_setDMG(current_clicked_chr);
+            
         }
         else if (skill_target == "ALLY_ALL")
         {
             //캐스팅
             //전체효과 및 이펙트 달고 끝내
-            return;
+            Skill_Effect();
+         
         }
         else if(skill_target == "ALLY_TARGET")
         {
             Time.timeScale = 0;
             isAttack = 2;
             //캐스팅
-            Skill_Type_setDMG(current_clicked_chr);
+
+           
+           // Skill_Type_setDMG(current_clicked_chr);
         }
 
         
 
         character.skillCoolAmount[i] = 0;
-      
+        character.skill_guage = 0;
         is_click = true;
      
 
@@ -215,7 +230,33 @@ public class SkillManager : MonoBehaviour {
         skill_panel.SetActive(true);
     }
 
+    public void Projectile_Hit(GameObject target)
+    {
+        Skill_Effect(target);
+        Skill_Type_setDMG(target);  
+    }
+    private void Skill_Effect(GameObject target = null)
+    {
+      
+        GameObject effect = Instantiate(Resources.Load("skill_effect/"+hit_effect)) as GameObject;
+      
+        if (effect_target == "THE_TARGET"&&target!=null)
+        {
+            effect.transform.parent = target.transform;
+            effect.transform.localPosition = Vector3.zero;
 
+        }
+        else if (effect_target == "MONSTER_GROUND")
+        {
+            effect.transform.parent = monster_ground.transform;
+            effect.transform.localPosition = Vector3.zero;
+        }
+        else if (effect_target == "ALLY_GROUND")
+        {
+            effect.transform.parent = ally_ground.transform;
+            effect.transform.localPosition = Vector3.zero;
+        }
+    }
     private void Skill_Type_setDMG(GameObject target)
     {
         int a;
@@ -232,7 +273,7 @@ public class SkillManager : MonoBehaviour {
 
             float dmg_skill;
 
-            ms1 = (current_char.GetComponent<Battle_Character>().mag + (a * b) * c -
+            ms1 = (character.mag + (a * b) * c -
                 target.GetComponent<Battle_Character>().rep);
             ms2 = 1;
             ms = ms1 > ms2 ? ms1 : ms2;
@@ -240,7 +281,7 @@ public class SkillManager : MonoBehaviour {
 
 
 
-            _as1 = (current_char.GetComponent<Battle_Character>().atk + (a * b) * c -
+            _as1 = (character.atk + (a * b) * c -
                 target.GetComponent<Battle_Character>().def);
             _as2 = 1;
             _as = _as1 > _as2 ? _as1 : _as2;
@@ -282,6 +323,7 @@ public class SkillManager : MonoBehaviour {
         if (projectile_type == 0)
             return;
 
+        GameObject pro_obj = Instantiate(Resources.Load("/skill_effect/" + projectile_model)) as GameObject;
         Skill_Type_setDMG(current_clicked_chr);
     }
 

@@ -27,7 +27,8 @@ public class Battle_Character : MonoBehaviour
     public float rep;
     public float sp;
 
-   
+
+    protected bool isAlive = true;
 
     protected string name;
     protected float progress_gauge = 0;
@@ -43,7 +44,9 @@ public class Battle_Character : MonoBehaviour
     public string id;
 
     public bool isInQ = false;
+    public bool isAlive_readonly { get { return isAlive; } }
 
+    public float skill_guage;
     private Vector2 own_position;
 
  
@@ -62,6 +65,7 @@ public class Battle_Character : MonoBehaviour
         hpBar = StatusUI.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         guageBar = StatusUI.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>();
         StatusUI.transform.localScale = new Vector3(1, 1, 1);
+        StatusUI.transform.localPosition = Vector3.zero;
         StatusUI.SetActive(true);
 
         GameObject nStatus_t = (GameObject)GameObject.Instantiate(status_T);
@@ -72,8 +76,8 @@ public class Battle_Character : MonoBehaviour
     }
     protected void update()
     {
-        StatusUI.transform.position = new Vector2(this.transform.position.x + 0.3f,
-                                             this.transform.position.y - 1.7f);
+        StatusUI.transform.position = new Vector2(this.transform.position.x+.1f,
+                                             this.transform.position.y-1.4f);
         status_t.transform.position = new Vector2(this.transform.position.x + 2f,
                                              this.transform.position.y);
         hpBar.fillAmount = hp * 0.01f;
@@ -87,14 +91,15 @@ public class Battle_Character : MonoBehaviour
             progress_gauge += Time.deltaTime * filled_speed;
             guageBar.fillAmount = progress_gauge * 0.01f;
         }
-        if (hp < 0)
-        {
-            this.gameObject.SetActive(false);
-            StatusUI.SetActive(false);
-        }
-      
+        //if (hp < 0)
+        //{
+        //    isAlive = false;
+        //    this.gameObject.SetActive(false);
+        //    StatusUI.SetActive(false);
+        //}
 
-}
+
+    }
     public void MoveToEnemy(GameObject enemy)
     {
         StartCoroutine(ImoveToEnemy(enemy));
@@ -132,6 +137,7 @@ public class Battle_Character : MonoBehaviour
             this.gameObject.transform.localPosition = pos;
             yield return 0;
         }
+      
         isInQ = false;
         battleManager.isFightWhile = false;
         progress_gauge = 0;

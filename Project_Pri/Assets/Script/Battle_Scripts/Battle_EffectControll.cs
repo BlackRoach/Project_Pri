@@ -9,4 +9,8 @@ public class Battle_EffectControll : MonoBehaviour {
     {
         this.gameObject.SetActive(false);
     }
+    public void DestroyEffect()
+    {
+        Destroy(this.gameObject);
+    }
 }

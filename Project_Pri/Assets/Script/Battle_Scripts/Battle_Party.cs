@@ -15,7 +15,6 @@ public class Battle_Party : Battle_Character
 
    
 
-    private float skill_guage = 0;
     // Use this for initialization
     void Start () {
         if (battleManager == null)
@@ -49,9 +48,10 @@ public class Battle_Party : Battle_Character
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
             skillGuagebar.fillAmount = skill_guage * 0.01f;
-
+     
 
         }
+    
         for (int i = 0; i < attack_num; i++)
         {
             if(skillCoolAmount[i]<1)

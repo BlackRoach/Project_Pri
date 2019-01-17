@@ -11,7 +11,7 @@ public class Battle_Player : Battle_Character
     [SerializeField] private Image skillGuagebar;
     
  
-    private float skill_guage = 0;
+  
 
     // Use this for initialization
     void Start()

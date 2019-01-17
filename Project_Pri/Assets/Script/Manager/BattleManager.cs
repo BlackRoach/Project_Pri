@@ -80,9 +80,7 @@ public class BattleManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //삭제해라 나중에 이거
-        PlayerPrefs.SetString("Current_group_id", "40005");
-
+   
         resultWindow.SetActive(false);
         ingameManager = InGamemanager.Instance;
         skillmanager = SkillManager.Instance;
@@ -110,17 +108,18 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        
        
         // 큐에 의한 신호등
         if (attackQueue.Count != 0 && !isFightWhile && !isResult)
         {
-            
+          
             isFightWhile = true;
             presentlyAttackChar = attackQueue.Dequeue();
+            Debug.Log(presentlyAttackChar);
             if (presentlyAttackChar.tag == "Monster")
                 presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(partys[UnityEngine.Random.Range(0,partyid.Count+1)]);
-            else if (presentlyAttackChar.tag == "Player")
+            else if (presentlyAttackChar.tag == "Ally")
             {
 
                 presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(enemys[UnityEngine.Random.Range(0,monster_cnt)]);
