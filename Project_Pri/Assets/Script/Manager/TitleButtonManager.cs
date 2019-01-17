@@ -138,6 +138,7 @@ public class TitleButtonManager : MonoBehaviour {
         }
         else
         {
+            NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
             NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
             SceneManager.LoadScene("Main");
         }
