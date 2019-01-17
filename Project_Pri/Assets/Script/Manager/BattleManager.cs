@@ -43,6 +43,7 @@ public class BattleManager : MonoBehaviour
 
     private GameObject presentlyAttackChar;
     private InGamemanager ingameManager;
+    private SkillManager skillmanager;
     private JsonFileWriter jsonFileWriter;
     private JsonData loadMonsterData;
     private JsonData loadPartyData;
@@ -56,13 +57,14 @@ public class BattleManager : MonoBehaviour
     private float fillamount;
     private float currentCoolTime;
     private float cooltime = 10f;
-    private bool isAttack = false;
+
     private bool isResult = false;
     private List<string> partyid = new List<string>();
 
     public bool isFightWhile = false;
     public bool isCommandOn = false;
-    public bool isAttack_readonly { get { return isAttack; } }
+  
+
 
     public GameObject enemy;
     public GameObject party;
@@ -78,8 +80,12 @@ public class BattleManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //삭제해라 나중에 이거
+        PlayerPrefs.SetString("Current_group_id", "40005");
+
         resultWindow.SetActive(false);
         ingameManager = InGamemanager.Instance;
+        skillmanager = SkillManager.Instance;
         jsonFileWriter = JsonFileWriter.Instance;
         group_id = PlayerPrefs.GetString("Current_group_id");
         loadMonsterData = jsonFileWriter.SerializeData("MONSTER_GROUP_TABLE");
@@ -97,36 +103,15 @@ public class BattleManager : MonoBehaviour
         
     }
     
+
+
+
+
     // Update is called once per frame
     void Update()
     {
        
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 100f);
-            Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousepos.z = 0;
-
-            if (hit)
-            {
-                if (hit.transform.CompareTag("Monster") && isAttack)
-                {
-                    Time.timeScale = 1;
-                    hit.transform.gameObject.GetComponent<Battle_Monster>().Attacked();
-                    player.GetComponent<Battle_Player>().Skillused();
-                    isAttack = false;
-                    isCommandOn = false;
-
-                    StartCoroutine(Cooltime(attackButton));
-                }
-               
-
-            }
-
-
-        }
+       
         // 큐에 의한 신호등
         if (attackQueue.Count != 0 && !isFightWhile && !isResult)
         {
@@ -144,6 +129,10 @@ public class BattleManager : MonoBehaviour
         // else if(enemys.count == 0) -> result 출력
 
     }
+
+
+
+
     IEnumerator Cooltime(Image skillFilter)
     {
         skillFilter.fillAmount = 0;
@@ -156,6 +145,10 @@ public class BattleManager : MonoBehaviour
 
         yield break;
     }
+
+
+
+
     IEnumerator MegamiMove(bool isWin)
     {
 
@@ -176,6 +169,10 @@ public class BattleManager : MonoBehaviour
             defeatPopup.SetActive(true);
         yield return null;
     }
+
+
+
+
     public void GetResult(bool isWin)
     {
         isResult = true;
@@ -183,12 +180,15 @@ public class BattleManager : MonoBehaviour
         resultWindow.GetComponent<FadeScript>()._FadeOut();
         StartCoroutine(MegamiMove(isWin));
     }
-    public void AttackButton()
-    {
-        Time.timeScale = 0;
-        if (attackButton.fillAmount >= 1)
-            isAttack = true;
-    }
+
+
+
+
+   
+
+
+
+
     // 배틀 매니저에 있는 큐 자료구조에 공격할 캐릭터를 집어넣는다.
     public void AddToArray(GameObject character)
     {
@@ -196,6 +196,8 @@ public class BattleManager : MonoBehaviour
     }
    
     
+
+
     public void BackToWorld()
     {
         ingameManager.opponent.SetActive(false);
@@ -205,18 +207,34 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("WorldMap");
        
     }
+
+
+
+
     public void ScanOn()
     {
         status_all.SetActive(true);
     }
+
+
+
+
     public void ScanOff()
     {
         status_all.SetActive(false);
     }
+
+
+
+
     public GameObject GetParty(int i)
     {
         return partys[i];
     }
+
+
+
+
     private void LoadMonsterData(string id)
     {
         for (int i = 0; i < loadMonsterData.Count; i++)
@@ -237,6 +255,11 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+
+
+
+
     private void Getparty()
     {
 
@@ -253,6 +276,11 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+
+
+
+
     private void SpawnMonster()
     {
         for (int i = 0; i < monster_cnt; i++)
@@ -266,6 +294,12 @@ public class BattleManager : MonoBehaviour
             nobj.SetActive(true);
         }
     }
+
+
+
+
+
+
     private void SpawnParty()
     {
         partys[0] = player;

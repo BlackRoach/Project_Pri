@@ -27,13 +27,7 @@ public class Battle_Monster : Battle_Character {
 	void Update () {
 
         update();
-        if (BattleManager.Instance.isAttack_readonly)
-        {
-            cursur.SetActive(true);
-         
-        }
-        else
-            cursur.SetActive(false);
+      
 
         status_t.GetComponent<Text>().text =
            "이름: " + name +

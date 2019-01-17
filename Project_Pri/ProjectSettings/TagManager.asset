@@ -18,6 +18,8 @@ TagManager:
   - SpawnPos
   - Sparring_Scene_Main
   - Scan
+  - FireBall
+  - Ally
   layers:
   - Default
   - TransparentFX

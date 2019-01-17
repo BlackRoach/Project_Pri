@@ -28,7 +28,7 @@ public class Battle_Player : Battle_Character
     {
 
         update();
-        if (skill_guage <= max_gauge && !battleManager.isCommandOn)
+        if (skill_guage <= max_gauge)
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
             skillGuagebar.fillAmount = skill_guage * 0.01f;

@@ -20,12 +20,12 @@ public class Battle_Character : MonoBehaviour
     protected BattleManager battleManager;
     protected JsonFileWriter jsonFileWriter;
     protected JsonData loadData;
-    protected int hp = 100;
-    protected int atk;
-    protected int def;
-    protected int mag;
-    protected int rep;
-    protected float sp;
+    public float hp = 100;
+    public float atk;
+    public float def;
+    public float mag;
+    public float rep;
+    public float sp;
 
    
 
