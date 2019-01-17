@@ -5,41 +5,35 @@ using UnityEngine.UI;
 using LitJson;
 using System.IO;
 using UnityEngine.SceneManagement;
-
 public class NewInventory_Manager : MonoBehaviour {
     public static NewInventory_Manager instance = null;
-
     public GameObject rena_Attire_Status_Panel; // 의상 패널
     public GameObject party_Status_Panel; // 모험 패널
     public GameObject inventory_Panel; // 인벤토리 패널
     public GameObject item_Status_Panel; // 아이템 상세설명 패널
     public GameObject inventory_Type_1, inventory_Type_2, inventory_Type_3; // 인벤토리 의상 , 퀘스트 , 잡화 3개 구성
     public GameObject slot_Num; // 인벤토리안에 소모품이나 아이템을 다쓴경우 삭제하기 위해 만든 변수
-
     private GameObject rena_Character_Image_Panel; // 레나 케릭터 이미지 패널
     private GameObject rena_Attire_Status_Text; // 레나 의상 스테이터스 텍스트 관련 패널
     private GameObject party_Status_Text; // 파티 스테이터스 텍스트 관련 패널
     private GameObject party_Face_Icon_Member; // 파티 맴버 Face Icon parent
     private GameObject party_character_Skills; // 파티 맴버 skills parent
     private GameObject text_Skills_Panel; // 각 케릭터의 스킬 Description
-
     private int Current_Page_1, Current_Page_2, Current_Page_3; // 페이지 현재 넘버
     // 디폴트 json_data
     private JsonData rena_Part_Data;
     private JsonData party_List_Data;
     private JsonData skills_Data;
     private Items_List selected_Item; // 인벤토리에서 선택한 아이템 
-    private int[] rena_Item_Value = new int[12]; // 아이템 착용시 레나 스테이터스에 변화주기위해
-
+    private int[] rena_Item_Value = new int[12]; // 아이템 착용시 레나 스테이터스 장착 value
+    private int[] party_Member_Item_Value = new int[7]; // 아이템 착용시 파티 스테이터스 장착 value
     private int selected_Party_Member; // 선택한 파티 맴버 케릭터
-
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-        }
-        else
+        }else
         {
             Destroy(this.gameObject);
         }
@@ -56,6 +50,10 @@ public class NewInventory_Manager : MonoBehaviour {
         for (int i = 0; i <rena_Item_Value.Length; i++)
         {
             rena_Item_Value[i] = 0;
+        }
+        for (int i = 0; i < party_Member_Item_Value.Length; i++)
+        {
+            party_Member_Item_Value[i] = 0;
         }
         selected_Item = new Items_List();
         Json_Data_Parsing();
@@ -81,10 +79,8 @@ public class NewInventory_Manager : MonoBehaviour {
     {
         TextAsset json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/RENA_PARTS");
         rena_Part_Data = JsonMapper.ToObject(json_File_1.text);
-
         TextAsset json_File_2 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/PARTY_LIST");
         party_List_Data = JsonMapper.ToObject(json_File_2.text);
-
         TextAsset json_File_3 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/SKILL_LIST");
         skills_Data = JsonMapper.ToObject(json_File_3.text);
     }
@@ -94,8 +90,7 @@ public class NewInventory_Manager : MonoBehaviour {
         if (!rena_Attire_Status_Text.activeInHierarchy)
         {
             rena_Attire_Status_Text.SetActive(true);
-        }
-        else
+        } else
         {
             rena_Attire_Status_Text.SetActive(false);
         }
@@ -124,8 +119,7 @@ public class NewInventory_Manager : MonoBehaviour {
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
                         party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().SetNativeSize();
                     }
-                }
-                break;
+                } break;
             case 3:
                 {
                     for (int i = 8; i < 12; i++)
@@ -134,8 +128,7 @@ public class NewInventory_Manager : MonoBehaviour {
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
                         party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().SetNativeSize();
                     }
-                }
-                break;
+                } break;
         }
     }
     // 파티 맴버 창에서 케릭터를 선택할 경우 모든 정보는 선택한 케릭터정보로 바뀜 (스테이터스창 , 스킬창 , 착용아이템 )
@@ -173,18 +166,15 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member - 1);
-                }
-                break;
+                } break;
             case 2:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member + 3);
-                }
-                break;
+                } break;
             case 3:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member + 7);
-                }
-                break;
+                } break;
         }
     } 
     // 파티맴버 스킬 and SD 케릭터 모델 이미지 푸싱
@@ -220,8 +210,7 @@ public class NewInventory_Manager : MonoBehaviour {
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localScale = new Vector3(1f, 1f, 1f);
             weapon.transform.GetComponent<Image>().SetNativeSize();
-        }
-        else
+        } else
         {
             if(party_Status_Panel.transform.GetChild(1).childCount == 2)
             {
@@ -242,8 +231,7 @@ public class NewInventory_Manager : MonoBehaviour {
             armor.transform.localPosition = Vector3.zero;
             armor.transform.localScale = new Vector3(1f, 1f, 1f);
             armor.transform.GetComponent<Image>().SetNativeSize();
-        }
-        else
+        } else
         {
             if (party_Status_Panel.transform.GetChild(2).childCount == 2)
             {
@@ -269,18 +257,15 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                }
-                break;
+                } break;
             case 2:
                 {
                     Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                }
-                break;
+                } break;
             case 3:
                 {
                     Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                }
-                break;
+                } break;
         }
     }
     private void Rena_Setting_Clothe(int index)
@@ -299,22 +284,32 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
             case 2:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
             case 3:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
         }
     }
     private void Rena_Attire_Status_Text(int i)
     {
+        rena_Item_Value[0] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_MUSCULAR_STRENGTH;
+        rena_Item_Value[1] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_MAGIC_POWER;
+        rena_Item_Value[2] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_STAMINA;
+        rena_Item_Value[3] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_INTELLECT;
+        rena_Item_Value[4] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_CHARM;
+        rena_Item_Value[5] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_SENSE;
+        rena_Item_Value[6] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_PRIDE;
+        rena_Item_Value[7] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_ARTISTIC;
+        rena_Item_Value[8] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_ELEGANCE;
+        rena_Item_Value[9] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_MORALITY;
+        rena_Item_Value[10] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_RELIABILITY;
+        rena_Item_Value[11] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_STRESS;
+        //--------------------------------------------------------------------
         rena_Attire_Status_Text.transform.GetChild(0).GetComponent<Text>().text = "근력: " +
             NewInventory_JsonData.instance.rena_Attire_Status[i - 1].MUSCULAR_STRENGTH.ToString() + " + " + "("+rena_Item_Value[0]+")";
         rena_Attire_Status_Text.transform.GetChild(1).GetComponent<Text>().text = "마법력: " +
@@ -350,22 +345,27 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Party_Status_Text(selected_Party_Member - 1);
-                }
-                break;
+                } break;
             case 2:
                 {
                     Party_Status_Text(selected_Party_Member + 3);
-                }
-                break;
+                } break;
             case 3:
                 {
                     Party_Status_Text(selected_Party_Member + 7);
-                }
-                break;
+                } break;
         }
     }
     private void Party_Status_Text(int i)
     {
+        party_Member_Item_Value[0] = NewInventory_JsonData.instance.party_Status[i].EQUIP_ATK;
+        party_Member_Item_Value[1] = NewInventory_JsonData.instance.party_Status[i].EQUIP_DEF;
+        party_Member_Item_Value[2] = NewInventory_JsonData.instance.party_Status[i].EQUIP_MAG;
+        party_Member_Item_Value[3] = NewInventory_JsonData.instance.party_Status[i].EQUIP_REP;
+        party_Member_Item_Value[4] = NewInventory_JsonData.instance.party_Status[i].EQUIP_SP;
+        party_Member_Item_Value[5] = NewInventory_JsonData.instance.party_Status[i].EQUIP_SP2;
+        party_Member_Item_Value[6] = NewInventory_JsonData.instance.party_Status[i].EQUIP_HP_MAX;
+        // -------------------------------------------------------------------------------
         party_Status_Text.transform.GetChild(0).GetComponent<Text>().text = "이름: " +
             NewInventory_JsonData.instance.party_Status[i].PARTY_NAME.ToString();
         party_Status_Text.transform.GetChild(1).GetComponent<Text>().text = "Grade: " +
@@ -373,20 +373,20 @@ public class NewInventory_Manager : MonoBehaviour {
         party_Status_Text.transform.GetChild(2).GetComponent<Text>().text = "FAME: " +
             NewInventory_JsonData.instance.party_Status[i].FAME.ToString();
         party_Status_Text.transform.GetChild(3).GetComponent<Text>().text = "ATK: " +
-            NewInventory_JsonData.instance.party_Status[i].ATK.ToString() + " + " + "(0)";
+            NewInventory_JsonData.instance.party_Status[i].ATK.ToString() + " + " + "("+party_Member_Item_Value[0] +")";
         party_Status_Text.transform.GetChild(4).GetComponent<Text>().text = "DEF: " +
-            NewInventory_JsonData.instance.party_Status[i].DEF.ToString() + " + " + "(0)";
+            NewInventory_JsonData.instance.party_Status[i].DEF.ToString() + " + " + "(" + party_Member_Item_Value[1] + ")";
         party_Status_Text.transform.GetChild(5).GetComponent<Text>().text = "MAG: " +
-            NewInventory_JsonData.instance.party_Status[i].MAG.ToString() + " + " + "(0)";
+            NewInventory_JsonData.instance.party_Status[i].MAG.ToString() + " + " + "(" + party_Member_Item_Value[2] + ")";
         party_Status_Text.transform.GetChild(6).GetComponent<Text>().text = "REP: " +
-            NewInventory_JsonData.instance.party_Status[i].REP.ToString() + " + " + "(0)";
+            NewInventory_JsonData.instance.party_Status[i].REP.ToString() + " + " + "(" + party_Member_Item_Value[3] + ")";
         party_Status_Text.transform.GetChild(7).GetComponent<Text>().text = "SP: " +
-            NewInventory_JsonData.instance.party_Status[i].SP.ToString() + " + " + "(0)";
+            NewInventory_JsonData.instance.party_Status[i].SP.ToString() + " + " + "(" + party_Member_Item_Value[4] + ")";
         party_Status_Text.transform.GetChild(8).GetComponent<Text>().text = "SP2: " +
-           NewInventory_JsonData.instance.party_Status[i].SP2.ToString() + " + " + "(0)";
+           NewInventory_JsonData.instance.party_Status[i].SP2.ToString() + " + " + "(" + party_Member_Item_Value[5] + ")";
         party_Status_Text.transform.GetChild(9).GetComponent<Text>().text = "HP: " +
            NewInventory_JsonData.instance.party_Status[i].HP.ToString() + "/" +
-           NewInventory_JsonData.instance.party_Status[i].HP_MAX.ToString() + " + " + "(0)";
+           NewInventory_JsonData.instance.party_Status[i].HP_MAX.ToString() + " + " + "(" + party_Member_Item_Value[6] + ")";
     }
     // 조건에 맞는 레나의 옷차림 세팅
     private void Rena_Attire_Setting()
@@ -419,19 +419,16 @@ public class NewInventory_Manager : MonoBehaviour {
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
                         Rena_Attire_Parts_Setting();
-                    }
-                    else if (_stress >= 31 && _stress <= 60)
+                    } else if (_stress >= 31 && _stress <= 60)
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
                         Rena_Attire_Parts_Setting();
-                    }
-                    else if (_stress >= 61 && _stress <= 200)
+                    } else if (_stress >= 61 && _stress <= 200)
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
                         Rena_Attire_Parts_Setting();
                     }
-                }
-                break;
+                } break;
             case 3:
                 {
                     int _stress = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].STRESS;
@@ -439,19 +436,16 @@ public class NewInventory_Manager : MonoBehaviour {
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
                         Rena_Attire_Parts_Setting();
-                    }
-                    else if (_stress >= 31 && _stress <= 60)
+                    } else if (_stress >= 31 && _stress <= 60)
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
                         Rena_Attire_Parts_Setting();
-                    }
-                    else if (_stress >= 61 && _stress <= 200)
+                    } else if (_stress >= 61 && _stress <= 200)
                     {
                         NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
                         Rena_Attire_Parts_Setting();
                     }
-                }
-                break;
+                } break;
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
@@ -579,8 +573,7 @@ public class NewInventory_Manager : MonoBehaviour {
             if(i == page_Num - 1)
             {
                 inventory_Type_1.transform.GetChild(i).gameObject.SetActive(true);
-            }
-            else
+            } else
             {
                 inventory_Type_1.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -612,8 +605,7 @@ public class NewInventory_Manager : MonoBehaviour {
             if (i == page_Num - 1)
             {
                 inventory_Type_2.transform.GetChild(i).gameObject.SetActive(true);
-            }
-            else
+            } else
             {
                 inventory_Type_2.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -645,8 +637,7 @@ public class NewInventory_Manager : MonoBehaviour {
             if (i == page_Num - 1)
             {
                 inventory_Type_3.transform.GetChild(i).gameObject.SetActive(true);
-            }
-            else
+            } else
             {
                 inventory_Type_3.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -663,8 +654,7 @@ public class NewInventory_Manager : MonoBehaviour {
             if (party_Status_Panel.gameObject.activeInHierarchy && inventory_Panel.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
-            }
-            else
+            } else
             {
                 item_Status_Panel.transform.GetChild(2).gameObject.SetActive(true);
             }
@@ -685,7 +675,6 @@ public class NewInventory_Manager : MonoBehaviour {
             + " 골드";
         // ------------------------------------
         selected_Item = select_Item;  // 아이템 사용버튼 누를시 어떤아이템인지 확인 item_value
-
     }
     // 아이템 사용 버튼 누를시 실행되는 함수 
     public void Button_Pressed_Item_EquipType_Input()
@@ -700,20 +689,17 @@ public class NewInventory_Manager : MonoBehaviour {
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
             case 2:
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
             case 3:
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                }
-                break;
+                } break;
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
@@ -728,10 +714,12 @@ public class NewInventory_Manager : MonoBehaviour {
         {
             case 1: // 의상실 의상슬롯장착 ( 좋은옷 )
                 {
-                    //  의상 슬롯에 아이템 착용시 원래 착용했던 아이템은 인벤토리로...
+                    //  이전 아이템
                     if(NewInventory_JsonData.instance.rena_Attire_Status[save_Type -1].ATTIRE_ID != 0)
                     {
                         rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite = null;
+                        NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].MUSCULAR_STRENGTH -= rena_Item_Value[0];
+                        NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STAMINA -= rena_Item_Value[2];
                         if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
                         {
                             NewInventory_Items_Data.instance.items_Data_1.Add(
@@ -748,11 +736,13 @@ public class NewInventory_Manager : MonoBehaviour {
                         Inventory_Item_Data_Saving();
                         NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
                     }
+                    //  착용할 아이템
                     if (selected_Item.ITEM_VALUETYPE_1 == 1) // 근력
                     {
                         if (selected_Item.UPDOWN_1 == 1)
                         { // 값을 더하라는 의미
                             NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].MUSCULAR_STRENGTH += selected_Item.ITEM_VALUE_1;
+                            NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].EQUIP_MUSCULAR_STRENGTH = selected_Item.ITEM_VALUE_1;
                             rena_Item_Value[0] = selected_Item.ITEM_VALUE_1;
                         }
                     }
@@ -761,6 +751,7 @@ public class NewInventory_Manager : MonoBehaviour {
                         if (selected_Item.UPDOWN_2 == 1)
                         { // 값을 더하라는 의미
                             NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STAMINA += selected_Item.ITEM_VALUE_2;
+                            NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].EQUIP_STAMINA = selected_Item.ITEM_VALUE_2;
                             rena_Item_Value[2] = selected_Item.ITEM_VALUE_2;
                         }
                     }
@@ -787,24 +778,26 @@ public class NewInventory_Manager : MonoBehaviour {
                 } break;
             case 3:  // 모험실 무기슬롯장착
                 {
+                    // 강철검
                     int _index = 0;
                     if (save_Type == 1)
                     {
                         _index = 0;
-                    }
-                    else if (save_Type == 2)
+                    } else if (save_Type == 2)
                     {
                         _index = 4;
-                    }
-                    else if (save_Type == 3)
+                    } else if (save_Type == 3)
                     {
                         _index = 8;
                     }
+                    // 이전 아이템
                     if(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID != 0)
-                    {   // 착용전 무기 슬롯에 있는 아이템은 인벤토리로~~!  ( 최근 수정 코드 )
+                    {   // 착용전 무기 슬롯에 있는 아이템은 인벤토리로~~!  
                         if(party_Status_Panel.transform.GetChild(1).transform.childCount == 2)
                         {
                             Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
+                            NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ATK -=
+                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].EQUIP_ATK;
                             if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
                             {
                                 NewInventory_Items_Data.instance.items_Data_1.Add(
@@ -822,19 +815,20 @@ public class NewInventory_Manager : MonoBehaviour {
                             NewInventory_Items_Data.instance.Previous_Item_Put_Back_To_Inventory();
                         }
                     }
-                    if (selected_Item.ITEM_VALUETYPE_1 == 14) // 강철검
+                    // 착용 아이템
+                    if (selected_Item.ITEM_VALUETYPE_1 == 14) 
                     {
                         if (selected_Item.UPDOWN_1 == 1)
                         { // 값을 더하라는 의미
                             NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ATK += selected_Item.ITEM_VALUE_1;
                             NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID = selected_Item.ID;
+                            NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].EQUIP_ATK = selected_Item.ITEM_VALUE_1;
                         }
                     }
                     Party_Status_Text((_index + selected_Party_Member) - 1); // 파티 스테이터스 텍스트
                     Selected_Party_Member_Skills_Setting((_index + selected_Party_Member) - 1);
                     Destory_Selected_Item_Data();
-                }
-                break;
+                } break;
             case 6: 
                 {
                     if(selected_Item.ID == 30015)  // 파티원 파트리샤 추가
@@ -870,8 +864,7 @@ public class NewInventory_Manager : MonoBehaviour {
                         }
                     }
                     Destory_Selected_Item_Data();
-                }
-                break;
+                } break;
         }
     }
     // 인벤토리 아이템 Save
@@ -954,18 +947,15 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Selected_Character_Delete(selected_Party_Member - 1);
-                }
-                break;
+                } break;
             case 2:
                 {
                     Selected_Character_Delete(selected_Party_Member + 3);
-                }
-                break;
+                } break;
             case 3:
                 {
                     Selected_Character_Delete(selected_Party_Member + 7);
-                }
-                break;
+                } break;
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
         Setting_Party_Status_Text_Input();

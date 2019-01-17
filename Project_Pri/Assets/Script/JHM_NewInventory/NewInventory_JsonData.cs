@@ -5,31 +5,24 @@ using LitJson;
 using System.IO;
 
 public class NewInventory_JsonData : MonoBehaviour {
-
     public static NewInventory_JsonData instance = null;
-
     public Save_Type_Option select_Type_Option;
     // 저장 불러오기 게임플레이 데이터
     public Party_Status[] party_Status;               
     public Rena_Attire_Status[] rena_Attire_Status;   
-
     public string mobile_Path; // 모바일 저장 경로
-
     public int selected_Save_Location; // 저장 위치 알려주는 정수
-
     // 디폴트 json_data
     private JsonData save_Type_Option;
     private JsonData rena_Attire_Status_Data;
     private JsonData party_Status_Data;
-
     private bool is_Begin; // 처음 게임 들어올때 한번 실행
     private void Awake()
     {       
         if (instance == null)
         {
             instance = this;
-        }
-        else
+        }else
         {
             Destroy(this.gameObject);
         }
@@ -56,8 +49,7 @@ public class NewInventory_JsonData : MonoBehaviour {
                 rena_Attire_Status[i] = new Rena_Attire_Status((int)rena_Attire_Status_Data[helper_2]["SAVE_NUM"]);
                 helper_2++;
             }
-            select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"],
-            (int)save_Type_Option[0]["SAVE_TYPE"]);
+            select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"],(int)save_Type_Option[0]["SAVE_TYPE"]);
         }
     }
     private void Start()
@@ -68,15 +60,10 @@ public class NewInventory_JsonData : MonoBehaviour {
     private void Json_Data_Parsing()
     {
         TextAsset json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/SAVE_TYPE_OPTION");
-
         save_Type_Option = JsonMapper.ToObject(json_File_1.text);
-
         TextAsset json_File_2 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/RENA_ATTIRE_STATUS_DATA");
-
         rena_Attire_Status_Data = JsonMapper.ToObject(json_File_2.text);
-
         TextAsset json_File_3 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/PARTY_STATUS_DATA");
-
         party_Status_Data = JsonMapper.ToObject(json_File_3.text);
     }
     // 만약 ID값이 0일 경우 초기값 넣기 Rena_Attire_Status
@@ -92,7 +79,6 @@ public class NewInventory_JsonData : MonoBehaviour {
             , (int)rena_Attire_Status_Data[0]["EQUIP_ELEGANCE"], (int)rena_Attire_Status_Data[0]["EQUIP_MORALITY"], (int)rena_Attire_Status_Data[0]["EQUIP_RELIABILITY"]
             , (int)rena_Attire_Status_Data[0]["EQUIP_STRESS"]);
     }
-
     // 만약 ID값이 0일 경우 초기값 넣기 Party_Status
     public void Default_Save_Data_Party_Status(int i)
     {
@@ -119,21 +105,18 @@ public class NewInventory_JsonData : MonoBehaviour {
     public void SAVE_NEW_DATA_JSON_Save_Type_Option()
     {
         JsonData save_Json = JsonMapper.ToJson(select_Type_Option);
-
         File.WriteAllText(mobile_Path + "/" + "Save_Type_Option_Data.json", save_Json.ToString());
     }
     // Json 저장 PARTY_STATUS_DATA
     public void SAVE_NEW_DATA_JSON_Party_Status()
     {
         JsonData save_Json = JsonMapper.ToJson(party_Status);
-
         File.WriteAllText(mobile_Path + "/" + "Party_Status_Data.json", save_Json.ToString());
     }
     // Json 저장 Rena_Attire_Status_Data
     public void SAVE_NEW_DATA_JSON_Rena_Attire_Status()
     {
         JsonData save_Json = JsonMapper.ToJson(rena_Attire_Status);
-
         File.WriteAllText(mobile_Path + "/" + "Rena_Attire_Status_Data.json", save_Json.ToString());
     }
     // Json 로드 Save_Type_Option_Data
@@ -144,10 +127,6 @@ public class NewInventory_JsonData : MonoBehaviour {
             string json_String = File.ReadAllText(mobile_Path + "/" + "Save_Type_Option_Data.json");
             JsonData load_Json = JsonMapper.ToObject(json_String);
             select_Type_Option = new Save_Type_Option((int)load_Json["LANGUAGE_TYPE"],(int)load_Json["SAVE_TYPE"]);             
-        }
-        else
-        {
-            Debug.Log("file is not found!");
         }
     }
     // Json 로드 PARTY_STATUS_DATA
@@ -168,10 +147,6 @@ public class NewInventory_JsonData : MonoBehaviour {
                     , (int)load_Json[i]["PARTY_ATTACK_NUM"], (int)load_Json[i]["PARTY_ATTACK1"], (int)load_Json[i]["PARTY_ATTACK2"]
                     , (int)load_Json[i]["PARTY_ATTACK3"]);
             }
-        }
-        else
-        {
-            Debug.Log("file is not found!");
         }
     }
     // Json 로드 Rena_Attire_Status_Data
@@ -197,10 +172,8 @@ public class NewInventory_JsonData : MonoBehaviour {
         else
         {
             is_Begin = true;
-            Debug.Log("file is not found!");
         }
     }
-
 } // class
 
 
