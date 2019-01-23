@@ -173,7 +173,7 @@ public class NewInventory_JsonData : MonoBehaviour {
         {
             is_Begin = true;
         }
-    }
+    }    
 } // class
 
 
