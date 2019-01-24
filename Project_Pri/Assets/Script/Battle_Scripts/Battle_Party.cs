@@ -44,6 +44,7 @@ public class Battle_Party : Battle_Character
           "\nSP: " + sp +
           "\nSP2: " + sp2 +
           "\nHP: " + hp;
+
         if (skill_guage <= max_gauge)
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
@@ -69,6 +70,7 @@ public class Battle_Party : Battle_Character
                 sd_model = loadData[i]["PARTY_SD_MODEL"].ToString();
                 name = loadData[i]["PARTY_NAME"].ToString();
                 hp = Int32.Parse(loadData[i]["PARTY_HP"].ToString());
+                c_hp = hp;
                 atk = Int32.Parse(loadData[i]["PARTY_PHY_ATK"].ToString());
                 def = Int32.Parse(loadData[i]["PARTY_DEF"].ToString());
                 mag = Int32.Parse(loadData[i]["PARTY_MAG_ATK"].ToString());

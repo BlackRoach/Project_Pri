@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Battle_Player : Battle_Character
 {
 
+    private SkillManager skillmanager;
 
     [SerializeField] private float skill_max_guage;
     [SerializeField] private float skill_filled_speed;
@@ -18,6 +19,8 @@ public class Battle_Player : Battle_Character
     {
         if (battleManager == null)
             battleManager = BattleManager.Instance;
+        hp = 100;
+        skillmanager = SkillManager.Instance;
         StatusInit();
         skillGuagebar = battleManager.PartyPanel[0].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
 
@@ -39,8 +42,5 @@ public class Battle_Player : Battle_Character
       
 
     }
-    public void Skillused()
-    {
-        skill_guage = 0;
-    }
+    
 }

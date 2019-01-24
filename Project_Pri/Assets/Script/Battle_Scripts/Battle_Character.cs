@@ -20,7 +20,8 @@ public class Battle_Character : MonoBehaviour
     protected BattleManager battleManager;
     protected JsonFileWriter jsonFileWriter;
     protected JsonData loadData;
-    public float hp = 100;
+    protected float c_hp;
+    public float hp;
     public float atk;
     public float def;
     public float mag;
@@ -33,8 +34,8 @@ public class Battle_Character : MonoBehaviour
     protected string name;
     protected float progress_gauge = 0;
 
-    public GameObject status;
-    public GameObject status_T;
+    public GameObject status;       //생성용
+    public GameObject status_T;     //생성용
     public int num;
     public int attack_num;
     public int[] attack_val;
@@ -45,7 +46,7 @@ public class Battle_Character : MonoBehaviour
 
     public bool isInQ = false;
     public bool isAlive_readonly { get { return isAlive; } }
-
+    public bool isFight = false;
     public float skill_guage;
     private Vector2 own_position;
 
@@ -80,7 +81,7 @@ public class Battle_Character : MonoBehaviour
                                              this.transform.position.y-1.4f);
         status_t.transform.position = new Vector2(this.transform.position.x + 2f,
                                              this.transform.position.y);
-        hpBar.fillAmount = hp * 0.01f;
+        hpBar.fillAmount = hp * (1/c_hp);
         if (progress_gauge >= max_gauge && !isInQ)
         {
             battleManager.AddToArray(this.gameObject);
@@ -111,13 +112,36 @@ public class Battle_Character : MonoBehaviour
     }
     public void Attack(GameObject enemy)
     {
-        enemy.GetComponent<Battle_Character>().Attacked();
+        float ms, ms1, ms2;
+        float _as, _as1, _as2;
+
+        float dmg;
+
+        ms1 = mag - enemy.GetComponent<Battle_Character>().rep;
+        ms2 = 1;
+        ms = ms1 > ms2 ? ms1 : ms2;
+
+
+
+
+        _as1 = atk - enemy.GetComponent<Battle_Character>().def;
+        _as2 = 1;
+        _as = _as1 > _as2 ? _as1 : _as2;
+        dmg = _as + ms;
+
+
+
+        enemy.GetComponent<Battle_Character>().Attacked(dmg);
 
     }
-    public void Attacked()
+    public void Attacked(float val)
     {
         effect.SetActive(true);
-        hp -= 10;
+        DamageTextContoller.CreateDamageText(-val, transform);
+        hp -= val;
+        if (hp < 0)
+            isAlive = false;
+
     }
     public void SetCoolTime(int i, int time)
     {
@@ -141,11 +165,12 @@ public class Battle_Character : MonoBehaviour
         isInQ = false;
         battleManager.isFightWhile = false;
         progress_gauge = 0;
+        isFight = false;
         yield return null;
     }
     public IEnumerator ImoveToEnemy(GameObject enemy)
     {
-       
+        isFight = true;
         Vector2 enemypos;
 
         if (enemy.transform.position.x > own_position.x)

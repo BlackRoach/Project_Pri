@@ -49,6 +49,7 @@ public class Battle_Monster : Battle_Character {
                 sd_model = loadData[i]["MONSTER_MODEL"].ToString();
                 name = loadData[i]["MONSTER_NAME"].ToString();
                 hp = Int32.Parse(loadData[i]["MONSTER_HP"].ToString());
+                c_hp = hp;
                 atk = Int32.Parse(loadData[i]["MONSTER_PHY_ATK"].ToString());
                 def = Int32.Parse(loadData[i]["MONSTER_DEF"].ToString());
                 mag = Int32.Parse(loadData[i]["MONSTER_MAG_ATK"].ToString());

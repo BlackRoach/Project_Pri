@@ -12,8 +12,8 @@ public class BattleManager : MonoBehaviour
     {
         get
         {
-             return instance;
-            
+            return instance;
+
         }
     }
     private void Awake()
@@ -35,7 +35,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject megami;
     [SerializeField] private Image attackButton;
     [SerializeField] private Image backGround;
-  
+
+
     [SerializeField] private Queue<GameObject> attackQueue = new Queue<GameObject>();
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[] partys;
@@ -53,7 +54,7 @@ public class BattleManager : MonoBehaviour
     private int monster_cnt;
     private int[] monster_pos;
     private string[] monster_id;
-   
+
     private float fillamount;
     private float currentCoolTime;
     private float cooltime = 10f;
@@ -63,24 +64,25 @@ public class BattleManager : MonoBehaviour
 
     public bool isFightWhile = false;
     public bool isCommandOn = false;
-  
 
 
-    public GameObject enemy;
-    public GameObject party;
+
+    public GameObject enemy;  // 스폰용
+    public GameObject party;  // 스폰용
 
     public Transform[] enemypos;
     public Transform[] partypos;
     public GameObject[] PartyPanel = new GameObject[4];
 
-
+    public int monster_cnt_readonly { get { return monster_cnt; } }
+    public int ally_cnt_readonly { get { return partyid.Count + 1; } }
     private GameObject atk_chr;
-    
-    
+
+
     // Use this for initialization
     void Start()
     {
-   
+
         resultWindow.SetActive(false);
         ingameManager = InGamemanager.Instance;
         skillmanager = SkillManager.Instance;
@@ -88,7 +90,7 @@ public class BattleManager : MonoBehaviour
         group_id = PlayerPrefs.GetString("Current_group_id");
         loadMonsterData = jsonFileWriter.SerializeData("MONSTER_GROUP_TABLE");
         loadPartyData = jsonFileWriter.SerializeData("PARTY_TABLE");
-        
+
         Getparty();
         LoadMonsterData(group_id);
         enemys = new GameObject[monster_cnt];
@@ -98,9 +100,9 @@ public class BattleManager : MonoBehaviour
         partys[0] = player;
         SpawnMonster();
         SpawnParty();
-        
+
     }
-    
+
 
 
 
@@ -108,21 +110,21 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-       
+
+
         // 큐에 의한 신호등
         if (attackQueue.Count != 0 && !isFightWhile && !isResult)
         {
-          
+
             isFightWhile = true;
             presentlyAttackChar = attackQueue.Dequeue();
-            Debug.Log(presentlyAttackChar);
+
             if (presentlyAttackChar.tag == "Monster")
-                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(partys[UnityEngine.Random.Range(0,partyid.Count+1)]);
+                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(partys[UnityEngine.Random.Range(0, partyid.Count + 1)]);
             else if (presentlyAttackChar.tag == "Ally")
             {
 
-                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(enemys[UnityEngine.Random.Range(0,monster_cnt)]);
+                presentlyAttackChar.GetComponent<Battle_Character>().MoveToEnemy(enemys[UnityEngine.Random.Range(0, monster_cnt)]);
             }
         }
         // else if(enemys.count == 0) -> result 출력
@@ -158,7 +160,7 @@ public class BattleManager : MonoBehaviour
 
             t += Time.deltaTime * 0.8f;
             Vector2 pos = megami.gameObject.transform.localPosition;
-            pos = Vector2.Lerp(thisPosition, new Vector2(470,6), t);
+            pos = Vector2.Lerp(thisPosition, new Vector2(470, 6), t);
             megami.gameObject.transform.localPosition = pos;
             yield return 0;
         }
@@ -183,7 +185,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-   
+
 
 
 
@@ -193,8 +195,8 @@ public class BattleManager : MonoBehaviour
     {
         attackQueue.Enqueue(character);
     }
-   
-    
+
+
 
 
     public void BackToWorld()
@@ -204,7 +206,7 @@ public class BattleManager : MonoBehaviour
         ingameManager.isRespawn = true;
         ingameManager.isFight = true;
         SceneManager.LoadScene("WorldMap");
-       
+
     }
 
 
@@ -230,7 +232,10 @@ public class BattleManager : MonoBehaviour
     {
         return partys[i];
     }
-
+    public GameObject GetMonster(int i)
+    {
+        return enemys[i];
+    }
 
 
 
@@ -308,6 +313,7 @@ public class BattleManager : MonoBehaviour
             nobj.GetComponent<Battle_Party>().id = partyid[i];
             nobj.GetComponent<Battle_Party>().num = i + 1;
             PartyPanel[i + 1].SetActive(true);
+            PartyPanel[i + 1].transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("초상화/character_face_patricia");
             nobj.transform.position = partypos[i+1].position;
             nobj.name = "Party" + i;
             nobj.gameObject.transform.parent = party.transform.parent;
