@@ -22196,8 +22196,8 @@ GameObject:
   - component: {fileID: 1537399563}
   - component: {fileID: 1537399564}
   - component: {fileID: 1537399565}
-  - component: {fileID: 1537399566}
   - component: {fileID: 1537399567}
+  - component: {fileID: 1537399566}
   m_Layer: 0
   m_Name: '*Manager'
   m_TagString: Untagged
@@ -22400,9 +22400,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1537399559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccf020341edc523498aa8faa0c8d70d0, type: 3}
+  m_Script: {fileID: 11500000, guid: c0e57a4f0f4905b40b2ca4434e7111de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current_Items: []
+  equip_Items: []
+  mobile_Path: 
 --- !u!114 &1537399567
 MonoBehaviour:
   m_ObjectHideFlags: 0
