@@ -7,26 +7,21 @@ using System.IO;
 
 
 public class NewInventory_Items_Data : MonoBehaviour {
-
-    public static NewInventory_Items_Data instance = null;
-
+    public static NewInventory_Items_Data instance = null;  
     public string mobile_Path; // 모바일 저장 경로
-
     public List<New_Item_Data> items_Data_1; // json 파일에 저장,로드할 아이템리스트 Save_Type 1
     public List<New_Item_Data> items_Data_2; // json 파일에 저장,로드할 아이템리스트 Save_Type 2
     public List<New_Item_Data> items_Data_3; // json 파일에 저장,로드할 아이템리스트 Save_Type 3
     public Items_List[] item_List;  // 현재 인벤토리 아이템들의 데이터
     public GameObject item_Prefab; // 인벤토리에 들어갈 아이템 프리펩
-    // 디폴트 json_data
-    private JsonData item_List_Data;
+    private JsonData item_List_Data; // 디폴트 json_data
     private bool is_Begin; // 게임 처음 실행 할때만 적용
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-        }
-        else
+        } else
         {
             Destroy(this.gameObject);
         }
@@ -88,7 +83,6 @@ public class NewInventory_Items_Data : MonoBehaviour {
     private void Json_Data_Parsing()
     {
         TextAsset json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/ITEM_LIST_2");
-
         item_List_Data = JsonMapper.ToObject(json_File_1.text);
     }
     public void Initailization_Item_List_Data_From_Items_Data_1()
@@ -191,8 +185,7 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 items_Data_1.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_1();
-        }
-        else
+        }  else
         {
             is_Begin = true;
         }
@@ -210,8 +203,7 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 items_Data_2.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_2();
-        }
-        else
+        } else
         {
             is_Begin = true;
         }
@@ -229,8 +221,7 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 items_Data_3.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_3();
-        }
-        else
+        } else
         {
             is_Begin = true;
         }
@@ -276,30 +267,25 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 j++;
                 index_1++;
 
-            } // 퀘스트 인벤토리
-            else if (item_List[i].INVENTORY_TYPE == 2)
+            } else if (item_List[i].INVENTORY_TYPE == 2) // 퀘스트 인벤토리
             {
                 GameObject item = Instantiate(item_Prefab);
                 if (k < 20)  // 페이지 1
                 {
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(0).transform.GetChild(index_2).transform;
-                }
-                else if (k >= 20 && k < 40) // 페이지 2
+                } else if (k >= 20 && k < 40) // 페이지 2
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(1).transform.GetChild(index_2).transform;
-                }
-                else if (k >= 40 && k < 60) // 페이지 3
+                } else if (k >= 40 && k < 60) // 페이지 3
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(2).transform.GetChild(index_2).transform;
-                }
-                else if (k >= 60 && k < 80) // 페이지 4
+                } else if (k >= 60 && k < 80) // 페이지 4
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(3).transform.GetChild(index_2).transform;
-                }
-                else if (k >= 80 && k < 100) // 페이지 5
+                } else if (k >= 80 && k < 100) // 페이지 5
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(4).transform.GetChild(index_2).transform;
@@ -307,30 +293,25 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 StartCoroutine(Item_Setting_In_Inventory(item, i));
                 k++;
                 index_2++;
-            } // 잡화 인벤토리
-            else if (item_List[i].INVENTORY_TYPE == 3)
+            } else if (item_List[i].INVENTORY_TYPE == 3) // 잡화 인벤토리
             {
                 GameObject item = Instantiate(item_Prefab);
                 if (t < 20)  // 페이지 1
                 {
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(0).transform.GetChild(index_3).transform;
-                }
-                else if (t >= 20 && t < 40) // 페이지 2
+                } else if (t >= 20 && t < 40) // 페이지 2
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(1).transform.GetChild(index_3).transform;
-                }
-                else if (t >= 40 && t < 60) // 페이지 3
+                } else if (t >= 40 && t < 60) // 페이지 3
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(2).transform.GetChild(index_3).transform;
-                }
-                else if (t >= 60 && t < 80) // 페이지 4
+                } else if (t >= 60 && t < 80) // 페이지 4
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(3).transform.GetChild(index_3).transform;
-                }
-                else if (t >= 80 && t < 100) // 페이지 5
+                } else if (t >= 80 && t < 100) // 페이지 5
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(4).transform.GetChild(index_3).transform;
@@ -349,18 +330,15 @@ public class NewInventory_Items_Data : MonoBehaviour {
             case 1:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_1();
-                }
-                break;
+                } break;
             case 2:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_2();
-                }
-                break;
+                } break;
             case 3:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_3();
-                }
-                break;
+                }  break;
         }
     }
     // 착용전 이전 아이템은 의상 인벤토리로 스폰
