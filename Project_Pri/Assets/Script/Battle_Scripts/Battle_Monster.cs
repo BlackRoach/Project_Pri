@@ -30,7 +30,7 @@ public class Battle_Monster : Battle_Character {
       
 
         status_t.GetComponent<Text>().text =
-           "이름: " + name +
+           "이름: " + c_name +
            "\nATK: " + atk +
            "\nDEF: " + def +
            "\nMAG: " + mag +
@@ -47,21 +47,21 @@ public class Battle_Monster : Battle_Character {
             if (loadData[i]["ID"].ToString() == id)
             {
                 sd_model = loadData[i]["MONSTER_MODEL"].ToString();
-                name = loadData[i]["MONSTER_NAME"].ToString();
-                hp = Int32.Parse(loadData[i]["MONSTER_HP"].ToString());
+                c_name = loadData[i]["MONSTER_NAME"].ToString();
+                hp = (int)loadData[i]["MONSTER_HP"];
                 c_hp = hp;
-                atk = Int32.Parse(loadData[i]["MONSTER_PHY_ATK"].ToString());
-                def = Int32.Parse(loadData[i]["MONSTER_DEF"].ToString());
-                mag = Int32.Parse(loadData[i]["MONSTER_MAG_ATK"].ToString());
-                rep = Int32.Parse(loadData[i]["MONSTER_MAG_DEF"].ToString());
+                atk = (int)loadData[i]["MONSTER_PHY_ATK"];
+                def = (int)loadData[i]["MONSTER_DEF"];
+                mag = (int)loadData[i]["MONSTER_MAG_ATK"];
+                rep = (int)loadData[i]["MONSTER_MAG_DEF"];
                 sp = float.Parse(loadData[i]["MONSTER_SP"].ToString());
-                attack_num = Int32.Parse(loadData[i]["MONSTER_ATTACK_NUM"].ToString());
+                attack_num = (int)loadData[i]["MONSTER_ATTACK_NUM"];
                 attack_val = new int[attack_num];
                 attack_id = new string[attack_num];
                 for(int j = 1; j<=attack_num;j++)
                 {
                     attack_id[j-1] = loadData[i]["MONSTER_ATTACK"+j].ToString();
-                    attack_val[j-1] = Int32.Parse(loadData[i]["MONSTER_ATTACK"+j+"_VALUE"].ToString());
+                    attack_val[j-1] = (int)loadData[i]["MONSTER_ATTACK"+j+"_VALUE"];
                 }
                 break;
             }

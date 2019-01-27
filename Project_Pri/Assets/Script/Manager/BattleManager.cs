@@ -34,7 +34,7 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private GameObject megami;
     [SerializeField] private Image attackButton;
-    [SerializeField] private Image backGround;
+    [SerializeField] private GameObject backGround;
 
 
     [SerializeField] private Queue<GameObject> attackQueue = new Queue<GameObject>();
@@ -61,6 +61,7 @@ public class BattleManager : MonoBehaviour
 
     private bool isResult = false;
     private List<string> partyid = new List<string>();
+    private List<string> partyface = new List<string>();
 
     public bool isFightWhile = false;
     public bool isCommandOn = false;
@@ -95,7 +96,8 @@ public class BattleManager : MonoBehaviour
         LoadMonsterData(group_id);
         enemys = new GameObject[monster_cnt];
         partys = new GameObject[partyid.Count + 1];
-        backGround.sprite = Resources.Load<Sprite>("전투배경/" + stage_background);
+    
+        backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("전투배경/" + stage_background);
         player.transform.position = partypos[0].position;
         partys[0] = player;
         SpawnMonster();
@@ -273,6 +275,7 @@ public class BattleManager : MonoBehaviour
             if (loadPartyData[i]["IS_PARTY"].ToString() == "1")
             {
                 partyid.Add(loadPartyData[i]["ID"].ToString());
+                partyface.Add(loadPartyData[i]["PARTY_FACE"].ToString());
                 n++;
                 if (n == 2)
                     break;
@@ -292,6 +295,7 @@ public class BattleManager : MonoBehaviour
             GameObject nobj = (GameObject)GameObject.Instantiate(enemy);
             nobj.GetComponent<Battle_Monster>().id = monster_id[i];
             nobj.transform.position = enemypos[monster_pos[i]].position;
+            nobj.GetComponent<Battle_Monster>().posnum = monster_pos[i];
             nobj.name = "Monster" + i;
             nobj.gameObject.transform.parent = enemy.transform.parent;
             enemys[i] = nobj;
@@ -313,12 +317,16 @@ public class BattleManager : MonoBehaviour
             nobj.GetComponent<Battle_Party>().id = partyid[i];
             nobj.GetComponent<Battle_Party>().num = i + 1;
             PartyPanel[i + 1].SetActive(true);
-            PartyPanel[i + 1].transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("초상화/character_face_patricia");
+            PartyPanel[i + 1].transform.GetChild(1).GetComponent<Image>().sprite =
+         Resources.Load<Sprite>("초상화/" + partyface[i]);
+      
             nobj.transform.position = partypos[i+1].position;
+            nobj.GetComponent<Battle_Party>().posnum = i+1;
             nobj.name = "Party" + i;
             nobj.gameObject.transform.parent = party.transform.parent;
             partys[i+1] = nobj;
             nobj.SetActive(true);
+     
         }
     }
 }

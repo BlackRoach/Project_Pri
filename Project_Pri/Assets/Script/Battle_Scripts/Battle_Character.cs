@@ -28,14 +28,16 @@ public class Battle_Character : MonoBehaviour
     public float rep;
     public float sp;
 
-
+ 
     protected bool isAlive = true;
 
-    protected string name;
+    protected string c_name;
     protected float progress_gauge = 0;
 
     public GameObject status;       //생성용
     public GameObject status_T;     //생성용
+
+    public int posnum;
     public int num;
     public int attack_num;
     public int[] attack_val;
@@ -57,6 +59,7 @@ public class Battle_Character : MonoBehaviour
         
         own_position = this.gameObject.transform.position;
         battleManager = BattleManager.Instance;
+        this.gameObject.GetComponent<SpriteRenderer>().sortingOrder = -posnum;
     }
     protected void StatusInit()
     {

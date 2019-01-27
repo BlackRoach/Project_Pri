@@ -15380,6 +15380,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4390567100094544, guid: 51c31b20d36fb644fa7ec6fb06b660dc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -10.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390567100094544, guid: 51c31b20d36fb644fa7ec6fb06b660dc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51c31b20d36fb644fa7ec6fb06b660dc, type: 2}
   m_IsPrefabParent: 0
@@ -22197,7 +22205,6 @@ GameObject:
   - component: {fileID: 1537399564}
   - component: {fileID: 1537399565}
   - component: {fileID: 1537399567}
-  - component: {fileID: 1537399566}
   m_Layer: 0
   m_Name: '*Manager'
   m_TagString: Untagged
@@ -22392,20 +22399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Grid: {fileID: 851958049}
---- !u!114 &1537399566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1537399559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e57a4f0f4905b40b2ca4434e7111de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  current_Items: []
-  equip_Items: []
-  mobile_Path: 
 --- !u!114 &1537399567
 MonoBehaviour:
   m_ObjectHideFlags: 0

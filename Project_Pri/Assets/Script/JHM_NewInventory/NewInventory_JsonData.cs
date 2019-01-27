@@ -65,6 +65,7 @@ public class NewInventory_JsonData : MonoBehaviour {
         rena_Attire_Status_Data = JsonMapper.ToObject(json_File_2.text);
         TextAsset json_File_3 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/PARTY_STATUS_DATA");
         party_Status_Data = JsonMapper.ToObject(json_File_3.text);
+        
     }
     // 만약 ID값이 0일 경우 초기값 넣기 Rena_Attire_Status
     public void Default_Save_Data_Rena_Attire_Status(int i)
@@ -146,6 +147,7 @@ public class NewInventory_JsonData : MonoBehaviour {
                     , (int)load_Json[i]["EQUIP_SP2"], (int)load_Json[i]["EQUIP_HP_MAX"], load_Json[i]["SD_CHARACTER_MODEL"].ToString()
                     , (int)load_Json[i]["PARTY_ATTACK_NUM"], (int)load_Json[i]["PARTY_ATTACK1"], (int)load_Json[i]["PARTY_ATTACK2"]
                     , (int)load_Json[i]["PARTY_ATTACK3"]);
+          
             }
         }
     }

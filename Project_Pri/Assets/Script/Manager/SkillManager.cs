@@ -177,12 +177,13 @@ public class SkillManager : MonoBehaviour {
           
           
         }
-        if(character.attack_num == 0)
+        
+        for (int j = character.attack_num; j < 4; j++)
         {
-            for (int j = 0; j < 4; j++)
-                skillButton[0].sprite = normal_icon;
-      
+            skillButton[j].sprite = normal_icon;
+            skillButtonCool[j].sprite = normal_icon;
         }
+        
         is_click = true;
         skill_panel.SetActive(true);
     }
@@ -190,7 +191,7 @@ public class SkillManager : MonoBehaviour {
     {
        
         if (i >= current_atknum || character.skillCoolAmount[i] < 1||
-            character.skill_guage<100||Time.timeScale == 0 || !character.isFight)
+            character.skill_guage<100||Time.timeScale == 0 || character.isFight)
             return;
 
         character.skill_guage = 0;
@@ -256,26 +257,51 @@ public class SkillManager : MonoBehaviour {
     private void Skill_Effect(string id, GameObject target = null)
     {
         LoadSkill(id);
-        GameObject effect = Instantiate(Resources.Load("skill_effect/"+hit_effect)) as GameObject;
-      
+        GameObject effect;
         if (effect_target == "THE_TARGET"&&target!=null)
         {
             // 이게 몬스터 올이랑 그라운드 효과랑 좀 다르더라 나중에 고쳐
+            effect = Instantiate(Resources.Load("skill_effect/" + hit_effect)) as GameObject;
             effect.transform.parent = target.transform;
             effect.transform.localPosition = Vector3.zero;
             Skill_Type_setDMG(target);
         }
         else if (effect_target == "MONSTER_GROUND")
         {
+            effect = Instantiate(Resources.Load("skill_effect/" + hit_effect)) as GameObject;
             effect.transform.parent = monster_ground.transform;
             effect.transform.localPosition = Vector3.zero;
-            Set_DMG_ALL(effect_target);
+            Set_DMG_ALL(skill_target);
         }
         else if (effect_target == "ALLY_GROUND")
         {
+            effect = Instantiate(Resources.Load("skill_effect/" + hit_effect)) as GameObject;
             effect.transform.parent = ally_ground.transform;
             effect.transform.localPosition = Vector3.zero;
-            Set_DMG_ALL(effect_target);
+            Set_DMG_ALL(skill_target);
+        }
+        else
+        {
+            if (skill_target == "MONSTER_ALL")
+            {
+                for (int i = 0; i < battleManager.monster_cnt_readonly; i++)
+                {
+                    effect = Instantiate(Resources.Load("skill_effect/" + hit_effect)) as GameObject;
+                    effect.transform.parent = battleManager.GetMonster(i).transform;
+                    effect.transform.localPosition = Vector3.zero;
+
+                }
+            }
+            else if (skill_target == "ALLY_ALL")
+            {
+                for (int i = 0; i < battleManager.ally_cnt_readonly; i++)
+                {
+                    effect = Instantiate(Resources.Load("skill_effect/" + hit_effect)) as GameObject;
+                    effect.transform.parent = battleManager.GetParty(i).transform;
+                    effect.transform.localPosition = Vector3.zero;
+                }
+            }
+            Set_DMG_ALL(skill_target);
         }
     }
     private void Skill_Type_setDMG(GameObject target)
@@ -344,14 +370,14 @@ public class SkillManager : MonoBehaviour {
 
     private void Set_DMG_ALL(string target)
     {
-        if (target == "MONSTER_GROUND")
+        if (target == "MONSTER_ALL")
         {
             for (int i = 0; i < battleManager.monster_cnt_readonly; i++)
             {
                 Skill_Type_setDMG(battleManager.GetMonster(i));
             }
         }
-        else if (target == "ALLY_GROUND")
+        else if (target == "ALLY_ALL")
         {
             for (int i = 0; i < battleManager.ally_cnt_readonly; i++)
             {

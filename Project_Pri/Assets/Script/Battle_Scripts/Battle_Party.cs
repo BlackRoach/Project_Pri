@@ -36,7 +36,7 @@ public class Battle_Party : Battle_Character
     void Update () {
         update();
         status_t.GetComponent<Text>().text =
-          "이름: " + name +
+          "이름: " + c_name +
           "\nATK: " + atk +
           "\nDEF: " + def +
           "\nMAG: " + mag +
@@ -67,17 +67,18 @@ public class Battle_Party : Battle_Character
         {
             if (loadData[i]["ID"].ToString() == id)
             {
+     
                 sd_model = loadData[i]["PARTY_SD_MODEL"].ToString();
-                name = loadData[i]["PARTY_NAME"].ToString();
-                hp = Int32.Parse(loadData[i]["PARTY_HP"].ToString());
+                c_name = loadData[i]["PARTY_NAME"].ToString();
+                hp = (int)loadData[i]["PARTY_HP"];
                 c_hp = hp;
-                atk = Int32.Parse(loadData[i]["PARTY_PHY_ATK"].ToString());
-                def = Int32.Parse(loadData[i]["PARTY_DEF"].ToString());
-                mag = Int32.Parse(loadData[i]["PARTY_MAG_ATK"].ToString());
-                rep = Int32.Parse(loadData[i]["PARTY_MAG_DEF"].ToString());
+                atk = (int)loadData[i]["PARTY_PHY_ATK"];
+                def = (int)loadData[i]["PARTY_DEF"];
+                mag = (int)loadData[i]["PARTY_MAG_ATK"];
+                rep = (int)loadData[i]["PARTY_MAG_DEF"];
                 sp = float.Parse(loadData[i]["PARTY_SP"].ToString());
                 sp2 = float.Parse(loadData[i]["PARTY_SP2"].ToString());
-                attack_num = Int32.Parse(loadData[i]["PARTY_ATTACK_NUM"].ToString());
+                attack_num = (int)loadData[i]["PARTY_ATTACK_NUM"];
                 attack_id = new string[attack_num];
                 for (int j = 1; j <= attack_num; j++)
                 {

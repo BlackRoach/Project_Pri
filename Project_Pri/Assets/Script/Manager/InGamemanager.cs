@@ -113,7 +113,7 @@ public class InGamemanager : MonoBehaviour
         worldObjects.SetActive(false);
         worldUI.SetActive(false);
         DontDestroyOnLoad(this);
-        SceneManager.LoadScene("Game_Inventory");
+        SceneManager.LoadScene("New_Inventory");
 
     }
     public void TurnOnWorldObjects()
