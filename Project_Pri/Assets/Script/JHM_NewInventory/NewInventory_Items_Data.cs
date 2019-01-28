@@ -4,80 +4,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
-
-
-public class NewInventory_Items_Data : MonoBehaviour {
-    public static NewInventory_Items_Data instance = null;  
+public class NewInventory_Items_Data : MonoBehaviour
+{
+    public static NewInventory_Items_Data instance = null;
     public string mobile_Path; // 모바일 저장 경로
     public List<New_Item_Data> items_Data_1; // json 파일에 저장,로드할 아이템리스트 Save_Type 1
     public List<New_Item_Data> items_Data_2; // json 파일에 저장,로드할 아이템리스트 Save_Type 2
     public List<New_Item_Data> items_Data_3; // json 파일에 저장,로드할 아이템리스트 Save_Type 3
     public Items_List[] item_List;  // 현재 인벤토리 아이템들의 데이터
     public GameObject item_Prefab; // 인벤토리에 들어갈 아이템 프리펩
+    public bool is_Defualt; // 게임 처음 실행 할때만 적용
+    public bool is_Inventory = false; // 인벤토리 씬에만 적용
     private JsonData item_List_Data; // 디폴트 json_data
-    private bool is_Begin; // 게임 처음 실행 할때만 적용
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-        } else
+        }
+        else
         {
             Destroy(this.gameObject);
         }
-        is_Begin = false;
+        is_Defualt = false;
         mobile_Path = Application.persistentDataPath;
         Json_Data_Parsing();
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
-        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1) {
-            LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
-            if (is_Begin)  // 초기 값
-            {
-                is_Begin = false;
-                for (int i = 0; i < item_List_Data.Count; i++)
-                {
-                    items_Data_1.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
-                }
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
-            }  else
-            {
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
-            }
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
-        {
-            LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
-            if (is_Begin)  // 초기 값
-            {
-                is_Begin = false;
-                for (int i = 0; i < item_List_Data.Count; i++)
-                {
-                    items_Data_2.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
-                }
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
-            } else
-            {
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
-            }
-        }else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
-        {
-            LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
-            if (is_Begin)  // 초기 값
-            {
-                is_Begin = false;
-                for (int i = 0; i < item_List_Data.Count; i++)
-                {
-                    items_Data_3.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
-                }
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
-            }else
-            {
-                SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
-            }
-        }
     }
     private void Start()
     {
-        Spawning_Inventory_Items();
+        if (is_Inventory)
+        {
+            Spawning_Inventory_Items();
+        }
     }
     // defualt json 리소스 파일 푸싱
     private void Json_Data_Parsing()
@@ -85,18 +43,64 @@ public class NewInventory_Items_Data : MonoBehaviour {
         TextAsset json_File_1 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/ITEM_LIST_2");
         item_List_Data = JsonMapper.ToObject(json_File_1.text);
     }
+    public void Selected_Save_Type_Include_Defualt_Data()
+    {
+        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
+        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+        {
+            LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
+            if (is_Defualt)  // 초기 값
+            {
+                is_Defualt = false;
+                items_Data_1.Clear();
+                for (int i = 0; i < item_List_Data.Count; i++)
+                {
+                    items_Data_1.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
+                }
+            }
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        {
+            LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
+            if (is_Defualt)  // 초기 값
+            {
+                is_Defualt = false;
+                items_Data_2.Clear();
+                for (int i = 0; i < item_List_Data.Count; i++)
+                {
+                    items_Data_2.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
+                }
+            }
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        {
+            LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
+            if (is_Defualt)  // 초기 값
+            {
+                is_Defualt = false;
+                items_Data_3.Clear();
+                for (int i = 0; i < item_List_Data.Count; i++)
+                {
+                    items_Data_3.Add(new New_Item_Data((int)item_List_Data[i]["ID"], 1));
+                }
+            }
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
+        }
+    }
     public void Initailization_Item_List_Data_From_Items_Data_1()
     {
         item_List = new Items_List[items_Data_1.Count];
-        for(int i = 0; i < item_List.Length; i++)
+        for (int i = 0; i < item_List.Length; i++)
         {
             item_List[i] = new Items_List();
         }
-        for(int i = 0; i < items_Data_1.Count; i++)
+        for (int i = 0; i < items_Data_1.Count; i++)
         {
-            for(int j = 0; j < item_List_Data.Count; j++)
+            for (int j = 0; j < item_List_Data.Count; j++)
             {
-                if((int)item_List_Data[j]["ID"] == items_Data_1[i].ID)
+                if ((int)item_List_Data[j]["ID"] == items_Data_1[i].ID)
                 {
                     Inventory_Item_Data_Input(i, j);
                     break;
@@ -136,13 +140,13 @@ public class NewInventory_Items_Data : MonoBehaviour {
             {
                 if ((int)item_List_Data[j]["ID"] == items_Data_3[i].ID)
                 {
-                    Inventory_Item_Data_Input(i,j);
+                    Inventory_Item_Data_Input(i, j);
                     break;
                 }
             }
         }
     }
-    private void Inventory_Item_Data_Input(int i,int j)
+    private void Inventory_Item_Data_Input(int i, int j)
     {
         item_List[i] = new Items_List((int)item_List_Data[j]["ID"], item_List_Data[j]["ITEM_NAME"].ToString(), (int)item_List_Data[j]["INVENTORY_TYPE"],
                    (int)item_List_Data[j]["ITEM_USETYPE"], (int)item_List_Data[j]["ITEM_EQUIPTYPE"], item_List_Data[j]["ITEM_ICON"].ToString(), (int)item_List_Data[j]["ITEM_PRICE"]
@@ -179,15 +183,12 @@ public class NewInventory_Items_Data : MonoBehaviour {
         {
             string json_String = File.ReadAllText(mobile_Path + "/" + "Item_List_Data_1.json");
             JsonData load_Json = JsonMapper.ToObject(json_String);
-            items_Data_1.Clear();            
+            items_Data_1.Clear();
             for (int i = 0; i < load_Json.Count; i++)
             {
                 items_Data_1.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_1();
-        }  else
-        {
-            is_Begin = true;
         }
     }
     // Json 로드 인벤토리 아이템 리스트 Save_Type 2
@@ -203,9 +204,6 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 items_Data_2.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_2();
-        } else
-        {
-            is_Begin = true;
         }
     }
     // Json 로드 인벤토리 아이템 리스트 Save_Type 3
@@ -221,44 +219,45 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 items_Data_3.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
             }
             Initailization_Item_List_Data_From_Items_Data_3();
-        } else
-        {
-            is_Begin = true;
         }
     }
     // 아이템 셋팅 인벤토리 (NewInventory_Scene에서만 적용)
     // 인벤토리 씬에 들어올때 바로 아이템을 인벤토리에 분산 배치 ( 의상, 퀘스트, 잡화)
     private void Spawning_Inventory_Items()
     {
-        int j = 0; 
+        int j = 0;
         int k = 0;
         int t = 0;
         int index_1 = 0; // 인벤토리 (의상)
         int index_2 = 0; // 인벤토리 (퀘스트)
         int index_3 = 0; // 인벤토리 (잡화)
         // -------------------
-        for (int i =0; i < item_List.Length; i++)
+        for (int i = 0; i < item_List.Length; i++)
         {
             // 의상 인벤토리
-            if(item_List[i].INVENTORY_TYPE == 1)
+            if (item_List[i].INVENTORY_TYPE == 1)
             {
                 GameObject item = Instantiate(item_Prefab);
-                if(j < 20)  // 페이지 1
+                if (j < 20)  // 페이지 1
                 {
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(0).transform.GetChild(index_1).transform;
-                }else if(j >= 20 && j < 40) // 페이지 2
+                }
+                else if (j >= 20 && j < 40) // 페이지 2
                 {
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(1).transform.GetChild(index_1).transform;
-                }else if (j >= 40 && j < 60) // 페이지 3
+                }
+                else if (j >= 40 && j < 60) // 페이지 3
                 {
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(2).transform.GetChild(index_1).transform;
-                }else if (j >= 60 && j < 80) // 페이지 4
+                }
+                else if (j >= 60 && j < 80) // 페이지 4
                 {
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(3).transform.GetChild(index_1).transform;
-                }else if (j >= 80 && j < 100) // 페이지 5
+                }
+                else if (j >= 80 && j < 100) // 페이지 5
                 {
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(4).transform.GetChild(index_1).transform;
@@ -267,25 +266,30 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 j++;
                 index_1++;
 
-            } else if (item_List[i].INVENTORY_TYPE == 2) // 퀘스트 인벤토리
+            }
+            else if (item_List[i].INVENTORY_TYPE == 2) // 퀘스트 인벤토리
             {
                 GameObject item = Instantiate(item_Prefab);
                 if (k < 20)  // 페이지 1
                 {
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(0).transform.GetChild(index_2).transform;
-                } else if (k >= 20 && k < 40) // 페이지 2
+                }
+                else if (k >= 20 && k < 40) // 페이지 2
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(1).transform.GetChild(index_2).transform;
-                } else if (k >= 40 && k < 60) // 페이지 3
+                }
+                else if (k >= 40 && k < 60) // 페이지 3
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(2).transform.GetChild(index_2).transform;
-                } else if (k >= 60 && k < 80) // 페이지 4
+                }
+                else if (k >= 60 && k < 80) // 페이지 4
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(3).transform.GetChild(index_2).transform;
-                } else if (k >= 80 && k < 100) // 페이지 5
+                }
+                else if (k >= 80 && k < 100) // 페이지 5
                 {
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(4).transform.GetChild(index_2).transform;
@@ -293,25 +297,30 @@ public class NewInventory_Items_Data : MonoBehaviour {
                 StartCoroutine(Item_Setting_In_Inventory(item, i));
                 k++;
                 index_2++;
-            } else if (item_List[i].INVENTORY_TYPE == 3) // 잡화 인벤토리
+            }
+            else if (item_List[i].INVENTORY_TYPE == 3) // 잡화 인벤토리
             {
                 GameObject item = Instantiate(item_Prefab);
                 if (t < 20)  // 페이지 1
                 {
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(0).transform.GetChild(index_3).transform;
-                } else if (t >= 20 && t < 40) // 페이지 2
+                }
+                else if (t >= 20 && t < 40) // 페이지 2
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(1).transform.GetChild(index_3).transform;
-                } else if (t >= 40 && t < 60) // 페이지 3
+                }
+                else if (t >= 40 && t < 60) // 페이지 3
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(2).transform.GetChild(index_3).transform;
-                } else if (t >= 60 && t < 80) // 페이지 4
+                }
+                else if (t >= 60 && t < 80) // 페이지 4
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(3).transform.GetChild(index_3).transform;
-                } else if (t >= 80 && t < 100) // 페이지 5
+                }
+                else if (t >= 80 && t < 100) // 페이지 5
                 {
                     index_3 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(4).transform.GetChild(index_3).transform;
@@ -330,15 +339,18 @@ public class NewInventory_Items_Data : MonoBehaviour {
             case 1:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_1();
-                } break;
+                }
+                break;
             case 2:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_2();
-                } break;
+                }
+                break;
             case 3:
                 {
                     Previous_Item_Put_To_The_Inventory_Type_3();
-                }  break;
+                }
+                break;
         }
     }
     // 착용전 이전 아이템은 의상 인벤토리로 스폰
@@ -363,7 +375,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 20 && i < 40)
+                }
+                else if (i >= 20 && i < 40)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 2
@@ -376,7 +389,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 40 && i < 60)
+                }
+                else if (i >= 40 && i < 60)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 3
@@ -389,7 +403,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                }else if (i >= 60 && i < 80)
+                }
+                else if (i >= 60 && i < 80)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 4
@@ -402,12 +417,13 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                }else if (i >= 80 && i < 100)
+                }
+                else if (i >= 80 && i < 100)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 5
                         is_Done = true;
-                        Spawn_Item__In_Inventory_Type_1(4,index);
+                        Spawn_Item__In_Inventory_Type_1(4, index);
                         break;
                     }
                     index++;
@@ -443,7 +459,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 20 && i < 40)
+                }
+                else if (i >= 20 && i < 40)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 2
@@ -456,7 +473,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 40 && i < 60)
+                }
+                else if (i >= 40 && i < 60)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 3
@@ -469,7 +487,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                }else if (i >= 60 && i < 80)
+                }
+                else if (i >= 60 && i < 80)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 4
@@ -482,12 +501,13 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 80 && i < 100)
+                }
+                else if (i >= 80 && i < 100)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 5
                         is_Done = true;
-                        Spawn_Item__In_Inventory_Type_2(4,index);
+                        Spawn_Item__In_Inventory_Type_2(4, index);
                         break;
                     }
                     index++;
@@ -523,7 +543,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 20 && i < 40)
+                }
+                else if (i >= 20 && i < 40)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(1).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 2
@@ -536,7 +557,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 40 && i < 60)
+                }
+                else if (i >= 40 && i < 60)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(2).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 3
@@ -549,12 +571,13 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                }  else if (i >= 60 && i < 80)
+                }
+                else if (i >= 60 && i < 80)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(3).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 4
                         is_Done = true;
-                        Spawn_Item__In_Inventory_Type_3(3,index);
+                        Spawn_Item__In_Inventory_Type_3(3, index);
                         break;
                     }
                     index++;
@@ -562,7 +585,8 @@ public class NewInventory_Items_Data : MonoBehaviour {
                     {
                         index = 0;
                     }
-                } else if (i >= 80 && i < 100)
+                }
+                else if (i >= 80 && i < 100)
                 {
                     if (NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(4).transform.GetChild(index).transform.childCount != 1)
                     {   // 페이지 5
@@ -575,7 +599,7 @@ public class NewInventory_Items_Data : MonoBehaviour {
             }
         }
     }
-    private void Spawn_Item__In_Inventory_Type_3(int page,int i)
+    private void Spawn_Item__In_Inventory_Type_3(int page, int i)
     {
         GameObject item = Instantiate(item_Prefab);
         item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(page).transform.GetChild(i).transform;

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using LitJson;
 using System.IO;
 using UnityEngine.SceneManagement;
-public class NewInventory_Manager : MonoBehaviour {
+public class NewInventory_Manager : MonoBehaviour
+{
     public static NewInventory_Manager instance = null;
     public GameObject rena_Attire_Status_Panel; // 의상 패널
     public GameObject party_Status_Panel; // 모험 패널
@@ -28,12 +29,14 @@ public class NewInventory_Manager : MonoBehaviour {
     private int[] rena_Item_Value = new int[12]; // 아이템 착용시 레나 스테이터스 장착 value
     private int[] party_Member_Item_Value = new int[7]; // 아이템 착용시 파티 스테이터스 장착 value
     private int selected_Party_Member; // 선택한 파티 맴버 케릭터
+    private int attire_Id, mood, old;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-        }else
+        }
+        else
         {
             Destroy(this.gameObject);
         }
@@ -43,11 +46,14 @@ public class NewInventory_Manager : MonoBehaviour {
         party_Face_Icon_Member = party_Status_Panel.transform.GetChild(6).gameObject;
         party_character_Skills = party_Status_Panel.transform.GetChild(5).gameObject;
         text_Skills_Panel = party_Status_Panel.transform.GetChild(7).gameObject;
+        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
+        NewInventory_Items_Data.instance.is_Inventory = true;
+        NewInventory_Items_Data.instance.Selected_Save_Type_Include_Defualt_Data();
     }
     private void Start()
     {
         selected_Party_Member = 1;
-        for (int i = 0; i <rena_Item_Value.Length; i++)
+        for (int i = 0; i < rena_Item_Value.Length; i++)
         {
             rena_Item_Value[i] = 0;
         }
@@ -90,7 +96,8 @@ public class NewInventory_Manager : MonoBehaviour {
         if (!rena_Attire_Status_Text.activeInHierarchy)
         {
             rena_Attire_Status_Text.SetActive(true);
-        } else
+        }
+        else
         {
             rena_Attire_Status_Text.SetActive(false);
         }
@@ -98,19 +105,19 @@ public class NewInventory_Manager : MonoBehaviour {
     // 파티 맴버 Image_Icon 푸싱
     private void Party_Face_Icon_Member_Image_Input()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
-                    for(int i = 0; i < 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
                         party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().SetNativeSize();
                     }
-                }break;
+                }
+                break;
             case 2:
                 {
                     for (int i = 4; i < 8; i++)
@@ -119,7 +126,8 @@ public class NewInventory_Manager : MonoBehaviour {
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
                         party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().SetNativeSize();
                     }
-                } break;
+                }
+                break;
             case 3:
                 {
                     for (int i = 8; i < 12; i++)
@@ -128,7 +136,8 @@ public class NewInventory_Manager : MonoBehaviour {
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
                         party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().SetNativeSize();
                     }
-                } break;
+                }
+                break;
         }
     }
     // 파티 맴버 창에서 케릭터를 선택할 경우 모든 정보는 선택한 케릭터정보로 바뀜 (스테이터스창 , 스킬창 , 착용아이템 )
@@ -159,29 +168,31 @@ public class NewInventory_Manager : MonoBehaviour {
     // 파티 맴버의 선택한 케릭터의 소유하고있는 스킬트리 and SD 케릭터 모델
     private void Party_Member_Selected_Character_Skills_Tree()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member - 1);
-                } break;
+                }
+                break;
             case 2:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member + 3);
-                } break;
+                }
+                break;
             case 3:
                 {
                     Selected_Party_Member_Skills_Setting(selected_Party_Member + 7);
-                } break;
+                }
+                break;
         }
-    } 
+    }
     // 파티맴버 스킬 and SD 케릭터 모델 이미지 푸싱
     private void Selected_Party_Member_Skills_Setting(int i)
     {
         // 스킬
-        party_character_Skills.transform.GetChild(0).GetComponent<Image>().sprite = 
+        party_character_Skills.transform.GetChild(0).GetComponent<Image>().sprite =
                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
                         NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1);
         party_character_Skills.transform.GetChild(0).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1.ToString();
@@ -210,9 +221,10 @@ public class NewInventory_Manager : MonoBehaviour {
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localScale = new Vector3(1f, 1f, 1f);
             weapon.transform.GetComponent<Image>().SetNativeSize();
-        } else
+        }
+        else
         {
-            if(party_Status_Panel.transform.GetChild(1).childCount == 2)
+            if (party_Status_Panel.transform.GetChild(1).childCount == 2)
             {
                 Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
             }
@@ -231,7 +243,8 @@ public class NewInventory_Manager : MonoBehaviour {
             armor.transform.localPosition = Vector3.zero;
             armor.transform.localScale = new Vector3(1f, 1f, 1f);
             armor.transform.GetComponent<Image>().SetNativeSize();
-        } else
+        }
+        else
         {
             if (party_Status_Panel.transform.GetChild(2).childCount == 2)
             {
@@ -239,10 +252,11 @@ public class NewInventory_Manager : MonoBehaviour {
             }
         }
         // 해고 버튼 true or false
-        if(NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 1)
+        if (NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 1)
         {
             party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(false);
-        } else if(NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 0)
+        }
+        else if (NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 0)
         {
             party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(true);
         }
@@ -250,22 +264,24 @@ public class NewInventory_Manager : MonoBehaviour {
     // 레나 착용 의상 로드
     private void Rena_Attire_Equip_Item()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
-                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                } break;
+                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1);
+                }
+                break;
             case 2:
                 {
-                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                } break;
+                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1);
+                }
+                break;
             case 3:
                 {
-                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1 );
-                } break;
+                    Rena_Setting_Clothe(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1);
+                }
+                break;
         }
     }
     private void Rena_Setting_Clothe(int index)
@@ -277,22 +293,24 @@ public class NewInventory_Manager : MonoBehaviour {
     // 레나 의상 스테이터스 값 푸싱
     private void Setting_Rena_Attire_Status_Text_Input()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
             case 2:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
             case 3:
                 {
                     Rena_Attire_Status_Text(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
         }
     }
     private void Rena_Attire_Status_Text(int i)
@@ -311,7 +329,7 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Item_Value[11] = NewInventory_JsonData.instance.rena_Attire_Status[i - 1].EQUIP_STRESS;
         //--------------------------------------------------------------------
         rena_Attire_Status_Text.transform.GetChild(0).GetComponent<Text>().text = "근력: " +
-            NewInventory_JsonData.instance.rena_Attire_Status[i - 1].MUSCULAR_STRENGTH.ToString() + " + " + "("+rena_Item_Value[0]+")";
+            NewInventory_JsonData.instance.rena_Attire_Status[i - 1].MUSCULAR_STRENGTH.ToString() + " + " + "(" + rena_Item_Value[0] + ")";
         rena_Attire_Status_Text.transform.GetChild(1).GetComponent<Text>().text = "마법력: " +
             NewInventory_JsonData.instance.rena_Attire_Status[i - 1].MAGIC_POWER.ToString() + " + " + "(" + rena_Item_Value[1] + ")";
         rena_Attire_Status_Text.transform.GetChild(2).GetComponent<Text>().text = "체력: " +
@@ -338,22 +356,24 @@ public class NewInventory_Manager : MonoBehaviour {
     // 파티 스테이터스 값 푸싱
     private void Setting_Party_Status_Text_Input()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
                     Party_Status_Text(selected_Party_Member - 1);
-                } break;
+                }
+                break;
             case 2:
                 {
                     Party_Status_Text(selected_Party_Member + 3);
-                } break;
+                }
+                break;
             case 3:
                 {
                     Party_Status_Text(selected_Party_Member + 7);
-                } break;
+                }
+                break;
         }
     }
     private void Party_Status_Text(int i)
@@ -373,7 +393,7 @@ public class NewInventory_Manager : MonoBehaviour {
         party_Status_Text.transform.GetChild(2).GetComponent<Text>().text = "FAME: " +
             NewInventory_JsonData.instance.party_Status[i].FAME.ToString();
         party_Status_Text.transform.GetChild(3).GetComponent<Text>().text = "ATK: " +
-            NewInventory_JsonData.instance.party_Status[i].ATK.ToString() + " + " + "("+party_Member_Item_Value[0] +")";
+            NewInventory_JsonData.instance.party_Status[i].ATK.ToString() + " + " + "(" + party_Member_Item_Value[0] + ")";
         party_Status_Text.transform.GetChild(4).GetComponent<Text>().text = "DEF: " +
             NewInventory_JsonData.instance.party_Status[i].DEF.ToString() + " + " + "(" + party_Member_Item_Value[1] + ")";
         party_Status_Text.transform.GetChild(5).GetComponent<Text>().text = "MAG: " +
@@ -391,99 +411,53 @@ public class NewInventory_Manager : MonoBehaviour {
     // 조건에 맞는 레나의 옷차림 세팅
     private void Rena_Attire_Setting()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
-        switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
+        int _stress = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].STRESS;
+        if (_stress >= 0 && _stress <= 30)
         {
-            case 1:
-                {
-                    int _stress = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].STRESS;
-                    if (_stress >= 0 && _stress <= 30)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
-                        Rena_Attire_Parts_Setting();
-                    } else if(_stress >= 31 && _stress <= 60)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
-                        Rena_Attire_Parts_Setting();
-                    } else if(_stress >= 61 && _stress <= 200)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
-                        Rena_Attire_Parts_Setting();
-                    }                   
-                }break;
-            case 2:
-                {
-                    int _stress = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].STRESS;
-                    if (_stress >= 0 && _stress <= 30)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
-                        Rena_Attire_Parts_Setting();
-                    } else if (_stress >= 31 && _stress <= 60)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
-                        Rena_Attire_Parts_Setting();
-                    } else if (_stress >= 61 && _stress <= 200)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
-                        Rena_Attire_Parts_Setting();
-                    }
-                } break;
-            case 3:
-                {
-                    int _stress = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].STRESS;
-                    if (_stress >= 0 && _stress <= 30)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
-                        Rena_Attire_Parts_Setting();
-                    } else if (_stress >= 31 && _stress <= 60)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
-                        Rena_Attire_Parts_Setting();
-                    } else if (_stress >= 61 && _stress <= 200)
-                    {
-                        NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
-                        Rena_Attire_Parts_Setting();
-                    }
-                } break;
+            NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 1;
+            Rena_Attire_Parts_Setting();
+        }
+        else if (_stress >= 31 && _stress <= 60)
+        {
+            NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 2;
+            Rena_Attire_Parts_Setting();
+        }
+        else if (_stress >= 61 && _stress <= 200)
+        {
+            NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD = 3;
+            Rena_Attire_Parts_Setting();
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
-        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
     }
     // 조건에 맞는 레나의 파츠 세팅
     private void Rena_Attire_Parts_Setting()
     {
-        int attire_Id = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].ATTIRE_ID;
-        int mood = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD;
-        int old = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].OLD;
+        attire_Id = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].ATTIRE_ID;
+        mood = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD;
+        old = NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].OLD;
         for (int i = 0; i < rena_Part_Data.Count; i++)
         {
-            if (old == (int)rena_Part_Data[i]["OLD"])
+            if (old == (int)rena_Part_Data[i]["OLD"] && mood == (int)rena_Part_Data[i]["MOOD"] && attire_Id == (int)rena_Part_Data[i]["ATTIRE_ID"])
             {
-                if (mood == (int)rena_Part_Data[i]["MOOD"])
-                {
-                    if (attire_Id == (int)rena_Part_Data[i]["ATTIRE_ID"])
-                    {
-                        // 바디 파츠
-                        rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
-                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["BODY_PARTS"].ToString());
-                        rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
-                        // 의상 파츠
-                        rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
-                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["ATTIRE_PARTS"].ToString());
-                        rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().SetNativeSize();
-                        // 얼굴 파츠 1
-                        rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().sprite =
-                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_1"].ToString());
-                        rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
-                        // 얼굴 파츠 2
-                        rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().sprite =
-                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_2"].ToString());
-                        rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().SetNativeSize();
-                        StartCoroutine(Rena_Eye_Start()); // 눈깜박임
-                        break;
-                    }                    
-                }
+                // 바디 파츠
+                rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["BODY_PARTS"].ToString());
+                rena_Character_Image_Panel.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
+                // 의상 파츠
+                rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["ATTIRE_PARTS"].ToString());
+                rena_Character_Image_Panel.transform.GetChild(1).GetComponent<Image>().SetNativeSize();
+                // 얼굴 파츠 1
+                rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_1"].ToString());
+                rena_Character_Image_Panel.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
+                // 얼굴 파츠 2
+                rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>("JHM.Img/New_Inventory/" + rena_Part_Data[i]["MOOD_FACE_PARTS_2"].ToString());
+                rena_Character_Image_Panel.transform.GetChild(3).GetComponent<Image>().SetNativeSize();
+                Button_Pressed_Rena_Attire_Status(); // 레나 fade in 하면서 등장
+                break;
             }
         }
     }
@@ -507,10 +481,11 @@ public class NewInventory_Manager : MonoBehaviour {
         rena_Attire_Status_Panel.SetActive(true);
         party_Status_Panel.SetActive(false);
         // --------------------------------------
+        // 레나 케릭터 fade in 하면서 등장
         StopAllCoroutines(); // 레나 눈깜박임 동작 멈춤 //  한번더 주는이유는 레나 fade in 모션이 이버튼 클릭햇을때 작동하기위해서 입니다
-        rena_Character_Image_Panel.SetActive(false);  // *****************
+        rena_Character_Image_Panel.SetActive(false);
         rena_Character_Image_Panel.SetActive(true);
-        StartCoroutine(Rena_Eye_Start());
+        StartCoroutine(Rena_Eye_Start()); // 레나 눈깜박임 동작 시작
     }
     // 레나 모험 패널  ON
     public void Button_Pressed_Party_Status()
@@ -518,7 +493,7 @@ public class NewInventory_Manager : MonoBehaviour {
         // 의상 인벤토리 아이템 클릭햇을경우 모험페이지로 이동할때 사용 버튼 false 
         if (selected_Item.INVENTORY_TYPE == 1)
         {
-            item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);         
+            item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
         }
         // --------------------------------------
         rena_Attire_Status_Panel.SetActive(false);
@@ -551,7 +526,7 @@ public class NewInventory_Manager : MonoBehaviour {
     // 인벤토리 페이지 1 ( 의 상 )
     public void Button_Inventory_Type_1_LeftArrow()
     {
-        if(Current_Page_1 > 1 && Current_Page_1 <= 5)
+        if (Current_Page_1 > 1 && Current_Page_1 <= 5)
         {
             Current_Page_1--;
             Inventory_Type_1_Setting(Current_Page_1);
@@ -559,7 +534,7 @@ public class NewInventory_Manager : MonoBehaviour {
     }
     public void Button_Inventory_Type_1_RightArrow()
     {
-        if (Current_Page_1 >= 1  && Current_Page_1 < 5)
+        if (Current_Page_1 >= 1 && Current_Page_1 < 5)
         {
             Current_Page_1++;
             Inventory_Type_1_Setting(Current_Page_1);
@@ -570,10 +545,11 @@ public class NewInventory_Manager : MonoBehaviour {
         inventory_Type_1.transform.GetChild(5).GetComponent<Text>().text = page_Num.ToString() + " / 5";
         for (int i = 0; i < 5; i++)
         {
-            if(i == page_Num - 1)
+            if (i == page_Num - 1)
             {
                 inventory_Type_1.transform.GetChild(i).gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 inventory_Type_1.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -605,7 +581,8 @@ public class NewInventory_Manager : MonoBehaviour {
             if (i == page_Num - 1)
             {
                 inventory_Type_2.transform.GetChild(i).gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 inventory_Type_2.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -637,7 +614,8 @@ public class NewInventory_Manager : MonoBehaviour {
             if (i == page_Num - 1)
             {
                 inventory_Type_3.transform.GetChild(i).gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 inventory_Type_3.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -649,16 +627,18 @@ public class NewInventory_Manager : MonoBehaviour {
     {
         item_Status_Panel.SetActive(true);
         // 만약 _item_UseType 이 1 일경우 사용버튼 true  2일 경우 false
-        if(select_Item.ITEM_USETYPE == 1)
+        if (select_Item.ITEM_USETYPE == 1)
         {
             if (party_Status_Panel.gameObject.activeInHierarchy && inventory_Panel.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
-            } else
+            }
+            else
             {
                 item_Status_Panel.transform.GetChild(2).gameObject.SetActive(true);
             }
-        } else if(select_Item.ITEM_USETYPE == 2)
+        }
+        else if (select_Item.ITEM_USETYPE == 2)
         {
             item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
         }
@@ -679,7 +659,6 @@ public class NewInventory_Manager : MonoBehaviour {
     // 아이템 사용 버튼 누를시 실행되는 함수 
     public void Button_Pressed_Item_EquipType_Input()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
         Inventory_Item_Data_Loading();
@@ -688,21 +667,31 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1:
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
             case 2:
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
             case 3:
                 {
                     Item_EquipType_Value(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE);
-                } break;
+                }
+                break;
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
         Inventory_Item_Data_Saving();
         Party_Face_Icon_Member_Image_Input();
         item_Status_Panel.SetActive(false);
+        // 레나 복장 교체하면 작동
+        if (attire_Id != NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].ATTIRE_ID
+            || mood != NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].MOOD
+            || old != NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].OLD)
+        {
+            Rena_Attire_Setting(); // 레나 의상 체인지와 fade in 하면서 등장
+        }
     }
     // 아이템 사용시 의상 스테이터스 값  UP , DOWN
     private void Item_EquipType_Value(int save_Type)
@@ -712,7 +701,7 @@ public class NewInventory_Manager : MonoBehaviour {
             case 1: // 의상실 의상슬롯장착 ( 좋은옷 )
                 {
                     //  이전 아이템
-                    if(NewInventory_JsonData.instance.rena_Attire_Status[save_Type -1].ATTIRE_ID != 0)
+                    if (NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID != 0)
                     {
                         rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite = null;
                         if (NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID == 30005)
@@ -726,11 +715,13 @@ public class NewInventory_Manager : MonoBehaviour {
                         {
                             NewInventory_Items_Data.instance.items_Data_1.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
-                        } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+                        }
+                        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
                         {
                             NewInventory_Items_Data.instance.items_Data_2.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
-                        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+                        }
+                        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
                         {
                             NewInventory_Items_Data.instance.items_Data_3.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID, 1));
@@ -768,7 +759,8 @@ public class NewInventory_Manager : MonoBehaviour {
                                 NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID = selected_Item.ID;
                             }
                         }
-                    } else if (selected_Item.ID == 30004)  // 평상복 
+                    }
+                    else if (selected_Item.ID == 30004)  // 평상복 
                     {
                         for (int i = 0; i < NewInventory_Items_Data.instance.item_List.Length; i++)
                         {
@@ -782,7 +774,8 @@ public class NewInventory_Manager : MonoBehaviour {
                     }
                     Rena_Attire_Status_Text(save_Type); // 레나 스테이터스 텍스트
                     Destory_Selected_Item_Data();
-                } break;
+                }
+                break;
             case 2:  // 의상실 소모품
                 {
                     if (selected_Item.ID == 30007) // 시집
@@ -794,7 +787,8 @@ public class NewInventory_Manager : MonoBehaviour {
                                 NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].SENSE += selected_Item.ITEM_VALUE_1;
                             }
                         }
-                    } else if (selected_Item.ID == 30014) // 빨간 책
+                    }
+                    else if (selected_Item.ID == 30014) // 빨간 책
                     {
                         if (selected_Item.ITEM_VALUETYPE_1 == 12) // 스트레스
                         {
@@ -802,11 +796,50 @@ public class NewInventory_Manager : MonoBehaviour {
                             { // 값을 뻬라는 의미
                                 NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STRESS -= selected_Item.ITEM_VALUE_1;
                             }
+                            if (Limited_Less_Than_Zero(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STRESS))
+                            {
+                                NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STRESS = 0;
+                            }
+                        }
+                    }
+                    else if (selected_Item.ID == 30008) // 떡국
+                    {
+                        if (selected_Item.ITEM_VALUETYPE_1 == 22) // OLD
+                        {
+                            if (selected_Item.UPDOWN_1 == 1)
+                            { // 값을 더하라는 의미
+                                NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].OLD += selected_Item.ITEM_VALUE_1;
+                            }
+                        }
+                    }
+                    else if (selected_Item.ID == 30009) // 시간의 비약
+                    {
+                        if (selected_Item.ITEM_VALUETYPE_1 == 22) // OLD
+                        {
+                            if (selected_Item.UPDOWN_1 == 2)
+                            { // 값을 뻬라는 의미
+                                NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].OLD -= selected_Item.ITEM_VALUE_1;
+                            }
+                            if (Limited_Less_Than_Zero(NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].OLD))
+                            {
+                                NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].OLD = 0;
+                            }
+                        }
+                    }
+                    else if (selected_Item.ID == 30013) // 상사의 사진
+                    {
+                        if (selected_Item.ITEM_VALUETYPE_1 == 12) // OLD
+                        {
+                            if (selected_Item.UPDOWN_1 == 1)
+                            { // 값을 더하라는 의미
+                                NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].STRESS += selected_Item.ITEM_VALUE_1;
+                            }
                         }
                     }
                     Rena_Attire_Status_Text(save_Type); // 레나 스테이터스 텍스트
                     Destory_Selected_Item_Data();
-                } break;
+                }
+                break;
             case 3:  // 모험실 무기슬롯장착
                 {
                     // 강철검
@@ -814,17 +847,19 @@ public class NewInventory_Manager : MonoBehaviour {
                     if (save_Type == 1)
                     {
                         _index = 0;
-                    } else if (save_Type == 2)
+                    }
+                    else if (save_Type == 2)
                     {
                         _index = 4;
-                    } else if (save_Type == 3)
+                    }
+                    else if (save_Type == 3)
                     {
                         _index = 8;
                     }
                     // 이전 아이템
-                    if(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID != 0)
+                    if (NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID != 0)
                     {   // 착용전 무기 슬롯에 있는 아이템은 인벤토리로~~!  
-                        if(party_Status_Panel.transform.GetChild(1).transform.childCount == 2)
+                        if (party_Status_Panel.transform.GetChild(1).transform.childCount == 2)
                         {
                             Destroy(party_Status_Panel.transform.GetChild(1).transform.GetChild(1).gameObject);
                             NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ATK -=
@@ -833,11 +868,13 @@ public class NewInventory_Manager : MonoBehaviour {
                             {
                                 NewInventory_Items_Data.instance.items_Data_1.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
-                            } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+                            }
+                            else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
                             {
                                 NewInventory_Items_Data.instance.items_Data_2.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
-                            }else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+                            }
+                            else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
                             {
                                 NewInventory_Items_Data.instance.items_Data_3.Add(
                                 new New_Item_Data(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].WEAPON_ID, 1));
@@ -847,7 +884,7 @@ public class NewInventory_Manager : MonoBehaviour {
                         }
                     }
                     // 착용 아이템
-                    if (selected_Item.ITEM_VALUETYPE_1 == 14) 
+                    if (selected_Item.ITEM_VALUETYPE_1 == 14)
                     {
                         if (selected_Item.UPDOWN_1 == 1)
                         { // 값을 더하라는 의미
@@ -859,7 +896,8 @@ public class NewInventory_Manager : MonoBehaviour {
                     Party_Status_Text((_index + selected_Party_Member) - 1); // 파티 스테이터스 텍스트
                     Selected_Party_Member_Skills_Setting((_index + selected_Party_Member) - 1);
                     Destory_Selected_Item_Data();
-                } break;
+                }
+                break;
             case 4:  // 모험실 방어구 슬롯 장착
                 {
                     int _index = 0;
@@ -876,7 +914,7 @@ public class NewInventory_Manager : MonoBehaviour {
                         _index = 8;
                     }
                     // 이전 아이템
-                    if(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ARMOR_ID != 0)
+                    if (NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ARMOR_ID != 0)
                     {    // 착용전 무기 슬롯에 있는 아이템은 인벤토리로~~!  
                         if (party_Status_Panel.transform.GetChild(2).transform.childCount == 2)
                         {
@@ -903,11 +941,11 @@ public class NewInventory_Manager : MonoBehaviour {
                         }
                     }
                     // 착용 아이템
-                    if(selected_Item.ID == 30001) // 노브 헬멧
+                    if (selected_Item.ID == 30001) // 노브 헬멧
                     {
-                        if(selected_Item.ITEM_VALUETYPE_1 == 15) // def
+                        if (selected_Item.ITEM_VALUETYPE_1 == 15) // def
                         {
-                            if(selected_Item.UPDOWN_1 == 1) // up
+                            if (selected_Item.UPDOWN_1 == 1) // up
                             {
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].DEF += selected_Item.ITEM_VALUE_1;
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ARMOR_ID = selected_Item.ID;
@@ -915,11 +953,11 @@ public class NewInventory_Manager : MonoBehaviour {
                             }
                         }
                     }
-                    if(selected_Item.ID == 30003) // 강철 방패
+                    if (selected_Item.ID == 30003) // 강철 방패
                     {
-                        if(selected_Item.ITEM_VALUETYPE_1 == 15) // def
+                        if (selected_Item.ITEM_VALUETYPE_1 == 15) // def
                         {
-                            if(selected_Item.UPDOWN_1 == 1) // hp
+                            if (selected_Item.UPDOWN_1 == 1) // hp
                             {
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].DEF += selected_Item.ITEM_VALUE_1;
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].ARMOR_ID = selected_Item.ID;
@@ -955,15 +993,29 @@ public class NewInventory_Manager : MonoBehaviour {
                             {
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP -= selected_Item.ITEM_VALUE_1;
                             }
+                            if (Limited_Less_Than_Zero(NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP))
+                            {
+                                NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP = 0;
+                            }
                         }
                     }
-                    if(selected_Item.ID == 30002) // hp 회복 물약
+                    else if (selected_Item.ID == 30002) // HP 회복 물약
                     {
-                        if(selected_Item.ITEM_VALUETYPE_1 == 20) // hp
+                        if (selected_Item.ITEM_VALUETYPE_1 == 20) // HP
                         {
-                            if(selected_Item.UPDOWN_1 == 1) // value up
+                            if (selected_Item.UPDOWN_1 == 1) // value up
                             {
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP += selected_Item.ITEM_VALUE_1;
+                            }
+                        }
+                    }
+                    else if (selected_Item.ID == 30010) // HP 영구 상승 물약
+                    {
+                        if (selected_Item.ITEM_VALUETYPE_1 == 21) // HP_MAX
+                        {
+                            if (selected_Item.UPDOWN_1 == 1) // value up
+                            {
+                                NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP_MAX += selected_Item.ITEM_VALUE_1;
                             }
                         }
                     }
@@ -972,16 +1024,16 @@ public class NewInventory_Manager : MonoBehaviour {
                     Destory_Selected_Item_Data();
                 }
                 break;
-            case 6: 
+            case 6:
                 {
-                    if(selected_Item.ID == 30015)  // 파티원 파트리샤 추가
+                    if (selected_Item.ID == 30015)  // 파티원 파트리샤 추가
                     {
-                        for(int i =0;i < NewInventory_JsonData.instance.party_Status.Length; i++)
+                        for (int i = 0; i < NewInventory_JsonData.instance.party_Status.Length; i++)
                         {
-                            if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE 
+                            if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE
                                 == NewInventory_JsonData.instance.party_Status[i].SAVE_NUM)
                             {
-                                if(NewInventory_JsonData.instance.party_Status[i].PARTY_ID == 0)
+                                if (NewInventory_JsonData.instance.party_Status[i].PARTY_ID == 0)
                                 {
                                     NewInventory_JsonData.instance.party_Status[i].PARTY_ID = (int)party_List_Data[2]["ID"];
                                     NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON = party_List_Data[2]["PARTY_FACE_ICON"].ToString();
@@ -1007,19 +1059,27 @@ public class NewInventory_Manager : MonoBehaviour {
                         }
                     }
                     Destory_Selected_Item_Data();
-                } break;
+                }
+                break;
         }
+    }
+    // 만약 스테이터스 value 가 0이하일경우
+    private bool Limited_Less_Than_Zero(int _value)
+    {
+        return (_value < 0) ? true : false;
     }
     // 인벤토리 아이템 Save
     private void Inventory_Item_Data_Saving()
     {
-        if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
         {
             NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
         {
             NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
-        }else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
         {
             NewInventory_Items_Data.instance.SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
         }
@@ -1030,10 +1090,12 @@ public class NewInventory_Manager : MonoBehaviour {
         if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
         {
             NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
         {
             NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
         {
             NewInventory_Items_Data.instance.LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
         }
@@ -1054,7 +1116,8 @@ public class NewInventory_Manager : MonoBehaviour {
                 }
             }
             NewInventory_Items_Data.instance.items_Data_1.RemoveAt(index);
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
         {
             int index = 0;
             for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_2.Count; i++)
@@ -1066,7 +1129,8 @@ public class NewInventory_Manager : MonoBehaviour {
                 }
             }
             NewInventory_Items_Data.instance.items_Data_2.RemoveAt(index);
-        } else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        }
+        else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
         {
             int index = 0;
             for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_3.Count; i++)
@@ -1083,22 +1147,24 @@ public class NewInventory_Manager : MonoBehaviour {
     // 해고 버튼 누를시 선택한 케릭터 데이터 삭제
     public void Button_Selected_Character_Fire()
     {
-        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Party_Status();
         switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
         {
             case 1:
                 {
                     Selected_Character_Delete(selected_Party_Member - 1);
-                } break;
+                }
+                break;
             case 2:
                 {
                     Selected_Character_Delete(selected_Party_Member + 3);
-                } break;
+                }
+                break;
             case 3:
                 {
                     Selected_Character_Delete(selected_Party_Member + 7);
-                } break;
+                }
+                break;
         }
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
         Setting_Party_Status_Text_Input();
@@ -1136,7 +1202,7 @@ public class NewInventory_Manager : MonoBehaviour {
     {
         int skil_Id = int.Parse(_skill_Id);
         text_Skills_Panel.transform.GetChild(0).GetComponent<Text>().text = " ";
-        for (int i =0; i< skills_Data.Count; i++)
+        for (int i = 0; i < skills_Data.Count; i++)
         {
             int skill_Icon = (int)skills_Data[i]["ID"];
             if (skill_Icon == skil_Id)

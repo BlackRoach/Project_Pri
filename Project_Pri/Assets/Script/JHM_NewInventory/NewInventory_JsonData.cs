@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System.IO;
-
-public class NewInventory_JsonData : MonoBehaviour {
+public class NewInventory_JsonData : MonoBehaviour
+{
     public static NewInventory_JsonData instance = null;
     public Save_Type_Option select_Type_Option;
     // 저장 불러오기 게임플레이 데이터
-    public Party_Status[] party_Status;               
-    public Rena_Attire_Status[] rena_Attire_Status;   
+    public Party_Status[] party_Status;
+    public Rena_Attire_Status[] rena_Attire_Status;
     public string mobile_Path; // 모바일 저장 경로
     public int selected_Save_Location; // 저장 위치 알려주는 정수
     // 디폴트 json_data
@@ -18,15 +18,16 @@ public class NewInventory_JsonData : MonoBehaviour {
     private JsonData party_Status_Data;
     private bool is_Begin; // 처음 게임 들어올때 한번 실행
     private void Awake()
-    {       
+    {
         if (instance == null)
         {
             instance = this;
-        }else
+        }
+        else
         {
             Destroy(this.gameObject);
         }
-        is_Begin = false; 
+        is_Begin = false;
         party_Status = new Party_Status[12];
         rena_Attire_Status = new Rena_Attire_Status[3];
         mobile_Path = Application.persistentDataPath;
@@ -49,7 +50,7 @@ public class NewInventory_JsonData : MonoBehaviour {
                 rena_Attire_Status[i] = new Rena_Attire_Status((int)rena_Attire_Status_Data[helper_2]["SAVE_NUM"]);
                 helper_2++;
             }
-            select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"],(int)save_Type_Option[0]["SAVE_TYPE"]);
+            select_Type_Option = new Save_Type_Option((int)save_Type_Option[0]["LANGUAGE_TYPE"], (int)save_Type_Option[0]["SAVE_TYPE"]);
         }
     }
     private void Start()
@@ -65,7 +66,6 @@ public class NewInventory_JsonData : MonoBehaviour {
         rena_Attire_Status_Data = JsonMapper.ToObject(json_File_2.text);
         TextAsset json_File_3 = Resources.Load<TextAsset>("JHM.Resources.Json/New_Inventory_Data/PARTY_STATUS_DATA");
         party_Status_Data = JsonMapper.ToObject(json_File_3.text);
-        
     }
     // 만약 ID값이 0일 경우 초기값 넣기 Rena_Attire_Status
     public void Default_Save_Data_Rena_Attire_Status(int i)
@@ -83,12 +83,12 @@ public class NewInventory_JsonData : MonoBehaviour {
     // 만약 ID값이 0일 경우 초기값 넣기 Party_Status
     public void Default_Save_Data_Party_Status(int i)
     {
-        int k = 0;  
-        int p = 4;  
+        int k = 0;
+        int p = 4;
         for (int j = 0; j < party_Status.Length; j++)
         {
             if (party_Status[j].SAVE_NUM == i)
-            {                
+            {
                 party_Status[j] = new Party_Status((int)party_Status_Data[p]["SAVE_NUM"], (int)party_Status_Data[p]["PARTY_NUM"], (int)party_Status_Data[k]["PARTY_ID"], party_Status_Data[k]["PARTY_FACE_ICON"].ToString(), party_Status_Data[k]["PARTY_NAME"].ToString(), (int)party_Status_Data[k]["DISMISSIBILITY_TYPE"]
                         , party_Status_Data[k]["PARTY_GRADE"].ToString(), (int)party_Status_Data[k]["FAME"], (int)party_Status_Data[k]["ATK"], (int)party_Status_Data[k]["DEF"]
                         , (int)party_Status_Data[k]["MAG"], (int)party_Status_Data[k]["REP"], (int)party_Status_Data[k]["SP"], (int)party_Status_Data[k]["SP2"], (int)party_Status_Data[k]["HP"]
@@ -127,7 +127,7 @@ public class NewInventory_JsonData : MonoBehaviour {
         {
             string json_String = File.ReadAllText(mobile_Path + "/" + "Save_Type_Option_Data.json");
             JsonData load_Json = JsonMapper.ToObject(json_String);
-            select_Type_Option = new Save_Type_Option((int)load_Json["LANGUAGE_TYPE"],(int)load_Json["SAVE_TYPE"]);             
+            select_Type_Option = new Save_Type_Option((int)load_Json["LANGUAGE_TYPE"], (int)load_Json["SAVE_TYPE"]);
         }
     }
     // Json 로드 PARTY_STATUS_DATA
@@ -147,7 +147,6 @@ public class NewInventory_JsonData : MonoBehaviour {
                     , (int)load_Json[i]["EQUIP_SP2"], (int)load_Json[i]["EQUIP_HP_MAX"], load_Json[i]["SD_CHARACTER_MODEL"].ToString()
                     , (int)load_Json[i]["PARTY_ATTACK_NUM"], (int)load_Json[i]["PARTY_ATTACK1"], (int)load_Json[i]["PARTY_ATTACK2"]
                     , (int)load_Json[i]["PARTY_ATTACK3"]);
-          
             }
         }
     }
@@ -160,7 +159,7 @@ public class NewInventory_JsonData : MonoBehaviour {
             JsonData load_Json = JsonMapper.ToObject(json_String);
             for (int i = 0; i < rena_Attire_Status.Length; i++)
             {
-                rena_Attire_Status[i] = new Rena_Attire_Status((int)load_Json[i]["SAVE_NUM"], (int)load_Json[i]["ID"],load_Json[i]["NAME"].ToString()
+                rena_Attire_Status[i] = new Rena_Attire_Status((int)load_Json[i]["SAVE_NUM"], (int)load_Json[i]["ID"], load_Json[i]["NAME"].ToString()
                     , (int)load_Json[i]["MUSCULAR_STRENGTH"], (int)load_Json[i]["MAGIC_POWER"], (int)load_Json[i]["STAMINA"]
                     , (int)load_Json[i]["INTELLECT"], (int)load_Json[i]["CHARM"], (int)load_Json[i]["SENSE"], (int)load_Json[i]["PRIDE"]
                     , (int)load_Json[i]["ARTISTIC"], (int)load_Json[i]["ELEGANCE"], (int)load_Json[i]["MORALITY"], (int)load_Json[i]["RELIABILITY"], (int)load_Json[i]["STRESS"]
@@ -175,7 +174,7 @@ public class NewInventory_JsonData : MonoBehaviour {
         {
             is_Begin = true;
         }
-    }    
+    }
 } // class
 
 

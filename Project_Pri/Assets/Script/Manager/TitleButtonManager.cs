@@ -37,11 +37,11 @@ public class TitleButtonManager : MonoBehaviour {
 
     [SerializeField] private float playingTime = 1f;
 
-
     private Image touchToStartImg;
     private float time = 0f;
     private bool isTitle = false;
-    void Start() {
+    void Start()
+    {
         touchToStartButton.SetActive(true);
         selectableButtons.SetActive(false);
         // ----------------------------------------
@@ -50,12 +50,8 @@ public class TitleButtonManager : MonoBehaviour {
         game_Start_Panel.SetActive(false);
         game_LoadError_Panel.SetActive(false);
 
-    touchToStartImg = touchToStartButton.GetComponent<Image>();
+        touchToStartImg = touchToStartButton.GetComponent<Image>();
         StartCoroutine(TouchButtonInvisible());
-    }
-
-    void Update() {
-
     }
 
     public void TouchToStartButtonOn()
@@ -68,7 +64,7 @@ public class TitleButtonManager : MonoBehaviour {
     {
         // 새게임 버튼
         //초기화 진행
-        
+
         SceneManager.LoadScene("WorldMap");
     }
     public void LoadGameButtonOn()
@@ -95,6 +91,7 @@ public class TitleButtonManager : MonoBehaviour {
     // 세이브 버튼 누를시 데이터 초기화 후 게임 실행 
     public void Button_Save_Data_Play_Game()
     {
+        NewInventory_Items_Data.instance.is_Defualt = true;
         switch (NewInventory_JsonData.instance.selected_Save_Location)
         {
             case 1:
@@ -117,9 +114,10 @@ public class TitleButtonManager : MonoBehaviour {
                 break;
         }
         NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE = NewInventory_JsonData.instance.selected_Save_Location;
+        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Rena_Attire_Status();
         NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Party_Status();
-        NewInventory_JsonData.instance.SAVE_NEW_DATA_JSON_Save_Type_Option();      
+        NewInventory_Items_Data.instance.Selected_Save_Type_Include_Defualt_Data();
         // -----------------------------
         SceneManager.LoadScene("Main");
     }
@@ -128,7 +126,7 @@ public class TitleButtonManager : MonoBehaviour {
     {
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Rena_Attire_Status();
-       
+
         NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE = NewInventory_JsonData.instance.selected_Save_Location;
         if (NewInventory_JsonData.instance.rena_Attire_Status[NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE - 1].ID == 0)
         {
@@ -178,7 +176,7 @@ public class TitleButtonManager : MonoBehaviour {
             yield return null;
         }
         yield return null;
-        if(!isTitle)
+        if (!isTitle)
             StartCoroutine(TouchButtonInvisible());
     }
     // ---------------------------------------------
