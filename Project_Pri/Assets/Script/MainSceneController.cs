@@ -64,7 +64,7 @@ public class MainSceneController : MonoBehaviour {
         AudioManager AM = FindObjectOfType<AudioManager>();
         AM.SetSoundEffectVolume(value);
     }
-
+  
     public void EnterSupportPanel()
     {
         settingPanel.SetActive(false);
