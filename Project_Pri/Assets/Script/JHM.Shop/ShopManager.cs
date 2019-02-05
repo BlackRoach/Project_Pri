@@ -339,7 +339,7 @@ public class ShopManager : MonoBehaviour {
     {
         gold -= selectedItem.PRICE;
         goldText.text = gold.ToString();
-   //     inventoryAddItem.Add_Item_Value(selectedItem.ID);
+        NewInventory_Items_Data.instance.Add_Item_Data(selectedItem.ID);
         CloseDialogueBox();
     }
 

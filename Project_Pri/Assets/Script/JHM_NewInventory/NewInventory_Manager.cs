@@ -1021,7 +1021,7 @@ public class NewInventory_Manager : MonoBehaviour
                     }
                     Party_Status_Text((_index + selected_Party_Member) - 1); // 파티 스테이터스 텍스트
                     Selected_Party_Member_Skills_Setting((_index + selected_Party_Member) - 1);
-                    Destory_Selected_Item_Data();
+                    Destory_Selected_Item_Data();              
                 }
                 break;
             case 6:

@@ -103,6 +103,7 @@ public class NewInventory_Items_Data : MonoBehaviour
                 if ((int)item_List_Data[j]["ID"] == items_Data_1[i].ID)
                 {
                     Inventory_Item_Data_Input(i, j);
+                    item_List[i].AMOUNT = items_Data_1[i].AMOUNT;
                     break;
                 }
             }
@@ -122,6 +123,7 @@ public class NewInventory_Items_Data : MonoBehaviour
                 if ((int)item_List_Data[j]["ID"] == items_Data_2[i].ID)
                 {
                     Inventory_Item_Data_Input(i, j);
+                    item_List[i].AMOUNT = items_Data_2[i].AMOUNT;
                     break;
                 }
             }
@@ -141,6 +143,7 @@ public class NewInventory_Items_Data : MonoBehaviour
                 if ((int)item_List_Data[j]["ID"] == items_Data_3[i].ID)
                 {
                     Inventory_Item_Data_Input(i, j);
+                    item_List[i].AMOUNT = items_Data_3[i].AMOUNT;
                     break;
                 }
             }
@@ -186,7 +189,7 @@ public class NewInventory_Items_Data : MonoBehaviour
             items_Data_1.Clear();
             for (int i = 0; i < load_Json.Count; i++)
             {
-                items_Data_1.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
+                items_Data_1.Add(new New_Item_Data((int)load_Json[i]["ID"], (int)load_Json[i]["AMOUNT"]));
             }
             Initailization_Item_List_Data_From_Items_Data_1();
         }
@@ -201,7 +204,7 @@ public class NewInventory_Items_Data : MonoBehaviour
             items_Data_2.Clear();
             for (int i = 0; i < load_Json.Count; i++)
             {
-                items_Data_2.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
+                items_Data_2.Add(new New_Item_Data((int)load_Json[i]["ID"], (int)load_Json[i]["AMOUNT"]));
             }
             Initailization_Item_List_Data_From_Items_Data_2();
         }
@@ -216,7 +219,7 @@ public class NewInventory_Items_Data : MonoBehaviour
             items_Data_3.Clear();
             for (int i = 0; i < load_Json.Count; i++)
             {
-                items_Data_3.Add(new New_Item_Data((int)load_Json[i]["ID"], 1));
+                items_Data_3.Add(new New_Item_Data((int)load_Json[i]["ID"], (int)load_Json[i]["AMOUNT"]));
             }
             Initailization_Item_List_Data_From_Items_Data_3();
         }
@@ -611,11 +614,108 @@ public class NewInventory_Items_Data : MonoBehaviour
         _item.transform.localScale = Vector3.zero;
         _item.transform.GetComponent<New_Item>().this_Item = item_List[_i];
         _item.transform.GetComponent<Image>().sprite = Resources.Load<Sprite>("JHM.Img/New_Inventory/" + item_List[_i].ITEM_ICON.ToString());
+        _item.transform.GetChild(0).GetComponent<Text>().text = item_List[_i].AMOUNT.ToString();
         yield return new WaitForSeconds(0.05f);
         _item.transform.localRotation = Quaternion.identity;
         _item.transform.localPosition = Vector3.zero;
         _item.transform.localScale = new Vector3(1f, 1f, 1f);
         _item.transform.GetComponent<Image>().SetNativeSize();
+    }
+    // 외부씬에서 아이템 구매나 추가시 이 함수 이용
+    public void Add_Item_Data(int selected_Item)
+    {
+        NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
+        if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+        {
+            Increase_Item_Data_1_Amount(selected_Item);
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_1();
+        }else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+        {
+            Increase_Item_Data_2_Amount(selected_Item);
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_2();
+        }else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+        {
+            Increase_Item_Data_3_Amount(selected_Item);
+            SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
+        }
+    }
+    private void Increase_Item_Data_1_Amount(int id)
+    {
+        bool can_Amount = false;
+        for (int i = 0; i < items_Data_1.Count; i++)
+        {
+            if (30002 == items_Data_1[i].ID && id == 30002)
+            {
+                can_Amount = true;
+                break;
+            }
+        }
+        if (can_Amount)
+        {
+            for (int i = 0; i < items_Data_1.Count; i++)
+            {
+                if (items_Data_1[i].ID == 30002)
+                {
+                    items_Data_1[i].AMOUNT++;
+                    break;
+                }
+            }
+        }else
+        {
+            items_Data_1.Add(new New_Item_Data(id, 1));
+        }
+    }
+    private void Increase_Item_Data_2_Amount(int id)
+    {
+        bool can_Amount = false;
+        for (int i = 0; i < items_Data_2.Count; i++)
+        {
+            if (30002 == items_Data_2[i].ID && id == 30002)
+            {
+                can_Amount = true;
+                break;
+            }
+        }
+        if (can_Amount)
+        {
+            for (int i = 0; i < items_Data_2.Count; i++)
+            {
+                if (items_Data_2[i].ID == 30002)
+                {
+                    items_Data_2[i].AMOUNT++;
+                    break;
+                }
+            }
+        } else
+        {
+            items_Data_2.Add(new New_Item_Data(id, 1));
+        }
+    }
+    private void Increase_Item_Data_3_Amount(int id)
+    {
+        bool can_Amount = false;
+        for (int i = 0; i < items_Data_3.Count; i++)
+        {
+            if (30002 == items_Data_3[i].ID && id == 30002)
+            {
+                can_Amount = true;
+                break;
+            }
+        }
+        if (can_Amount)
+        {
+            for (int i = 0; i < items_Data_3.Count; i++)
+            {
+                if (items_Data_3[i].ID == 30002)
+                {
+                    items_Data_3[i].AMOUNT++;
+                    break;
+                }
+            }
+        }else
+        {
+            items_Data_3.Add(new New_Item_Data(id, 1));
+        }
     }
 } // class
 
