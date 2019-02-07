@@ -976,12 +976,10 @@ public class NewInventory_Manager : MonoBehaviour
                     if (save_Type == 1)
                     {
                         _index = 0;
-                    }
-                    else if (save_Type == 2)
+                    } else if (save_Type == 2)
                     {
                         _index = 4;
-                    }
-                    else if (save_Type == 3)
+                    }else if (save_Type == 3)
                     {
                         _index = 8;
                     }
@@ -998,8 +996,7 @@ public class NewInventory_Manager : MonoBehaviour
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP = 0;
                             }
                         }
-                    }
-                    else if (selected_Item.ID == 30002) // HP 회복 물약
+                    }else if (selected_Item.ID == 30002) // HP 회복 물약
                     {
                         if (selected_Item.ITEM_VALUETYPE_1 == 20) // HP
                         {
@@ -1008,8 +1005,7 @@ public class NewInventory_Manager : MonoBehaviour
                                 NewInventory_JsonData.instance.party_Status[(_index + selected_Party_Member) - 1].HP += selected_Item.ITEM_VALUE_1;
                             }
                         }
-                    }
-                    else if (selected_Item.ID == 30010) // HP 영구 상승 물약
+                    } else if (selected_Item.ID == 30010) // HP 영구 상승 물약
                     {
                         if (selected_Item.ITEM_VALUETYPE_1 == 21) // HP_MAX
                         {
@@ -1020,8 +1016,14 @@ public class NewInventory_Manager : MonoBehaviour
                         }
                     }
                     Party_Status_Text((_index + selected_Party_Member) - 1); // 파티 스테이터스 텍스트
-                    Selected_Party_Member_Skills_Setting((_index + selected_Party_Member) - 1);
-                    Destory_Selected_Item_Data();              
+                    Selected_Party_Member_Skills_Setting((_index + selected_Party_Member) - 1); 
+                    if (selected_Item.AMOUNT == 1)
+                    {
+                        Destory_Selected_Item_Data();
+                    } else
+                    {
+                        Selected_Inventory_Item_Decrease_Amount(selected_Item.ID);
+                    }
                 }
                 break;
             case 6:
@@ -1142,6 +1144,58 @@ public class NewInventory_Manager : MonoBehaviour
                 }
             }
             NewInventory_Items_Data.instance.items_Data_3.RemoveAt(index);
+        }
+    }
+    // 인벤토리에 아이템 사용시 amount가 1보다 클경우 1 감소
+    private void Selected_Inventory_Item_Decrease_Amount(int id)
+    {
+        switch (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE)
+        {
+            case 1:
+                {
+                    for(int i = 0; i < NewInventory_Items_Data.instance.items_Data_1.Count; i++)
+                    {
+                        if(id == NewInventory_Items_Data.instance.items_Data_1[i].ID)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_1[i].AMOUNT--;
+                            slot_Num.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text =
+                            NewInventory_Items_Data.instance.items_Data_1[i].AMOUNT.ToString();
+                            slot_Num.transform.GetChild(0).GetComponent<New_Item>().this_Item.AMOUNT =
+                                 NewInventory_Items_Data.instance.items_Data_1[i].AMOUNT;
+                            break;
+                        }
+                    }
+                }break;
+            case 2:
+                {
+                    for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_2.Count; i++)
+                    {
+                        if (id == NewInventory_Items_Data.instance.items_Data_2[i].ID)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_2[i].AMOUNT--;
+                            slot_Num.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text =
+                            NewInventory_Items_Data.instance.items_Data_2[i].AMOUNT.ToString();
+                            slot_Num.transform.GetChild(0).GetComponent<New_Item>().this_Item.AMOUNT =
+                               NewInventory_Items_Data.instance.items_Data_2[i].AMOUNT;
+                            break;
+                        }
+                    }
+                }break;
+            case 3:
+                {
+                    for (int i = 0; i < NewInventory_Items_Data.instance.items_Data_3.Count; i++)
+                    {
+                        if (id == NewInventory_Items_Data.instance.items_Data_3[i].ID)
+                        {
+                            NewInventory_Items_Data.instance.items_Data_3[i].AMOUNT--;
+                            slot_Num.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text =
+                            NewInventory_Items_Data.instance.items_Data_3[i].AMOUNT.ToString();
+                            slot_Num.transform.GetChild(0).GetComponent<New_Item>().this_Item.AMOUNT =
+                               NewInventory_Items_Data.instance.items_Data_3[i].AMOUNT;
+                            break;
+                        }
+                    }
+                } break;
         }
     }
     // 해고 버튼 누를시 선택한 케릭터 데이터 삭제
