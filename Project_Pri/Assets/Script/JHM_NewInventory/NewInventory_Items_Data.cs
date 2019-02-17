@@ -622,7 +622,9 @@ public class NewInventory_Items_Data : MonoBehaviour
         _item.transform.GetComponent<Image>().SetNativeSize();
     }
     // 외부씬에서 아이템 구매나 추가시 이 함수 이용
-    public void Add_Item_Data(int selected_Item)
+    // **********************************************************
+    // **********************************************************
+    public void Add_Item_Data(int selected_Item) // param 에 아이템 id 입력 하면 끝 
     {
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
         if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
@@ -639,6 +641,8 @@ public class NewInventory_Items_Data : MonoBehaviour
             SAVE_NEW_DATA_JSON_ITEMS_LIST_3();
         }
     }
+    // ***********************************************************
+    // --------------------------------------------------
     private void Increase_Item_Data_1_Amount(int id)
     {
         bool can_Amount = false;

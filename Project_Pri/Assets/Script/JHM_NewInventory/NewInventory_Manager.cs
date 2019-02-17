@@ -42,7 +42,7 @@ public class NewInventory_Manager : MonoBehaviour
         }
         rena_Character_Image_Panel = rena_Attire_Status_Panel.transform.GetChild(0).gameObject;
         rena_Attire_Status_Text = rena_Attire_Status_Panel.transform.GetChild(3).gameObject;
-        party_Status_Text = party_Status_Panel.transform.GetChild(4).gameObject;
+        party_Status_Text = party_Status_Panel.transform.GetChild(3).gameObject;
         party_Face_Icon_Member = party_Status_Panel.transform.GetChild(6).gameObject;
         party_character_Skills = party_Status_Panel.transform.GetChild(5).gameObject;
         text_Skills_Panel = party_Status_Panel.transform.GetChild(7).gameObject;
@@ -112,9 +112,9 @@ public class NewInventory_Manager : MonoBehaviour
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().sprite =
+                        party_Face_Icon_Member.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
-                        party_Face_Icon_Member.transform.GetChild(i).GetComponent<Image>().SetNativeSize();
+                        party_Face_Icon_Member.transform.GetChild(i).GetChild(0).GetComponent<Image>().SetNativeSize();
                     }
                 }
                 break;
@@ -122,9 +122,9 @@ public class NewInventory_Manager : MonoBehaviour
                 {
                     for (int i = 4; i < 8; i++)
                     {
-                        party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().sprite =
+                        party_Face_Icon_Member.transform.GetChild(i - 4).GetChild(0).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
-                        party_Face_Icon_Member.transform.GetChild(i - 4).GetComponent<Image>().SetNativeSize();
+                        party_Face_Icon_Member.transform.GetChild(i - 4).GetChild(0).GetComponent<Image>().SetNativeSize();
                     }
                 }
                 break;
@@ -132,9 +132,9 @@ public class NewInventory_Manager : MonoBehaviour
                 {
                     for (int i = 8; i < 12; i++)
                     {
-                        party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().sprite =
+                        party_Face_Icon_Member.transform.GetChild(i - 8).GetChild(0).GetComponent<Image>().sprite =
                            Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].PARTY_FACE_ICON);
-                        party_Face_Icon_Member.transform.GetChild(i - 8).GetComponent<Image>().SetNativeSize();
+                        party_Face_Icon_Member.transform.GetChild(i - 8).GetChild(0).GetComponent<Image>().SetNativeSize();
                     }
                 }
                 break;
@@ -192,18 +192,24 @@ public class NewInventory_Manager : MonoBehaviour
     private void Selected_Party_Member_Skills_Setting(int i)
     {
         // 스킬
-        party_character_Skills.transform.GetChild(0).GetComponent<Image>().sprite =
+        party_character_Skills.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite =
                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
                         NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1);
-        party_character_Skills.transform.GetChild(0).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1.ToString();
-        party_character_Skills.transform.GetChild(1).GetComponent<Image>().sprite =
+        party_character_Skills.transform.GetChild(0).GetChild(0).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK1.ToString();
+        party_character_Skills.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40f);
+        party_character_Skills.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40f);
+        party_character_Skills.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite =
                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
                         NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK2);
-        party_character_Skills.transform.GetChild(1).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK2.ToString();
-        party_character_Skills.transform.GetChild(2).GetComponent<Image>().sprite =
+        party_character_Skills.transform.GetChild(1).GetChild(0).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK2.ToString();
+        party_character_Skills.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40f);
+        party_character_Skills.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40f);
+        party_character_Skills.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite =
                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "skill_icon_" +
                         NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK3);
-        party_character_Skills.transform.GetChild(2).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK3.ToString();
+        party_character_Skills.transform.GetChild(2).GetChild(0).gameObject.name = NewInventory_JsonData.instance.party_Status[i].PARTY_ATTACK3.ToString();
+        party_character_Skills.transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40f);
+        party_character_Skills.transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40f);
         // sd 케릭터 모델
         party_Status_Panel.transform.GetChild(0).GetComponent<Image>().sprite =
             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + NewInventory_JsonData.instance.party_Status[i].SD_CHARACTER_MODEL);
@@ -254,11 +260,11 @@ public class NewInventory_Manager : MonoBehaviour
         // 해고 버튼 true or false
         if (NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 1)
         {
-            party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(false);
+            party_Status_Panel.transform.GetChild(4).transform.gameObject.SetActive(false);
         }
         else if (NewInventory_JsonData.instance.party_Status[i].DISMISSIBILITY_TYPE == 0)
         {
-            party_Status_Panel.transform.GetChild(3).transform.gameObject.SetActive(true);
+            party_Status_Panel.transform.GetChild(4).transform.gameObject.SetActive(true);
         }
     }
     // 레나 착용 의상 로드
@@ -386,7 +392,7 @@ public class NewInventory_Manager : MonoBehaviour
         party_Member_Item_Value[5] = NewInventory_JsonData.instance.party_Status[i].EQUIP_SP2;
         party_Member_Item_Value[6] = NewInventory_JsonData.instance.party_Status[i].EQUIP_HP_MAX;
         // -------------------------------------------------------------------------------
-        party_Status_Text.transform.GetChild(0).GetComponent<Text>().text = "이름: " +
+        party_Status_Text.transform.GetChild(0).GetComponent<Text>().text = "Name: " +
             NewInventory_JsonData.instance.party_Status[i].PARTY_NAME.ToString();
         party_Status_Text.transform.GetChild(1).GetComponent<Text>().text = "Grade: " +
             NewInventory_JsonData.instance.party_Status[i].PARTY_GRADE.ToString();
@@ -1236,17 +1242,17 @@ public class NewInventory_Manager : MonoBehaviour
     public void Event_Skill_Description_1_Pointer_Down()
     {
         text_Skills_Panel.SetActive(true);
-        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(0).gameObject.name);
+        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(0).GetChild(0).gameObject.name);
     }
     public void Event_Skill_Description_2_Pointer_Down()
     {
         text_Skills_Panel.SetActive(true);
-        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(1).gameObject.name);
+        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(1).GetChild(0).gameObject.name);
     }
     public void Event_Skill_Description_3_Pointer_Down()
     {
         text_Skills_Panel.SetActive(true);
-        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(2).gameObject.name);
+        Post_Selected_Skill_Text(party_character_Skills.transform.GetChild(2).GetChild(0).gameObject.name);
     }
     public void Event_Skill_Description_Pointer_Up()
     {
