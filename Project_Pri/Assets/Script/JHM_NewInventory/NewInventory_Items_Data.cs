@@ -310,22 +310,34 @@ public class NewInventory_Items_Data : MonoBehaviour
                 }
                 else if (t >= 20 && t < 40) // 페이지 2
                 {
-                    index_3 = 0;
+                    if(t == 20)
+                    {
+                        index_3 = 0;
+                    }
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(1).transform.GetChild(index_3).transform;
                 }
                 else if (t >= 40 && t < 60) // 페이지 3
                 {
-                    index_3 = 0;
+                    if (t == 40)
+                    {
+                        index_3 = 0;
+                    }
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(2).transform.GetChild(index_3).transform;
                 }
                 else if (t >= 60 && t < 80) // 페이지 4
                 {
-                    index_3 = 0;
+                    if (t == 60)
+                    {
+                        index_3 = 0;
+                    }
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(3).transform.GetChild(index_3).transform;
                 }
                 else if (t >= 80 && t < 100) // 페이지 5
                 {
-                    index_3 = 0;
+                    if (t == 80)
+                    {
+                        index_3 = 0;
+                    }
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_3.transform.GetChild(4).transform.GetChild(index_3).transform;
                 }
                 StartCoroutine(Item_Setting_In_Inventory(item, i));

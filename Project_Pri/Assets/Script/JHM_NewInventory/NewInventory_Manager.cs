@@ -292,9 +292,10 @@ public class NewInventory_Manager : MonoBehaviour
     }
     private void Rena_Setting_Clothe(int index)
     {
-        rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+        rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite =
                                     Resources.Load<Sprite>("JHM.Img/New_Inventory/" + "item_icon_"
                                     + NewInventory_JsonData.instance.rena_Attire_Status[index].ATTIRE_ID.ToString());
+        rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().SetNativeSize();
     }
     // 레나 의상 스테이터스 값 푸싱
     private void Setting_Rena_Attire_Status_Text_Input()
@@ -649,9 +650,9 @@ public class NewInventory_Manager : MonoBehaviour
             item_Status_Panel.transform.GetChild(2).gameObject.SetActive(false);
         }
         // 이미지 
-        item_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+        item_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite =
             Resources.Load<Sprite>("JHM.Img/New_Inventory/" + select_Item.ITEM_ICON.ToString());
-        item_Status_Panel.transform.GetChild(1).GetComponent<Image>().SetNativeSize();
+        item_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().SetNativeSize();
         // ------------------------------------
         // 설명 창 텍스트 
         item_Status_Panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "[이름]: " + select_Item.ITEM_NAME.ToString();
@@ -709,7 +710,7 @@ public class NewInventory_Manager : MonoBehaviour
                     //  이전 아이템
                     if (NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID != 0)
                     {
-                        rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite = null;
+                        rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = null;
                         if (NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID == 30005)
                         {
                             NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].MUSCULAR_STRENGTH -= rena_Item_Value[0];
@@ -760,8 +761,9 @@ public class NewInventory_Manager : MonoBehaviour
                         {
                             if (selected_Item.ID == 30005) // 좋은옷 
                             {
-                                rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+                                rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite =
                                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + selected_Item.ITEM_ICON.ToString());
+                                rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().SetNativeSize();
                                 NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID = selected_Item.ID;
                             }
                         }
@@ -772,8 +774,9 @@ public class NewInventory_Manager : MonoBehaviour
                         {
                             if (selected_Item.ID == 30004) // 평상복 창작시
                             {
-                                rena_Attire_Status_Panel.transform.GetChild(1).GetComponent<Image>().sprite =
+                                rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite =
                                         Resources.Load<Sprite>("JHM.Img/New_Inventory/" + selected_Item.ITEM_ICON.ToString());
+                                rena_Attire_Status_Panel.transform.GetChild(1).GetChild(0).GetComponent<Image>().SetNativeSize();
                                 NewInventory_JsonData.instance.rena_Attire_Status[save_Type - 1].ATTIRE_ID = selected_Item.ID;
                             }
                         }
