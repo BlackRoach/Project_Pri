@@ -34,7 +34,21 @@ public class NewInventory_Items_Data : MonoBehaviour
     {
         if (is_Inventory)
         {
+            Debug.Log(" inventory!");
             Spawning_Inventory_Items();
+        } else
+        {
+            Debug.Log("not inventory!");
+            if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+            {
+                LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
+            } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+            {
+                LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
+            } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+            {
+                LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
+            }
         }
     }
     // defualt json 리소스 파일 푸싱

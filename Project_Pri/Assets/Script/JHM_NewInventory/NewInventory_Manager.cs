@@ -1126,7 +1126,8 @@ public class NewInventory_Manager : MonoBehaviour
                     break;
                 }
             }
-            NewInventory_Items_Data.instance.items_Data_1.RemoveAt(index);
+         //   NewInventory_Items_Data.instance.items_Data_1.RemoveAt(index);
+            NewInventory_Items_Data.instance.items_Data_1.Remove(NewInventory_Items_Data.instance.items_Data_1[index]);
         }
         else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
         {
@@ -1139,7 +1140,8 @@ public class NewInventory_Manager : MonoBehaviour
                     break;
                 }
             }
-            NewInventory_Items_Data.instance.items_Data_2.RemoveAt(index);
+         //   NewInventory_Items_Data.instance.items_Data_2.RemoveAt(index);
+            NewInventory_Items_Data.instance.items_Data_2.Remove(NewInventory_Items_Data.instance.items_Data_2[index]);
         }
         else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
         {
@@ -1152,7 +1154,8 @@ public class NewInventory_Manager : MonoBehaviour
                     break;
                 }
             }
-            NewInventory_Items_Data.instance.items_Data_3.RemoveAt(index);
+        //    NewInventory_Items_Data.instance.items_Data_3.RemoveAt(index);
+            NewInventory_Items_Data.instance.items_Data_3.Remove(NewInventory_Items_Data.instance.items_Data_3[index]);
         }
     }
     // 인벤토리에 아이템 사용시 amount가 1보다 클경우 1 감소
