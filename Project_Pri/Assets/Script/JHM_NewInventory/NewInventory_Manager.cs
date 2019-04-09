@@ -47,7 +47,6 @@ public class NewInventory_Manager : MonoBehaviour
         party_character_Skills = party_Status_Panel.transform.GetChild(5).gameObject;
         text_Skills_Panel = party_Status_Panel.transform.GetChild(7).gameObject;
         NewInventory_JsonData.instance.LOAD_NEW_DATA_JSON_Save_Type_Option();
-        NewInventory_Items_Data.instance.is_Inventory = true;
         NewInventory_Items_Data.instance.Selected_Save_Type_Include_Defualt_Data();
     }
     private void Start()
