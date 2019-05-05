@@ -82,9 +82,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1857038564931616}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.11, y: -2.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.77, y: -2.94, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4142034986472098}
   - {fileID: 4497306293812924}
@@ -116,18 +116,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.2, y: 3}
+    oldSize: {x: 1.28, y: 1.6}
     newSize: {x: 2.2, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 3}
+  m_Size: {x: 0.5, y: 0.8}
   m_EdgeRadius: 0
 --- !u!95 &95985179288180640
 Animator:
@@ -170,12 +170,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 1696663353187136}
   StatusUI: {fileID: 0}
-  guageBar: {fileID: 0}
-  hpBar: {fileID: 0}
-  filled_speed: 10
+  status_t: {fileID: 0}
+  filled_speed: 30
   max_gauge: 100
-  progress_gauge: 0
+  hp: 0
+  atk: 0
+  def: 0
+  mag: 0
+  rep: 0
+  sp: 0
+  status: {fileID: 0}
+  status_T: {fileID: 0}
+  posnum: 0
+  num: 0
+  attack_num: 0
+  attack_val: 
+  skillCoolTime: 
+  skillCoolAmount: []
+  attack_id: []
+  id: 
   isInQ: 0
+  isFight: 0
+  skill_guage: 0
   cursur: {fileID: 1669220701651296}
 --- !u!212 &212056121049874490
 SpriteRenderer:
@@ -299,7 +315,7 @@ SpriteRenderer:
   m_SortingLayerID: 673009037
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 3eb6ae3c9317c6740b40478ce21de5be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56c6cae242941c84695edef33ddeffb3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

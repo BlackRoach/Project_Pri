@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4435892985090502}
   - component: {fileID: 212165908993633124}
-  - component: {fileID: 114892991212493918}
+  - component: {fileID: 61188785473571758}
+  - component: {fileID: 114559937176138900}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,14 +66,39 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147688597429424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.02, y: -1.48, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.11, y: -1.69, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4182933994776128}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61188785473571758
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1147688597429424}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.05, y: -0.2}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.28, y: 1.6}
+    newSize: {x: 2.2, y: 3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.7}
+  m_EdgeRadius: 0
 --- !u!95 &95753165038863366
 Animator:
   serializedVersion: 3
@@ -101,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88554f6c15e8d6140982531caec6cfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114892991212493918
+--- !u!114 &114559937176138900
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,17 +135,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1147688597429424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ddf407f6e0c97c4aa865022a7bc27db, type: 3}
+  m_Script: {fileID: 11500000, guid: 5efc58f190e0fd04f955348a49c63f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 1736915076308936}
   StatusUI: {fileID: 0}
-  guageBar: {fileID: 0}
-  hpBar: {fileID: 0}
-  filled_speed: 20
+  status_t: {fileID: 0}
+  filled_speed: 30
   max_gauge: 100
-  progress_gauge: 0
+  hp: 100
+  atk: 0
+  def: 0
+  mag: 0
+  rep: 0
+  sp: 0
+  status: {fileID: 0}
+  status_T: {fileID: 0}
+  posnum: 0
+  num: 0
+  attack_num: 0
+  attack_val: 
+  skillCoolTime: 
+  skillCoolAmount: []
+  attack_id: []
+  id: 
   isInQ: 0
+  isFight: 0
+  skill_guage: 0
+  sp2: 0
   skill_max_guage: 100
   skill_filled_speed: 10
   skillGuagebar: {fileID: 0}
@@ -157,7 +200,7 @@ SpriteRenderer:
   m_SortingLayerID: -713751653
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 32c5b741f730d1540afb6fe812314e0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 403faf1f08ca49341a16068d5af7f087, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

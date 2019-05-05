@@ -27,16 +27,17 @@ public class Battle_Monster : Battle_Character {
 	void Update () {
 
         update();
-      
 
-        status_t.GetComponent<Text>().text =
-           "이름: " + c_name +
+        status_t.transform.GetChild(0).GetComponent<Text>().text =
+           "<size=30>"+"<color=#ff9500>" +c_name + "</color>" + "</size>"+
            "\nATK: " + atk +
            "\nDEF: " + def +
            "\nMAG: " + mag +
            "\nREP: " + rep +
-           "\nSP: " + sp +
-           "\nHP: " + hp;
+           "<color=#00b3ff>" + "\nSP: " + sp + "</color>" +
+           "<color=#3bf600>" + "\nHP: " + hp + "</color>";
+
+      
 
     }
 

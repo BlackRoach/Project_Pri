@@ -9,7 +9,7 @@ public class Battle_Player : Battle_Character
 
     [SerializeField] private float skill_max_guage;
     [SerializeField] private float skill_filled_speed;
-    [SerializeField] private Image skillGuagebar;
+    [SerializeField] private RectTransform skillGuagebar;
     
  
   
@@ -20,9 +20,10 @@ public class Battle_Player : Battle_Character
         if (battleManager == null)
             battleManager = BattleManager.Instance;
         hp = 100;
+        c_hp = 100;
         skillmanager = SkillManager.Instance;
         StatusInit();
-        skillGuagebar = battleManager.PartyPanel[0].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        skillGuagebar = battleManager.PartyPanel[0].transform.GetChild(0).GetComponent<RectTransform>();
 
     }
 
@@ -34,7 +35,7 @@ public class Battle_Player : Battle_Character
         if (skill_guage <= max_gauge)
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
-            skillGuagebar.fillAmount = skill_guage * 0.01f;
+            skillGuagebar.sizeDelta = new Vector2(skill_guage, 100);
 
 
         }

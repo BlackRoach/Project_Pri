@@ -9,11 +9,7 @@ public class TurnToWall : MonoBehaviour {
     string[] splitter = new string[2];
 
     bool isWall;
-    // Use this for initialization
-    void Start () {
-
-     
-	}
+  
   
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,7 +19,7 @@ public class TurnToWall : MonoBehaviour {
             Game.addWall(int.Parse(splitter[0]), int.Parse(splitter[1]));
             isWall = true;
             grid.GetComponent<Renderer>().material.color = Color.red;
-            this.GetComponent<BoxCollider2D>().enabled = false;
+            this.GetComponent<CircleCollider2D>().enabled = false;
 
         }
         else if (collision.gameObject.tag == "Player")
@@ -41,42 +37,42 @@ public class TurnToWall : MonoBehaviour {
             Game.spawnpos.Add(this.gameObject.transform.parent.gameObject);
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        splitter = grid.gameObject.name.Split(',');
-        if (collision.gameObject.tag == "obstacle")
-        {
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    splitter = grid.gameObject.name.Split(',');
+    //    if (collision.gameObject.tag == "obstacle")
+    //    {
 
-            Game.addWall(int.Parse(splitter[0]), int.Parse(splitter[1]));
-            isWall = true;
-            grid.GetComponent<Renderer>().material.color = Color.red;
-            this.GetComponent<BoxCollider2D>().enabled = false;
-        }
-        else if (collision.gameObject.tag == "Player")
-        {
+    //        Game.addWall(int.Parse(splitter[0]), int.Parse(splitter[1]));
+    //        isWall = true;
+    //        grid.GetComponent<Renderer>().material.color = Color.red;
+    //        this.GetComponent<CircleCollider2D>().enabled = false;
+    //    }
+    //    else if (collision.gameObject.tag == "Player")
+    //    {
 
-        }
+    //    }
 
 
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        splitter = grid.gameObject.name.Split(',');
-        if (collision.gameObject.tag == "obstacle")
-        {
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    splitter = grid.gameObject.name.Split(',');
+    //    if (collision.gameObject.tag == "obstacle")
+    //    {
 
        
-        }
-        else if (collision.gameObject.tag == "Player")
-        {
+    //    }
+    //    else if (collision.gameObject.tag == "Player")
+    //    {
 
-        }
-    }
+    //    }
+    //}
     public void Initgrid()
     {
         isWall = false;
         grid.GetComponent<Renderer>().material.color = Color.white;
-        this.GetComponent<BoxCollider2D>().enabled = true;
+        this.GetComponent<CircleCollider2D>().enabled = true;
     }
 
 }

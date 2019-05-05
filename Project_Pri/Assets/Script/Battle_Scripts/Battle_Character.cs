@@ -9,8 +9,8 @@ public class Battle_Character : MonoBehaviour
 
     [SerializeField] private GameObject effect;
     [SerializeField]protected GameObject StatusUI;
-    protected Image guageBar;
-    protected Image hpBar;
+    protected RectTransform guageBar;
+    protected RectTransform hpBar;
     [SerializeField]protected GameObject status_t;
     [SerializeField] protected float filled_speed = 30;
     [SerializeField] protected float max_gauge = 100;
@@ -64,10 +64,10 @@ public class Battle_Character : MonoBehaviour
     protected void StatusInit()
     {
         GameObject nStatus = (GameObject)GameObject.Instantiate(status);
-        nStatus.gameObject.transform.parent = status.transform.parent;
+        nStatus.gameObject.transform.parent = status.transform.parent.transform.GetChild(0);
         StatusUI = nStatus;
-        hpBar = StatusUI.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        guageBar = StatusUI.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        hpBar = StatusUI.transform.GetChild(0).GetComponent<RectTransform>();
+        guageBar = StatusUI.transform.GetChild(1).GetComponent<RectTransform>();
         StatusUI.transform.localScale = new Vector3(1, 1, 1);
         StatusUI.transform.localPosition = Vector3.zero;
         StatusUI.SetActive(true);
@@ -81,10 +81,10 @@ public class Battle_Character : MonoBehaviour
     protected void update()
     {
         StatusUI.transform.position = new Vector2(this.transform.position.x+.1f,
-                                             this.transform.position.y-1.4f);
-        status_t.transform.position = new Vector2(this.transform.position.x + 2f,
-                                             this.transform.position.y);
-        hpBar.fillAmount = hp * (1/c_hp);
+                                             this.transform.position.y+1.4f);
+        status_t.transform.position = new Vector2(this.transform.position.x + 1f,
+                                             this.transform.position.y+1f);
+        hpBar.sizeDelta = new Vector2(hp * (1/c_hp) * 100,100);
         if (progress_gauge >= max_gauge && !isInQ)
         {
             battleManager.AddToArray(this.gameObject);
@@ -93,14 +93,19 @@ public class Battle_Character : MonoBehaviour
         else if (progress_gauge <= max_gauge)
         {
             progress_gauge += Time.deltaTime * filled_speed;
-            guageBar.fillAmount = progress_gauge * 0.01f;
+            guageBar.sizeDelta = new Vector2(progress_gauge,100);
         }
-        //if (hp < 0)
-        //{
-        //    isAlive = false;
-        //    this.gameObject.SetActive(false);
-        //    StatusUI.SetActive(false);
-        //}
+        if (hp < 0)
+        {
+            isAlive = false;
+            this.gameObject.SetActive(false);
+            StatusUI.SetActive(false);
+            status_t.SetActive(false);
+        }
+
+        if (hp > c_hp)
+            hp = c_hp;
+
 
 
     }

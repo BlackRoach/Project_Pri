@@ -285,6 +285,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1667450590732150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4732829270398530}
+  m_Layer: 0
+  m_Name: gridpos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1767753579002526
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +572,7 @@ Transform:
   - {fileID: 4934499030497320}
   - {fileID: 4817396398578026}
   - {fileID: 4165557828561934}
+  - {fileID: 4732829270398530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -647,6 +663,19 @@ Transform:
   - {fileID: 4438197583436756}
   m_Father: {fileID: 4458004305391660}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4732829270398530
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667450590732150}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -13.52, y: -8.16, z: -0.0038206913}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4458004305391660}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4746883218361652
 Transform:
@@ -1377,9 +1406,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGamemanager: {fileID: 0}
+  gridpos: {fileID: 4732829270398530}
   spawnpos:
   - {fileID: 4934499030497320}
   - {fileID: 4817396398578026}
+  width: 30
+  height: 40
+  monsternum: 0
+  areaName: 
 --- !u!114 &114663938496605004
 MonoBehaviour:
   m_ObjectHideFlags: 1

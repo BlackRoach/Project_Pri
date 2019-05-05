@@ -11,7 +11,7 @@ public class Battle_Party : Battle_Character
     [SerializeField] private float sp2;
     [SerializeField] private float skill_max_guage;
     [SerializeField] private float skill_filled_speed;
-    [SerializeField] private Image skillGuagebar;
+    [SerializeField] private RectTransform skillGuagebar;
 
    
 
@@ -25,7 +25,7 @@ public class Battle_Party : Battle_Character
         LoadData();
         this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("SD캐릭터/" + sd_model);
         StatusInit();
-        skillGuagebar = battleManager.PartyPanel[num].gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        skillGuagebar = battleManager.PartyPanel[num].gameObject.transform.GetChild(0).GetComponent<RectTransform>();
         skillCoolTime = new int[attack_num];
         skillCoolAmount = new float[attack_num];
         for (int i = 0; i < attack_num; i++)
@@ -35,20 +35,20 @@ public class Battle_Party : Battle_Character
     // Update is called once per frame
     void Update () {
         update();
-        status_t.GetComponent<Text>().text =
-          "이름: " + c_name +
+        status_t.transform.GetChild(0).GetComponent<Text>().text =
+           "<size=30>" + "<color=#ff9500>" + c_name +"</color>" + "</size>" +
           "\nATK: " + atk +
           "\nDEF: " + def +
           "\nMAG: " + mag +
           "\nREP: " + rep +
-          "\nSP: " + sp +
-          "\nSP2: " + sp2 +
-          "\nHP: " + hp;
+          "<color=#00b3ff>" + "\nSP: " + sp + "</color>" +
+          "<color=#01709f>" + "\nSP2: " + sp2 + "</color>" +
+          "<color=#3bf600>" + "\nHP: " + hp + "</color>";
 
         if (skill_guage <= max_gauge)
         {
             skill_guage += Time.deltaTime * skill_filled_speed;
-            skillGuagebar.fillAmount = skill_guage * 0.01f;
+            skillGuagebar.sizeDelta = new Vector2(skill_guage, 100);
      
 
         }

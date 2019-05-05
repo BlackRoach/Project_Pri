@@ -86,3 +86,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/New_Inventory.unity
     guid: 0ea56e6651d5df147973af967d3b2b0f
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: e3bf7525deae79342a9a26f27357cc60
