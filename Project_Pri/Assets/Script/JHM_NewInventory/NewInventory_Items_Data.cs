@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
+using UnityEngine.SceneManagement;
 public class NewInventory_Items_Data : MonoBehaviour
 {
     public static NewInventory_Items_Data instance = null;
@@ -14,7 +15,6 @@ public class NewInventory_Items_Data : MonoBehaviour
     public Items_List[] item_List;  // 현재 인벤토리 아이템들의 데이터
     public GameObject item_Prefab; // 인벤토리에 들어갈 아이템 프리펩
     public bool is_Defualt; // 게임 처음 실행 할때만 적용
-    public bool is_Inventory = false; // 인벤토리 씬에만 적용
     private JsonData item_List_Data; // 디폴트 json_data
     private void Awake()
     {
@@ -32,20 +32,22 @@ public class NewInventory_Items_Data : MonoBehaviour
     }
     private void Start()
     {
-        if (is_Inventory)
+        if (SceneManager.GetActiveScene().name == "New_Inventory")
         {
-            Debug.Log(" inventory!");
+            Debug.Log("inventory!");
             Spawning_Inventory_Items();
         } else
         {
             Debug.Log("not inventory!");
-            if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
+            if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 1)
             {
                 LOAD_NEW_DATA_JSON_ITEMS_LIST_1();
-            } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
+            }
+            else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 2)
             {
                 LOAD_NEW_DATA_JSON_ITEMS_LIST_2();
-            } else if(NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
+            }
+            else if (NewInventory_JsonData.instance.select_Type_Option.SAVE_TYPE == 3)
             {
                 LOAD_NEW_DATA_JSON_ITEMS_LIST_3();
             }
@@ -261,21 +263,37 @@ public class NewInventory_Items_Data : MonoBehaviour
                 }
                 else if (j >= 20 && j < 40) // 페이지 2
                 {
+                    if (j == 20)
+                    {
+                        index_1 = 0;
+                    }
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(1).transform.GetChild(index_1).transform;
                 }
                 else if (j >= 40 && j < 60) // 페이지 3
                 {
+                    if (j == 40)
+                    {
+                        index_1 = 0;
+                    }
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(2).transform.GetChild(index_1).transform;
                 }
                 else if (j >= 60 && j < 80) // 페이지 4
                 {
+                    if (j == 60)
+                    {
+                        index_1 = 0;
+                    }
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(3).transform.GetChild(index_1).transform;
                 }
                 else if (j >= 80 && j < 100) // 페이지 5
                 {
+                    if (j == 80)
+                    {
+                        index_1 = 0;
+                    }
                     index_1 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_1.transform.GetChild(4).transform.GetChild(index_1).transform;
                 }
@@ -293,21 +311,37 @@ public class NewInventory_Items_Data : MonoBehaviour
                 }
                 else if (k >= 20 && k < 40) // 페이지 2
                 {
+                    if (k == 20)
+                    {
+                        index_2 = 0;
+                    }
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(1).transform.GetChild(index_2).transform;
                 }
                 else if (k >= 40 && k < 60) // 페이지 3
                 {
+                    if (k == 40)
+                    {
+                        index_2 = 0;
+                    }
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(2).transform.GetChild(index_2).transform;
                 }
                 else if (k >= 60 && k < 80) // 페이지 4
                 {
+                    if (k == 60)
+                    {
+                        index_2 = 0;
+                    }
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(3).transform.GetChild(index_2).transform;
                 }
                 else if (k >= 80 && k < 100) // 페이지 5
                 {
+                    if (k == 80)
+                    {
+                        index_2 = 0;
+                    }
                     index_2 = 0;
                     item.transform.parent = NewInventory_Manager.instance.inventory_Type_2.transform.GetChild(4).transform.GetChild(index_2).transform;
                 }
