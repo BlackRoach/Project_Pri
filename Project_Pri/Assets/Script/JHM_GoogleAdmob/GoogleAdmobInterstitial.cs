@@ -17,7 +17,7 @@ public class GoogleAdmobInterstitial : MonoBehaviour {
     private void Start()
     {
         RequestInterstital();
-        Invoke("InterstitalShow",20f);
+        Invoke("InterstitalShow",10f);
     }
 
     private void RequestInterstital()
@@ -43,6 +43,7 @@ public class GoogleAdmobInterstitial : MonoBehaviour {
 
         interstitial.Show();
     }
+
 } // class
 
 

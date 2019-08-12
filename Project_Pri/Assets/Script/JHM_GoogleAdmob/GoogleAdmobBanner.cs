@@ -18,12 +18,11 @@ public class GoogleAdmobBanner : MonoBehaviour {
     {
         RequestBanner();
     }
-
     private void RequestBanner()
     {
         string id = Debug.isDebugBuild ? testId : unitId;
 
-        banner = new BannerView(id, AdSize.SmartBanner, AdPosition.Bottom);
+        banner = new BannerView(id, AdSize.SmartBanner, AdPosition.BottomLeft);
 
         AdRequest request = new AdRequest.Builder().AddTestDevice(testDeviceId).Build();
 
@@ -35,7 +34,7 @@ public class GoogleAdmobBanner : MonoBehaviour {
         {
             banner.Show();
         }else
-        {
+        {            
             banner.Hide();
         }
     }
